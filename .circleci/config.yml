@@ -19,7 +19,7 @@ jobs:
     steps:
       - checkout
 
-      - run: echo "This is new"
+      - run: echo $GCLOUD_SERVICE_KEY
 
       # Download and cache dependencies
       - restore_cache:
