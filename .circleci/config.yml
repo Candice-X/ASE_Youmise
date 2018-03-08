@@ -29,13 +29,15 @@ jobs:
     steps:
       - checkout
       - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
-      - run: sudo gcloud --quiet components update
-      - run: sudo gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-      - run: sudo gcloud config set project $GCLOUD_PROJECT
+      - run: gcloud --quiet components update
+      - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+      - run: gcloud config set project $GCLOUD_PROJECT
       - run: gcloud app deploy app.yaml
 workflows:
   version: 2
-  build_and_test:
+  build_and_deploy:
     jobs:
       - build
       - deploy
+          requires:
+            - build
