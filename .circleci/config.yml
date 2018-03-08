@@ -19,6 +19,8 @@ jobs:
     steps:
       - checkout
 
+      - run: echo "This is new"
+
       # Download and cache dependencies
       - restore_cache:
           keys:
