@@ -14,7 +14,8 @@
   },
   "scripts": {
     "deploy": "gcloud app deploy",
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "node test.js"
   },
   "dependencies": {
     "express": "4.15.4"
