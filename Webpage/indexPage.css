@@ -150,10 +150,39 @@ body {
 }
 
 .page-title {
-    font-size: 2.2em;
+    font-size: 2.5em;
     text-align: center;
     font-weight: 700;
-    color: #000;
+    color: #fff;
+
+}
+#first_page{
+  background: url(img/bg.jpeg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+#second_bg{
+    background: url(img/bg1.jpg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+#third_bg{
+    background: url(img/bg2.jpg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
+
+.page-content{
+    margin:50px;
+    color:#eee;
 }
 
 #logo {
@@ -256,7 +285,7 @@ body {
 
 #logo_container{
     position: fixed;
-    top:8px;
+    top:48px;
     left:50px;
     width:500px;
     height:90px;
@@ -272,21 +301,22 @@ body {
     left:0;
     top:0;
     /* background:red; */
-    max-height:80px;
-    width:150px;
+    max-height:150px;
+    width:100px;
 }
 #logo_container #logo_cont img{
     position: relative;
     margin:0;
     padding:0;
-    height:60px;
+    height:80px;
 }
 #try_it_container{
     display: inline-block;
     /* background:black; */
-    margin-left:30px;
+    margin-left:0px;
     width: 200px;
     height:100%;
+    color:#fff;
 }
 
 
@@ -304,7 +334,7 @@ body {
 }
 
 .img-s3{
-  width:95%;
+  width:55%;
   height:auto;
   position: relative;
   top: 50%;
@@ -313,7 +343,7 @@ body {
 
 
 #blue-img-container{
-  background-color: #1061d6;
+  /* background-color: #1061d6; */
   height: 100%;
 }
 
