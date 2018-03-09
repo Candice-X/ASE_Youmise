@@ -1,0 +1,38 @@
+{
+    "pages": [
+       "pages/home/index",
+        "pages/index/index",
+        "pages/chat/chat",
+        "pages/logs/logs"       
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#333",
+        "navigationBarTitleText": "UMise Demo",
+        "navigationBarTextStyle": "white"
+    },
+    "tabBar": {
+      "list": [
+        {
+          "pagePath": "pages/home/index",
+          "text": "Home"
+        },
+        {
+          "pagePath": "pages/index/index",
+          "text": "Test"
+        },
+        {
+          "pagePath": "pages/logs/logs",
+          "text": "Add"
+        },
+        {
+          "pagePath": "pages/chat/chat",
+          "text": "Chat"
+        },
+        {
+          "pagePath": "pages/logs/logs",
+          "text": "Message"
+        }
+      ]
+    }
+}

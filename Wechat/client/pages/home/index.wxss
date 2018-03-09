@@ -1,0 +1,31 @@
+/**index.wxss**/
+page{
+  height:100%;
+}
+#home_page{
+  background-image: url("https://wximg-1256107077.cos.ap-shanghai.myqcloud.com/imgs/1520613903870-SJuf94gFG.jpg");
+  background-size:100% 100%;
+  background-repeat:no-repeat;
+}
+
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 200px;
+  color:#fff;
+}
