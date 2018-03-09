@@ -23,7 +23,7 @@ jobs:
       - image: candicexyh/youmise-primary:0.0.1
     steps:
       - checkout
-      - run: yarn test
+      - run: open ./Webpage/index.html
 
 
   deploy_uat:
