@@ -1,11 +1,6 @@
-      # run tests!
-      # - run: yarn test
-      # - install_gcloud
-      #     curl -sSL https://sdk.cloud.google.com | bash
-
 version: 2
 jobs:
-  build for uat:
+  build:
     docker:
       - image: candicexyh/youmise-primary:0.0.1
     steps:
@@ -23,7 +18,15 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-  deploy:
+  test:
+    docker:
+      - image: candicexyh/youmise-primary:0.0.1
+    steps:
+      - checkout
+      - run: yarn test
+
+
+  deploy_uat:
     docker:
       - image: candicexyh/youmise-primary:0.0.1
     steps:
@@ -33,11 +36,58 @@ jobs:
       - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
       - run: gcloud config set project $GCLOUD_PROJECT
       - run: gcloud app deploy app.yaml
+
+  deploy_dev:
+    docker:
+      - image: candicexyh/youmise-primary:0.0.1
+    steps:
+      - checkout
+      - run: echo $GCLOUD_SERVICE_KEY_DEV | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
+      - run: gcloud --quiet components update
+      - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+      - run: gcloud config set project $GCLOUD_PROJECT_DEV
+      - run: gcloud app deploy app_dev.yaml
+
+  deploy_prod:
+    docker:
+      - image: candicexyh/youmise-primary:0.0.1
+    steps:
+      - checkout
+      - run: echo $GCLOUD_SERVICE_KEY_PROD | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
+      - run: gcloud --quiet components update
+      - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+      - run: gcloud config set project $GCLOUD_PROJECT_PROD
+      - run: gcloud app deploy app_prod.yaml
+
 workflows:
   version: 2
-  build_and_deploy:
+  dev_uat_prod:
     jobs:
-      - build for uat
-      - deploy:
+      - build
+
+      - test:
           requires:
-            - build for uat
+            - build
+
+      - deploy_dev:
+          filters:
+            branches:
+              only: dev
+          requires:
+            - test
+
+      - deploy_uat:
+          filters:
+            branches:
+              only: master
+          requires:
+            - test
+
+      - hold:
+          type: approval
+          requires:
+            - deploy_uat
+
+      - deploy_prod:
+          requires:
+            - hold
