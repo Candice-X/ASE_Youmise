@@ -157,7 +157,7 @@ body {
 
 }
 #first_page{
-  background: url(img/bg.jpeg) no-repeat center center fixed;
+  background: url(img/bg1.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -165,7 +165,7 @@ body {
 }
 
 #second_bg{
-    background: url(img/bg1.jpg) no-repeat center center;
+    background: url(img/bg.jpeg) no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -375,7 +375,7 @@ body {
   }
 
   #blue-img-container{
-    background-color: #2a62cf;
+    /* background-color: #2a62cf; */
     height: 50%;
   }
   #img-s3{
