@@ -1,0 +1,60 @@
+<view class="root">
+    <view class="line">
+        <text>Chat Room</text>
+        <view bindtap="openChat" class="demo">
+            Promise Chat Room
+            <view class="link">Demo ></view>
+        </view>
+    </view>
+    <view class="line">
+        <text>Log in Demo</text>
+        <input type="text" value="{{loginUrl}}" disabled class="hide"></input>
+        <view class="line-control">
+            <view bindtap="doLogin" class="item"><view class="item-inner">Log in</view></view>
+            <view bindtap="clearSession" class="item"><view class="item-inner">Log out</view></view>
+        </view>
+    </view>
+    <!-- <view class="line">
+        <text>带会话请求测试</text>
+        <input type="text" value="{{requestUrl}}" disabled class="hide"></input>
+        <view class="line-control">
+            <view bindtap="doRequest" class="item" ><view class="item-inner">请求</view></view>
+        </view>
+    </view> -->
+    <view class="line">
+        <text>Upload Photoes</text>
+        <view class="line-control">
+            <view bindtap="doUpload" class="item">
+                <view class="item-inner">Upload</view>
+            </view>
+            <view class="item-image" wx:if="{{ imgUrl }}">
+                <image src="{{ imgUrl }}" class="image" mode="aspectFill" bindtap="previewImage"></image>
+            </view>
+        </view>
+    </view>
+     <!-- <view class="line">
+        <text>客服消息测试</text>
+        <view class="line-control">
+            <view class="item" style="padding: 10px 20px">
+                <contact-button type="default" size="24" session-from="weapp" >
+                </contact-button>
+            </view>
+        </view> 
+    </view> -->
+    <view class="line">
+        <text>WebSocket Channel Test</text>
+        <input type="text" value="{{tunnelUrl}}" disabled class="hide" />
+        <view class="line-control">
+            <view class="item flag">
+                <view class="item-inner">Channel
+                    <view class="switch-status">
+                        <text>{{tunnelStatusText[tunnelStatus]}}</text>
+                        <switch bindchange="switchTunnel" class="switch" checked="{{tunnelStatus == 'connected'}}"/>
+                    </view>
+                </view>
+            </view>
+            <view bindtap="sendMessage" class="item {{tunnelStatus == 'connected' || 'disabled'}}"><view class="item-inner">Send Message</view></view>
+            <view bindtap="testReconnect" class="item {{tunnelStatus == 'connected' || 'disabled'}}"><view class="item-inner">Test Reconnection</view></view>
+        </view>
+    </view>
+</view>
