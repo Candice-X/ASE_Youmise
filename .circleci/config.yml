@@ -32,7 +32,7 @@ jobs:
     steps:
       - checkout
       - run: sudo pip install awsebcli --upgrade
-      - run: eb deploy --profile default $UATENV
+      - run: eb deploy --profile default
 
   deploy_dev:
     docker:
@@ -40,7 +40,7 @@ jobs:
     steps:
       - checkout
       - run: sudo pip install awsebcli --upgrade
-      - run: eb deploy --profile default $DEVENV
+      - run: eb deploy --profile defaults
 
   deploy_prod:
     docker:
