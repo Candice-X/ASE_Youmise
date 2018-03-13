@@ -25,3 +25,8 @@ jspm_packages
 # Serverless directories
 .serverless
 .webpack
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
