@@ -1,26 +1,26 @@
 version: 2
 jobs:
-  build:
-    docker:
-      - image: candicexyh/youmise-primary:0.0.1
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          # - v1-dependencies-
-
-      - run: yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+  # build:
+  #   docker:
+  #     - image: circleci/node:8.9.4-stretch-browsers
+  #   steps:
+  #     - checkout
+  #     - restore_cache:
+  #         keys:
+  #         - v1-dependencies-{{ checksum "package.json" }}
+  #         # fallback to using the latest cache if no exact match is found
+  #         # - v1-dependencies-
+  #
+  #     - run: yarn install
+  #
+  #     - save_cache:
+  #         paths:
+  #           - node_modules
+  #         key: v1-dependencies-{{ checksum "package.json" }}
 
   test:
     docker:
-      - image: candicexyh/youmise-primary:0.0.1
+      - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
       - run: yarn test
@@ -28,46 +28,40 @@ jobs:
 
   deploy_uat:
     docker:
-      - image: candicexyh/youmise-primary:0.0.1
+      - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
-      - run: echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
-      - run: gcloud --quiet components update
-      - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-      - run: gcloud config set project $GCLOUD_PROJECT
-      - run: gcloud app deploy app.yaml
+      - run: sudo apt-get -y -qq update
+      - run: sudo apt-get install python-pip python-dev build-essential
+      - run: sudo pip install awsebcli --upgrade
+      - run: eb deploy
 
   deploy_dev:
     docker:
-      - image: candicexyh/youmise-primary:0.0.1
+      - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
-      - run: echo $GCLOUD_SERVICE_KEY_DEV | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
-      - run: gcloud --quiet components update
-      - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-      - run: gcloud config set project $GCLOUD_PROJECT_DEV
-      - run: gcloud app deploy app_dev.yaml
+      - run: sudo apt-get -y -qq update
+      - run: sudo apt-get install python-pip python-dev build-essential
+      - run: sudo pip install awsebcli --upgrade
+      - run: eb deploy
 
   deploy_prod:
     docker:
-      - image: candicexyh/youmise-primary:0.0.1
+      - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
-      - run: echo $GCLOUD_SERVICE_KEY_PROD | base64 --decode --ignore-garbage > ${HOME}/gcloud-service-key.json
-      - run: gcloud --quiet components update
-      - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-      - run: gcloud config set project $GCLOUD_PROJECT_PROD
-      - run: gcloud app deploy app_prod.yaml
+      - run: sudo apt-get -y -qq update
+      - run: sudo apt-get install python-pip python-dev build-essential
+      - run: sudo pip install awsebcli --upgrade
+      - run: eb deploy $PRODENV
 
 workflows:
   version: 2
   dev_uat_prod:
     jobs:
-      - build
 
-      - test:
-          requires:
-            - build
+      - test
 
       - deploy_dev:
           filters:
