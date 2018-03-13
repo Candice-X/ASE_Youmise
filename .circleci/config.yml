@@ -31,8 +31,10 @@ jobs:
       - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
+      - run: sudo apt-get -y -qq update
+      - run: sudo apt-get install python-pip python-dev build-essential
       - run: sudo pip install awsebcli --upgrade
-      - run: eb deploy --profile default
+      - run: eb deploy
 
   deploy_dev:
     docker:
@@ -42,15 +44,17 @@ jobs:
       - run: sudo apt-get -y -qq update
       - run: sudo apt-get install python-pip python-dev build-essential
       - run: sudo pip install awsebcli --upgrade
-      - run: eb deploy --profile defaults
+      - run: eb deploy
 
   deploy_prod:
     docker:
       - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
+      - run: sudo apt-get -y -qq update
+      - run: sudo apt-get install python-pip python-dev build-essential
       - run: sudo pip install awsebcli --upgrade
-      - run: eb deploy --profile default $PRODENV
+      - run: eb deploy $PRODENV
 
 workflows:
   version: 2
