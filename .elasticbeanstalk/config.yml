@@ -1,0 +1,21 @@
+branch-defaults:
+  dev:
+    environment: Cat-named-doggie-dev
+  master:
+    environment: Cat-named-doggie-uat
+# environment-defaults:
+#   Cat-named-doggie-dev:
+#     branch: null
+#     repository: null
+global:
+  application_name: Youmise
+  default_ec2_keyname: candicexyh
+  default_platform: Node.js running on 64bit Amazon Linux
+  default_region: us-east-2
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
+  profile: null
+  sc: git
+  workspace_type: Application
