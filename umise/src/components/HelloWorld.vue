@@ -1,6 +1,6 @@
 <template>
   <div class='hello'>
- 
+
   <Navbar></Navbar>
     <header class="masthead">
       <div class="container h-100">
@@ -174,7 +174,7 @@ import Navbar from './Navbar';
 
 export default {
   name: 'HelloWorld',
-  components:{
+  components: {
     Navbar,
   },
   data() {
@@ -187,7 +187,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import '../assets/css/font-awesome.min.css';
+@import "../assets/css/font-awesome.min.css";
 @import "../assets/css/simple-line-icons.css";
 @import "../assets/css/new-age.css";
 

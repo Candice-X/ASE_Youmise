@@ -4,13 +4,12 @@
         <span class="d-block d-lg-none">Umise</span>
         <span class="d-none d-lg-block">
           <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="../assets/img/Logo.png" alt="">
-        </span>    
+        </span>
       </a>
-      <div class="profile-usertitle-name">
-			    {{ name }}
-	  </div>
+      <div class="profile-usertitle-name">{{ name }}</div>
         <hr />
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -23,10 +22,10 @@
             <a class="nav-link js-scroll-trigger" href="#experience"><i class="icon-layers"></i>My Cards</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#education"><i class="icon-directions"></i>Friends</a>
+            <a class="nav-link js-scroll-trigger" href="#education"><i class="icon-people"></i>Friends</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#skills"><i class="icon-people"></i>Messages</a>
+            <a class="nav-link js-scroll-trigger" href="#skills"><i class="icon-bubbles"></i>Messages</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#awards"><i class="icon-directions"> </i>About</a>
@@ -37,39 +36,36 @@
 </template>
 
 <script>
-
 export default {
-   data() {
-       return{
-        name: 'kuer',
-       };
-   }, 
+  data() {
+    return {
+      name: "kuer",
+    };
+  },
 };
 </script>
 
 
 <style scoped>
-@import '../assets/css/font-awesome.min.css';
+@import "../assets/css/font-awesome.min.css";
 @import "../assets/css/simple-line-icons.css";
 
 body {
-  font-family: 'Open Sans', serif;
+  font-family: "Open Sans", serif;
   padding-top: 54px;
   color: #868e96;
 }
-
 
 @media (min-width: 992px) {
   /* #nav_dashboard {
     padding-top: 0;
     padding-left: 17rem;
   } */
-.send_cards_container{
-    height:auto;
-    margin-top:0px;
-    margin-left:0rem;
-}
-
+  .send_cards_container {
+    height: auto;
+    margin-top: 0px;
+    margin-left: 0rem;
+  }
 }
 
 h1,
@@ -78,7 +74,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Saira Extra Condensed', serif;
+  font-family: "Saira Extra Condensed", serif;
   font-weight: 700;
   color: #343a40;
 }
@@ -92,45 +88,46 @@ h2 {
   font-size: 3.5rem;
 }
 .card_img h4 {
-    margin-top:15px;
-    font-size:0.9rem;
+  margin-top: 15px;
+  font-size: 0.9rem;
 }
 .card_img p {
-    font-size:0.7rem;
+  font-size: 0.7rem;
 }
 .subheading {
   font-weight: 500;
-  font-family: 'Saira Extra Condensed', serif;
+  font-family: "Saira Extra Condensed", serif;
   font-size: 1.35rem;
 }
-li{
-    text-align:left;
-    font-size:0.8rem;
-    margin:5px;
-    padding:2px;
+li {
+  text-align: left;
+  font-size: 0.8rem;
+  margin: 5px;
+  padding: 2px;
 }
-li:hover{
-    background:#aaa;
-    color:#000;
-    border-radius: 3px;
+li:hover {
+  background: #aaa;
+  color: #000;
+  border-radius: 3px;
 }
-li a{
-    color:#ffffff;
+li a {
+  color: #ffffff;
 }
-li:hover,a:hover{
-    color:#fff !important;
+li:hover,
+a:hover {
+  color: #fff !important;
 }
 
 .nav_active {
-    background:#3ac17e !important;
-    color:#ffffff;
-    border-radius: 3px;
+  background: #3ac17e !important;
+  color: #ffffff;
+  border-radius: 3px;
 }
 
 li:active {
-    background:#3ac17e;
-    color:#ffffff;
-    border-radius: 3px;
+  background: #3ac17e;
+  color: #ffffff;
+  border-radius: 3px;
 }
 
 #sideNav .navbar-nav .nav-item .nav-link {
@@ -179,51 +176,48 @@ li:active {
 }
 
 @media (min-width: 768px) {
-  .send_cards_container{
-    width:auto;
-    height:auto;
-    margin-left:0rem;
-    margin-top:55px;
-}
-.body_cont{
-    height:100%;
+  .send_cards_container {
+    width: auto;
+    height: auto;
+    margin-left: 0rem;
+    margin-top: 55px;
+  }
+  .body_cont {
+    height: 100%;
     position: relative;
-    display:block;
-    margin-left:0rem;
+    display: block;
+    margin-left: 0rem;
     /* min-height: 775px; */
-}
-
+  }
 }
 
 @media (min-width: 992px) {
-  .body_cont{
-    height:100%;
+  .body_cont {
+    height: 100%;
     position: relative;
-    display:block;
-    margin-top:0px !important;
-    margin-left:17rem !important;
+    display: block;
+    margin-top: 0px !important;
+    margin-left: 17rem !important;
     /* min-height: 775px; */
-}
+  }
 }
 
 .bg-primary {
-  background-color: rgba(0,0,0,0.7) !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
 }
 
-i{
-    margin-left:15px;
-    margin-right:25px;
+i {
+  margin-left: 15px;
+  margin-right: 25px;
 }
 .text-primary {
   color: #000 !important;
 }
-.js-scroll-trigger{
-    color:#ffffff !important;
+.js-scroll-trigger {
+  color: #ffffff !important;
 }
-.profile-usertitle-name{
-    color:#eeeeee;
+.profile-usertitle-name {
+  color: #eeeeee;
 }
-
-
 </style>
 

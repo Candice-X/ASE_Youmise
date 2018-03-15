@@ -36,17 +36,16 @@ import Navbar from './Navbar';
 export default {
   components: {
     Navbar,
-  }
-}
-
+  },
+};
 </script>
 
 <style scoped>
-:root,body {
-  --input-padding-x: .75rem;
-  --input-padding-y: .75rem;
+:root,
+body {
+  --input-padding-x: 0.75rem;
+  --input-padding-y: 0.75rem;
 }
-
 
 body {
   display: -ms-flexbox;
@@ -59,18 +58,18 @@ body {
   -webkit-box-pack: center;
   justify-content: center;
   background-color: #f5f5f5;
-  width:100%;
+  width: 100%;
   height: 100vh;
   min-height: 775px;
   padding-top: 0;
   /* margin-top:-60px; */
   padding-bottom: 0;
   background-image: url("../assets/img/bg2.jpg");
-  background-size:cover;
-  color:#eee;
+  background-size: cover;
+  color: #eee;
 }
 
-img{
+img {
   border: 0.3rem solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
 }
@@ -101,8 +100,8 @@ img{
   line-height: 1.5;
   color: #495057;
   border: 1px solid transparent;
-  border-radius: .25rem;
-  transition: all .1s ease-in-out;
+  border-radius: 0.25rem;
+  transition: all 0.1s ease-in-out;
 }
 
 .form-label-group input::-webkit-input-placeholder {
@@ -136,5 +135,4 @@ img{
   font-size: 12px;
   color: #777;
 }
-
 </style>
