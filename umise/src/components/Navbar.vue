@@ -35,16 +35,9 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 export default {
   name: 'Navbar',
 };
-=======
-export default{
-  name: 'Navbar',
-};
-
->>>>>>> a007e61233688a57cff1360c2832235533af1648
 </script>
 
 <style>
