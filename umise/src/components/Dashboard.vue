@@ -77,7 +77,10 @@ export default {
   },
   components: {
     Nav,
+<<<<<<< HEAD
     Friends,
+=======
+>>>>>>> a007e61233688a57cff1360c2832235533af1648
   },
 };
 </script>
@@ -92,6 +95,7 @@ body {
   color: #868e96;
 }
 
+<<<<<<< HEAD
 .card_cont {
   /* background:#dcdcdc; */
   display: block;
@@ -116,6 +120,34 @@ body {
   background: #dcdcdc;
   height: 320px;
   border-radius: 5px;
+=======
+.card_cont{
+    /* background:#dcdcdc; */
+    display:block;
+    width:auto;
+    padding:0;
+    margin:0px;
+    margin-top:15px;
+    margin-bottom:50px;
+    border-radius: 5px;
+}
+.row{
+    width:auto;
+    padding:0;
+    margin:0;
+    margin-left:20px;
+    padding-bottom:50px;
+    margin-bottom:200px;
+
+}
+.card_img{
+    width:220px;
+    margin: 10px 25px;
+    background:#dcdcdc;
+    height:320px;
+    border-radius: 5px;
+
+>>>>>>> a007e61233688a57cff1360c2832235533af1648
 }
 .card_img:hover {
   background: #3ac17e;

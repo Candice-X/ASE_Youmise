@@ -38,6 +38,10 @@ export default {
     Navbar,
   },
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> a007e61233688a57cff1360c2832235533af1648
 </script>
 
 <style scoped>

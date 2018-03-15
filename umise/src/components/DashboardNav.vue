@@ -39,7 +39,11 @@
 export default {
   data() {
     return {
+<<<<<<< HEAD
       name: "kuer",
+=======
+      name: 'kuer',
+>>>>>>> a007e61233688a57cff1360c2832235533af1648
     };
   },
 };
