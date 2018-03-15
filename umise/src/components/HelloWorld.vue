@@ -32,7 +32,7 @@
         </div>
       </div>
     </nav> -->
-
+  <Navbar></Navbar>
     <header class="masthead">
       <div class="container h-100">
         <div class="row h-100">
@@ -40,12 +40,16 @@
             <div class="header-content mx-auto">
               <h2 class="mb-5">Fun Way to Chat with Friend</h2>
                 <div class="page-content">
-                Sometimes in life, your friend may invite you for a dinner, but something happens by accident and your friend could not make
-                it. In general, he may say something like, “I'm sorry, something just came out. Maybe some other time?” Then,
-                in most cases, your friend may feel really sorry or just forget about it and you may feel somewhat awkward
+                Sometimes in life, your friend may invite you for a dinner, but something happens
+                by accident and your friend could not make
+                it. In general, he may say something like, “I'm sorry, something just came out.
+                Maybe some other time?” Then,
+                in most cases, your friend may feel really sorry or just forget about it and you
+                may feel somewhat awkward
                 to remind him.
                 <br />
-                <br /> Our purpose is to avoid this kind of embarrassment and make interactions and invitations between friends
+                <br /> Our purpose is to avoid this kind of embarrassment and make interactions and
+                invitations between friends
                 more interesting.
                 </div>
 
@@ -138,12 +142,13 @@
         <div class="container">
           <h2>We Make Friends Closer</h2>
             <div class="page-content">
-                Under the condition mentioned above, if using our application, your friend could just send you a dinner card when he or she
-                could not make it. The dinner card means having a meal together. And this card could be used only within
-                a period of validity. 
+                Under the condition mentioned above, if using our application, your friend could just send
+                you a dinner card when he or she could not make it. The dinner card means having a meal
+                together. And this card could be used only within a period of validity.
                 <br />
                 <br />
-                Through this operation, not only neither of you would forget this appointment and have a great time together, but
+                Through this operation, not only neither of you would forget this appointment and have a
+                great time together, but
                 you would also feel more interesting and natural to send invitation.
               </div>
           <a href="#" class="btn btn-outline btn-xl js-scroll-trigger">Let's Get Started!</a>

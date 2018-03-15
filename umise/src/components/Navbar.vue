@@ -3,7 +3,7 @@
  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
       <div class="container">
         <a class="navbar-brand js-scroll-trigger" href="#">
-          <img src="../assets/img/Logo.png" width='45' /> Umise</a>
+         <router-link to="/"> <img src="../assets/img/Logo.png" width='45' /><span class="logo"> Umise </span></router-link></a>
         <button class="navbar-toggler navbar-toggler-right"
         type="button" data-toggle="collapse" data-target="#navbarResponsive"
         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,20 +12,20 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <router-link class="nav-link js-scroll-trigger" to='/'>Home</router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link js-scroll-trigger" to="/#Features">Features</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link js-scroll-trigger" href="#About">About US</router-link>
+              <router-link class="nav-link js-scroll-trigger" to="/#About">About US</router-link>
+            </li> -->
+            <li class="nav-item">
+              <router-link type="button"  style="margin-left:15px;" to="/login"><a class="btn btn-sm btn-success" style="font-size:1em;" >Sign in</a></router-link>
             </li>
             <li class="nav-item">
-              <router-link type="button" class="btn btn-sm btn-success" style="margin-left:15px;" to="/login">Sign in</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link type="button" class="btn btn-sm btn-outline-success" style="margin-left:15px;" to="/signup">Sign up</router-link>
+              <router-link type="button"  style="margin-left:15px;" to="/signup"><a class="btn btn-sm btn-outline-success" style="font-size:1em;"> Sign up</a></router-link>
             </li>
           </ul>
         </div>
@@ -36,7 +36,7 @@
 
 <script>
 export default{
-    name:'Navbar',
+  name:'Navbar',
 }
 
 </script>
@@ -46,7 +46,8 @@ export default{
 #mainNav {
   border-color: rgba(34, 34, 34, 0.05);
   /* background-color: white; */
-  background-color:rgba(33,33,33,0.8);
+  background-color:rgba(0,0,0,0.2);
+  transition: background .5s ease-in-out, padding .5s ease-in-out;
   -webkit-transition: all .35s;
   -moz-transition: all .35s;
   transition: all .35s;
@@ -97,6 +98,11 @@ export default{
 #mainNav .navbar-nav > li > a:focus:hover {
   color: #fff;
   font-weight:bold;
+}
+.logo{
+  color:#fff;
+  font-size:1.2em;
+  font-weight: 300;
 }
 
 @media (min-width: 992px) {

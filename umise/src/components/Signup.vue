@@ -4,27 +4,40 @@
   <form class="form-signin">
       <div class="text-center mb-4">
         <img class="mb-4" src="../assets/img/Logo.png" alt="" height="72" width="72">
-        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise- Login</h1>
+        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise - Sign Up</h1>
        </div>
+      <!--- This is the sign up div -->
+      <div id="signup_div" v-show = 'submittedValue' >
+        <div class="form-label-group">
+          <input id="inputUserName" class="form-control" placeholder="UserName" required="" type="">
+          <label for="inputUserName">User Name</label>
+        </div>
 
+        <div class="form-label-group">
+          <input v-model="emailAddress" id="inputEmail" class="form-control" placeholder="Email address"
+          required="" type="email" >
+          <label for="inputEmail">Email address</label>
+        </div>
+
+        <div class="form-label-group">
+          <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password">
+          <label for="inputPassword">Password</label>
+        </div>
+
+        <button class="btn btn-lg btn-success btn-block" v-on:click= "submitSignup" type="" name = 'sign_up' >Sign Up</button>
+
+      </div>
+    
+      <!-- This is the validation code div -->
+      <div id="validate_div" v-show = "!submittedValue" >
+      <label class="message"> We have send the validation code to the Email : {{ emailAddress }}</label>
       <div class="form-label-group">
-        <input id="inputEmail" class="form-control" placeholder="Email address"
-        srequired="" autofocus="" type="email">
-        <label for="inputEmail">Email address</label>
+        <input id="validateCode" class="form-control" placeholder="UserName" autofocus="" type="">
+        <label for="validateCode">Validate Code</label>
       </div>
+      <button class="btn btn-lg btn-success btn-block" type="submit">Validate Email </button>
 
-      <div class="form-label-group">
-        <input id="inputPassword" class="form-control" placeholder="Password"
-        required="" type="password">
-        <label for="inputPassword">Password</label>
       </div>
-
-      <div class="checkbox mb-3">
-        <label>
-          <input value="remember-me" type="checkbox"> Remember me
-        </label>
-      </div>
-      <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
     </form>
 </body>
@@ -34,19 +47,31 @@
 import Navbar from './Navbar';
 
 export default {
+  name: 'siguup',
   components: {
     Navbar,
-  }
-}
-
+  },
+  data() {
+    return {
+      emailAddress: '',
+      submittedValue: true,
+    };
+  },
+  methods: {
+    submitSignup: () => {
+      this.submittedValue = !this.submittedValue;
+      alert(this.submittedValue);
+    },
+  },
+};
 </script>
 
 <style scoped>
-:root,body {
-  --input-padding-x: .75rem;
-  --input-padding-y: .75rem;
+:root,
+body {
+  --input-padding-x: 0.75rem;
+  --input-padding-y: 0.75rem;
 }
-
 
 body {
   display: -ms-flexbox;
@@ -59,21 +84,17 @@ body {
   -webkit-box-pack: center;
   justify-content: center;
   background-color: #f5f5f5;
-  width:100%;
+  width: 100%;
   height: 100vh;
   min-height: 775px;
   padding-top: 0;
   /* margin-top:-60px; */
   padding-bottom: 0;
   background-image: url("../assets/img/bg2.jpg");
-  background-size:cover;
-  color:#eee;
+  background-size: cover;
+  color: #eee;
 }
 
-img{
-  border: 0.3rem solid rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-}
 .form-signin {
   width: 100%;
   max-width: 420px;
@@ -101,8 +122,8 @@ img{
   line-height: 1.5;
   color: #495057;
   border: 1px solid transparent;
-  border-radius: .25rem;
-  transition: all .1s ease-in-out;
+  border-radius: 0.25rem;
+  transition: all 0.1s ease-in-out;
 }
 
 .form-label-group input::-webkit-input-placeholder {
@@ -136,5 +157,12 @@ img{
   font-size: 12px;
   color: #777;
 }
+.message {
+  font-size: 1em;
+}
 
+img{
+  border: 0.3rem solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+}
 </style>
