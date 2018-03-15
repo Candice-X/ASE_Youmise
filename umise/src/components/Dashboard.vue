@@ -37,7 +37,7 @@
                         <h4>Dinning Card</h4>
                         <p class="sub_title">Just have Lunch with me!</p>
                     </div>
-                </div> 
+                </div>
 
                  <div class="col-lg-3 col-md-3 col-sm-6 card_cont">
                     <div class="card_img" >
@@ -55,7 +55,7 @@
                         <h4 style="color:#fff;">Customize Card</h4>
                         <p class="sub_title">Enjoy the Creations</p>
                     </div>
-                </div> 
+                </div>
 
             </div>
         </div>
@@ -69,14 +69,14 @@
 import Nav from './DashboardNav';
 
 export default {
-   data() {
-       return{
-        name: 'kuer',
-       };
-   }, 
-   components: {
-        Nav,
-   },
+  data() {
+    return {
+      name: 'kuer',
+    };
+  },
+  components: {
+    Nav,
+  },
 };
 </script>
 
@@ -107,7 +107,7 @@ body {
     margin-left:20px;
     padding-bottom:50px;
     margin-bottom:200px;
-    
+
 }
 .card_img{
     width:220px;

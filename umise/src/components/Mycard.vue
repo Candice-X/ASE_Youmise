@@ -7,7 +7,7 @@
         <div class = "send_cards_container" >
             <!-- <h4 class="title" >My Cards</h4>
             <h4 class="subTitle">Card with  </h4> -->
-    
+
         <button class="btn btn-primary btn-outline-success active" >Cards Received</button>
         <button class="btn btn-primary btn-outline-success" >Cards Sent</button>
 
@@ -23,9 +23,9 @@
                                 <h4>{{ card.cardName }}</h4>
                                 <p class="sub_title">{{ card.sender }}</p>
                             </div>
-                           
+
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -42,51 +42,51 @@
 import Nav from './DashboardNav';
 
 export default {
-   data() {
-       return{
-         cards:[
-             {
-             cardName:'Dinning Card',
-             cardImg: '../assets/img/card1.png',
-             sender: 'From Kuer and Enjoy',
-             senderImg: '../assets/img/girl.png',
-             },
-            {
-             cardName:'Dinning Card',
-             cardImg: '../assets/img/card2.png',
-             sender: 'Joy and Enjoy',
-             senderImg: '../assets/img/bg.jpeg',
-             },
-             {
-             cardName:'Dinning Card',
-             cardImg: '../assets/img/bg.jpg',
-             sender: 'Joy and Enjoy',
-             senderImg: '../assets/img/bg.jpeg',
-             },
-             {
-             cardName:'Dinning Card',
-             cardImg: '../assets/img/card2.png',
-             sender: 'Joy and Enjoy',
-             senderImg: '../assets/img/bg.jpeg',
-             },
-              {
-             cardName:'Dinning Card',
-             cardImg: '../assets/img/card1.png',
-             sender: 'Joy and Enjoy',
-             senderImg: '../assets/img/bg.jpeg',
-             },
-              {
-             cardName:'Dinning Card',
-             cardImg: '../assets/img/bg.jpg',
-             sender: 'Joy and Enjoy',
-             senderImg: '../assets/img/bg.jpeg',
-             },
-         ],
-       };
-   }, 
-   components: {
-        Nav,
-   },
+  data() {
+    return {
+      cards: [
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../assets/img/card1.png',
+          sender: 'From Kuer and Enjoy',
+          senderImg: '../assets/img/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../assets/img/card2.png',
+          sender: 'Joy and Enjoy',
+          senderImg: '../assets/img/bg.jpeg',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../assets/img/bg.jpg',
+          sender: 'Joy and Enjoy',
+          senderImg: '../assets/img/bg.jpeg',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../assets/img/card2.png',
+          sender: 'Joy and Enjoy',
+          senderImg: '../assets/img/bg.jpeg',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../assets/img/card1.png',
+          sender: 'Joy and Enjoy',
+          senderImg: '../assets/img/bg.jpeg',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../assets/img/bg.jpg',
+          sender: 'Joy and Enjoy',
+          senderImg: '../assets/img/bg.jpeg',
+        },
+      ],
+    };
+  },
+  components: {
+    Nav,
+  },
 };
 </script>
 
@@ -150,7 +150,7 @@ body {
     margin-left:20px;
     padding-bottom:50px;
     margin-bottom:200px;
-    
+
 }
 .card_img{
     width:220px;

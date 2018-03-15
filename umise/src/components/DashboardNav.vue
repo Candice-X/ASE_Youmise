@@ -4,7 +4,7 @@
         <span class="d-block d-lg-none">Umise</span>
         <span class="d-none d-lg-block">
           <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="../assets/img/Logo.png" alt="">
-        </span>    
+        </span>
       </a>
       <div class="profile-usertitle-name">
 			    {{ name }}
@@ -39,11 +39,11 @@
 <script>
 
 export default {
-   data() {
-       return{
-        name: 'kuer',
-       };
-   }, 
+  data() {
+    return {
+      name: 'kuer',
+    };
+  },
 };
 </script>
 

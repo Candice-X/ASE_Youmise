@@ -27,7 +27,7 @@
         <button class="btn btn-lg btn-success btn-block" v-on:click= "submitSignup" type="" name = 'sign_up' >Sign Up</button>
 
       </div>
-    
+
       <!-- This is the validation code div -->
       <div id="validate_div" v-show = "!submittedValue" >
       <label class="message"> We have send the validation code to the Email : {{ emailAddress }}</label>

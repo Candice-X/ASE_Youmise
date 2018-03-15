@@ -13,39 +13,39 @@ Vue.use(Router);
 
 export default new Router({
   routes: [{
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld,
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login,
-    },
-    {
-      path: '/nav',
-      name: 'nav',
-      component: Navbar,
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: Signup,
-    },
-    {
-      path: '/Dashboard',
-      name: 'dashboard',
-      component: Dashboard,
-    },
-    {
-      path: '/mycard',
-      name: 'mycard',
-      component: Mycard,
-    },
-    {
-      path: '/friends',
-      name: 'friends',
-      component: Friends,
-    },
+    path: '/',
+    name: 'HelloWorld',
+    component: HelloWorld,
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login,
+  },
+  {
+    path: '/nav',
+    name: 'nav',
+    component: Navbar,
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: Signup,
+  },
+  {
+    path: '/Dashboard',
+    name: 'dashboard',
+    component: Dashboard,
+  },
+  {
+    path: '/mycard',
+    name: 'mycard',
+    component: Mycard,
+  },
+  {
+    path: '/friends',
+    name: 'friends',
+    component: Friends,
+  },
   ],
 });

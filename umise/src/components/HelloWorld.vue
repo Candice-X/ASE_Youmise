@@ -1,6 +1,6 @@
 <template>
   <div class='hello'>
- 
+
   <Navbar></Navbar>
     <header class="masthead">
       <div class="container h-100">
@@ -174,7 +174,7 @@ import Navbar from './Navbar';
 
 export default {
   name: 'HelloWorld',
-  components:{
+  components: {
     Navbar,
   },
   data() {
