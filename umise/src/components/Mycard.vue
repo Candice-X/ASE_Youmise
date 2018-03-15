@@ -1,61 +1,34 @@
 <template>
-<div id='nav_dashboard' >
-    <Nav></Nav>
+<div id='mycards' >
+     <Nav></Nav>
+
     <!--- body -->
-    <div id="send_cards" class="body_cont">
+    <div id="my_cards" class="body_cont">
         <div class = "send_cards_container" >
-            <h4 class="title" >Send Cards</h4>
-            <h4 class="subTitle">Choose a Card and send to your friends, or you can design your own card.</h4>
+            <!-- <h4 class="title" >My Cards</h4>
+            <h4 class="subTitle">Card with  </h4> -->
+    
+        <button class="btn btn-primary btn-outline-success active" >Cards Received</button>
+        <button class="btn btn-primary btn-outline-success" >Cards Sent</button>
+
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-6 card_cont">
+                <div v-for = "( card, index ) in cards" class="col-lg-3 col-md-3 col-sm-6 card_cont" >
                     <div class="card_img" >
-                        <img src="../assets/img/card2.png" />
-                        <h4>Dinning Card</h4>
-                        <p class="sub_title">Just have Lunch with me!</p>
-                    </div>
-                </div>
-
-                 <div class="col-lg-3 col-md-3 col-sm-6 card_cont">
-                    <div class="card_img" >
-                        <img src="../assets/img/card1.png" />
-                        <h4>Dinning Card</h4>
-                        <p class="sub_title">Just have Lunch with me!</p>
-                    </div>
-                </div>
-
-                 <div class="col-lg-3 col-md-3 col-sm-6 card_cont">
-                    <div class="card_img" >
-                        <img src="../assets/img/bg.jpg" />
-                        <h4>Dinning Card</h4>
-                        <p class="sub_title">Just have Lunch with me!</p>
-                    </div>
-                </div>
-
-                 <div class="col-md-3 col-md-3 col-sm-6 card_cont">
-                    <div class="card_img" >
-                        <img src="../assets/img/card2.png" />
-                        <h4>Dinning Card</h4>
-                        <p class="sub_title">Just have Lunch with me!</p>
-                    </div>
-                </div> 
-
-                 <div class="col-lg-3 col-md-3 col-sm-6 card_cont">
-                    <div class="card_img" >
-                        <img src="../assets/img/bg.jpg" />
-                        <h4>Dinning Card</h4>
-                        <p class="sub_title">Just have Lunch with me!</p>
-                    </div>
-                </div>
-
-                 <div class="col-md-3 col-md-3 col-sm-6 card_cont">
-                    <div class="card_img customize-icon-cont" >
-                        <div class="customize-icon">
-                        <i class="icon-settings "></i>
+                        <img v-bind:src="card.cardImg" />
+                        <div class ="sender_cont" >
+                            <div class ='avatar' >
+                                <img v-bind:src="card.senderImg" />
+                            </div>
+                            <div class="content">
+                                <h4>{{ card.cardName }}</h4>
+                                <p class="sub_title">{{ card.sender }}</p>
+                            </div>
+                           
                         </div>
-                        <h4 style="color:#fff;">Customize Card</h4>
-                        <p class="sub_title">Enjoy the Creations</p>
+                        
                     </div>
-                </div> 
+                </div>
+
 
             </div>
         </div>
@@ -71,7 +44,44 @@ import Nav from './DashboardNav';
 export default {
    data() {
        return{
-        name: 'kuer',
+         cards:[
+             {
+             cardName:'Dinning Card',
+             cardImg: '../assets/img/card1.png',
+             sender: 'From Kuer and Enjoy',
+             senderImg: '../assets/img/girl.png',
+             },
+            {
+             cardName:'Dinning Card',
+             cardImg: '../assets/img/card2.png',
+             sender: 'Joy and Enjoy',
+             senderImg: '../assets/img/bg.jpeg',
+             },
+             {
+             cardName:'Dinning Card',
+             cardImg: '../assets/img/bg.jpg',
+             sender: 'Joy and Enjoy',
+             senderImg: '../assets/img/bg.jpeg',
+             },
+             {
+             cardName:'Dinning Card',
+             cardImg: '../assets/img/card2.png',
+             sender: 'Joy and Enjoy',
+             senderImg: '../assets/img/bg.jpeg',
+             },
+              {
+             cardName:'Dinning Card',
+             cardImg: '../assets/img/card1.png',
+             sender: 'Joy and Enjoy',
+             senderImg: '../assets/img/bg.jpeg',
+             },
+              {
+             cardName:'Dinning Card',
+             cardImg: '../assets/img/bg.jpg',
+             sender: 'Joy and Enjoy',
+             senderImg: '../assets/img/bg.jpeg',
+             },
+         ],
        };
    }, 
    components: {
@@ -88,6 +98,39 @@ body {
   font-family: 'Open Sans', serif;
   padding-top: 54px;
   color: #868e96;
+}
+
+.send_cards_container button {
+    color:#ffffff;
+    margin-left:15px;
+}
+.sender_cont {
+    width:100%;
+    text-align:left;
+    margin-top:0;
+    padding:0;
+}
+
+.avatar {
+    position: relative;
+    top:-10px;
+    display:inline-block;
+    width:40px;
+    height:40px;
+    padding:0;
+    margin-left:10px;
+}
+.avatar img {
+    width:40px;
+    height:40px !important;
+    border-radius: 50% !important;
+}
+.content {
+    width:150px;
+    margin-left:8px;
+    display: inline-block;
+    line-height: 1em;
+
 }
 
 .card_cont{
@@ -170,13 +213,13 @@ body {
     margin-left:50px;
     text-align:left;
 }
-#nav_dashboard{
+#mycards{
     width:100%;
     height:100%;
     position: relative;
     display:block;
-    background:#fff;
-    background: url(/static/img/bg1.2bf8b4c.jpg) no-repeat center center fixed;
+    background:#f0f3f6;
+    background: url('../assets/img/bg1.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -207,6 +250,7 @@ h5,
 h6 {
   font-family: 'Saira Extra Condensed', serif;
   font-weight: 700;
+
 }
 
 h1 {
@@ -218,9 +262,10 @@ h2 {
   font-size: 3.5rem;
 }
 .card_img h4 {
-    margin-top:15px;
+    margin-top:8px;
     font-size:0.9rem;
 }
+
 .card_img p {
     font-size:0.7rem;
 }
@@ -240,7 +285,24 @@ li:hover{
     color:#000;
     border-radius: 3px;
 }
+li a{
+    color:#ffffff;
+}
+li:hover,a:hover{
+    color:#fff !important;
+}
 
+.nav_active {
+    background:#3ac17e !important;
+    color:#ffffff;
+    border-radius: 3px;
+}
+
+li:active {
+    background:#3ac17e;
+    color:#ffffff;
+    border-radius: 3px;
+}
 
 #sideNav .navbar-nav .nav-item .nav-link {
   font-weight: 600;
@@ -287,9 +349,23 @@ li:hover{
   }
 }
 
+section.resume-section {
+  border-bottom: 1px solid #dee2e6;
+  padding-top: 5rem !important;
+  padding-bottom: 5rem !important;
+}
+
+section.resume-section .resume-item .resume-date {
+  min-width: none;
+}
 
 @media (min-width: 768px) {
-
+  section.resume-section {
+    min-height: 100vh;
+  }
+  section.resume-section .resume-item .resume-date {
+    min-width: 18rem;
+  }
   .send_cards_container{
     width:auto;
     height:auto;
@@ -307,7 +383,10 @@ li:hover{
 }
 
 @media (min-width: 992px) {
-
+  section.resume-section {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
   .body_cont{
     height:100%;
     position: relative;
