@@ -1,17 +1,5 @@
 version: 2
 jobs:
-  build:
-    docker:
-      - image: circleci/node:8.9.4-stretch-browsers
-    steps:
-      - checkout
-      - run:
-          name: Build front end
-          command: |
-            cd umise
-            npm install
-            npm run build
-            cd ..
 
   test:
     docker:
@@ -26,39 +14,60 @@ jobs:
       - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
-      - run: sudo apt-get -y -qq update
-      - run: sudo apt-get install python-pip python-dev build-essential
-      - run: sudo pip install awsebcli --upgrade
-      - run: eb deploy
+
+      - run:
+          name: Install deployment dependencies
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install awsebcli --upgrade
+      - run:
+          name: Deploying
+          command: eb deploy
 
   deploy_dev:
     docker:
       - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
-      - run: sudo apt-get -y -qq update
-      - run: sudo apt-get install python-pip python-dev build-essential
-      - run: sudo pip install awsebcli --upgrade
-      - run: eb deploy
+      - run:
+          name: Install deployment dependencies
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install awsebcli --upgrade
+      - run:
+          name: Build front end
+          command: |
+            cd umise
+            npm install
+            npm run build
+            cd ..
+      - run:
+          name: Deploying
+          command: eb deploy
 
   deploy_prod:
     docker:
       - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
-      - run: sudo apt-get -y -qq update
-      - run: sudo apt-get install python-pip python-dev build-essential
-      - run: sudo pip install awsebcli --upgrade
-      - run: eb deploy $PRODENV
+      - run:
+          name: Install deployment dependencies
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install awsebcli --upgrade
+      - run:
+          name: Deploying
+          command: eb deploy $PRODENV
 
 workflows:
   version: 2
   dev_uat_prod:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - test
+
       - deploy_dev:
           filters:
             branches:
