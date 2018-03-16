@@ -54,8 +54,8 @@ workflows:
     jobs:
       - build
       - test:
-        requires:
-          - build
+          requires:
+            - build
       - deploy_dev:
           filters:
             branches:
