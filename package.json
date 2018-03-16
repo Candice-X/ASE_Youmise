@@ -13,9 +13,8 @@
     "node": ">=4.3.2"
   },
   "scripts": {
-    "deploy": "gcloud app deploy",
     "start": "node app.js",
-    "test": "node test.js"
+    "test": "node server/tests/test.js"
   },
   "dependencies": {
     "express": "4.15.4"
