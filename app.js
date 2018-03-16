@@ -2,15 +2,16 @@
 const express = require('express');
 const helmet = require('helmet');
 const compression = require('compression');
+const path = require('path');
 
 const app = express();
 
 app.use(helmet());
 app.use(compression());
 
-app.use(express.static('./umise/dist'));
+app.use(express.static(path.join(`${__dirname}/umise/dist`)));
 app.use('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/dist/index.html`));
+  res.sendFile(path.join(`${__dirname}/umise/dist/index.html`));
 });
 
 

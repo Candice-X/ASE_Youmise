@@ -1,22 +1,5 @@
 version: 2
 jobs:
-  # build:
-  #   docker:
-  #     - image: circleci/node:8.9.4-stretch-browsers
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys:
-  #         - v1-dependencies-{{ checksum "package.json" }}
-  #         # fallback to using the latest cache if no exact match is found
-  #         # - v1-dependencies-
-  #
-  #     - run: yarn install
-  #
-  #     - save_cache:
-  #         paths:
-  #           - node_modules
-  #         key: v1-dependencies-{{ checksum "package.json" }}
 
   test:
     docker:
@@ -31,36 +14,61 @@ jobs:
       - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
-      - run: sudo apt-get -y -qq update
-      - run: sudo apt-get install python-pip python-dev build-essential
-      - run: sudo pip install awsebcli --upgrade
-      - run: eb deploy
+
+      - run:
+          name: Install deployment dependencies
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install awsebcli --upgrade
+      - run:
+          name: Deploying
+          command: eb deploy
 
   deploy_dev:
     docker:
       - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
-      - run: sudo apt-get -y -qq update
-      - run: sudo apt-get install python-pip python-dev build-essential
-      - run: sudo pip install awsebcli --upgrade
-      - run: eb deploy
+      - run:
+          name: Install deployment dependencies
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install awsebcli --upgrade
+      - run:
+          name: Build front end
+          command: |
+            cd umise
+            npm install
+            npm run build
+            cd ..
+
+      - run: ls umise/dist
+
+      - run:
+          name: Deploying
+          command: eb deploy
 
   deploy_prod:
     docker:
       - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
-      - run: sudo apt-get -y -qq update
-      - run: sudo apt-get install python-pip python-dev build-essential
-      - run: sudo pip install awsebcli --upgrade
-      - run: eb deploy $PRODENV
+      - run:
+          name: Install deployment dependencies
+          command: |
+            sudo apt-get -y -qq update
+            sudo apt-get install python-pip python-dev build-essential
+            sudo pip install awsebcli --upgrade
+      - run:
+          name: Deploying
+          command: eb deploy $PRODENV
 
 workflows:
   version: 2
   dev_uat_prod:
     jobs:
-
       - test
 
       - deploy_dev:
