@@ -1,6 +1,6 @@
 {
   "name": "appengine-hello-world",
-  "description": "Simple Hello World Node.js sample for Google App Engine Flexible Environment.",
+  "description": "Simple Hello World Node.js.",
   "version": "0.0.1",
   "private": true,
   "license": "Apache-2.0",
