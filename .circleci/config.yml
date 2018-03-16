@@ -7,7 +7,8 @@ jobs:
       - checkout
       - run: cd umise
       - run: yarn install
-      - run: npm run build
+      - run: cat package.json
+      - run: yarn build
       - run: cd ..
 
   test:
