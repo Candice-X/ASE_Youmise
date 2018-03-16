@@ -25,5 +25,3 @@ With `npm`:
 or with `yarn`:
 
     yarn start
-
-check circleci
