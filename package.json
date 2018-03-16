@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "node test.js"
+    "test": "node server/tests/test.js"
   },
   "dependencies": {
     "compression": "^1.7.2",

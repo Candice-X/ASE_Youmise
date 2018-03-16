@@ -51,9 +51,10 @@ workflows:
   version: 2
   dev_uat_prod:
     jobs:
-
-      - test
-
+      - build
+      - test:
+        require:
+          - build
       - deploy_dev:
           filters:
             branches:
