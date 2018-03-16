@@ -22,10 +22,11 @@
               <router-link class="nav-link js-scroll-trigger" to="/#About">About US</router-link>
             </li> -->
             <li class="nav-item">
-              <router-link type="button"  style="margin-left:15px;" to="/login"><a class="btn btn-sm btn-success" style="font-size:1em;" >Sign in</a></router-link>
+              <router-link  style="margin-left:15px;" to="/login"><a class="btn btn-sm btn-success"
+              style="font-size:1em;" >Sign in</a></router-link>
             </li>
             <li class="nav-item">
-              <router-link type="button"  style="margin-left:15px;" to="/signup"><a class="btn btn-sm btn-outline-success" style="font-size:1em;"> Sign up</a></router-link>
+              <router-link  style="margin-left:15px;" to="/signup"><a class="btn btn-sm btn-outline-success" style="font-size:1em;"> Sign up</a></router-link>
             </li>
           </ul>
         </div>
@@ -41,6 +42,10 @@ export default {
 </script>
 
 <style>
+router-link {
+background:none;
+border:none;
+}
 #mainNav {
   border-color: rgba(34, 34, 34, 0.05);
   /* background-color: white; */
