@@ -5,11 +5,13 @@ jobs:
       - image: circleci/node:8.9.4-stretch-browsers
     steps:
       - checkout
-      - run: cd umise
-      - run: yarn install
-      - run: cat package.json
-      - run: yarn build
-      - run: cd ..
+      - run:
+          name: Build front end
+          command: |
+            cd umise
+            npm install
+            npm run build
+            cd ..
 
   test:
     docker:
