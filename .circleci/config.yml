@@ -43,6 +43,9 @@ jobs:
             npm install
             npm run build
             cd ..
+
+      - run: ls umise/dist
+
       - run:
           name: Deploying
           command: eb deploy
