@@ -15,7 +15,7 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(express.static(path.join(`${__dirname}/umise/dist`)));
 
-app.use('/signup', users)
+app.use('/user', users)
 app.use('*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/umise/dist/index.html`));
 });
@@ -23,15 +23,15 @@ app.use('*', (req, res) => {
 const PORT = process.env.PORT || 8080;
 
 (async () => {
-  models.sequelize.authenticate()
-  .then(() => {
+  try {
+    await models.sequelize.authenticate();
     console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
+  } catch(err) {
     console.error('Unable to connect to the database:', err);
-  });
-  await models.sequelize.sync({force: true});
-
+  };
+  // await models.sequelize.sync({force: true});
+  await models.sequelize.sync();
+  
   app.listen(PORT, (err) => {
     if (err) {
       console.error(err);

@@ -7,16 +7,21 @@ AWS.config.update({ region: 'us-east-2' });
 
 const cognito = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
 
-router.post('/', async (req, res) => {
-  const raw = await models.User.create({
-    username: req.body.username,
-    email: req.body.email,
-  });
+router.post('/signup', async (req, res) => {
+  try{
+    const raw = await models.User.create({
+      username: req.body.username,
+      email: req.body.email,
+    });
+  } catch(err) {
+    console.error(err);
+    res.status(400).send(err.message);
+  }
 
   const result = raw.get({ plain: true });
   // console.log(result);
 
-  const params = {
+  let params = {
     ClientId: process.env.CLIENT_ID,
     Password: req.body.password,
     Username: result.username,
@@ -41,12 +46,31 @@ router.post('/', async (req, res) => {
       models.User.findAll().then(users => {
           console.log(users)
       })
+      res.status(400).send(err.message);
     } else {
       console.log(data);
+      res.json({ username: result.username });
     }
   });
+});
 
-  res.send('ok');
+router.post('/verification', async(req, res) => {
+  let params = {
+    ClientId: process.env.CLIENT_ID,
+    ConfirmationCode: req.body.confirmationCode,
+    Username: req.body.username,
+  };
+
+  cognito.confirmSignUp(params, function(err, data) {
+    if (err) {
+      console.log(err, err.stack);
+      res.status(400).send(err.message);
+    }
+    else {
+      console.log(data);
+      res.send("ok!");
+    }
+  });
 });
 
 module.exports = router;
