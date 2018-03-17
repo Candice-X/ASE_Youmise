@@ -9,13 +9,13 @@
 
       <div class="form-label-group">
         <input id="inputEmail" class="form-control" placeholder="Email address"
-        srequired="" autofocus="" type="email">
+        srequired="" autofocus="" type="email" v-model.lazy="userData.email">
         <label for="inputEmail">Email address</label>
       </div>
 
       <div class="form-label-group">
         <input id="inputPassword" class="form-control" placeholder="Password"
-        required="" type="password">
+        required="" type="password" v-model.lazy="userData.password">
         <label for="inputPassword">Password</label>
       </div>
 
@@ -24,6 +24,8 @@
           <input value="remember-me" type="checkbox"> Remember me
         </label>
       </div>
+      {{ userData.password }}
+      {{userData.email }}
       <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
     </form>
@@ -34,6 +36,15 @@
 import Navbar from './Navbar';
 
 export default {
+  data() {
+    return {
+      userData: {
+        userName:'',
+        email:'',
+        password:'',
+      },
+    };
+  },
   components: {
     Navbar,
   },

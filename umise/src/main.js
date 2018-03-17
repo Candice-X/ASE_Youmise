@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import router from './router';
 
+import { store } from './store/store';
+
 global.jQuery = jQuery;
 // eslint-disable-next-line
 const Bootstrap = require('bootstrap');
@@ -17,6 +19,7 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   el: '#app',
+  store,
   components: { App },
   template: '<App/>',
 });
