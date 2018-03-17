@@ -1,11 +1,13 @@
-var Sequelize = require('sequelize')
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
-var sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
     host: 'youmise-dev.cu29iy1svdfp.us-east-2.rds.amazonaws.com',
     port: 3306,
     logging: console.log,
     maxConcurrentQueries: 100,
     dialect: 'mysql',
+    operatorsAliases: Op,
     dialectOptions: {
         ssl:'Amazon RDS'
     },
