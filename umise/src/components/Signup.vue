@@ -7,7 +7,7 @@
         <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise - Sign Up</h1>
        </div>
       <!--- This is the sign up div -->
-      <div id="signup_div" v-show = 'submittedValue' >
+      <div id="signup_div" v-show = '!submittedValue' >
         <div class="form-label-group">
           <input id="inputUserName" class="form-control" placeholder="UserName" required="" type="">
           <label for="inputUserName">User Name</label>
@@ -25,17 +25,17 @@
         </div>
 
         <button class="btn btn-lg btn-success btn-block" v-on:click= "submitSignup" type="" name = 'sign_up' >Sign Up</button>
-
+   
       </div>
-
+   
       <!-- This is the validation code div -->
-      <div id="validate_div" v-show = "!submittedValue" >
+      <div id="validate_div" v-if = "submittedValue" >
       <label class="message"> We have send the validation code to the Email : {{ emailAddress }}</label>
       <div class="form-label-group">
-        <input id="validateCode" class="form-control" placeholder="UserName" autofocus="" type="">
+        <input id="validateCode" class="form-control" placeholder="UserName" autofocus="" type="" required="" >
         <label for="validateCode">Validate Code</label>
       </div>
-      <button class="btn btn-lg btn-success btn-block" type="submit">Validate Email </button>
+      <button class="btn btn-lg btn-success btn-block" type="submit" >Validate Email </button>
 
       </div>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
@@ -47,19 +47,20 @@
 import Navbar from './Navbar';
 
 export default {
-  name: 'siguup',
   components: {
     Navbar,
   },
   data() {
     return {
       emailAddress: '',
-      submittedValue: true,
+      submittedValue: false,
     };
   },
   methods: {
-    submitSignup: () => {
-      this.submittedValue = !this.submittedValue;
+    submitSignup() {
+        //if the input is validated
+
+      this.submittedValue = true;
     },
   },
 };

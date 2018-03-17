@@ -24,8 +24,6 @@
           <input value="remember-me" type="checkbox"> Remember me
         </label>
       </div>
-      {{ userData.password }}
-      {{userData.email }}
       <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
     </form>
