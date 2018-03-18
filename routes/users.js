@@ -16,7 +16,10 @@ router.post('/signup', async (req, res) => {
     });
     result = raw.get({ plain: true });
   } catch (err) {
-    return res.status(400).send(err.message)
+    const message = err.errors.reduce((prev, { message }) => {
+      return `${prev}${message}; `;
+    }, '');
+    return res.status(400).send(message);
   }
 
   let params = {

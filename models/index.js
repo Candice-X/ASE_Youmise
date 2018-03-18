@@ -4,9 +4,10 @@ var fs = require('fs');
 const path = require('path');
 const basename  = path.basename(__filename);
 var db = {};
+const config = require('../config')
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-    host: 'youmise-dev.cu29iy1svdfp.us-east-2.rds.amazonaws.com',
+    host: config.db_host,
     port: 3306,
     logging: console.log,
     maxConcurrentQueries: 100,
