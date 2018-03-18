@@ -61,5 +61,9 @@ export default new Router({
     name: 'messages',
     component: Messages,
   },
+  {
+    path: '*',
+    redirect: '/',
+  },
   ],
 });
