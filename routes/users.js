@@ -13,45 +13,45 @@ router.post('/signup', async (req, res) => {
       username: req.body.username,
       email: req.body.email,
     });
+    const result = raw.get({ plain: true });
+
+    let params = {
+      ClientId: process.env.CLIENT_ID,
+      Password: req.body.password,
+      Username: result.username,
+      UserAttributes: [
+        {
+          Name: 'custom:uid',
+          Value: result.uid
+        },
+        {
+          Name: 'email',
+          Value: result.email
+        }
+      ]
+    };
+
+    cognito.signUp(params, async(err, data) => {
+      if (err) {
+        console.error(err);
+        await models.User.destroy({
+          where: { uid: result.uid }
+        });
+        models.User.findAll().then(users => {
+            console.log(users)
+        })
+        res.status(400).send(err.message);
+      } else {
+        console.log(data);
+        res.json({ username: result.username });
+      }
+    });
+
   } catch(err) {
     console.error(err);
     res.status(400).send(err.message);
   }
 
-  const result = raw.get({ plain: true });
-  // console.log(result);
-
-  let params = {
-    ClientId: process.env.CLIENT_ID,
-    Password: req.body.password,
-    Username: result.username,
-    UserAttributes: [
-      {
-        Name: 'custom:uid',
-        Value: result.uid
-      },
-      {
-        Name: 'email',
-        Value: result.email
-      }
-    ]
-  };
-
-  cognito.signUp(params, async(err, data) => {
-    if (err) {
-      console.error(err);
-      await models.User.destroy({
-        where: { uid: result.uid }
-      });
-      models.User.findAll().then(users => {
-          console.log(users)
-      })
-      res.status(400).send(err.message);
-    } else {
-      console.log(data);
-      res.json({ username: result.username });
-    }
-  });
 });
 
 router.post('/verification', async(req, res) => {
