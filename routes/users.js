@@ -8,18 +8,19 @@ AWS.config.update({ region: 'us-east-2' });
 const cognito = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
 
 router.post('/signup', async (req, res) => {
+  let result;
   try{
-    const raw = await models.User.create({
+    let raw = await models.User.create({
       username: req.body.username,
       email: req.body.email,
     });
-  } catch(err) {
-    console.error(err);
-    res.status(400).send(err.message);
+    result = raw.get({ plain: true });
+  } catch (err) {
+    const message = err.errors.reduce((prev, { message }) => {
+      return `${prev}${message}; `;
+    }, '');
+    return res.status(400).send(message);
   }
-
-  const result = raw.get({ plain: true });
-  // console.log(result);
 
   let params = {
     ClientId: process.env.CLIENT_ID,
@@ -52,6 +53,8 @@ router.post('/signup', async (req, res) => {
       res.json({ username: result.username });
     }
   });
+
+
 });
 
 router.post('/verification', async(req, res) => {

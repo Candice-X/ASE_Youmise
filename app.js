@@ -5,11 +5,13 @@ const compression = require('compression');
 const path = require('path');
 const models = require('./models');
 const bodyParser = require('body-parser');
+const cors = require("cors");
 
 const users = require('./routes/users');
 
 const app = express();
 
+app.use(cors())
 app.use(helmet());
 app.use(compression());
 app.use(bodyParser.json());
@@ -29,9 +31,9 @@ const PORT = process.env.PORT || 8080;
   } catch(err) {
     console.error('Unable to connect to the database:', err);
   };
-  // await models.sequelize.sync({force: true});
-  await models.sequelize.sync();
-  
+  await models.sequelize.sync({force: true});
+  // await models.sequelize.sync();
+
   app.listen(PORT, (err) => {
     if (err) {
       console.error(err);
