@@ -22,11 +22,15 @@
               <router-link class="nav-link js-scroll-trigger" to="/#About">About US</router-link>
             </li> -->
             <li class="nav-item">
-              <router-link  style="margin-left:15px;" to="/login"><a class="btn btn-sm btn-success"
-              style="font-size:1em;" >Sign in</a></router-link>
+              <router-link  style="margin-left:15px;" to="/login" tag="li" active-class="active" exact >
+              <a class="btn btn-sm btn-outline-success"
+              style="font-size:1em;" >Sign in</a>
+              </router-link>
             </li>
             <li class="nav-item">
-              <router-link  style="margin-left:15px;" to="/signup"><a class="btn btn-sm btn-outline-success" style="font-size:1em;"> Sign up</a></router-link>
+              <router-link  style="margin-left:15px;" tag="li" to="/signup" active-class="active" exact >
+              <a class="btn btn-sm btn-outline-success" style="font-size:1em;"> Sign up</a>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -58,7 +62,11 @@ border:none;
   font-weight: 200;
   letter-spacing: 1px;
 }
-
+.active{
+  background:#218838;
+  color:#fff !important;
+  border-radius:5px;
+}
 #mainNav .navbar-brand {
   color: #fff;
   font-family: "Catamaran", "Helvetica", "Arial", "sans-serif";

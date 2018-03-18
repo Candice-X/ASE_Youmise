@@ -182,6 +182,9 @@ export default {
       msg: 'Welcome to Your Vue.js App',
     };
   },
+  created: function() {
+    this.$store.state.isLogin = false;
+  },
 };
 </script>
 

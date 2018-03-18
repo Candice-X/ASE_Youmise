@@ -8,10 +8,13 @@ import Dashboard from '@/components/Dashboard';
 import Mycard from '@/components/Mycard';
 // import DashboardNav from '@/components/DashboardNav';
 import Friends from '@/components/Friends';
+import About from '@/components/About';
+import Messages from '@/components/Messages';
 
 Vue.use(Router);
 
 export default new Router({
+  mode: 'history',
   routes: [{
     path: '/',
     name: 'HelloWorld',
@@ -33,7 +36,7 @@ export default new Router({
     component: Signup,
   },
   {
-    path: '/Dashboard',
+    path: '/dashboard',
     name: 'dashboard',
     component: Dashboard,
   },
@@ -46,6 +49,16 @@ export default new Router({
     path: '/friends',
     name: 'friends',
     component: Friends,
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: About,
+  },
+  {
+    path: '/messages',
+    name: 'messages',
+    component: Messages,
   },
   ],
 });

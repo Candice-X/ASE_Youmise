@@ -1,7 +1,5 @@
 <template>
 <div id='mycards' >
-     <Nav></Nav>
-
     <!--- body -->
     <div id="my_cards" class="body_cont">
         <div class = "send_cards_container" >
@@ -38,7 +36,7 @@
 </template>
 
 <script>
-import Nav from './DashboardNav';
+// import Nav from './DashboardNav';
 
 export default {
   data() {
@@ -84,8 +82,12 @@ export default {
     };
   },
   components: {
-    Nav,
+    // Nav,
   },
+  created: function() {
+    this.$store.state.isLogin = true;
+  },
+
 };
 </script>
 

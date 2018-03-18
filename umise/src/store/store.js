@@ -11,8 +11,11 @@ export const store = new Vuex.Store({
             userToken:'',
             UserID:'',
         },
+        isLogin:false,
     },
-    getters:{
-
-    },
+    // mutations:{
+    //     setLogin() {
+    //         this.isLogin = true;
+    //     }
+    // },
 });

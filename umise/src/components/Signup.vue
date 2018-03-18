@@ -9,18 +9,20 @@
       <!--- This is the sign up div -->
       <div id="signup_div" v-show = '!submittedValue' >
         <div class="form-label-group">
-          <input id="inputUserName" class="form-control" placeholder="UserName" required="" type="">
+          <input id="inputUserName" class="form-control" placeholder="UserName" required=""
+          v-model.lazy ="user.username">
           <label for="inputUserName">User Name</label>
         </div>
 
         <div class="form-label-group">
-          <input v-model="emailAddress" id="inputEmail" class="form-control" placeholder="Email address"
-          required="" type="email" >
+          <input  id="inputEmail" class="form-control" placeholder="Email address"
+          required="" type="email" v-model.lazy ="user.email">
           <label for="inputEmail">Email address</label>
         </div>
 
         <div class="form-label-group">
-          <input id="inputPassword" class="form-control" placeholder="Password" required="" type="password">
+          <input id="inputPassword" class="form-control" placeholder="Password" required=""
+          type="password" v-model.lazy="user.password">
           <label for="inputPassword">Password</label>
         </div>
 
@@ -29,15 +31,18 @@
       </div>
    
       <!-- This is the validation code div -->
+      <transition name="fade">
       <div id="validate_div" v-if = "submittedValue" >
-      <label class="message"> We have send the validation code to the Email : {{ emailAddress }}</label>
+      <label class="message"> We have send the validation code to the Email : {{ user.email }}</label>
       <div class="form-label-group">
-        <input id="validateCode" class="form-control" placeholder="UserName" autofocus="" type="" required="" >
+        <input id="validateCode" class="form-control" placeholder="UserName" autofocus="" type=""
+        required="" v-model.lazy ="user.code" >
         <label for="validateCode">Validate Code</label>
       </div>
       <button class="btn btn-lg btn-success btn-block" type="submit" >Validate Email </button>
 
       </div>
+      </transition>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
     </form>
 </body>
@@ -52,14 +57,19 @@ export default {
   },
   data() {
     return {
-      emailAddress: '',
+      user: {
+        username:'',
+        email: '',
+        password:'',
+        code:'',  
+      },
       submittedValue: false,
     };
   },
   methods: {
     submitSignup() {
         //if the input is validated
-
+      console.log(this.user);
       this.submittedValue = true;
     },
   },
@@ -164,5 +174,46 @@ body {
 img {
   border: 0.3rem solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
+}
+.fade-enter {
+  opacity:0;
+
+}
+
+.fade-enter-active {
+  transition:opacity 1s;
+}
+
+.fade-leave {
+
+}
+.fade-leave-active{
+  transition: opacity 1s;
+  opacity:0;
+}
+
+.slide-enter {
+ 
+}
+.slide-enter-active {
+   animation: slide-in 1s ease-out forwads;
+   transition: opacity .5s;
+}
+.slide-leave {
+
+}
+.slide-leave-active {
+   animation: slide-out 1s ease-out forwads;
+   transition: opacity .5s;
+   opacity: 0;
+}
+@keyframes slide-in {
+  from {
+    transform: translateY(20px);
+  }
+  to {
+    transform: translateY(0);
+  }
+  
 }
 </style>

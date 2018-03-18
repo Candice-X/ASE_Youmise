@@ -15,23 +15,27 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
-          <li class="nav-item nav_active">
-            <a class="nav-link js-scroll-trigger" href="#about"> <i class="icon-directions"></i>Send Cards</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#experience"><i class="icon-layers"></i>My Cards</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#education"><i class="icon-people"></i>Friends</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#skills"><i class="icon-bubbles"></i>Messages</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#awards"><i class="icon-directions"> </i>About</a>
-          </li>
+          <router-link tag="li" to="/mycard" active-class="nav_active"  class="nav-item" default>
+            <a class="nav-link js-scroll-trigger" ><i class="icon-layers"></i>My Cards</a>
+          </router-link>
+          <router-link tag="li" to="/dashboard" active-class="nav_active"  class="nav-item">
+            <a class="nav-link js-scroll-trigger" > <i class="icon-directions"></i>Send Cards</a>
+          </router-link>
+         <router-link tag="li" to="/friends" active-class="nav_active"  class="nav-item">
+            <a class="nav-link js-scroll-trigger" ><i class="icon-people"></i>Friends</a>
+        </router-link>
+        <router-link tag="li" to="/messages" active-class="nav_active"  class="nav-item">
+            <a class="nav-link js-scroll-trigger" ><i class="icon-bubbles"></i>Messages</a>
+          </router-link>
+         <router-link tag="li" to="/about" active-class="nav_active"  class="nav-item">
+            <a class="nav-link js-scroll-trigger" ><i class="icon-directions"> </i>About</a>
+         </router-link>
         </ul>
+
       </div>
+       <router-link  to="/"  >
+            <a class="logout" style="text-decoration:none;" ><i class="icon-logout"> </i>Log out</a>
+        </router-link>
     </nav>
 </template>
 
@@ -42,6 +46,7 @@ export default {
       name: 'kuer',
     };
   },
+
 };
 </script>
 
@@ -218,6 +223,22 @@ i {
 }
 .profile-usertitle-name {
   color: #eeeeee;
+}
+.logout {
+  position: relative;
+  bottom:20px;
+  text-align: left;
+  color:#dcdcdc !important;
+  font-size:0.9em;
+  list-style: none;
+  outline:none;
+  text-decoration: none !important;
+  margin-left:-100px;
+  padding:0;
+
+}
+a, a:link, a:active {
+  text-decoration: none;
 }
 </style>
 

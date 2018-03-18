@@ -1,6 +1,5 @@
 <template>
 <div id='nav_dashboard' >
-    <Nav></Nav>
     <!--- body -->
     <div id="send_cards" class="body_cont">
         <div class = "send_cards_container" >
@@ -59,14 +58,14 @@
 
             </div>
         </div>
-        <Friends></Friends>
+        <!-- <Friends></Friends> -->
     </div>
 
 </div>
 </template>
 
 <script>
-import Nav from './DashboardNav';
+// import Nav from './DashboardNav';
 import Friends from './Friends';
 
 export default {
@@ -76,8 +75,10 @@ export default {
     };
   },
   components: {
-    Nav,
     Friends,
+  },
+  created: function() {
+    this.$store.state.isLogin = true;
   },
 };
 </script>

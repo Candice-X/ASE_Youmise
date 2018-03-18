@@ -1,16 +1,26 @@
 <template>
   <div id="app">
+    <dashboard-nav v-if="$store.state.isLogin"></dashboard-nav>
+    
     <router-view/>
   </div>
 </template>
 
 <script>
-// import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar";
+import DashboardNav from './components/DashboardNav';
+
 
 export default {
   name: 'App',
+  data() {
+    return {
+    
+    }
+  },
   components: {
-
+    Navbar,
+    DashboardNav,
   },
 };
 </script>
