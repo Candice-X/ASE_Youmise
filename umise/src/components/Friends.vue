@@ -68,7 +68,7 @@ export default {
     }
   },
   components: {
-    Dashboard,
+    // Dashboard,
   }
 };
 </script>

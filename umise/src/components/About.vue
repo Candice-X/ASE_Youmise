@@ -3,11 +3,8 @@
     <!--- body -->
     <div id="my_cards" class="body_cont">
         <div class = "send_cards_container" >
-            <!-- <h4 class="title" >My Cards</h4>
-            <h4 class="subTitle">Card with  </h4> -->
-
-        <button class="btn btn-primary btn-outline-success active" >Cards Received</button>
-        <button class="btn btn-primary btn-outline-success" >Cards Sent</button>
+            <!-- <h4 class="title" >My Cards</h4>-->
+            <h2 class="title"> We are Cat Named Doggie</h2> 
             <div class="row">
                 <div v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont" >
                     <div class="card_img" >
@@ -41,44 +38,32 @@
 export default {
   data() {
     return {
-      cards: [
+       cards: [
         {
-          cardName: 'Dinning Card',
-          cardImg: '../assets/img/card1.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../assets/img/girl.png',
+          cardName: 'Fujunku Chen',
+          cardImg: '../../static/card/card1.png',
+          sender: 'Enjoy the show',
+          senderImg: '../../static/Logo.png',
         },
         {
-          cardName: 'Dinning Card',
-          cardImg: '../assets/img/card2.png',
-          sender: 'Joy and Enjoy',
-          senderImg: '../assets/img/bg.jpeg',
+          cardName: 'Yinghai Xu',
+          cardImg: '../../static/card/1.jpg',
+          sender: 'Just like it',
+          senderImg: '../../static/girl.png',
         },
         {
-          cardName: 'Dinning Card',
-          cardImg: '../assets/img/bg.jpg',
-          sender: 'Joy and Enjoy',
-          senderImg: '../assets/img/bg.jpeg',
+          cardName: 'Yingying Huang',
+          cardImg: '../../static/card/7.png',
+          sender: 'hhhhh',
+          senderImg: '../../static/girl.png',
         },
         {
-          cardName: 'Dinning Card',
-          cardImg: '../assets/img/card2.png',
-          sender: 'Joy and Enjoy',
-          senderImg: '../assets/img/bg.jpeg',
+          cardName: 'Shanshan Zhang',
+          cardImg: '../../static/card/8.png',
+          sender: 'We make friend closer',
+          senderImg: '../../static/girl.png',
         },
-        {
-          cardName: 'Dinning Card',
-          cardImg: '../assets/img/card1.png',
-          sender: 'Joy and Enjoy',
-          senderImg: '../assets/img/bg.jpeg',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: '../assets/img/bg.jpg',
-          sender: 'Joy and Enjoy',
-          senderImg: '../assets/img/bg.jpeg',
-        },
-      ],
+       ],
     };
   },
   components: {

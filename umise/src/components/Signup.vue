@@ -25,7 +25,7 @@
           type="password" v-model.lazy="user.password">
           <label for="inputPassword">Password</label>
         </div>
-        <label>{{ validateMsg }}</label>
+        <label>{{ errorMsg }}</label>
         <button class="btn btn-lg btn-success btn-block" v-on:click= "submitSignup"  name = 'sign_up' >Sign Up</button>
    
       </div>
@@ -40,7 +40,7 @@
         <label for="validateCode">Validate Code</label>
       </div>
 
-      <label>{{errorMsg}}</label>
+      <label>{{validateMsg}}</label>
       <button class="btn btn-lg btn-success btn-block" @click="validateCode" >Validate Email </button>
 
       </div>

@@ -6,45 +6,13 @@
             <h4 class="title" >Send Cards</h4>
             <h4 class="subTitle">Choose a Card and send to your friends, or you can design your own card.</h4>
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-6 card_cont">
+                <div  v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont">
                     <div class="card_img" >
-                        <img src="../assets/img/card2.png" />
-                        <h4>Dinning Card</h4>
-                        <p class="sub_title">Just have Lunch with me!</p>
+                        <img :src="card.cardImg" />
+                        <h4>{{card.cardName}}</h4>
+                        <p class="sub_title">{{card.cardInfo}}</p>
                     </div>
-                </div>
-
-                 <div class="col-lg-3 col-md-3 col-sm-6 card_cont">
-                    <div class="card_img" >
-                        <img src="../assets/img/card1.png" />
-                        <h4>Dinning Card</h4>
-                        <p class="sub_title">Just have Lunch with me!</p>
-                    </div>
-                </div>
-
-                 <div class="col-lg-3 col-md-3 col-sm-6 card_cont">
-                    <div class="card_img" >
-                        <img src="../assets/img/bg.jpg" />
-                        <h4>Dinning Card</h4>
-                        <p class="sub_title">Just have Lunch with me!</p>
-                    </div>
-                </div>
-
-                 <div class="col-md-3 col-md-3 col-sm-6 card_cont">
-                    <div class="card_img" >
-                        <img src="../assets/img/card2.png" />
-                        <h4>Dinning Card</h4>
-                        <p class="sub_title">Just have Lunch with me!</p>
-                    </div>
-                </div>
-
-                 <div class="col-lg-3 col-md-3 col-sm-6 card_cont">
-                    <div class="card_img" >
-                        <img src="../assets/img/bg.jpg" />
-                        <h4>Dinning Card</h4>
-                        <p class="sub_title">Just have Lunch with me!</p>
-                    </div>
-                </div>
+                </div>          
 
                  <div class="col-md-3 col-md-3 col-sm-6 card_cont">
                     <div class="card_img customize-icon-cont" >
@@ -72,6 +40,95 @@ export default {
   data() {
     return {
       name: 'kuer',
+      cards: [
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/12.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/card1.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/card2.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/1.jpg',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/2.jpg',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/3.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/4.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/5.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/6.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/7.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/8.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/9.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/10.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/11.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        
+
+
+      ],
     };
   },
   components: {
