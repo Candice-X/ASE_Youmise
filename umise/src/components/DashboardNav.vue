@@ -30,9 +30,9 @@
          <router-link tag="li" to="/about" active-class="nav_active"  class="nav-item">
             <a class="nav-link js-scroll-trigger" ><i class="icon-directions"> </i>About</a>
          </router-link>
-        <router-link  tag="li" to="/"  >
+        <li @click="logoutUser" >
             <a class=" nav-link js-scroll-trigger logout" style="text-decoration:none;" ><i class="icon-logout"> </i>Log out</a>
-        </router-link>
+        </li>
         
         </ul>
        
@@ -48,6 +48,11 @@ export default {
       name: 'kuer',
     };
   },
+  methods: {
+    logoutUser() {
+      this.$store.dispatch('logout',this.$router);
+    }
+  }
 
 };
 </script>

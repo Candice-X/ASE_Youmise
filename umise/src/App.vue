@@ -22,6 +22,9 @@ export default {
     Navbar,
     DashboardNav,
   },
+  created: {
+    
+  }
 };
 </script>
 

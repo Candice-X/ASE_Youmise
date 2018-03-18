@@ -10,6 +10,7 @@ import Mycard from '@/components/Mycard';
 import Friends from '@/components/Friends';
 import About from '@/components/About';
 import Messages from '@/components/Messages';
+import FriendsList from '@/components/FriendsList';
 
 Vue.use(Router);
 // path:"*", redirect(/)

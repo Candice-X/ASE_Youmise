@@ -1,35 +1,21 @@
 <template>
-<div id='messages' >
+<div id='message' >
     <!--- body -->
-    <div id="my_cards" class="body_cont">
+    <div id="send_cards" class="body_cont">
         <div class = "send_cards_container" >
-            <!-- <h4 class="title" >My Cards</h4>
-            <h4 class="subTitle">Card with  </h4> -->
-
-        <button class="btn btn-primary btn-outline-success active" >All Messages</button>
-        <button class="btn btn-primary btn-outline-success" >Unread Messages</button>
+            <h4 class="title" >Send Cards</h4>
+            <h4 class="subTitle">Choose a Card and send to your friends, or you can design your own card.</h4>
             <div class="row">
-                <div v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont" >
+                <div  v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont">
                     <div class="card_img" >
-                        <img v-bind:src="card.cardImg" />
-                        <div class ="sender_cont" >
-                            <div class ='avatar' >
-                                <img v-bind:src="card.senderImg" />
-                            </div>
-                            <div class="content">
-                                <h4>{{ card.cardName }}</h4>
-                                <p class="sub_title">{{ card.sender }}</p>
-                            </div>
-
-                        </div>
-
+                        <img :src="card.cardImg" />
+                        <h4>{{card.cardName}}</h4>
+                        <p class="sub_title">{{card.cardInfo}}</p>
                     </div>
-                </div>
-
-
+                </div>                    
             </div>
         </div>
-
+        <!-- <Friends></Friends> -->
     </div>
 
 </div>
@@ -37,100 +23,120 @@
 
 <script>
 // import Nav from './DashboardNav';
+// import Friends from './Friends';
 
 export default {
   data() {
     return {
+      name: 'kuer',
       cards: [
         {
           cardName: 'Dinning Card',
-          cardImg: '../assets/img/card1.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../assets/img/girl.png',
+          cardImg: '../../static/card/12.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../assets/img/card2.png',
-          sender: 'Joy and Enjoy',
-          senderImg: '../assets/img/bg.jpeg',
+          cardImg: '../../static/card/card1.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../assets/img/bg.jpg',
-          sender: 'Joy and Enjoy',
-          senderImg: '../assets/img/bg.jpeg',
+          cardImg: '../../static/card/card2.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../assets/img/card2.png',
-          sender: 'Joy and Enjoy',
-          senderImg: '../assets/img/bg.jpeg',
+          cardImg: '../../static/card/1.jpg',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../assets/img/card1.png',
-          sender: 'Joy and Enjoy',
-          senderImg: '../assets/img/bg.jpeg',
+          cardImg: '../../static/card/2.jpg',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../assets/img/bg.jpg',
-          sender: 'Joy and Enjoy',
-          senderImg: '../assets/img/bg.jpeg',
+          cardImg: '../../static/card/3.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
         },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/4.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/5.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/6.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/7.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/8.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/9.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/10.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        {
+          cardName: 'Dinning Card',
+          cardImg: '../../static/card/11.png',
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: '../../static/girl.png',
+        },
+        
+
+
       ],
     };
   },
   components: {
-    // Nav,
+  
   },
   created: function() {
     this.$store.state.isLogin = true;
   },
-
 };
 </script>
 
 <style scoped>
-@import "../assets/css/font-awesome.min.css";
-@import "../assets/css/simple-line-icons.css";
+@import '../assets/css/font-awesome.min.css';
+@import '../assets/css/simple-line-icons.css';
 
 body {
   font-family: "Open Sans", serif;
   padding-top: 54px;
   color: #868e96;
-}
-
-.send_cards_container button {
-  color: #ffffff;
-  margin-left: 15px;
-}
-.sender_cont {
-  width: 100%;
-  text-align: left;
-  margin-top: 0;
-  padding: 0;
-}
-
-.avatar {
-  position: relative;
-  top: -10px;
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  margin-left: 10px;
-}
-.avatar img {
-  width: 40px;
-  height: 40px !important;
-  border-radius: 50% !important;
-}
-.content {
-  width: 150px;
-  margin-left: 8px;
-  display: inline-block;
-  line-height: 1em;
 }
 
 .card_cont {
@@ -209,13 +215,13 @@ body {
   margin-left: 50px;
   text-align: left;
 }
-#messages {
+#message {
   width: 100%;
   height: 100%;
   position: relative;
   display: block;
-  background: #f0f3f6;
-  background: url("../assets/img/bg1.jpg") no-repeat center center fixed;
+  background: #fff;
+  background: url(/static/img/bg1.2bf8b4c.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -255,10 +261,9 @@ h2 {
   font-size: 3.5rem;
 }
 .card_img h4 {
-  margin-top: 8px;
+  margin-top: 15px;
   font-size: 0.9rem;
 }
-
 .card_img p {
   font-size: 0.7rem;
 }
@@ -278,43 +283,8 @@ li:hover {
   color: #000;
   border-radius: 3px;
 }
-li a {
-  color: #ffffff;
-}
-li:hover,
-a:hover {
-  color: #fff !important;
-}
-
-.nav_active {
-  background: #3ac17e !important;
-  color: #ffffff;
-  border-radius: 3px;
-}
-
-li:active {
-  background: #3ac17e;
-  color: #ffffff;
-  border-radius: 3px;
-}
-
-section.resume-section {
-  border-bottom: 1px solid #dee2e6;
-  padding-top: 5rem !important;
-  padding-bottom: 5rem !important;
-}
-
-section.resume-section .resume-item .resume-date {
-  min-width: none;
-}
 
 @media (min-width: 768px) {
-  section.resume-section {
-    min-height: 100vh;
-  }
-  section.resume-section .resume-item .resume-date {
-    min-width: 18rem;
-  }
   .send_cards_container {
     width: auto;
     height: auto;
@@ -331,10 +301,6 @@ section.resume-section .resume-item .resume-date {
 }
 
 @media (min-width: 992px) {
-  section.resume-section {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
-  }
   .body_cont {
     height: 100%;
     position: relative;
