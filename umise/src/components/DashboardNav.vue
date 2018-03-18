@@ -30,12 +30,14 @@
          <router-link tag="li" to="/about" active-class="nav_active"  class="nav-item">
             <a class="nav-link js-scroll-trigger" ><i class="icon-directions"> </i>About</a>
          </router-link>
-        </ul>
-
-      </div>
-       <router-link  to="/"  >
-            <a class="logout" style="text-decoration:none;" ><i class="icon-logout"> </i>Log out</a>
+        <router-link  tag="li" to="/"  >
+            <a class=" nav-link js-scroll-trigger logout" style="text-decoration:none;" ><i class="icon-logout"> </i>Log out</a>
         </router-link>
+        
+        </ul>
+       
+      </div>
+  
     </nav>
 </template>
 
@@ -194,7 +196,11 @@ li:active {
     margin-left: 0rem;
     /* min-height: 775px; */
   }
+  .logout{
+    position:relative;
+  }
 }
+
 
 @media (min-width: 992px) {
   .body_cont {
@@ -225,7 +231,7 @@ i {
   color: #eeeeee;
 }
 .logout {
-  position: relative;
+  /* position: relative;
   bottom:20px;
   text-align: left;
   color:#dcdcdc !important;
@@ -233,8 +239,9 @@ i {
   list-style: none;
   outline:none;
   text-decoration: none !important;
-  margin-left:-100px;
+  margin-left:0;
   padding:0;
+  display:block; */
 
 }
 a, a:link, a:active {

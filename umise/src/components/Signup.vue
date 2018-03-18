@@ -1,7 +1,7 @@
 <template>
 <body class="bg">
   <Navbar></Navbar>
-  <form class="form-signin">
+  <div class="form-signin">
       <div class="text-center mb-4">
         <img class="mb-4" src="../assets/img/Logo.png" alt="" height="72" width="72">
         <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise - Sign Up</h1>
@@ -25,30 +25,33 @@
           type="password" v-model.lazy="user.password">
           <label for="inputPassword">Password</label>
         </div>
-
-        <button class="btn btn-lg btn-success btn-block" v-on:click= "submitSignup" type="" name = 'sign_up' >Sign Up</button>
+        <label>{{ validateMsg }}</label>
+        <button class="btn btn-lg btn-success btn-block" v-on:click= "submitSignup"  name = 'sign_up' >Sign Up</button>
    
       </div>
    
       <!-- This is the validation code div -->
       <transition name="fade">
-      <div id="validate_div" v-if = "submittedValue" >
-      <label class="message"> We have send the validation code to the Email : {{ user.email }}</label>
+        <div id="validate_div" v-if = "submittedValue" >
+        <label class="message"> We have send the validation code to the Email : {{ user.email }}</label>
       <div class="form-label-group">
         <input id="validateCode" class="form-control" placeholder="UserName" autofocus="" type=""
-        required="" v-model.lazy ="user.code" >
+        required="" v-model.lazy ="user.confirmationCode" >
         <label for="validateCode">Validate Code</label>
       </div>
-      <button class="btn btn-lg btn-success btn-block" type="submit" >Validate Email </button>
+
+      <label>{{errorMsg}}</label>
+      <button class="btn btn-lg btn-success btn-block" @click="validateCode" >Validate Email </button>
 
       </div>
       </transition>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
-    </form>
+    </div>
 </body>
 </template>
 
 <script>
+import axios from 'axios';
 import Navbar from './Navbar';
 
 export default {
@@ -61,17 +64,88 @@ export default {
         username:'',
         email: '',
         password:'',
-        code:'',  
+        confirmationCode:'',  
       },
       submittedValue: false,
+      errorMsg:'',
+      validateMsg:'',
     };
   },
   methods: {
     submitSignup() {
         //if the input is validated
-      console.log(this.user);
-      this.submittedValue = true;
+      if(this.user.username.length!=0 && this.user.email.length!=0 && this.user.password.length>=8){
+      // request server for sign up
+       this.errorMsg ="";
+
+        axios.post("http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/user/signup",this.user)
+        .then(res => {       
+          console.log("response !!!!!",res);
+          // const data = res.data;
+          console.log(res.data);
+          // console.log(user);   
+          this.submittedValue = true; 
+        })
+        .catch(error => {
+        if(typeof error.response ==='undefined'){
+          return;
+        }else{
+            if(error.response){
+            //请求已发出，但服务器使用状态代码进行响应
+            //落在2xx的范围之外
+            this.errorMsg = error.response.data;
+            
+            console.log("data",error.response.data);
+            console.log("status",error.response.status);
+            console.log("header",error.response.headers);
+
+          } else {
+            //在设置触发错误的请求时发生了错误
+            console.log('Error',error.message);
+          }
+        }
+      });
+      }else{
+        this.errorMsg =" Fileds should not be empty";
+      }
     },
+
+    validateCode() {
+      this.validateMsg ='';
+      if(this.user.confirmationCode.length !=6){
+         this.validateMsg = "validation code length should be 6 digitals";
+         return false;
+      }else{
+        this.validateMsg ='';
+          axios.post("http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/user/verification",this.user)
+          .then(res=>{  
+            console.log("response verification!",res);
+            // const data = res.data;
+            console.log(res.data);
+            setTimeout(()=>{
+              this.$router.push({path:'/dashboard'})
+              },2000);
+            // console.log(user);    
+          })
+          .catch(error => {
+          if(typeof error.response ==='undefined'){
+            return;
+          }else{
+              if(error.response){
+              //请求已发出，但服务器使用状态代码进行响应
+              //落在2xx的范围之外
+              this.validateMsg = error.response.data;
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else {
+              //在设置触发错误的请求时发生了错误
+              console.log('Error',error.message);
+            }
+          }
+        });
+      };
+    }
   },
 };
 </script>

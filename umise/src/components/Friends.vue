@@ -60,11 +60,15 @@
 </template>
 
 <script>
+
 export default {
   data(){
     return{
       friend_list: true,
     }
+  },
+  components: {
+    Dashboard,
   }
 };
 </script>

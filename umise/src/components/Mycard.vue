@@ -220,7 +220,6 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  height: 100vh;
   min-height: 786px;
   overflow-x: hidden;
 }

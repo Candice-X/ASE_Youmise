@@ -12,6 +12,7 @@ import About from '@/components/About';
 import Messages from '@/components/Messages';
 
 Vue.use(Router);
+// path:"*", redirect(/)
 
 export default new Router({
   mode: 'history',
