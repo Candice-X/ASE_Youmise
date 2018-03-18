@@ -5,11 +5,13 @@ const compression = require('compression');
 const path = require('path');
 const models = require('./models');
 const bodyParser = require('body-parser');
+const cors = require("cors");
 
 const users = require('./routes/users');
 
 const app = express();
 
+app.use(cors())
 app.use(helmet());
 app.use(compression());
 app.use(bodyParser.json());
