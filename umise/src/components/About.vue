@@ -54,7 +54,7 @@ export default {
         {
           cardName: 'Yingying Huang',
           cardImg: '../../static/card/7.png',
-          sender: 'Enjoy laughing, Enjoy life',
+          sender: 'hhhhh',
           senderImg: '../../static/girl.png',
         },
         {
