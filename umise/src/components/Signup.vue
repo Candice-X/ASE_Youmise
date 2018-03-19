@@ -126,13 +126,10 @@ export default {
             console.log("response verification!",res);
             // const data = res.data;
             console.log(res.data);
+            console.log("success sign up, please login");
 
-            this.$store.state.user.
-
-            setTimeout(()=>{
-
-              this.$router.push({path:'/dashboard'})
-              },2000);
+            this.$router.push({path:'/login'});
+              
             // console.log(user);    
           })
           .catch(error => {

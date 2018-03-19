@@ -69,8 +69,7 @@ export default {
         } else if (result === 2) {
           // this.$message({ message: "You need to set a new password" });
           console.log("You have to set a new password !");
-          this.$router.push("/dashboard");
-        
+          this.$router.push("/dashboard");   
         }
       } catch (e) {
        this.error = e.message;
