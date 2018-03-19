@@ -10,7 +10,7 @@ jobs:
           name: Test connection to database
           command: |
             yarn install
-            yarn test-unit
+            yarn test
 
 
   deploy_uat:
