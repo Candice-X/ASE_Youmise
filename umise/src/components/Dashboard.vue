@@ -135,7 +135,7 @@ export default {
     Friends,
   },
   created: function() {
-    this.$store.state.isLogin = true;
+    this.$store.state.user.isLogin = true;
   },
 };
 </script>

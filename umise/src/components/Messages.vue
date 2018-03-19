@@ -3,8 +3,11 @@
     <!--- body -->
     <div id="send_cards" class="body_cont">
         <div class = "send_cards_container" >
-            <h4 class="title" >Send Cards</h4>
-            <h4 class="subTitle">Choose a Card and send to your friends, or you can design your own card.</h4>
+            <h4 class="title" >Messages</h4>
+            <h4 class="subTitle">Messages from your friends</h4>
+
+        <button class="btn btn-primary btn-outline-success active" >All Messages</button>
+        <button class="btn btn-primary btn-outline-success" >Unread Messages</button>
             <div class="row">
                 <div  v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont">
                     <div class="card_img" >

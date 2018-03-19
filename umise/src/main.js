@@ -7,7 +7,7 @@ import App from './App';
 import router from './router';
 import axios from 'axios';
 
-import { store } from './store/store';
+import store from './store/store';
 
 // axios.defaults.baseURL = "http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com";
 //add token to every request in the header

@@ -1,50 +1,83 @@
 <template>
 <body class="bg">
-  <Navbar></Navbar>
-  <form class="form-signin">
+  <Navbar ></Navbar>
+  <div class="form-signin">
       <div class="text-center mb-4">
         <img class="mb-4" src="../assets/img/Logo.png" alt="" height="72" width="72">
         <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise- Login</h1>
        </div>
 
       <div class="form-label-group">
-        <input id="inputEmail" class="form-control" placeholder="Email address"
-        srequired="" autofocus="" type="email" v-model.lazy="userData.email">
-        <label for="inputEmail">Email address</label>
+        <input id="inputEmail" class="form-control" placeholder="User Name"
+         autofocus="" v-model="userData.username">
+        <label for="inputEmail">User Name</label>
       </div>
 
       <div class="form-label-group">
         <input id="inputPassword" class="form-control" placeholder="Password"
-        required="" type="password" v-model.lazy="userData.password">
+         type="password" v-model="userData.password">
         <label for="inputPassword">Password</label>
       </div>
 
       <div class="checkbox mb-3">
         <label>
-          <input value="remember-me" type="checkbox"> Remember me
+          {{ error }}
         </label>
       </div>
-      <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
+      <button class="btn btn-lg btn-success btn-block" @click = "handleLogin" @keyup.enter ="handleLogin" >Sign in</button>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
-    </form>
+    </div>
 </body>
 </template>
 
 <script>
 import Navbar from './Navbar';
+import { mapState, mapActions } from "vuex";
 
 export default {
+  name: "login",
   data() {
     return {
       userData: {
-        userName:'',
-        email:'',
+        username:'',
         password:'',
       },
+      error: '',
     };
+  },
+  computed: {
+    ...mapState({
+      loading: state => state.user.loading
+    })
   },
   components: {
     Navbar,
+  },
+  created: function(){
+     this.$store.state.user.isLogin = false;
+     this.$store.dispatch("tryAutoLogin", this.$router);
+  },
+  methods: {
+    ...mapActions(['login']),
+    async handleLogin() {
+      try {
+        const result = await this.login(this.userData);
+        console.log("result :",result);
+        if (result === 1) {
+          this.$router.push("/dashboard");
+          console.log('login success !');
+        } else if (result === 2) {
+          // this.$message({ message: "You need to set a new password" });
+          console.log("You have to set a new password !");
+          this.$router.push("/dashboard");
+        
+        }
+      } catch (e) {
+       this.error = e.message;
+       console.log("error :",e);
+      }
+    },
+
   },
 };
 </script>

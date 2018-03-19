@@ -74,6 +74,10 @@ export default {
   methods: {
     submitSignup() {
         //if the input is validated
+      if(this.user.password.length<8){
+        this.errorMsg ="password has to be more than 8 characters";
+        return;
+      }
       if(this.user.username.length!=0 && this.user.email.length!=0 && this.user.password.length>=8){
       // request server for sign up
        this.errorMsg ="";
@@ -122,7 +126,11 @@ export default {
             console.log("response verification!",res);
             // const data = res.data;
             console.log(res.data);
+
+            this.$store.state.user.
+
             setTimeout(()=>{
+
               this.$router.push({path:'/dashboard'})
               },2000);
             // console.log(user);    

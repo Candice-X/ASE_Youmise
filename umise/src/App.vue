@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <dashboard-nav v-if="$store.state.isLogin"></dashboard-nav>
+    <dashboard-nav v-if="this.$store.state.user.isLogin"></dashboard-nav>
     
     <router-view/>
   </div>
@@ -22,9 +22,6 @@ export default {
     Navbar,
     DashboardNav,
   },
-  created: {
-    
-  }
 };
 </script>
 

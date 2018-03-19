@@ -22,8 +22,10 @@
                 more interesting.
                 </div>
 
+            <router-link to="/dashboard"> 
               <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">
-                Start Now for Free</a>
+                Try it now !</a>
+              </router-link> 
             </div>
           </div>
           <div class="col-lg-5 my-auto">
@@ -72,15 +74,15 @@
                 <div class="col-lg-6">
                   <div class="feature-item">
                     <i class="icon-screen-smartphone text-primary"></i>
-                    <h3>Device Mockups</h3>
-                    <p class="text-muted">Ready to use HTML/CSS device mockups, no Photoshop required!</p>
+                    <h3>Unlimited Fun</h3>
+                    <p class="text-muted">unlimited card, unlimited fun !</p>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="feature-item">
                     <i class="icon-camera text-primary"></i>
                     <h3>Flexible Use</h3>
-                    <p class="text-muted">Put an image, video, animation, or anything else in the screen!</p>
+                    <p class="text-muted">Put an image, text, send to your Umise friends or facebook friends </p>
                   </div>
                 </div>
               </div>
@@ -89,14 +91,14 @@
                   <div class="feature-item">
                     <i class="icon-present text-primary"></i>
                     <h3>Free to Use</h3>
-                    <p class="text-muted">As always, this theme is free to download and use for any purpose!</p>
+                    <p class="text-muted">As always, this theme is free to use for any purpose!</p>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="feature-item">
                     <i class="icon-lock-open text-primary"></i>
-                    <h3>Open Source</h3>
-                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
+                    <h3>We make friend closer </h3>
+                    <p class="text-muted">It is such a wonderful journey</p>
                   </div>
                 </div>
               </div>

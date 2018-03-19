@@ -45,7 +45,7 @@
 export default {
   data() {
     return {
-      name: 'kuer',
+      name: this.$store.getters.getUserName,
     };
   },
   methods: {
