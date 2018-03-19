@@ -12,7 +12,8 @@ const poolData = {
   UserPoolId: configs.POOL_ID,
   ClientId: configs.CLIENT_ID,
 };
-
+console.log(configs.POOL_ID);
+console.log(configs.CLIENT_ID);
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 var cognitoUser = "";
 
