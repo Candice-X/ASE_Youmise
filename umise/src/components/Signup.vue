@@ -4,27 +4,32 @@
   <div class="form-signin">
       <div class="text-center mb-4">
         <img class="mb-4" src="../assets/img/Logo.png" alt="" height="72" width="72">
-        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise - Sign Up-change001</h1>
+        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise - Sign Up</h1>
        </div>
       <!--- This is the sign up div -->
       <div id="signup_div" v-show = '!submittedValue' >
-        <div class="form-label-group">
-          <input id="inputUserName" class="form-control" placeholder="UserName" required=""
-          v-model.lazy ="user.username">
+        <div class="form-label-group" :class="{ invalid: $v.user.username.$error }">
+          <input id="inputUserName" class="form-control" placeholder="UserName"
+          @blur="$v.user.username.$touch()" v-model ="user.username">
           <label for="inputUserName">User Name</label>
         </div>
+        <p v-if="!$v.user.username.required" >Username is required</p>
 
-        <div class="form-label-group">
+        <div class="form-label-group" :class="{ invalid: $v.user.email.$error }">
           <input  id="inputEmail" class="form-control" placeholder="Email address"
-          required="" type="email" v-model.lazy ="user.email">
+          @blur="$v.user.email.$touch()" v-model ="user.email">
           <label for="inputEmail">Email address</label>
         </div>
-
-        <div class="form-label-group">
-          <input id="inputPassword" class="form-control" placeholder="Password" required=""
-          type="password" v-model.lazy="user.password">
+        <p v-if="!$v.user.email.required" >Email should not be empty</p>
+        <p v-if="!$v.user.email.email" >Please provide a valid email address</p>
+        
+        <div class="form-label-group" :class="{ invalid: $v.user.password.$error }">
+          <input id="inputPassword" class="form-control" placeholder="Password" 
+          @blur="$v.user.password.$touch()" type="password" v-model="user.password">
           <label for="inputPassword">Password</label>
         </div>
+        <p v-if="!$v.user.password.required" >Password should at lesst have 8 character with letters and numbers </p>
+
         <label>{{ errorMsg }}</label>
         <button class="btn btn-lg btn-success btn-block" v-on:click= "submitSignup"  name = 'sign_up' >Sign Up</button>
    
@@ -36,8 +41,10 @@
         <label class="message"> We have send the validation code to the Email : {{ user.email }}</label>
       <div class="form-label-group">
         <input id="validateCode" class="form-control" placeholder="UserName" autofocus="" type=""
-        required="" v-model.lazy ="user.confirmationCode" >
+        @blur ="$v.user.confirmationCode" v-model ="user.confirmationCode" >
+        
         <label for="validateCode">Validate Code</label>
+         <p v-if="!$v.user.confirmationCode.required" >Confirmation Code should be 6 numbers </p>
       </div>
 
       <label>{{validateMsg}}</label>
@@ -53,6 +60,7 @@
 <script>
 import axios from 'axios';
 import Navbar from './Navbar';
+import { required, email, m } from 'vuelidate/lib/validators';
 
 export default {
   components: {
@@ -70,6 +78,25 @@ export default {
       errorMsg:'',
       validateMsg:'',
     };
+  },
+  validations: {
+  
+  user: {
+      email:{
+      email,
+      required,
+    },
+    username:{
+      required,
+    },
+    password: {
+      required,
+    },
+    confirmationCode: {
+      required,
+
+    }
+  }
   },
   methods: {
     submitSignup() {
@@ -294,5 +321,13 @@ img {
     transform: translateY(0);
   }
   
+}
+
+/* input.invalid label{
+  color:red;
+}  */
+.form-label-group.invalid input {
+  border : 1px solid red;
+  background: #ffc9aa;
 }
 </style>
