@@ -26,6 +26,13 @@ jobs:
             sudo apt-get install python-pip python-dev build-essential
             sudo pip install awsebcli --upgrade
       - run:
+          name: Build front end
+          command: |
+            cd umise
+            npm install
+            npm run build
+            cd ..
+      - run:
           name: Deploying
           command: eb deploy
 
@@ -65,6 +72,13 @@ jobs:
             sudo apt-get -y -qq update
             sudo apt-get install python-pip python-dev build-essential
             sudo pip install awsebcli --upgrade
+      - run:
+          name: Build front end
+          command: |
+            cd umise
+            npm install
+            npm run build
+            cd ..
       - run:
           name: Deploying
           command: eb deploy $PRODENV
