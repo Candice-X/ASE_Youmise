@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "node app.js",
-    "test": "node tests/test.js"
+    "test-unit": "./node_modules/.bin/mocha tests/unit/*.test.js"
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^2.0.1",
@@ -29,7 +29,9 @@
     "sequelize": "^4.37.1"
   },
   "devDependencies": {
-    "@google-cloud/nodejs-repo-tools": "1.4.17"
+    "expect": "^23.0.0-alpha.0",
+    "sequelize-mock": "^0.10.2",
+    "mocha": "^5.0.4"
   },
   "cloud-repo-tools": {
     "test": {

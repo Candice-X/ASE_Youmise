@@ -6,7 +6,7 @@ const basename  = path.basename(__filename);
 var db = {};
 const config = require('../config')
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+const sequelize = new Sequelize(config.db_name, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
     host: config.db_host,
     port: 3306,
     logging: console.log,
