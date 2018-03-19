@@ -12,7 +12,10 @@ Vue.use(Vuelidate);
 
 import store from './store/store';
 
-// axios.defaults.baseURL = "http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com";
+const config = require('../../config');
+
+axios.defaults.baseURL = config.SERVER_POST_PREFIX;
+// console.log(config);
 //add token to every request in the header
 // axios.defaults.headers.common['Authorization'] = "test";
 

@@ -2,12 +2,15 @@ import AWS from 'aws-sdk';
 import { CognitoUserPool, CognitoUserAttribute, CognitoUser } from 'amazon-cognito-identity-js';
 
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
+const configs = require('../../../config.js');
+
+// console.log(configs);
+// console.log(configs.POOL_ID);
+// console.log(configs.CLIENT_ID);
 
 const poolData = {
-  // UserPoolId: process.env.VUE_APP_USER_POOL,
-  // ClientId: process.env.VUE_APP_USER_POOL_CLIENT,
-  UserPoolId: "us-east-2_3cJYUpv2L",
-  ClientId: "3ve2arrdn5q12re3j4smq5tmv8",
+  UserPoolId: configs.POOL_ID,
+  ClientId: configs.CLIENT_ID,
 };
 
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
@@ -55,6 +58,7 @@ export default {
         onSuccess: result =>{
             resolve({ status: 1, data:  result.getIdToken(),});
           },
+
         onFailure: err => reject(err),
         // newPasswordRequired: (userAttributes, requiredAttributes) =>
         //   resolve({
@@ -126,34 +130,34 @@ export default {
   //   return ;
   // },
 
-  authenticate() {
-    return new Promise((resolve, reject) => {
-      const cognitoUser = userPool.getCurrentUser();
+  // authenticate() {
+  //   return new Promise((resolve, reject) => {
+  //     const cognitoUser = userPool.getCurrentUser();
 
-      if (!cognitoUser) {
-        return reject(new Error('No user in local storage'));
-      }
+  //     if (!cognitoUser) {
+  //       return reject(new Error('No user in local storage'));
+  //     }
 
-      cognitoUser.getSession((err, session) => {
-        if (err) {
-          return reject(err);
-        }
+  //     cognitoUser.getSession((err, session) => {
+  //       if (err) {
+  //         return reject(err);
+  //       }
 
-        if (!session.isValid()) {
-          const refreshToken = session.getRefreshToken().getToken();
-          cognitoUser.refreshSession(refreshToken, (e, result) => {
-            if (e) {
-              return reject(new Error('Session cannot be refreshed'));
-            }
-            return getIAMCredentials(result.getIdToken().getJwtToken()).then(credentials =>
-              resolve(credentials));
-          });
-        }
-        return getIAMCredentials(session.getIdToken().getJwtToken()).then(credentials =>
-          resolve(credentials));
-      });
+  //       if (!session.isValid()) {
+  //         const refreshToken = session.getRefreshToken().getToken();
+  //         cognitoUser.refreshSession(refreshToken, (e, result) => {
+  //           if (e) {
+  //             return reject(new Error('Session cannot be refreshed'));
+  //           }
+  //           return getIAMCredentials(result.getIdToken().getJwtToken()).then(credentials =>
+  //             resolve(credentials));
+  //         });
+  //       }
+  //       return getIAMCredentials(session.getIdToken().getJwtToken()).then(credentials =>
+  //         resolve(credentials));
+  //     });
 
-      return true;
-    });
-  },
+  //     return true;
+  //   });
+  // },
 };

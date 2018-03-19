@@ -109,7 +109,7 @@ export default {
       // request server for sign up
        this.errorMsg ="";
 
-        axios.post("http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/user/signup",this.user)
+        axios.post("/user/signup",this.user)
         .then(res => {       
           console.log("response !!!!!",res);
           // const data = res.data;
@@ -148,7 +148,7 @@ export default {
          return false;
       }else{
         this.validateMsg ='';
-          axios.post("http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/user/verification",this.user)
+          axios.post("/user/verification",this.user)
           .then(res=>{  
             console.log("response verification!",res);
             // const data = res.data;
