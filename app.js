@@ -1,33 +1,43 @@
-/**
- * Copyright 2017, Google, Inc.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-'use strict';
-
-// [START app]
+// [Start app]
 const express = require('express');
+const helmet = require('helmet');
+const compression = require('compression');
+const path = require('path');
+const models = require('./models');
+const bodyParser = require('body-parser');
+const cors = require("cors");
+
+const users = require('./routes/users');
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.status(200).send('Hello, world! UAT!').end();
+app.use(cors())
+app.use(helmet());
+app.use(compression());
+app.use(bodyParser.json());
+app.use(express.static(path.join(`${__dirname}/umise/dist`)));
+
+app.use('/user', users)
+app.use('*', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/umise/dist/index.html`));
 });
 
-// Start the server
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
-  console.log('Press Ctrl+C to quit.');
-});
-// [END app]
+
+(async () => {
+  try {
+    await models.sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+  } catch(err) {
+    console.error('Unable to connect to the database:', err);
+  };
+  await models.sequelize.sync({force: true});
+  // await models.sequelize.sync();
+
+  app.listen(PORT, (err) => {
+    if (err) {
+      console.error(err);
+    }
+    console.log(`Listening ${PORT}`);
+  });
+})();
