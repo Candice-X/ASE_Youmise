@@ -4,7 +4,7 @@
   <div class="form-signin">
       <div class="text-center mb-4">
         <img class="mb-4" src="../assets/img/Logo.png" alt="" height="72" width="72">
-        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise - Sign Up-change</h1>
+        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise - Sign Up-change001</h1>
        </div>
       <!--- This is the sign up div -->
       <div id="signup_div" v-show = '!submittedValue' >
