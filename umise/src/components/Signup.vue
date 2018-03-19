@@ -13,26 +13,36 @@
           @blur="$v.user.username.$touch()" v-model ="user.username">
           <label for="inputUserName">User Name</label>
         </div>
-        <p v-if="!$v.user.username.required" >Username is required</p>
+        <!-- <p v-if="!$v.user.username.required" >Username is required</p> -->
 
         <div class="form-label-group" :class="{ invalid: $v.user.email.$error }">
           <input  id="inputEmail" class="form-control" placeholder="Email address"
           @blur="$v.user.email.$touch()" v-model ="user.email">
           <label for="inputEmail">Email address</label>
         </div>
-        <p v-if="!$v.user.email.required" >Email should not be empty</p>
-        <p v-if="!$v.user.email.email" >Please provide a valid email address</p>
+        <!-- <p v-if="!$v.user.email.required" >Email should not be empty</p> -->
+        <!-- <p v-if="!$v.user.email.email" >Please provide a valid email address</p> -->
         
         <div class="form-label-group" :class="{ invalid: $v.user.password.$error }">
           <input id="inputPassword" class="form-control" placeholder="Password" 
           @blur="$v.user.password.$touch()" type="password" v-model="user.password">
           <label for="inputPassword">Password</label>
         </div>
-        <p v-if="!$v.user.password.required" >Password should at lesst have 8 character with letters and numbers </p>
+        <!-- <p v-if="!$v.user.password.required" >Password should at lesst have 8 character with letters and numbers </p> -->
+        
+         <div class="form-label-group" :class="{ invalid: $v.user.repeatPassword.$error }">
+          <input id="inputRepeatPassword" class="form-control" placeholder="Repeat Password" 
+          @blur="$v.user.repeatPassword.$touch()" type="password" v-model="user.repeatPassword">
+          <label for="inputRepeatPassword">Repeat Password</label>
+        </div>
+        <!-- <p v-if="!$v.user.repeatPassword.required" >Password are not not the same </p> -->
+
+
 
         <label>{{ errorMsg }}</label>
-        <button class="btn btn-lg btn-success btn-block" v-on:click= "submitSignup"  name = 'sign_up' >Sign Up</button>
-   
+        <button class="btn btn-lg btn-success btn-block" 
+        :disabled="$v.user.username.$invalid || $v.user.email.$invalid || $v.user.password.$invalid 
+        || $v.user.repeatPassword.$invalid" v-on:click= "submitSignup"  name = 'sign_up' >Sign Up</button>
       </div>
    
       <!-- This is the validation code div -->
@@ -40,15 +50,16 @@
         <div id="validate_div" v-if = "submittedValue" >
         <label class="message"> We have send the validation code to the Email : {{ user.email }}</label>
       <div class="form-label-group">
+
         <input id="validateCode" class="form-control" placeholder="UserName" autofocus="" type=""
         @blur ="$v.user.confirmationCode" v-model ="user.confirmationCode" >
         
         <label for="validateCode">Validate Code</label>
-         <p v-if="!$v.user.confirmationCode.required" >Confirmation Code should be 6 numbers </p>
+         <!-- <p v-if="!$v.confirmationCode.required" >Confirmation Code should be 6 numbers </p> -->
       </div>
 
       <label>{{validateMsg}}</label>
-      <button class="btn btn-lg btn-success btn-block" @click="validateCode" >Validate Email </button>
+      <button class="btn btn-lg btn-success btn-block" :disabled="$v.user.confirmationCode.$invalid"  @click="validateCode" >Validate Email </button>
 
       </div>
       </transition>
@@ -60,7 +71,7 @@
 <script>
 import axios from 'axios';
 import Navbar from './Navbar';
-import { required, email, m } from 'vuelidate/lib/validators';
+import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
 
 export default {
   components: {
@@ -72,7 +83,8 @@ export default {
         username:'',
         email: '',
         password:'',
-        confirmationCode:'',  
+        confirmationCode:'',
+        repeatPassword:'',  
       },
       submittedValue: false,
       errorMsg:'',
@@ -91,12 +103,17 @@ export default {
     },
     password: {
       required,
+      minLength:minLength(8),
+    },
+    repeatPassword:{
+      sameAs: sameAs('password'),
     },
     confirmationCode: {
       required,
-
+      minLength: minLength(6),
     }
-  }
+  },
+   
   },
   methods: {
     submitSignup() {
