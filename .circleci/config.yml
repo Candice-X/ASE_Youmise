@@ -52,7 +52,7 @@ jobs:
           command: |
             cd umise
             npm install
-            npm run build
+            npm run build --mode development
             cd ..
 
       - run: ls umise/dist
