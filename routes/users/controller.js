@@ -75,7 +75,7 @@ exports.resendConfirmation = async (User, cognito, email) => {
     };
 
     try{
-      await cognito.resendConfirmationCode(params);
+      await cognito.resendConfirmationCode(params).promise();
       return { username: username };
     } catch (err) {
       throw new ServerError(400, err.message);
