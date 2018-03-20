@@ -57,7 +57,7 @@ exports.verification = async (cognito, confirmationCode, username) => {
   };
 
   try {
-    await cognito.confirmSignUp(params);
+    await cognito.confirmSignUp(params).promise();
     return { username: username };
   } catch (err) {
     throw new ServerError(400, err.message);
