@@ -224,7 +224,7 @@ body {
   position: relative;
   display: block;
   background: #fff;
-  background: url(/static/img/bg1.2bf8b4c.jpg) no-repeat center center fixed;
+  background: url(/img/bg1.2bf8b4c8.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

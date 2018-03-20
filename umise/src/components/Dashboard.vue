@@ -8,10 +8,11 @@
             <div class="row">
                 <div  v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont">
                     <div class="card_img" >
-                        <img :src="card.cardImg" />
+                        <img v-bind:src="card.cardImg" />                        
                         <h4>{{card.cardName}}</h4>
                         <p class="sub_title">{{card.cardInfo}}</p>
                     </div>
+                    <img src="../../static/card/12.png" />
                 </div>          
 
                  <div class="col-md-3 col-md-3 col-sm-6 card_cont">
@@ -49,13 +50,13 @@ export default {
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/card1.png',
+          cardImg: '../static/card/card1.png',
           cardInfo: 'From Kuer and Enjoy',
           senderImg: '../../static/girl.png',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/card2.png',
+          cardImg: './static/card/card2.png',
           cardInfo: 'From Kuer and Enjoy',
           senderImg: '../../static/girl.png',
         },
@@ -232,7 +233,7 @@ body {
   position: relative;
   display: block;
   background: #fff;
-  background: url(/static/img/bg1.2bf8b4c.jpg) no-repeat center center fixed;
+  background: url(/img/bg1.2bf8b4c8.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

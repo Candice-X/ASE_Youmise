@@ -10,6 +10,7 @@
 import Navbar from "./components/Navbar";
 import DashboardNav from './components/DashboardNav';
 
+// const img1 = require('../static/card/1.jpg');
 
 export default {
   name: 'App',
