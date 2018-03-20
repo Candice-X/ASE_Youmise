@@ -17,31 +17,7 @@ console.log(configs.CLIENT_ID);
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 var cognitoUser = "";
 
-// const getIAMCredentials = (idToken) => {
-//   // const awsRegion = process.env.VUE_APP_AWS_REGION;
-//   const awsRegion = "us-east-2";
-//   const userPoolUrl = `cognito-idp.${awsRegion}.amazonaws.com/${poolData.UserPoolId}`;
 
-//   console.log("idToken :", idToken);
-//   return new Promise((resolve, reject) => {
-//     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-//       // IdentityPoolId: process.env.VUE_APP_IDENTITY_POOL_ID,
-//       IdentityPoolId: 'us-east-2:3d4fe29b-059e-4562-81ab-ab84e6b4a776',
-//       Logins: { [userPoolUrl]: idToken },
-//     });
-//     if (!AWS.config.credentials.expired) {
-//       return resolve(AWS.config.credentials);
-//     }
-//     AWS.config.region = awsRegion;
-//     AWS.config.credentials.refresh((error) => {
-//       if (error) {
-//         return reject(error);
-//       }
-//       return resolve(AWS.config.credentials);
-//     });
-//     return true;
-//   });
-// };
 
 export default {
   login(Username, Password) {
