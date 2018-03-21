@@ -81,7 +81,7 @@ jobs:
             cd ..
       - run:
           name: Deploying
-          command: eb deploy
+          command: eb deploy $PRODENV
 
 
 workflows:
