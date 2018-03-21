@@ -2,7 +2,7 @@ branch-defaults:
   dev:
     environment: Cat-named-doggie-dev
   master:
-    environment: Cat-named-doggie-uat
+    environment: Cat-named-doggie-prod
 # environment-defaults:
 #   Cat-named-doggie-dev:
 #     branch: null
