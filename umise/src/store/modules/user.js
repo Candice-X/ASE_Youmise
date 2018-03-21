@@ -2,8 +2,6 @@ import apis from '../../api/user';
 import { init } from '../../api/apiGatewayClient';
 import * as types from '../mutation-types';
 
-
-
 const state = {
   userName: null,
   idToken: null,
@@ -116,39 +114,6 @@ const actions = {
     }
   },
 
-
-  // async passwordChallenge({ commit, state }, { password }) {
-  //   const { cognitoUser } = state.challengeData;
-  //   commit(types.USER_LOGIN_PASS_CHALLENGE_REQUEST);
-  //   try {
-  //     const userAttributes = { ...state.challengeData.userAttributes };
-  //     const credentials = await apis.passwordChallenge(cognitoUser, password, userAttributes);
-  //     commit(types.USER_LOGIN_PASS_CHALLENGE_SUCCESS, { credentials });
-  //   } catch (e) {
-  //     commit(types.USER_LOGIN_PASS_CHALLENGE_FAILURE);
-  //     throw e;
-  //   }
-  // },
-  // login({ commit, dispatch }, authData) {
-  //   //success, status 200. Then auth user 
-
-  //   //store in local storage
-  //   const now = new Date();
-  //   const expirationDate = new Date(now.getTime() + res.data.expiresIn * 1000);
-
-  //   localStorage.setItem('idToken', res.data.idToken);
-  //   localStorage.setItem('userName', res.data.userName);
-  //   localStorage.setItem('userID', res.data.userID);
-  //   localStorage.setItem('expirationDate', expirationDate);
-
-  //   // commit('authUser',{
-  //   //     idToken: res.data.idToken;
-  //   //     userID 
-  //   // });
-
-  //   //if success, set the expiration TIME for the auto logout
-  //   //  dispatch('setLogoutTime',res.data.expiresIn);   
-  // },
 
   setLogoutTime({ commit }, expirationTime) {
     setTimeout(() => {
