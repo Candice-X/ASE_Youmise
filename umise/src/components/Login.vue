@@ -8,14 +8,14 @@
        </div>
 
       <div class="form-label-group">
-        <input id="inputEmail" class="form-control" placeholder="User Name"
-         autofocus="" v-model="userData.username">
+        <input id="inputEmail" class="form-control" :class="{ invalid: $v.userData.username.$error }" placeholder="User Name"
+         autofocus="" @blur="$v.userData.username" v-model="userData.username">
         <label for="inputEmail">User Name</label>
       </div>
 
       <div class="form-label-group">
-        <input id="inputPassword" class="form-control" placeholder="Password"
-         type="password" v-model="userData.password">
+        <input id="inputPassword" class="form-control" :class="{ invalid: $v.userData.password.$error }"  placeholder="Password"
+         type="password" @blur="$v.userData.password" v-model="userData.password">
         <label for="inputPassword">Password</label>
       </div>
 
@@ -33,6 +33,7 @@
 <script>
 import Navbar from './Navbar';
 import { mapState, mapActions } from "vuex";
+import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
 
 export default {
   name: "login",
@@ -56,6 +57,16 @@ export default {
   created: function(){
      this.$store.state.user.isLogin = false;
      this.$store.dispatch("tryAutoLogin", this.$router);
+  },
+  validations: {
+    userData: {
+      username: {
+       required,
+      },
+      password: {
+        required,
+      },
+    }
   },
   methods: {
     ...mapActions(['login']),
@@ -175,5 +186,10 @@ img {
   padding-bottom: calc(var(--input-padding-y) / 3);
   font-size: 12px;
   color: #777;
+}
+
+.form-label-group.invalid input {
+  border : 1px solid red;
+  background: #ffc9aa;
 }
 </style>

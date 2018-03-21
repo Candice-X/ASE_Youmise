@@ -6,8 +6,8 @@ const basename  = path.basename(__filename);
 var db = {};
 const config = require('../config')
 
-const sequelize = new Sequelize(config.db_name, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-    host: config.db_host,
+const sequelize = new Sequelize(config.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+    host: config.DB_HOST,
     port: 3306,
     logging: console.log,
     maxConcurrentQueries: 100,

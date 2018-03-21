@@ -2,6 +2,8 @@ import apis from '../../api/user';
 import { init } from '../../api/apiGatewayClient';
 import * as types from '../mutation-types';
 
+
+
 const state = {
   userName: null,
   idToken: null,

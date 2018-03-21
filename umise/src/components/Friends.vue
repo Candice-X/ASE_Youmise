@@ -39,6 +39,24 @@
 // import Nav from './DashboardNav';
 import FriendsList from './FriendsList';
 
+const img1 = require('../../static/card/1.jpg');
+const img2 = require('../../static/card/2.jpg');
+const img3 = require('../../static/card/3.png');
+const img4 = require('../../static/card/4.png');
+const img5 = require('../../static/card/5.png');
+const img6 = require('../../static/card/6.png');
+const img7 = require('../../static/card/7.png');
+const img8 = require('../../static/card/8.png');
+const img9 = require('../../static/card/9.png');
+const img10 = require('../../static/card/10.png');
+const img11 = require('../../static/card/11.png');
+const img12 = require('../../static/card/12.png');
+const img13 = require('../../static/card/card1.png');
+const img14 = require('../../static/card/card2.png');
+
+const girl = require('../../static/girl.png');
+const boy = require('../../static/Logo.png');
+
 export default {
   data() {
     return {
@@ -46,88 +64,89 @@ export default {
       cards: [
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/1.jpg',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img1,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/2.jpg',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img2,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/3.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img3,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/4.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img4,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/5.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img5,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/6.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img6,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/7.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img7,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/8.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img8,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/9.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img9,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/10.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img10,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/11.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img11,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/12.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img12,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/card1.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img13,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: '../../static/card/card2.png',
-          sender: 'From Kuer and Enjoy',
-          senderImg: '../../static/girl.png',
+          cardImg: img14,
+          cardInfo: 'From Kuer and Enjoy',
+          senderImg: girl,
         },
+        
 
 
       ],

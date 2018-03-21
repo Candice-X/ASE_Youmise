@@ -12,9 +12,11 @@ Vue.use(Vuelidate);
 
 import store from './store/store';
 
-const config = require('../../config');
+// const config = require('../config/config.env.json');
 
-axios.defaults.baseURL = config.SERVER_POST_PREFIX;
+// axios.defaults.baseURL = config.SERVER_POST_PREFIX;
+
+axios.defaults.baseURL = process.env.VUE_APP_SEVER_POST_PREFIX;
 // console.log(config);
 //add token to every request in the header
 // axios.defaults.headers.common['Authorization'] = "test";
@@ -28,8 +30,6 @@ Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({
   router,
-  el: '#app',
   store,
-  components: { App },
-  template: '<App/>',
-});
+  render: h => h(App),
+}).$mount('#app');

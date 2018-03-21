@@ -315,15 +315,6 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
   text-decoration: none;
 }
 
-.bg-primary {
-  background: #fdcc52;
-  background: -webkit-linear-gradient(#fdcc52, #fdc539);
-  background: linear-gradient(#fdcc52, #fdc539);
-}
-
-.text-primary {
-  color: #fdcc52;
-}
 
 .no-gutter > [class*='col-'] {
   padding-right: 0;
@@ -343,10 +334,10 @@ footer ul li a:hover, footer ul li a:focus, footer ul li a:active, footer ul li 
 }
 
 .btn {
-  border-radius: 300px;
+  border-radius: 5px;
   font-family: 'Lato', 'Helvetica', 'Arial', 'sans-serif';
   letter-spacing: 2px;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .btn-xl {
