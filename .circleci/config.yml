@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Test connection to database
           command: |
-            yarn install
+            yarn
             yarn test
 
 
@@ -25,6 +25,13 @@ jobs:
             sudo apt-get -y -qq update
             sudo apt-get install python-pip python-dev build-essential
             sudo pip install awsebcli --upgrade
+      - run:
+          name: Build front end
+          command: |
+            cd umise
+            yarn
+            yarn build --mode uat
+            cd ..
       - run:
           name: Deploying
           command: eb deploy
@@ -44,8 +51,8 @@ jobs:
           name: Build front end
           command: |
             cd umise
-            npm install
-            npm run build
+            yarn
+            yarn build --mode development
             cd ..
 
       - run: ls umise/dist
@@ -65,6 +72,13 @@ jobs:
             sudo apt-get -y -qq update
             sudo apt-get install python-pip python-dev build-essential
             sudo pip install awsebcli --upgrade
+      - run:
+          name: Build front end
+          command: |
+            cd umise
+            yarn
+            yarn build --mode production
+            cd ..
       - run:
           name: Deploying
           command: eb deploy $PRODENV
