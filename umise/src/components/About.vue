@@ -34,53 +34,53 @@
 
 <script>
 // import Nav from './DashboardNav';
-const img1 = require('../../static/card/1.jpg');
-const img2 = require('../../static/card/2.jpg');
-const img3 = require('../../static/card/3.png');
-const img4 = require('../../static/card/4.png');
-const img5 = require('../../static/card/5.png');
-const img6 = require('../../static/card/6.png');
-const img7 = require('../../static/card/7.png');
-const img8 = require('../../static/card/8.png');
-const img9 = require('../../static/card/9.png');
-const img10 = require('../../static/card/10.png');
-const img11 = require('../../static/card/11.png');
-const img12 = require('../../static/card/12.png');
-const img13 = require('../../static/card/card1.png');
-const img14 = require('../../static/card/card2.png');
+const img1 = require("../../static/card/1.jpg");
+const img2 = require("../../static/card/2.jpg");
+const img3 = require("../../static/card/3.png");
+const img4 = require("../../static/card/4.png");
+const img5 = require("../../static/card/5.png");
+const img6 = require("../../static/card/6.png");
+const img7 = require("../../static/card/7.png");
+const img8 = require("../../static/card/8.png");
+const img9 = require("../../static/card/9.png");
+const img10 = require("../../static/card/10.png");
+const img11 = require("../../static/card/11.png");
+const img12 = require("../../static/card/12.png");
+const img13 = require("../../static/card/card1.png");
+const img14 = require("../../static/card/card2.png");
 
-const girl = require('../../static/girl.png');
-const boy = require('../../static/Logo.png');
+const girl = require("../../static/girl.png");
+const boy = require("../../static/Logo.png");
 
 export default {
   data() {
     return {
-       cards: [
+      cards: [
         {
-          cardName: 'Fujunku Chen',
+          cardName: "Fujunku Chen",
           cardImg: img13,
-          sender: 'Enjoy the show',
-          senderImg: boy,
+          sender: "Enjoy the show",
+          senderImg: boy
         },
         {
-          cardName: 'Yinghai Xu',
+          cardName: "Yinghai Xu",
           cardImg: img1,
-          sender: 'Just like it',
-          senderImg: girl,
+          sender: "Just like it",
+          senderImg: girl
         },
         {
-          cardName: 'Yingying Huang',
+          cardName: "Yingying Huang",
           cardImg: img7,
-          sender: 'hhhhh',
-          senderImg: girl,
+          sender: "hhhhh",
+          senderImg: girl
         },
         {
-          cardName: 'Shanshan Zhang',
+          cardName: "Shanshan Zhang",
           cardImg: img8,
-          sender: 'We make friend closer',
-          senderImg: girl,
-        },
-       ],
+          sender: "We make friend closer",
+          senderImg: girl
+        }
+      ]
     };
   },
   components: {
@@ -88,8 +88,7 @@ export default {
   },
   created: function() {
     this.$store.state.isLogin = true;
-  },
-
+  }
 };
 </script>
 
@@ -300,7 +299,6 @@ li:active {
   color: #ffffff;
   border-radius: 3px;
 }
-
 
 section.resume-section {
   border-bottom: 1px solid #dee2e6;

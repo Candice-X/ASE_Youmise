@@ -1,21 +1,22 @@
 <template>
-<body class="bg">
-  <Navbar ></Navbar>
-  <div class="form-signin">
+
+  <body class="bg">
+    <Navbar></Navbar>
+    <div class="form-signin">
       <div class="text-center mb-4">
         <img class="mb-4" src="../assets/img/Logo.png" alt="" height="72" width="72">
         <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise- Login</h1>
-       </div>
+      </div>
 
-      <div class="form-label-group">
-        <input id="inputEmail" class="form-control" :class="{ invalid: $v.userData.username.$error }" placeholder="User Name"
-         autofocus="" @blur="$v.userData.username" v-model="userData.username">
+      <div class="form-label-group" :class="{invalid: $v.userData.username.$error }">
+        <input id="inputEmail" class="form-control"  placeholder="User Name" autofocus=""
+          @blur="$v.userData.username.touch()" v-model="userData.username">
         <label for="inputEmail">User Name</label>
       </div>
 
-      <div class="form-label-group">
-        <input id="inputPassword" class="form-control" :class="{ invalid: $v.userData.password.$error }"  placeholder="Password"
-         type="password" @blur="$v.userData.password" v-model="userData.password">
+      <div class="form-label-group" :class="{invalid: $v.userData.password.$error }">
+        <input id="inputPassword" class="form-control"  placeholder="Password" type="password"
+          @blur="$v.userData.password.touch()" v-model="userData.password">
         <label for="inputPassword">Password</label>
       </div>
 
@@ -24,27 +25,37 @@
           {{ error }}
         </label>
       </div>
-      <button class="btn btn-lg btn-success btn-block" @click = "handleLogin" @keyup.enter ="handleLogin" >Sign in</button>
+      <button class="btn btn-lg btn-success btn-block" :disabled="$v.userData.$invalid" @click="handleLogin" @keyup.enter="handleLogin">Sign in</button>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
     </div>
-</body>
+  </body>
 </template>
 
 <script>
-import Navbar from './Navbar';
+import Navbar from "./Navbar";
 import { mapState, mapActions } from "vuex";
-import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
+import { required, email, minLength } from "vuelidate/lib/validators";
 
 export default {
   name: "login",
   data() {
     return {
       userData: {
-        username:'',
-        password:'',
+        username: "",
+        password: ""
       },
-      error: '',
+      error: ""
     };
+  },
+  validations: {
+    userData: {
+      username: {
+        required,
+      },
+      password: {
+        required,
+      }
+    }
   },
   computed: {
     ...mapState({
@@ -54,41 +65,31 @@ export default {
   components: {
     Navbar,
   },
-  created: function(){
-     this.$store.state.user.isLogin = false;
-     this.$store.dispatch("tryAutoLogin", this.$router);
+  created: function() {
+    this.$store.state.user.isLogin = false;
+    this.$store.dispatch("tryAutoLogin", this.$router);
   },
-  validations: {
-    userData: {
-      username: {
-       required,
-      },
-      password: {
-        required,
-      },
-    }
-  },
+  
   methods: {
-    ...mapActions(['login']),
+    ...mapActions(["login"]),
     async handleLogin() {
       try {
         const result = await this.login(this.userData);
-        console.log("result :",result);
+        console.log("result :", result);
         if (result === 1) {
           this.$router.push("/dashboard");
-          console.log('login success !');
+          console.log("login success !");
         } else if (result === 2) {
           // this.$message({ message: "You need to set a new password" });
           console.log("You have to set a new password !");
-          this.$router.push("/dashboard");   
+          this.$router.push("/dashboard");
         }
       } catch (e) {
-       this.error = e.message;
-       console.log("error :",e);
+        this.error = e.message;
+        console.log("error :", e);
       }
-    },
-
-  },
+    }
+  }
 };
 </script>
 
@@ -125,6 +126,7 @@ img {
   border: 0.3rem solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
 }
+
 .form-signin {
   width: 100%;
   max-width: 420px;
@@ -148,7 +150,8 @@ img {
   left: 0;
   display: block;
   width: 100%;
-  margin-bottom: 0; /* Override default `<label>` margin */
+  margin-bottom: 0;
+  /* Override default `<label>` margin */
   line-height: 1.5;
   color: #495057;
   border: 1px solid transparent;
@@ -189,7 +192,7 @@ img {
 }
 
 .form-label-group.invalid input {
-  border : 1px solid red;
+  border: 1px solid red;
   background: #ffc9aa;
 }
 </style>
