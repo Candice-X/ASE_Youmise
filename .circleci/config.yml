@@ -13,28 +13,28 @@ jobs:
             yarn test
 
 
-  deploy_uat:
-    docker:
-      - image: circleci/node:8.9.4-stretch-browsers
-    steps:
-      - checkout
-
-      - run:
-          name: Install deployment dependencies
-          command: |
-            sudo apt-get -y -qq update
-            sudo apt-get install python-pip python-dev build-essential
-            sudo pip install awsebcli --upgrade
-      - run:
-          name: Build front end
-          command: |
-            cd umise
-            yarn
-            yarn build --mode uat
-            cd ..
-      - run:
-          name: Deploying
-          command: eb deploy
+  # deploy_uat:
+  #   docker:
+  #     - image: circleci/node:8.9.4-stretch-browsers
+  #   steps:
+  #     - checkout
+  #
+  #     - run:
+  #         name: Install deployment dependencies
+  #         command: |
+  #           sudo apt-get -y -qq update
+  #           sudo apt-get install python-pip python-dev build-essential
+  #           sudo pip install awsebcli --upgrade
+  #     - run:
+  #         name: Build front end
+  #         command: |
+  #           cd umise
+  #           yarn
+  #           yarn build --mode uat
+  #           cd ..
+  #     - run:
+  #         name: Deploying
+  #         command: eb deploy
 
   deploy_dev:
     docker:
@@ -81,7 +81,7 @@ jobs:
             cd ..
       - run:
           name: Deploying
-          command: eb deploy $PRODENV
+          command: eb deploy
 
 
 workflows:
@@ -97,18 +97,25 @@ workflows:
           requires:
             - test
 
-      - deploy_uat:
+      # - deploy_uat:
+      #     filters:
+      #       branches:
+      #         only: master
+      #     requires:
+      #       - test
+      #
+      # - hold:
+      #     type: approval
+      #     requires:
+      #       - deploy_uat
+      #
+      # - deploy_prod:
+      #     requires:
+      #       - hold
+
+      - deploy_prod:
           filters:
             branches:
               only: master
           requires:
             - test
-
-      - hold:
-          type: approval
-          requires:
-            - deploy_uat
-
-      - deploy_prod:
-          requires:
-            - hold

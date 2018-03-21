@@ -32,7 +32,10 @@ const PORT = process.env.PORT || 8080;
     console.error('Unable to connect to the database:', err);
   };
   await models.sequelize.sync({force: true});
-  // await models.sequelize.sync();
+  // models.User.findOne().then(user => {
+  //   console.log(user.get('username'));
+  // });
+  // await models.sequelize.sync({force: true});
 
   app.listen(PORT, (err) => {
     if (err) {
