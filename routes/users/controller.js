@@ -2,19 +2,16 @@ const ServerError = require('../../utils/ServerError');
 const config = require('../../config');
 
 exports.getUsernameFromEmail = async (User, email) => {
-  if(email){
+  try {
     const user = await User.findOne({ where: { email: email } });
-    if(!user) {
-      username = user.get('username');
-      return username;
-    } else {
-      const message = "Email doesn't exist in the system";
-      throw new ServerError(400, message);
+    if(!user){
+      throw new Error('User not found!');
     }
-  } else {
-      const message = "Email is empty";
-      throw new ServerError(400, message);
-    }
+    const username = user.get('username');
+    return username;
+  } catch(err) {
+    throw new ServerError(400, err.message);
+  }
 }
 
 
@@ -81,10 +78,8 @@ exports.verification = async (cognito, confirmationCode, username) => {
   }
 }
 
-exports.resendConfirmation = async (User, cognito, email) => {
+exports.resendConfirmation = async (cognito, username) => {
   try {
-    const username = exports.getUsernameFromEmail(User, email);
-
     const params = {
       ClientId: config.CLIENT_ID,
       Username: username,
