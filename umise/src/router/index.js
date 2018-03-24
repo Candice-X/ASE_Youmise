@@ -11,7 +11,10 @@ import Friends from '@/components/Friends';
 import About from '@/components/About';
 import Messages from '@/components/Messages';
 import FriendsList from '@/components/FriendsList';
+import Account from '@/components/Account';
+
 import store from '../store/store';
+
 
 Vue.use(Router);
 // path:"*", redirect(/)
@@ -89,6 +92,12 @@ export default new Router({
     name: 'messages',
     component: Messages,
     beforeEnter: loginGuard('/messages'),
+  },
+  {
+    path: '/account',
+    name: 'account',
+    component: Account,
+    beforeEnter: loginGuard('/account'),
   },
   {
     path: '*',
