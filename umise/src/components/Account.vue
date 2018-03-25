@@ -1,19 +1,46 @@
 <template>
+  
 <div id='account' >
     <!--- body -->
     <div id="send_cards" class="body_cont">
         <div class = "send_cards_container" >
-            <h4 class="title" >Account </h4>
-            <h4 class="subTitle">请在这里写用户的个人信息，请参考其他网站的账户信息的显示</h4>
-            <div class="row">
-            test
+            <h4 class="title" ><i class="icon-home" ></i>Account Information</h4><br/>
+            <h4 class="subTitle">Your information is listed below: </h4>
+            <hr id='hrstyle'><br/>
 
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-2">
+                  <h5>User Name : </h5>
+                </div>
+                <div class="col-lg-10">
+                  <p>{{name}}</p>
+                </div><br/>
+              <hr id='hrstyle'><br/><br/>
+                <div class="col-lg-2">
+                  <h5>Password : </h5>
+                </div>
+                <div class="col-lg-10">
+                  <p>{{password}}</p>
+                </div><br/>
+              <hr id='hrstyle'><br/><br/>
+                <div class="col-lg-2">
+                  <h5>Email Address: </h5>
+                </div>
+                <div class="col-lg-10">
+                  <p>{{email}}</p>
+                </div>
+
+              </div>
             </div>
-        </div>
-        <!-- <Friends></Friends> -->
-    </div>
 
+    
+      </div>
+  </div>
 </div>
+
+
+        <!-- <Friends></Friends> -->
 </template>
 
 <script>
@@ -21,8 +48,11 @@
 export default {
   data() {
     return {
-      name: 'kuer',
       
+      name: this.$store.getters.getUserName,
+      password: this.$store.getters.getPasswprd,
+      email: this.$store.getters.getUserEmail
+
     };
   },
   components: {
@@ -37,6 +67,7 @@ export default {
 <style scoped>
 @import '../assets/css/font-awesome.min.css';
 @import '../assets/css/simple-line-icons.css';
+
 
 body {
   font-family: "Open Sans", serif;
@@ -103,6 +134,9 @@ body {
   width: 100%;
   height: 260px;
 }
+.icon-home {
+  padding: 10px;
+}
 .send_cards_container {
   height: auto;
   margin-top: 50px;
@@ -135,6 +169,13 @@ body {
   overflow-x: hidden;
 }
 
+#hrstyle{
+     border: 1px;
+     height: 1px;
+     width: 1000px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
 @media (min-width: 992px) {
   /* #nav_dashboard {
     padding-top: 0;
@@ -155,6 +196,8 @@ h5,
 h6 {
   font-family: "Saira Extra Condensed", serif;
   font-weight: 700;
+  color: #283747;
+
 }
 
 h1 {
