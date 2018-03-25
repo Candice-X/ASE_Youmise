@@ -27,6 +27,7 @@
       </div>
       <button class="btn btn-lg btn-success btn-block" :disabled="$v.userData.$invalid" @click="handleLogin" @keyup.enter="handleLogin">Sign in</button>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
+      <router-link to="/resetPassword" tag ="a"><p style="color:#dcdcdc;text-align:center;padding-top:10px;">Forget Password ?</p> </router-link>
     </div>
   </body>
 </template>
@@ -44,7 +45,8 @@ export default {
         username: "",
         password: ""
       },
-      error: ""
+      error: "",
+
     };
   },
   validations: {

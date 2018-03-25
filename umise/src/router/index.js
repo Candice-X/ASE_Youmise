@@ -12,6 +12,7 @@ import About from '@/components/About';
 import Messages from '@/components/Messages';
 import FriendsList from '@/components/FriendsList';
 import Account from '@/components/Account';
+import ResetPassword from '@/components/ResetPassword';
 
 import store from '../store/store';
 
@@ -98,6 +99,12 @@ export default new Router({
     name: 'account',
     component: Account,
     beforeEnter: loginGuard('/account'),
+  },
+  {
+    path: '/resetPassword',
+    name: 'resetPassword',
+    component: ResetPassword,
+    beforeEnter: loginGuard('/resetPassword'),
   },
   {
     path: '*',
