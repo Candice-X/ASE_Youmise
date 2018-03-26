@@ -20,15 +20,29 @@
                 <div class="col-lg-2">
                   <h5>Password : </h5>
                 </div>
-                <div class="col-lg-10">
+
+                <div class="col-lg-7">
                   <p>{{password}}</p>
-                </div><br/>
+                </div>
+                <div class="col-lg-3">
+                 <router-link to="/changePassword" active-class="nav_active"  class="nav-item">
+                 <button class="btn btn-primary btn-outline-success" >Change Password</button>
+                 </router-link>
+                </div>
+                <br/>
               <hr id='hrstyle'><br/><br/>
                 <div class="col-lg-2">
                   <h5>Email Address: </h5>
                 </div>
                 <div class="col-lg-10">
                   <p>{{email}}</p>
+                </div>
+              <hr id='hrstyle'><br/><br/>
+                <div class="col-lg-2">
+                  <h5>DD/MM/YY: </h5>
+                </div>
+                <div class="col-lg-10">
+                  <p></p>
                 </div>
 
               </div>

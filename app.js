@@ -1,3 +1,5 @@
+require('./config');
+
 // [Start app]
 const express = require('express');
 const helmet = require('helmet');
@@ -8,8 +10,12 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 
 const users = require('./routes/users');
+const cards = require('./routes/cards');
+const records = require('./routes/records');
+
 
 const app = express();
+
 
 app.use(cors())
 app.use(helmet());
@@ -17,7 +23,9 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(express.static(path.join(`${__dirname}/umise/dist`)));
 
-app.use('/user', users)
+app.use('/user', users);
+app.use('/card', cards);
+app.use('/record', records);
 app.use('*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/umise/dist/index.html`));
 });
@@ -31,7 +39,7 @@ const PORT = process.env.PORT || 8080;
   } catch(err) {
     console.error('Unable to connect to the database:', err);
   };
-  await models.sequelize.sync({force: true});
+  await models.sequelize.sync();
   // models.User.findOne().then(user => {
   //   console.log(user.get('username'));
   // });
@@ -44,3 +52,5 @@ const PORT = process.env.PORT || 8080;
     console.log(`Listening ${PORT}`);
   });
 })();
+
+module.exports = {app};
