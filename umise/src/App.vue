@@ -42,4 +42,7 @@ a:active,
 a:hover {
   outline: none;
 }
+.modal-dialog-centered{
+  overflow: hidden;
+}
 </style>
