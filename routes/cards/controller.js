@@ -78,7 +78,7 @@ exports.dbUpdateById = async (Card, cardid, cardName, cardImgURL, cardNote) => {
           if (cardNote != null){
             card[0].cardNote = cardNote;
           }
-          let updateCard = await Card.findOne({cardid: card[0].cardid});
+          let updateCard = await Card.findOne({where : {cardid: cardid}});
           let result = await updateCard.updateAttributes({
               cardName : card[0].cardName, 
               cardImgURL: card[0].cardImgURL,
