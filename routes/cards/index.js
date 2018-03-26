@@ -32,6 +32,9 @@ router.get('/card/:id', async(req, res) => {
         res.status(400).send();
       }
       let result = await controller.dbFindById(models.Card, cardid);
+      if (!result) {
+        res.status(400).send();
+      }
       res.json(result);
     } catch (err) {
       res.status(400).send(err.message);
