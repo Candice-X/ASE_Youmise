@@ -7,7 +7,8 @@ var db = {};
 const config = require('../config')
 let sequelize
 if (process.env.NODE_ENV === 'test'){
-    sequelize = new Sequelize(config.DB_NAME,'root', '' , {
+    sequelize = new Sequelize(config.DB_NAME,process.env.DB_USE
+      , process.env.DB_PASSWORD , {
         host: config.DB_HOST,
         port: 3306,
         logging: console.log,
