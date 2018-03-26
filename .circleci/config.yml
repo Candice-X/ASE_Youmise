@@ -30,7 +30,7 @@ jobs:
       #     command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run:
           name: mysql db
-          command: mysql -u root -e "create database mate;"
+          command: mysql -h 127.0.0.1 -u root -e "create database mate;"
 
       - run:
           name: Test
