@@ -3,7 +3,11 @@ jobs:
 
   test:
     docker:
-      - image: circleci/node:8.9.4-stretch-browsers
+      # - image: circleci/node:8.9.4-stretch-browsers
+      - image: candicexyh/youmise_node_mysql:0.0.1
+    environment:
+      DB_USERNAME: "root"
+      DB_PASSWORD: ""
     steps:
       - checkout
       - run:

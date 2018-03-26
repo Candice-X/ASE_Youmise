@@ -9,9 +9,7 @@ const models = require('../../models');
 const config = require('../../config');
 
 const router = express.Router();
-AWS.config.update({ region: 'us-east-2' });
 
-const cognito = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
 // Create Record
 router.post('/record', async (req, res) => {
   try {
