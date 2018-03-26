@@ -1,9 +1,23 @@
 const ServerError = require('../../utils/ServerError');
 const config = require('../../config');
 
+exports.getUsernameFromEmail = async (User, email) => {
+  try {
+    const user = await User.findOne({ where: { email: email } });
+    if(!user){
+      throw new Error('User not found!');
+    }
+    const username = user.get('username');
+    return username;
+  } catch(err) {
+    throw new ServerError(400, err.message);
+  }
+}
+
+
 exports.dbCreateUser = async (User, username, email) => {
   let result;
-  try{
+  try {
     let raw = await User.create({
       username,
       email,
@@ -20,7 +34,7 @@ exports.dbCreateUser = async (User, username, email) => {
 }
 
 exports.signup = async (User, cognito, username, email, password) => {
-  let result = await exports.dbCreateUser(User, username, email);
+  const result = await exports.dbCreateUser(User, username, email);
 
   let params = {
     ClientId: config.CLIENT_ID,
@@ -50,7 +64,7 @@ exports.signup = async (User, cognito, username, email, password) => {
 };
 
 exports.verification = async (cognito, confirmationCode, username) => {
-  let params = {
+  const params = {
     ClientId: config.CLIENT_ID,
     ConfirmationCode: confirmationCode,
     Username: username,
@@ -64,25 +78,45 @@ exports.verification = async (cognito, confirmationCode, username) => {
   }
 }
 
-exports.resendConfirmation = async (User, cognito, email) => {
-  const user = await User.findOne({ where: { email: email } });
-  if( user != null ){
-    let username =  user.get('username');
-
-    let params = {
+exports.resendConfirmation = async (cognito, username) => {
+  try {
+    const params = {
       ClientId: config.CLIENT_ID,
-      Username: username
+      Username: username,
     };
-
-    try{
-      await cognito.resendConfirmationCode(params).promise();
-      return { username: username };
-    } catch (err) {
-      throw new ServerError(400, err.message);
-    }
+    await cognito.resendConfirmationCode(params).promise();
+    return { username: username };
+  } catch (err) {
+    throw new ServerError(400, err.message);
   }
-  else{
-    const message = "Email doesn't exist in the system!";
-    throw new ServerError(400, message);
+};
+
+exports.forgetPassword = async (cognito, username) => {
+  let params = {
+    ClientId: config.CLIENT_ID,
+    Username: username,
+  };
+  try {
+    await cognito.forgotPassword(params).promise();
+    return { username: username};
+  } catch (err) {
+    throw new ServerError(400, err.message);
+  }
+
+};
+
+exports.confirmforgetPassword = async (cognito, confirmationCode, password, username) => {
+  let params = {
+    ClientId: config.CLIENT_ID,
+    ConfirmationCode: confirmationCode,
+    Password: password,
+    Username: username,
+  };
+
+  try {
+    await cognito.confirmForgotPassword(params).promise();
+    return { username: username};
+  } catch (err) {
+    throw new ServerError(400, err.message);
   }
 };

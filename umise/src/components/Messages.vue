@@ -8,15 +8,28 @@
 
         <button class="btn btn-primary btn-outline-success active" >All Messages</button>
         <button class="btn btn-primary btn-outline-success" >Unread Messages</button>
-            <div class="row">
-                <div  v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont">
+
+           <div class="row">
+                <div v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont" >
                     <div class="card_img" >
-                        <img :src="card.cardImg" />
-                        <h4>{{card.cardName}}</h4>
-                        <p class="sub_title">{{card.cardInfo}}</p>
+                        <img v-bind:src="card.cardImg" />
+                        <div class ="sender_cont" >
+                            <div class ='avatar' >
+                                <img v-bind:src="card.senderImg" />
+                            </div>
+                            <div class="content">
+                                <h4>{{ card.cardName }}</h4>
+                                <p class="sub_title">{{ card.sender }}</p>
+                            </div>
+
+                        </div>
+
                     </div>
-                </div>                    
+                </div>
+
+
             </div>
+
         </div>
         <!-- <Friends></Friends> -->
     </div>
@@ -27,23 +40,6 @@
 <script>
 // import Nav from './DashboardNav';
 // import Friends from './Friends';
-const img1 = require('../../static/card/1.jpg');
-const img2 = require('../../static/card/2.jpg');
-const img3 = require('../../static/card/3.png');
-const img4 = require('../../static/card/4.png');
-const img5 = require('../../static/card/5.png');
-const img6 = require('../../static/card/6.png');
-const img7 = require('../../static/card/7.png');
-const img8 = require('../../static/card/8.png');
-const img9 = require('../../static/card/9.png');
-const img10 = require('../../static/card/10.png');
-const img11 = require('../../static/card/11.png');
-const img12 = require('../../static/card/12.png');
-const img13 = require('../../static/card/card1.png');
-const img14 = require('../../static/card/card2.png');
-
-const girl = require('../../static/girl.png');
-const boy = require('../../static/Logo.png');
 
 export default {
   data() {
@@ -52,87 +48,87 @@ export default {
       cards: [
         {
           cardName: 'Dinning Card',
-          cardImg: img1,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img1,
+          sender: 'From Kuer and Enjoy',
+          senderImg:this.$store.state.card.girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img2,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img2,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img3,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img3,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img4,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img4,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img5,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img5,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img6,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img6,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img7,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img7,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img8,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img8,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img9,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img9,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img10,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img10,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img11,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img11,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img12,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img12,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img13,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img13,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img14,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img14,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
         },
         
 
@@ -157,6 +153,38 @@ body {
   font-family: "Open Sans", serif;
   padding-top: 54px;
   color: #868e96;
+}
+
+.send_cards_container button {
+  color: #ffffff;
+  margin-left: 15px;
+}
+.sender_cont {
+  width: 100%;
+  text-align: left;
+  margin-top: 0;
+  padding: 0;
+}
+
+.avatar {
+  position: relative;
+  top: -10px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: 10px;
+}
+.avatar img {
+  width: 40px;
+  height: 40px !important;
+  border-radius: 50% !important;
+}
+.content {
+  width: 150px;
+  margin-left: 8px;
+  display: inline-block;
+  line-height: 1em;
 }
 
 .card_cont {
@@ -240,8 +268,8 @@ body {
   height: 100%;
   position: relative;
   display: block;
-  background: #fff;
-  background: url(/img/bg1.2bf8b4c8.jpg) no-repeat center center fixed;
+  background: #f0f3f6;
+  background: url("../assets/img/bg1.jpg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -281,9 +309,10 @@ h2 {
   font-size: 3.5rem;
 }
 .card_img h4 {
-  margin-top: 15px;
+  margin-top: 8px;
   font-size: 0.9rem;
 }
+
 .card_img p {
   font-size: 0.7rem;
 }
@@ -303,8 +332,88 @@ li:hover {
   color: #000;
   border-radius: 3px;
 }
+li a {
+  color: #ffffff;
+}
+li:hover,
+a:hover {
+  color: #fff !important;
+}
+
+.nav_active {
+  background: #3ac17e !important;
+  color: #ffffff;
+  border-radius: 3px;
+}
+
+li:active {
+  background: #3ac17e;
+  color: #ffffff;
+  border-radius: 3px;
+}
+
+#sideNav .navbar-nav .nav-item .nav-link {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+@media (min-width: 992px) {
+  #sideNav {
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 17rem;
+    height: 100vh;
+  }
+  #sideNav .navbar-brand {
+    display: flex;
+    margin: auto auto 0;
+    padding: 0.5rem;
+  }
+  #sideNav .navbar-brand .img-profile {
+    max-width: 6rem;
+    max-height: 10rem;
+    border: 0.1rem solid #3ac17e;
+  }
+  #sideNav .navbar-collapse {
+    display: flex;
+    align-items: flex-start;
+    flex-grow: 0;
+    width: 100%;
+    margin-bottom: auto;
+  }
+  #sideNav .navbar-collapse .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+  }
+  #sideNav .navbar-collapse .navbar-nav .nav-item {
+    display: block;
+  }
+  #sideNav .navbar-collapse .navbar-nav .nav-item .nav-link {
+    display: block;
+  }
+}
+
+section.resume-section {
+  border-bottom: 1px solid #dee2e6;
+  padding-top: 5rem !important;
+  padding-bottom: 5rem !important;
+}
+
+section.resume-section .resume-item .resume-date {
+  min-width: none;
+}
 
 @media (min-width: 768px) {
+  section.resume-section {
+    min-height: 100vh;
+  }
+  section.resume-section .resume-item .resume-date {
+    min-width: 18rem;
+  }
   .send_cards_container {
     width: auto;
     height: auto;
@@ -321,6 +430,10 @@ li:hover {
 }
 
 @media (min-width: 992px) {
+  section.resume-section {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
   .body_cont {
     height: 100%;
     position: relative;
