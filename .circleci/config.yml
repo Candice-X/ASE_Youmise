@@ -8,14 +8,15 @@ jobs:
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
           DB_USERNAME: root
-          DB_PASSWORD: youmise
+          DB_PASSWORD:
           DB_DATABASE: circle_test
       # - image: candicexyh/youmise_node_mysql:0.0.1
       - image: circleci/mysql:5.7.21
         command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --innodb-large-prefix=true --innodb-file-format=Barracuda
         environment:
-          MYSQL_ROOT_PASSWORD: youmise
+          # MYSQL_ROOT_PASSWORD: youmise
           MYSQL_ROOT_HOST: "%"
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
     steps:
       - checkout
       - run: sudo apt-get update && sudo apt-get install -y mysql-client
@@ -30,7 +31,7 @@ jobs:
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run:
           name: mysql db
-          command: mysql --host=localhost -u $DB_USERNAME -p $DB_PASSWORD $DB_DATABASE -e "create schema circle_test;"
+          command: mysql -h 127.0.0.1 -u root
           # mysql -h localhost -u root -e "create database mate;"
 
       - run:
