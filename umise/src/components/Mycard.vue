@@ -91,7 +91,7 @@ export default {
       oneCard: {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img1,
-          sender: 'From Kuer and Enjoy',
+          sender: 'Kuer and Enjoy',
           senderImg:this.$store.state.card.girl,
       },    
       cardsReceive: [

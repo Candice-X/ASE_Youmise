@@ -34,7 +34,7 @@
 
 <!-- Modal -->
   <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="height:380px;">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">Card Info</h5>
@@ -44,9 +44,9 @@
         </div>
         <div class="modal-body" style="height:420px;">
           <div class="row">
-            <div class="col-sm-1"></div>
+            
                 <div class="col-lg-5 col-md-5 col-sm-5 card_cont" >
-                    <div class="card_img" >
+                    <div class="card_img_more" >
                         <img v-bind:src = "this.oneCard.cardImg" />
                     </div>
                 </div>
@@ -59,22 +59,22 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Friend</span>
                           </div>
-                          <input type="text" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
+                          <input type="text" v-model="oneCard.to" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                         <div class="form-group">         
-                            <select class="form-control" id="exampleFormControlSelect1">
-                              <option checked>Forever</option>
-                              <option>1 Day</option>
+                            <select  class="form-control" id="exampleFormControlSelect1">
+                              <option value='Forever' checked >Forever</option>
+                              <option value="1" >1 Day</option>
                               <option>1 Week</option>
                               <option>1 Month</option>
                               <option>1 Year</option>
                             </select>
                           </div>
 
-                        <textarea class="form-control message_more" maxlength="140">How you have a great weekend, I will treat you a great dinner Next time :)
+                        <textarea v-model="oneCard.message" class="form-control message_more" maxlength="140">How you have a great weekend, I will treat you a great dinner Next time :)
                         </textarea>
                     </div>
-                    <button class="btn btn-primary btn-success btn-send" >Send to Friends</button>
+                    <button class="btn btn-primary btn-success btn-send" @click="sendCard" >Send to Friends</button>
                 </div>
 
 
@@ -108,6 +108,9 @@ export default {
           cardImg: this.$store.state.card.img1,
           sender: 'From Kuer and Enjoy',
           senderImg:this.$store.state.card.girl,
+          to:'',
+          // expire:'Forever',
+          message:'',
       },    
       cards: [
         {
@@ -115,84 +118,126 @@ export default {
           cardImg: this.$store.state.card.img1,
           sender: 'From Kuer and Enjoy',
           senderImg:this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img2,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img3,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img4,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img5,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img6,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img7,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img8,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img9,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img10,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img11,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img12,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img13,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img14,
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
 
       ],
@@ -205,7 +250,11 @@ export default {
     showCard(index) {
   
       this.oneCard = this.cards[index];
-    }
+    },
+    sendCard() {
+      console.log(this.oneCard);
+      jQuery("#Dashboard_send").modal('hide');
+    },
   },
   created: function() {
     this.$store.state.user.isLogin = true;
@@ -255,6 +304,25 @@ body {
   border: 2px dashed #fff;
   color: #fff;
 }
+.card_img_more {
+  width: 220px;
+  margin: 10px 25px;
+  background: #dcdcdc;
+  height: 320px;
+  border-radius: 5px;
+  border: 2px dashed #fff;
+}
+.card_img_more:hover {
+  background: #3ac17e;
+  opacity: 0.9;
+  cursor: pointer;
+  border: 2px dashed #fff;
+  color: #fff;
+}
+
+
+
+
 .customize-icon-cont {
   border: 4px dashed #fff;
   width: 220px;
