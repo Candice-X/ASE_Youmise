@@ -30,8 +30,7 @@ jobs:
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run:
           name: mysql db
-          command: echo $DB_HOST
-          # command: mysql -h $DB_HOST -u $DB_USERNAME -p $DB_PASSWORD $DB_DATABASE
+          command: mysql -h $DB_HOST -u $DB_USERNAME -p $DB_PASSWORD $DB_DATABASE
           # mysql -h localhost -u root -e "create database mate;"
 
       - run:
