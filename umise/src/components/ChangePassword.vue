@@ -5,7 +5,7 @@
     <div class="form-signin">
       <div class="text-center mb-4">
         <img class="mb-4" src="../assets/img/Logo.png" alt="" height="72" width="72">
-        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise- Login</h1>
+        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Reset Password</h1>
       </div>
       <div class="form-label-group" :class="{invalid: $v.userData.password.$error }">
         <input id="inputPassword" class="form-control"  placeholder="Old Password" type="Old Password"
