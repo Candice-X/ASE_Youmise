@@ -8,13 +8,13 @@ jobs:
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
           DB_USERNAME: root
-          DB_PASSWORD: youmise
+          DB_PASSWORD:
           DB_DATABASE: circle_test
       # - image: candicexyh/youmise_node_mysql:0.0.1
       - image: circleci/mysql:5.7.21
         command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --innodb-large-prefix=true --innodb-file-format=Barracuda
         environment:
-          MYSQL_ROOT_PASSWORD: youmise
+          # MYSQL_ROOT_PASSWORD: youmise
           MYSQL_ROOT_HOST: "%"
           MYSQL_ALLOW_EMPTY_PASSWORD: true
     steps:
