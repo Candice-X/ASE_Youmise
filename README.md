@@ -25,3 +25,7 @@ With `npm`:
 or with `yarn`:
 
     yarn start
+
+### For passing process.env variables:
+* If using fish, then: env USERID= USERNAME= node app.js
+* If using bash, remove "env"
