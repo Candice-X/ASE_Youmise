@@ -6,9 +6,6 @@ const models = require('../../models');
 const config = require('../../config');
 
 const router = express.Router();
-AWS.config.update({ region: 'us-east-2' });
-
-const cognito = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
 
 router.post('/card', async (req, res) => {
   try {
