@@ -30,7 +30,7 @@ jobs:
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run:
           name: mysql db
-          command: mysql --host=localhost -u $DB_USERNAME -p $DB_PASSWORD $DB_DATABASE -e "create schema circle_test;"
+          command: mysql --host=127.0.0.1 -u $DB_USERNAME -p $DB_PASSWORD $DB_DATABASE
           # mysql -h localhost -u root -e "create database mate;"
 
       - run:
