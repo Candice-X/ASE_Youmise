@@ -1,7 +1,9 @@
 const sequelize = require('sequelize');
 const models = require('./../../models');
 const {Card} = require('./../../routes/cards/controller');
-
+before(function () {
+    return require('../../models').sequelize.sync();
+});
 function generateUUID() {
     let d = new Date().getTime();
     let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
