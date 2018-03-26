@@ -3,15 +3,28 @@ jobs:
 
   test:
     docker:
-      # - image: circleci/node:8.9.4-stretch-browsers
-      - image: candicexyh/youmise_node_mysql:0.0.1
-    environment:
-      DB_USERNAME: "root"
-      DB_PASSWORD: ""
+      - image: circleci/node:8.9.4-stretch-browsers
+      # - image: candicexyh/youmise_node_mysql:0.0.1
+      - image: circleci/mysql:5.7.21
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD=true
+          MYSQL_DATABASE=circle_test
+          MYSQL_HOST=127.0.0.1
+          MYSQL_USER=root
+
     steps:
       - checkout
       - run:
-          name: Test connection to database
+          name: install dockerize
+          command: |
+            wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+      - run:
+          name: wait for db
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
+      - run:
+          name: Test
           command: |
             yarn
             yarn test
