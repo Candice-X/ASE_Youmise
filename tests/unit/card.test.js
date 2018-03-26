@@ -47,7 +47,6 @@ describe('POST /card', ()=>{
                     return done(err);
                 }
                 models.Card.findAll({ raw: true }).then((res)=>{
-                    console.log(res);
                     expect(res.length).toBe(2);
                     done();
                 }).catch((e)=> done(e));
@@ -77,138 +76,72 @@ describe('GET /card/:id',()=>{
             })
             .end(done);
     });
-    it('should return 404 if card not found',(done)=>{
+    it('should return 400 for non-object ids',(done)=>{
         var wrongId = "abcd3";
-        console.log(`-----${JSON.stringify(wrongId)}----`);
         request(app)
             .get(`/card/card/${wrongId}`)
-            .expect(404)
+            .expect(400)
             .end(done);
     });
-    // it('should not return todo doc created by other user',(done)=>{
-    //     request(app)
-    //         .get(`/todos/${todos[1]._id.toHexString()}`)
-    //         .set('x-auth', users[0].tokens[0].token)
-    //         .expect(404)
-    //         .end(done);
-    // });
-    // it('should return 404 for non-object ids',(done)=>{
-    //     request(app)
-    //         .get('/todos/123abc')
-    //         .set('x-auth', users[0].tokens[0].token)
-    //         .expect(404)
-    //         .end(done);
-    // });
 });
 
-// describe('DELETE /todos/:id', ()=>{
-//     it('should remove a todo',(done)=>{
-//         var hexId = todos[1]._id.toHexString();
-
-//         request(app)
-//             .delete(`/todos/${hexId}`)
-//             .set('x-auth', users[1].tokens[0].token)
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.todo._id).toBe(hexId);
-//             })
-//             .end((err,res)=>{
-//                 if(err){
-//                     return done(err);
-//                 }
-//                 Todo.findById(hexId).then((todo)=>{
-//                     expect(todo).toBeFalsy();
-//                     done();
-//                 }).catch((e)=>done(e));  
-//             });
-
-//     });
-//     it('should not remove a todo',(done)=>{
-//         var hexId = todos[0]._id.toHexString();
-
-//         request(app)
-//             .delete(`/todos/${hexId}`)
-//             .set('x-auth', users[1].tokens[0].token)
-//             .expect(404)
-//             .end((err,res)=>{
-//                 if(err){
-//                     return done(err);
-//                 }
-//                 Todo.findById(hexId).then((todo)=>{
-//                     expect(todo).toBeTruthy();
-//                     done();
-//                 }).catch((e)=>done(e));  
-//             });
-
-//     });
-
-//     it('should return 404 if todo not found', (done)=>{
-//         var hexId = new ObjectID().toHexString();
-//         request(app)
-//             .delete(`/todos/${hexId}`)
-//             .set('x-auth', users[1].tokens[0].token)
-//             .expect(404)
-//             .end(done);
-//     });
-
-//     it('should return 404 if object id is invalid',(done)=>{
+describe('DELETE /card/:id', ()=>{
+    it('should remove a card',(done)=>{
+        request(app)
+            .delete(`/card/card/${cards[0].cardid}`)
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.cardid).toBe(cards[0].cardid);
+            })
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.Card.findAll({ where: { cardid: cards[0].cardid }, raw : true }).then((card)=>{
+                    expect(card.length).toBe(0);
+                    done();
+                }).catch((e)=>done(e));  
+            });
+    });
+    it('should return 400 if card not found', (done)=>{
+        var wrongId = "abcd3";
+        request(app)
+            .delete(`/card/card/${wrongId}`)
+            .expect(400)
+            .end(done);
+    });
+//     it('should return 404 if id is invalid',(done)=>{
 //         request(app)
 //         .delete('/todos/123abc')
 //         .set('x-auth', users[1].tokens[0].token)
 //         .expect(404)
 //         .end(done);
 //     });
-// });
+});
 
-// describe('PATCH /todo/:id',()=>{
-//     it('should update the todo', (done)=>{
-//         var hexId = todos[0]._id.toHexString();
-//         var text = 'This should be th new text';
-//         request(app)
-//             .patch(`/todos/${hexId}`)
-//             .set('x-auth', users[0].tokens[0].token)
-//             .send({
-//                 completed: true,
-//                 text
-//             })
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.todo.text).toBe(text);
-//                 expect(res.body.todo.completed).toBe(true);
-//                 // expect(res.body.todo.completedAt).toBeA('number');
-//                 expect(typeof res.body.todo.completedAt).toBe('number');
-//             })
-//             .end(done);
-//     });
-//     it('should not update the todo created by other user', (done)=>{
-//         var hexId = todos[0]._id.toHexString();
-//         var text = 'This should be th new text';
-//         request(app)
-//             .patch(`/todos/${hexId}`)
-//             .set('x-auth', users[1].tokens[0].token)
-//             .send({
-//                 completed: true,
-//                 text
-//             })
-//             .expect(404)
-//             .end(done);
-//     });
-//     it('should clear completedAt when todo is not completed', (done)=>{
-//         var hexId = todos[1]._id.toHexString();
-//         var text = 'This should be th new text!!';
-//         request(app)
-//             .patch(`/todos/${hexId}`)
-//             .set('x-auth', users[1].tokens[0].token)
-//             .send({
-//                 completed: false,
-//                 text
-//             })
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.todo.text).toBe(text);
-//                 expect(res.body.todo.completed).toBe(false);
-//                 expect(res.body.todo.completedAt).toBeFalsy();
-//             })
-//             .end(done);
-//     });
-// });
+describe('PATCH /card/:id',()=>{
+    it('should update the card', (done)=>{
+        var cardid = cards[0].cardid;
+        var text = cards[0].cardNote;
+        request(app)
+            .patch(`/card/card/${cardid}`)
+            .send({
+                cardName : null, 
+                cardImgURL: null,
+                cardNote: "Change note"
+            })
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.cardNote).toBe("Change note");
+            })
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.Card.findAll({ where: { cardid: cardid }, raw : true }).then((card)=>{
+                    expect(card[0].cardName).toBeTruthy();
+                    done();
+                }).catch((e)=>done(e));  
+            });
+    });
+});

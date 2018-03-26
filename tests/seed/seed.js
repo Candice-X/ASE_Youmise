@@ -40,14 +40,12 @@ const populateCards = (done)=>{
         truncate: true
     }).then(()=>{
         const cardOne = models.Card.create(cards[0]).then((card)=>{
-            console.log(`card One!!!!!!!!!!!!!!!!!!!!!! ${card}`);
             return card;
             
     });
         const cardTwo =  models.Card.create(cards[1]).then((card)=>{
             return card;
     });
-        console.log(`card One?????????? ${cardOne}`);
         return Promise.all([cardOne, cardTwo])
     }).then(()=> done());
 }
