@@ -7,16 +7,7 @@ const {app} = require('./../../app');
 const models = require('./../../models');
 
 const {cards, populateCards} = require('./../seed/seed');
-(async () => {
-    try {
-      await models.sequelize.authenticate();
-      console.log('Connection has been established successfully.');
-    } catch(err) {
-      console.error('Unable to connect to the database:', err);
-    };
 
-    await models.sequelize.sync();
-})();
 beforeEach(populateCards);
  //run before every test case
 
