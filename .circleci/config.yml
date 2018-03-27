@@ -12,7 +12,6 @@ jobs:
       - image: circleci/mysql:5.7.21
         command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --innodb-large-prefix=true --innodb-file-format=Barracuda
         environment:
-          # MYSQL_ROOT_PASSWORD: youmise
           MYSQL_USER: root
           MYSQL_ROOT_HOST: "%"
           MYSQL_ALLOW_EMPTY_PASSWORD: true
