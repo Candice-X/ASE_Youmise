@@ -5,6 +5,7 @@ jobs:
       - image: circleci/node:8.9.4-stretch-browsers
         environment:
           DB_USERNAME: root
+          DB_PASSWORD: ''
           MYSQL_ALLOW_EMPTY_PASSWORD: true
           MYSQL_ROOT_HOST: "%"
           MYSQL_DATABASE: 'circle_test'
@@ -16,18 +17,19 @@ jobs:
           MYSQL_ROOT_HOST: "%"
           MYSQL_HOST: 127.0.0.1
           MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_DATABASE: 'circle_test'
     steps:
       - checkout
-      - run: sudo apt-get install -y mysql-client
-      # - run:
-      #     name: install dockerize
-      #     command: |
-      #       wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
-      #     environment:
-      #       DOCKERIZE_VERSION: v0.6.0
-      # - run:
-      #     name: wait for db
-      #     command: dockerize -wait tcp://localhost:3306 -timeout 1m
+      # - run: sudo apt-get install -y mysql-client
+      - run:
+          name: install dockerize
+          command: |
+            wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.6.0
+      - run:
+          name: wait for db
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
       # - run:
       #     name: mysql db
       #     command: |
