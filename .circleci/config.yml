@@ -30,7 +30,9 @@ jobs:
       #     command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run:
           name: mysql db
-          command: mysql -h localhost -u root -e "create database circle_test;"
+          command: |
+            sudo service mysql start
+            mysql -h localhost -u root -e "create database circle_test;"
           # mysql -h localhost -u root -e "create database mate;"
 
       - run:
