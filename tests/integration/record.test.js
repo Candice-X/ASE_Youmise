@@ -12,7 +12,17 @@ const {cards, populateCards, records, populateRecords} = require('./../seed/seed
 beforeEach(populateCards);
 beforeEach(populateRecords);
  //run before every test case
-
+ // This part is not work.. Not sure what will happen if not close connection, just keep here for now.
+//  after(async ()=>{
+//     await models.sequelize.connectionManager.close().then((done) =>
+//     {
+//         console.log('shut down gracefully');
+//         // setTimeout(function() {
+//         //     done();  // MAGIC == EVIL.
+//         // }, 1000);
+//         done();
+//     });   
+// });
 describe('POST /record/record 123', ()=>{
     it('should create a new record', (done)=>{
         request(app)

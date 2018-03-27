@@ -14,7 +14,7 @@ const cards = require('./routes/cards');
 const records = require('./routes/records');
 
 
-const app = express();
+var app = express();
 
 
 app.use(cors())
@@ -48,12 +48,12 @@ const PORT = process.env.PORT || 8080;
   // });
   // await models.sequelize.sync({force: true});
 
-  app.listen(PORT, (err) => {
-    if (err) {
-      console.error(err);
-    }
-    console.log(`Listening ${PORT}`);
-  });
 })();
 
+app.listen(PORT, (err) => {
+  if (err) {
+    console.error(err);
+  }
+  console.log(`Listening ${PORT}`);
+});
 module.exports = {app};

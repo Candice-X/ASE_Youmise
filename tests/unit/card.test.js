@@ -11,7 +11,9 @@ const {cards, populateCards} = require('./../seed/seed');
 
 beforeEach(populateCards);
  //run before every test case
-
+ after(()=>{
+    return require('../../models').sequelize.connectionManager.close().then(() => console.log('shut down gracefully'));
+});
 
 describe('create', ()=>{
     it('should create a new card unit test', async ()=>{

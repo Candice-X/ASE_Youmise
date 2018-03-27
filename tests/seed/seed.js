@@ -6,6 +6,8 @@ const moment = require('moment');
 before(function () {
     return require('../../models').sequelize.sync();
 });
+
+
 // models.Records.belongsTo(models.Users, {foreignKey: 'userid'});
 // models.Records.belongsTo(models.Cards, {foreignKey: 'cardid'});
 

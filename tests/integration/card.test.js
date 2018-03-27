@@ -1,3 +1,5 @@
+var log = require('why-is-node-running');
+
 const expect = require('expect');
 const request = require('supertest');
 const _ = require('lodash');
@@ -9,7 +11,18 @@ const models = require('./../../models');
 const {cards, populateCards} = require('./../seed/seed');
 
 beforeEach(populateCards);
- //run before every test case
+//  run before every test case
+// This part is not work.. Not sure what will happen if not close connection, just keep here for now.
+//  after(async ()=>{
+//     await models.sequelize.connectionManager.close().then((done) =>
+//     {
+//         console.log('shut down gracefully');
+//         // setTimeout(function() {
+//         //     done();  // MAGIC == EVIL.
+//         // }, 1000);
+//         done();
+//     });   
+// });
 
 describe('POST /card', ()=>{
     it('should create a new card', (done)=>{
@@ -145,3 +158,4 @@ describe('PATCH /card/:id',()=>{
             });
     });
 });
+
