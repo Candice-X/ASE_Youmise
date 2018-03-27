@@ -40,7 +40,7 @@ jobs:
           name: Test
           command: |
             yarn
-            npm install
+            npm install why-is-node-running
             yarn test
 
 
