@@ -5,12 +5,15 @@ jobs:
       - image: circleci/node:8.9.4-stretch-browsers
         environment:
           DB_USERNAME: root
-          DB_PASSWORD:
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_ROOT_HOST: "%"
+          MYSQL_DATABASE: 'circle_test'
       # - image: candicexyh/youmise_node_mysql:0.0.1
       - image: circleci/mysql:5.7.21
         command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --innodb-large-prefix=true --innodb-file-format=Barracuda
         environment:
           # MYSQL_ROOT_PASSWORD: youmise
+          MYSQL_USER: root
           MYSQL_ROOT_HOST: "%"
           MYSQL_ALLOW_EMPTY_PASSWORD: true
     steps:
@@ -27,7 +30,7 @@ jobs:
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run:
           name: mysql db
-          command: mysql -h localhost -u root
+          command: mysql -h localhost -u root -e "create database circle_test;"
           # mysql -h localhost -u root -e "create database mate;"
 
       - run:
