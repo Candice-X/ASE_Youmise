@@ -4,10 +4,36 @@
   <div class="form-signin">
       <div class="text-center mb-4">
         <img class="mb-4" src="../assets/img/Logo.png" alt="" height="72" width="72">
-        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise - Sign Up</h1>
+        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise - Reset Password</h1>
        </div>
       <!--- This is the sign up div -->
-      <div id="signup_div" v-show = '!submittedValue' >
+ <!-- This is the validation code div   -->
+
+        <div id="validate_div"  v-if = "!submittedValue">
+        <label class="message"> Please input your email address  </label>
+      <div class="form-label-group">
+
+        <input id="email_address" class="form-control" placeholder="UserName" autofocus="" type=""
+        @blur ="$v.user.email" v-model ="user.email" >
+        <label for="email_address">Email</label>
+         <!-- <p v-if="!$v.confirmationCode.required" >Confirmation Code should be 6 numbers </p> -->
+      </div>
+
+      <label>{{validateMsg}}</label>
+      <button class="btn btn-lg btn-success btn-block" :disabled="$v.user.email.$invalid"  @click="resendValidationCode" >Reset Password </button>
+      
+      </div>
+      
+
+      <transition name="fade">
+      <div id="signup_div" v-if = 'submittedValue' >
+
+        <div class="form-label-group" :class="{ invalid: $v.user.confirmationCode.$error }">
+        <input id="validateCode" class="form-control" placeholder="Verification Code" autofocus="" type=""
+        @blur ="$v.user.confirmationCode" v-model ="user.confirmationCode" >
+         <label for="validateCode">Verification Code</label>
+        </div>
+
         <div class="form-label-group" :class="{ invalid: $v.user.username.$error }">
           <input id="inputUserName" class="form-control" placeholder="UserName"
           @blur="$v.user.username.$touch()" v-model ="user.username">
@@ -15,11 +41,11 @@
         </div>
         <!-- <p v-if="!$v.user.username.required" >Username is required</p> -->
 
-        <div class="form-label-group" :class="{ invalid: $v.user.email.$error }">
+        <!-- <div class="form-label-group" :class="{ invalid: $v.user.email.$error }">
           <input  id="inputEmail" class="form-control" placeholder="Email address"
           @blur="$v.user.email.$touch()" v-model ="user.email">
           <label for="inputEmail">Email address</label>
-        </div>
+        </div> -->
         <!-- <p v-if="!$v.user.email.required" >Email should not be empty</p> -->
         <!-- <p v-if="!$v.user.email.email" >Please provide a valid email address</p> -->
         
@@ -37,34 +63,12 @@
         </div>
         <!-- <p v-if="!$v.user.repeatPassword.required" >Password are not not the same </p> -->
 
-
-
         <label>{{ errorMsg }}</label>
         <button class="btn btn-lg btn-success btn-block" 
-        :disabled="$v.user.username.$invalid || $v.user.email.$invalid || $v.user.password.$invalid 
-        || $v.user.repeatPassword.$invalid" v-on:click= "submitSignup"  name = 'sign_up' >Sign Up</button>
+        :disabled="$v.user.username.$invalid || $v.user.confirmationCode.$invalid || $v.user.password.$invalid 
+        || $v.user.repeatPassword.$invalid" v-on:click= "submitSignup"  name = 'sign_up' >Reset Password </button>
       </div>
    
-      <!-- This is the validation code div   -->
-      <transition name="fade">
-        <div id="validate_div"  v-if = "submittedValue">
-        <label class="message"> We have send the validation code to the Email : {{ user.email }}</label>
-      <div class="form-label-group">
-
-        <input id="validateCode" class="form-control" placeholder="UserName" autofocus="" type=""
-        @blur ="$v.user.confirmationCode" v-model ="user.confirmationCode" >
-        
-      
-
-        <label for="validateCode">Validate Code</label>
-         <!-- <p v-if="!$v.confirmationCode.required" >Confirmation Code should be 6 numbers </p> -->
-      </div>
-
-      <label>{{validateMsg}}</label>
-      <button class="btn btn-lg btn-success btn-block" :disabled="$v.user.confirmationCode.$invalid"  @click="validateCode" >Validate Email </button>
-      
-      <button class ="btn  btn-secondary btn-block" style="margin-top:20px;" @click="resendValidationCode" >Resend Verification Code</button>
-      </div>
       </transition>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
     </div>
@@ -125,17 +129,18 @@ export default {
         this.errorMsg ="password has to be more than 8 characters";
         return;
       }
-      if(this.user.username.length!=0 && this.user.email.length!=0 && this.user.password.length>=8){
+      if(this.user.username.length!=0 && this.user.password.length>=8){
       // request server for sign up
        this.errorMsg ="";
 
-        axios.post("/user/signup",this.user)
+        axios.post("/user/confirmforgetPassword",this.user)
         .then(res => {       
           console.log("response !!!!!",res);
           // const data = res.data;
           console.log(res.data);
           // console.log(user);   
           this.submittedValue = true; 
+          this.$router.push('/login');
         })
         .catch(error => {
         if(typeof error.response ==='undefined'){
@@ -145,11 +150,6 @@ export default {
             //请求已发出，但服务器使用状态代码进行响应
             //落在2xx的范围之外
             this.errorMsg = error.response.data;
-            
-            console.log("data",error.response.data);
-            console.log("status",error.response.status);
-            console.log("header",error.response.headers);
-
           } else {
             //在设置触发错误的请求时发生了错误
             console.log('Error',error.message);
@@ -161,52 +161,19 @@ export default {
       }
     },
 
-    validateCode() {
-      this.validateMsg ='';
-      if(this.user.confirmationCode.length !=6){
-         this.validateMsg = "validation code length should be 6 digitals";
-         return false;
-      }else{
-        this.validateMsg ='';
-          axios.post("/user/verification",this.user)
-          .then(res=>{  
-            console.log("response verification!",res);
-            // const data = res.data;
-            console.log(res.data);
-            console.log("success sign up, please login");
-
-            this.$router.push({path:'/login'});
-              
-            // console.log(user);    
-          })
-          .catch(error => {
-          if(typeof error.response ==='undefined'){
-            return;
-          }else{
-              if(error.response){
-              //请求已发出，但服务器使用状态代码进行响应
-              //落在2xx的范围之外
-              this.validateMsg = error.response.data;
-              console.log(error.response.data);
-              console.log(error.response.status);
-              console.log(error.response.headers);
-            } else {
-              //在设置触发错误的请求时发生了错误
-              console.log('Error',error.message);
-            }
-          }
-        });
-      }
-    },
 
     resendValidationCode() {
-        this.validateMsg ='Resend the verification code successfully';
-          axios.post("/user/resendConfirmation",{email:this.user.email})
+        this.validateMsg ='';
+          axios.post("/user/forgetPassword",{email:this.user.email})
           .then(res=>{  
             console.log("response verification!",res);
             // const data = res.data;
             console.log(res.data);
+            this.user.username = res.data.user.username;
+            console.log(res.data.user);
             console.log("resend verification code");
+            this.submittedValue = true;
+            this.validateMsg = 'Resend the verification code successfully';
           })
           .catch(error => {
           if(typeof error.response ==='undefined'){

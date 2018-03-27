@@ -5,17 +5,16 @@
     <div class="form-signin">
       <div class="text-center mb-4">
         <img class="mb-4" src="../assets/img/Logo.png" alt="" height="72" width="72">
-        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Umise- Login</h1>
+        <h1 class="h3 mb-3 font-weight-normal" style="color:#fff;">Reset Password</h1>
       </div>
-
-      <div class="form-label-group" :class="{invalid: $v.userData.username.$error }">
-        <input id="inputEmail" class="form-control"  placeholder="User Name" autofocus=""
-          @blur="$v.userData.username.touch()" v-model="userData.username">
-        <label for="inputEmail">User Name</label>
+      <div class="form-label-group" :class="{invalid: $v.userData.password.$error }">
+        <input id="inputPassword" class="form-control"  placeholder="Old Password" type="Old Password"
+          @blur="$v.userData.password.touch()" v-model="userData.password">
+        <label for="inputPassword">Password</label>
       </div>
 
       <div class="form-label-group" :class="{invalid: $v.userData.password.$error }">
-        <input id="inputPassword" class="form-control"  placeholder="Password" type="password"
+        <input id="inputPassword" class="form-control"  placeholder="New Password" type="New Password"
           @blur="$v.userData.password.touch()" v-model="userData.password">
         <label for="inputPassword">Password</label>
       </div>
@@ -27,7 +26,6 @@
       </div>
       <button class="btn btn-lg btn-success btn-block" :disabled="$v.userData.$invalid" @click="handleLogin" @keyup.enter="handleLogin">Sign in</button>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
-      <router-link to="/resetPassword" tag ="a"><p style="color:#dcdcdc;text-align:center;padding-top:10px;">Forget Password ?</p> </router-link>
     </div>
   </body>
 </template>
@@ -45,8 +43,7 @@ export default {
         username: "",
         password: ""
       },
-      error: "",
-
+      error: ""
     };
   },
   validations: {

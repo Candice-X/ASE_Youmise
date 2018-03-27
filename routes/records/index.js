@@ -1,0 +1,124 @@
+const express = require('express');
+const AWS = require('aws-sdk');
+
+const controller = require('./controller');
+const models = require('../../models');
+// Add foreign key to records.
+
+const config = require('../../config');
+
+const router = express.Router();
+
+// Create Record
+router.post('/record', async (req, res) => {
+  try {
+    const result = await controller.dbCreateRecord(models.Record, req.body.senderid, req.body.receiverid, req.body.cardid, req.body.expireDate, req.body.cardContent, req.body.cardTitle);
+    
+    res.json(result);
+  } catch (err) {
+    if (err.statusCode){
+      res.status(err.statusCode).send(err.message);
+    } else {
+      res.status(400).send();
+    }
+    
+  }
+
+});
+// Fetch all records by administrator
+router.get('/record', async(req, res) => {
+  try {
+    let result = await controller.dbFetchAll(models.Record);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+// Fetch records by senderid and status
+router.get('/record/sender/:id/:status', async(req, res) => {
+  try {
+    const senderid = req.params.id;
+    const status = req.params.status;
+    let result = await controller.dbFindBySender(models.Record, senderid, status);
+    res.json(result);
+  } catch (err) {
+    res.status(err.statusCode).send(err.message);
+  }
+});
+// Fetch all records by senderid
+router.get('/record/sender/:id', async(req, res) => {
+  try {
+    const senderid = req.params.id;
+    let result = await controller.dbFindBySender(models.Record, senderid, null);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+// Fetch all records by senderid
+router.get('/record/receiver/:id', async(req, res) => {
+  try {
+    const receiverid = req.params.id;
+    let result = await controller.dbFindByReceiver(models.Record, receiverid, null);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+// Fetch records by receiverid and status
+router.get('/record/receiver/:id/:status', async(req, res) => {
+  try {
+    const receiverid = req.params.id;
+    const status = req.params.status;
+    let result = await controller.dbFindByReceiver(models.Record, receiverid, status);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+// Fetch records by recordid
+router.get('/record/:id', async(req, res) => {
+    try {
+        const recordid = req.params.id;
+        let result = await controller.dbFindById(models.Record, recordid);
+        if(result.length === 0){
+          res.status(err.statusCode).send();
+        }
+        res.json(result);
+    } catch (err) {
+      res.status(err.statusCode).send(err.message);
+    }
+  });
+
+// Fetch records by recordid
+router.patch('/record/:id', async(req, res) => {
+    try {
+        const recordid = req.params.id;
+        const updates = req.body;
+        let record = await models.Record.findAll({ where: { recordid: recordid }, raw: true });
+        if (record.length === 0){
+          res.status(400).send();
+        }
+        let result = await controller.dbUpdateById(models.Record, recordid, updates.receiverid, updates.status);
+        res.json(result);
+    } catch (err) {
+      res.status(400).send(err.message);
+    }
+  });
+
+router.delete('/record/:id', async(req, res) => {
+  try {
+      const recordid = req.params.id;
+      let result = await controller.dbDeleteById(models.Record, recordid);
+      if (result.length === 0){
+        res.status(400).send();
+      }
+      res.json(result);
+  } catch (err) {
+      res.status(400).send(err.message);
+  }
+  });
+module.exports = router;

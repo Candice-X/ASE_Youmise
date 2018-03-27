@@ -5,12 +5,15 @@
         <div class = "send_cards_container" >
             <h4 class="title" >Send Cards</h4>
             <h4 class="subTitle">Choose a Card and send to your friends, or you can design your own card.</h4>
+            
             <div class="row">
-                <div  v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont">
-                    <div class="card_img" >
+                <div  v-for = "(card, index) in cards" :key="index"
+                class="col-lg-3 col-md-3 col-sm-6 card_cont" >
+                    <div class="card_img" data-toggle="modal"
+                    data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImg" />                        
-                        <h4>{{card.cardName}}</h4>
-                        <p class="sub_title">{{card.cardInfo}}</p>
+                        <h4>{{ index }} {{card.cardName}}</h4>
+                        <p class="sub_title">{{card.sender}}</p>
                     </div>
                 </div>          
 
@@ -26,7 +29,66 @@
 
             </div>
         </div>
-        <!-- <Friends></Friends> -->
+        <div>
+     
+
+<!-- Modal -->
+  <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Card Info</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height:420px;">
+          <div class="row">
+            
+                <div class="col-lg-5 col-md-5 col-sm-5 card_cont" >
+                    <div class="card_img_more" >
+                        <img v-bind:src = "this.oneCard.cardImg" />
+                    </div>
+                </div>
+                   <div class ="sender_cont_more col-lg-5 col-md-5 col-sm-5" > 
+                       
+                    <div class="content_more">
+                        <h4>{{ this.oneCard.cardName }}</h4>
+                        <p class="sub_title">{{ this.oneCard.sender }}</p>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Friend</span>
+                          </div>
+                          <input type="text" v-model="oneCard.to" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="form-group">         
+                            <select  class="form-control" id="exampleFormControlSelect1">
+                              <option value='Forever' checked >Forever</option>
+                              <option value="1" >1 Day</option>
+                              <option>1 Week</option>
+                              <option>1 Month</option>
+                              <option>1 Year</option>
+                            </select>
+                          </div>
+
+                        <textarea v-model="oneCard.message" class="form-control message_more" maxlength="140">How you have a great weekend, I will treat you a great dinner Next time :)
+                        </textarea>
+                    </div>
+                    <button class="btn btn-primary btn-success btn-send" @click="sendCard" >Send to Friends</button>
+                </div>
+
+
+            </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- end of card one -->
+
+</div>
+
     </div>
 
 </div>
@@ -36,121 +98,163 @@
 // import Nav from './DashboardNav';
 import Friends from './Friends';
 
-const img1 = require('../../static/card/1.jpg');
-const img2 = require('../../static/card/2.jpg');
-const img3 = require('../../static/card/3.png');
-const img4 = require('../../static/card/4.png');
-const img5 = require('../../static/card/5.png');
-const img6 = require('../../static/card/6.png');
-const img7 = require('../../static/card/7.png');
-const img8 = require('../../static/card/8.png');
-const img9 = require('../../static/card/9.png');
-const img10 = require('../../static/card/10.png');
-const img11 = require('../../static/card/11.png');
-const img12 = require('../../static/card/12.png');
-const img13 = require('../../static/card/card1.png');
-const img14 = require('../../static/card/card2.png');
-
-const girl = require('../../static/girl.png');
-const boy = require('../../static/Logo.png');
 
 export default {
   data() {
     return {
       name: 'kuer',
+      oneCard: {
+          cardName: 'Dinning Card',
+          cardImg: this.$store.state.card.img1,
+          sender: 'From Kuer and Enjoy',
+          senderImg:this.$store.state.card.girl,
+          to:'',
+          // expire:'Forever',
+          message:'',
+      },    
       cards: [
         {
           cardName: 'Dinning Card',
-          cardImg: img1,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img1,
+          sender: 'From Kuer and Enjoy',
+          senderImg:this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img2,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img2,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img3,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img3,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img4,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img4,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img5,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img5,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img6,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img6,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img7,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img7,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img8,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img8,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img9,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img9,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img10,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img10,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img11,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img11,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img12,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: boy,
+          cardImg: this.$store.state.card.img12,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.boy,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img13,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img13,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
         {
           cardName: 'Dinning Card',
-          cardImg: img14,
-          cardInfo: 'From Kuer and Enjoy',
-          senderImg: girl,
+          cardImg: this.$store.state.card.img14,
+          sender: 'From Kuer and Enjoy',
+          senderImg: this.$store.state.card.girl,
+           to:'',
+          // expire:'Forever',
+          message:'',
         },
-        
-
 
       ],
     };
   },
   components: {
     Friends,
+  },
+  methods:{
+    showCard(index) {
+  
+      this.oneCard = this.cards[index];
+    },
+    sendCard() {
+      console.log(this.oneCard);
+      jQuery("#Dashboard_send").modal('hide');
+    },
   },
   created: function() {
     this.$store.state.user.isLogin = true;
@@ -200,6 +304,25 @@ body {
   border: 2px dashed #fff;
   color: #fff;
 }
+.card_img_more {
+  width: 220px;
+  margin: 10px 25px;
+  background: #dcdcdc;
+  height: 320px;
+  border-radius: 5px;
+  border: 2px dashed #fff;
+}
+.card_img_more:hover {
+  background: #3ac17e;
+  opacity: 0.9;
+  cursor: pointer;
+  border: 2px dashed #fff;
+  color: #fff;
+}
+
+
+
+
 .customize-icon-cont {
   border: 4px dashed #fff;
   width: 220px;
@@ -410,5 +533,33 @@ i {
   display: block;
   float: left;
   /* min-height: 775px;  */
+}
+
+.modal-dialog-centered{
+  overflow: hidden;
+}
+
+.sender_cont_more img{
+  width:90px;
+  margin-top:25px;
+}
+.content_more{
+  margin-top:15px;
+}
+
+.message_more{
+  background: #eeeeee;
+  border-radius: 5px;
+  margin:0px;
+  display: block;
+  text-align: left;
+  padding:15px;
+  height:100px;
+  font-size:0.85em;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.btn-send{
+  width:100%;
 }
 </style>
