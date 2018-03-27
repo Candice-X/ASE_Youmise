@@ -28,10 +28,10 @@ jobs:
       # - run:
       #     name: wait for db
       #     command: dockerize -wait tcp://localhost:3306 -timeout 1m
-      - run:
-          name: mysql db
-          command: |
-            mysql -u root -e "create database circle_test;"
+      # - run:
+      #     name: mysql db
+      #     command: |
+      #       mysql -u root -e "create database circle_test;"
           # mysql -h localhost -u root -e "create database mate;"
 
       - run:
