@@ -18,7 +18,7 @@ jobs:
           MYSQL_ALLOW_EMPTY_PASSWORD: true
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install -y mysql-client
+      - run: sudo apt-get install -y mysql-client
       # - run:
       #     name: install dockerize
       #     command: |
@@ -31,7 +31,6 @@ jobs:
       - run:
           name: mysql db
           command: |
-            sudo service mysql start
             mysql -h localhost -u root -e "create database circle_test;"
           # mysql -h localhost -u root -e "create database mate;"
 
