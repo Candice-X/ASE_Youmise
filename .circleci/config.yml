@@ -4,22 +4,23 @@ jobs:
     docker:
       - image: circleci/node:8.9.4-stretch-browsers
         environment:
-          DB_CONNECTION: mysql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 3306
           DB_USERNAME: root
-          DB_PASSWORD:
-          DB_DATABASE: circle_test
+          DB_PASSWORD: ''
+          MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_ROOT_HOST: "%"
+          MYSQL_DATABASE: 'circle_test'
       # - image: candicexyh/youmise_node_mysql:0.0.1
       - image: circleci/mysql:5.7.21
         command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin --innodb-large-prefix=true --innodb-file-format=Barracuda
         environment:
-          # MYSQL_ROOT_PASSWORD: youmise
+          MYSQL_USER: root
           MYSQL_ROOT_HOST: "%"
+          MYSQL_HOST: 127.0.0.1
           MYSQL_ALLOW_EMPTY_PASSWORD: true
+          MYSQL_DATABASE: 'circle_test'
     steps:
       - checkout
-      - run: sudo apt-get update && sudo apt-get install -y mysql-client
+      # - run: sudo apt-get install -y mysql-client
       - run:
           name: install dockerize
           command: |
@@ -29,15 +30,17 @@ jobs:
       - run:
           name: wait for db
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
-      - run:
-          name: mysql db
-          command: mysql -h 127.0.0.1 -u root
+      # - run:
+      #     name: mysql db
+      #     command: |
+      #       mysql -u root -e "create database circle_test;"
           # mysql -h localhost -u root -e "create database mate;"
 
       - run:
           name: Test
           command: |
             yarn
+            npm install why-is-node-running
             yarn test
 
 
