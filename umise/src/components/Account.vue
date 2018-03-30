@@ -3,6 +3,7 @@
 <div id='account' >
     <!--- body -->
     <div id="send_cards" class="body_cont">
+
         <div class = "send_cards_container" >
             <h4 class="title" ><i class="icon-home" ></i>Account Information</h4><br/>
             <h4 class="subTitle">Your information is listed below: </h4>
@@ -44,14 +45,21 @@
                 <div class="col-lg-10">
                   <p></p>
                 </div>
-
+               <hr id='hrstyle'><br/><br/>
+       <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?
+       u=http%3A%2F%2Fdolphin.com%2Fhappy-new-year%2F &
+       t=Enter%20your%20name%20and%20see%20what%20you%20might%20encounter%20in%20the%20new%20year."
+       target="_blank" id="J-share-facebook"><button class="btn btn-primary btn-outline-success" >Share to Facebook</button>
+     </a>
               </div>
             </div>
 
     
       </div>
   </div>
+   
 </div>
+
 
 
         <!-- <Friends></Friends> -->
