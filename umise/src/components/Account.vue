@@ -46,9 +46,7 @@
                   <p></p>
                 </div>
                <hr id='hrstyle'><br/><br/>
-       <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?
-       u=http%3A%2F%2Fdolphin.com%2Fhappy-new-year%2F &
-       t=Enter%20your%20name%20and%20see%20what%20you%20might%20encounter%20in%20the%20new%20year."
+       <a class="facebook" v-bind:href="'https://www.facebook.com/sharer/sharer.php?u=' + url"
        target="_blank" id="J-share-facebook"><button class="btn btn-primary btn-outline-success" >Share to Facebook</button>
      </a>
               </div>
@@ -73,8 +71,8 @@ export default {
       
       name: this.$store.getters.getUserName,
       password: this.$store.getters.getPasswprd,
-      email: this.$store.getters.getUserEmail
-
+      email: this.$store.getters.getUserEmail,
+      url: "http%3A%2F%2Fdolphin.com%2Fhappy-new-year%2F"
     };
   },
   components: {
