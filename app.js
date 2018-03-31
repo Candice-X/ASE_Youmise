@@ -14,7 +14,7 @@ const cards = require('./routes/cards');
 const records = require('./routes/records');
 
 
-const app = express();
+var app = express();
 
 
 app.use(cors())
@@ -40,17 +40,20 @@ const PORT = process.env.PORT || 8080;
     console.error('Unable to connect to the database:', err);
   };
   await models.sequelize.sync();
+  // models.Records.belongsTo(models.Users, {foreignKey: 'userid'});
+  // models.Records.belongsTo(models.Cards, {foreignKey: 'cardid'});
+  
   // models.User.findOne().then(user => {
   //   console.log(user.get('username'));
   // });
   // await models.sequelize.sync({force: true});
 
-  app.listen(PORT, (err) => {
-    if (err) {
-      console.error(err);
-    }
-    console.log(`Listening ${PORT}`);
-  });
 })();
 
+app.listen(PORT, (err) => {
+  if (err) {
+    console.error(err);
+  }
+  console.log(`Listening ${PORT}`);
+});
 module.exports = {app};

@@ -29,3 +29,13 @@ or with `yarn`:
 ### For passing process.env variables:
 * If using fish, then: env USERID= USERNAME= node app.js
 * If using bash, remove "env"
+
+### For merging:
+* In develop branch: git merge master
+* One way:
+    * git checkout master
+    * git merge --no-ff development  (maybe no need to do this
+    * git push
+* The other way:
+    * git checkout development
+    * git push origin development:master
