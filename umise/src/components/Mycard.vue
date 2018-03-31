@@ -82,6 +82,7 @@
 
 <script>
 // import Nav from './DashboardNav';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
@@ -228,6 +229,7 @@ export default {
     };
   },
   methods:{
+    ...mapActions(['']),
     showCard(index) {
   
       this.oneCard = this.cards[index];
@@ -235,6 +237,10 @@ export default {
     showReceivedCard() {
       this.isReceiveModel =true;
       this.cards = this.cardsReceive;
+      
+      //test auth
+      
+
     },
     showSendCard() {
       this.isReceiveModel = false;

@@ -17,6 +17,21 @@ import store from './store/store';
 // axios.defaults.baseURL = config.SERVER_POST_PREFIX;
 
 axios.defaults.baseURL = process.env.VUE_APP_SEVER_POST_PREFIX;
+
+//authentication 
+//add token to every request in the header
+
+
+// axios.defaults.headers.common['Authorization'] = "test";
+
+
+const token = localStorage.getItem('idToken');
+console.log('token:', token);
+  if ( token != null ) {
+    axios.defaults.headers.common['Authorization'] = token;
+  };
+
+
 // console.log(config);
 //add token to every request in the header
 // axios.defaults.headers.common['Authorization'] = "test";

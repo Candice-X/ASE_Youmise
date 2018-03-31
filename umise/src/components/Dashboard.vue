@@ -4,16 +4,18 @@
     <div id="send_cards" class="body_cont">
         <div class = "send_cards_container" >
             <h4 class="title" >Send Cards</h4>
+       
             <h4 class="subTitle">Choose a Card and send to your friends, or you can design your own card.</h4>
-            
+           
             <div class="row">
-                <div  v-for = "(card, index) in cards" :key="index"
+                <div  v-for = "(card, index) in cardsType" :key="index" :id ="card.cardid"
                 class="col-lg-3 col-md-3 col-sm-6 card_cont" >
                     <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
-                        <img v-bind:src="card.cardImg" />                        
+                        <img v-bind:src="card.cardImgURL" />                        
                         <h4>{{ index }} {{card.cardName}}</h4>
-                        <p class="sub_title">{{card.sender}}</p>
+                        <!-- <h5 style="font-size:0.5rem;">{{card.createdAt}}</h5> -->
+                        <p class="sub_title">{{card.cardNotes}}</p>
                     </div>
                 </div>          
 
@@ -37,7 +39,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Card Info</h5>
+          <h5 class="modal-title" id="exampleModalLongTitle">Card Info{{this.oneCard.cardName}}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -47,14 +49,14 @@
             
                 <div class="col-lg-5 col-md-5 col-sm-5 card_cont" >
                     <div class="card_img_more" >
-                        <img v-bind:src = "this.oneCard.cardImg" />
+                        <img v-bind:src = "this.oneCard.cardImgURL" />
                     </div>
                 </div>
                    <div class ="sender_cont_more col-lg-5 col-md-5 col-sm-5" > 
                        
                     <div class="content_more">
                         <h4>{{ this.oneCard.cardName }}</h4>
-                        <p class="sub_title">{{ this.oneCard.sender }}</p>
+                        <p class="sub_title">{{ this.oneCard.cardNotes }}</p>
                         <div class="input-group mb-3">
                           <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Friend</span>
@@ -97,168 +99,75 @@
 <script>
 // import Nav from './DashboardNav';
 import Friends from './Friends';
-
+import {mapState, mapActions, mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
   data() {
     return {
       name: 'kuer',
+      cardsType: [],
+      // used to send card to others
       oneCard: {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'From Kuer and Enjoy',
+          cardid:null,
+          cardName: '',
+          cardid:null,
+          cardImgURL: null,
+          cardNotes:'',
+          sender: null,
           senderImg:this.$store.state.card.girl,
           to:'',
           // expire:'Forever',
           message:'',
-      },    
-      cards: [
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'From Kuer and Enjoy',
-          senderImg:this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img2,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img3,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img4,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img5,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img6,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img7,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img8,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img9,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img10,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img11,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img12,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img13,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img14,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-
-      ],
+      }, 
+      
     };
   },
+  // computed: {...mapGetters(["getAllCardTypeFromState"]),},
+
   components: {
     Friends,
   },
   methods:{
     showCard(index) {
   
-      this.oneCard = this.cards[index];
+      this.oneCard = this.cardsType[index];
     },
     sendCard() {
       console.log(this.oneCard);
       jQuery("#Dashboard_send").modal('hide');
     },
+
+    refreshCard(){
+      // this.cardsType = this.$store.state.card.sendCardTypes;
+      // console.log("cardsType : ",this.$store.state.card.sendCardTypes);
+    },
+    // ...mapActions(["getAllCardType"]), // this.$store.dispatch("getAllCardType"),
+    // ...mapGetters(["getAllCardTypeFromState"]),
+    
+
   },
+
   created: function() {
     this.$store.state.user.isLogin = true;
+    // this.cardsType = this.$store.getters.getAllCardTypeFromState;
+    // console.log("cards type:",cardsType);
   },
+
+  mounted(){
+      axios.get("/card/card")
+      .then(res =>{
+        console.log("get all cards types", res.data);
+        // this.setAllCardType(res.data);
+       this.$store.state.card.sendCardTypes = res.data;
+       this.cardsType = this.$store.state.card.sendCardTypes;
+      })
+      .catch(error =>{
+        console.log(error);
+      });
+    
+  },
+
 };
 </script>
 
@@ -319,9 +228,6 @@ body {
   border: 2px dashed #fff;
   color: #fff;
 }
-
-
-
 
 .customize-icon-cont {
   border: 4px dashed #fff;
