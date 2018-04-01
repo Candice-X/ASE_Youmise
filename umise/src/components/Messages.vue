@@ -102,7 +102,7 @@ export default {
         try{
           console.log("userId: ",this.$store.state.user.userID);
           if(this.$store.state.user.userID != null ){ 
-            const response = await axios.post("/friend/updateFriendRequest/",{"friendRequestId":requestId,"status":"APPROVE"}); 
+            const response = await axios.post("/friend/updateFriendRequest/",{"friendRequestId":requestId,"status":"APPROVED"}); 
             console.log(`You have accept ${requestId}'s friend request` );
           }else{
             throw new Error("You need to login first");
