@@ -16,8 +16,63 @@ const state = {
 
   girl: require('../../../static/girl.png'),
   boy: require('../../../static/Logo.png'),
+  cards:[],
+  sendCardTypes:[],
+};
+
+
+const mutations = {
+  SET_SEND_CARD_TYPES(state,cardType){
+    state.sendCardTypes = cardType;
+     console.log("mutations:", cardType);
+  },
+
+};
+
+const actions = {
+  // testAxios() {
+  //   axios.post("/user/verification",this.user)
+  //         .then(res=>{  
+  //           console.log("response verification!",res);
+  //           // const data = res.data;
+  //           console.log(res.data);
+  //           console.log("success sign up, please login");
+              
+  //           // console.log(user);    
+  //         })
+  //         .catch(error => {
+  //           console.log(error);
+  //         });
+  // },
+
+  // getAllCardType({commit}){
+  //   axios.get("/card/card")
+  //   .then(res =>{
+  //     console.log("get all cards types", res.data);
+  //     commit("SET_SEND_CARD_TYPES",res.data);
+  //   })
+  //   .catch(error =>{
+  //     console.log(error);
+  //   });
+  // },
+  setAllCardType({commit},cardType){
+    // console.log("card.js : !!!!", cardType);
+    commit("SET_SEND_CARD_TYPES",cardType);
+  },
+
+};
+
+const getters = {
+  getAllCardTypeFromState: state =>{
+    return state.sendCardTypes;
+  },
 };
 
 export default {
+
   state,
+  mutations,
+  actions,
+  getters,
+  
 };
