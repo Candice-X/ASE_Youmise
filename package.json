@@ -29,7 +29,8 @@
     "helmet": "^3.12.0",
     "moment": "^2.15.1",
     "mysql2": "^1.5.2",
-    "sequelize": "^4.37.1"
+    "sequelize": "^4.37.1",
+    "why-is-node-running": "^2.0.2"
   },
   "devDependencies": {
     "expect": "^21.1.0",
