@@ -120,3 +120,17 @@ exports.confirmforgetPassword = async (cognito, confirmationCode, password, user
     throw new ServerError(400, err.message);
   }
 };
+
+exports.dbFetchAll = async (User) => {
+  try {
+    const result = await User.findAll({ raw: true });
+      if (!result){
+        console.log('There is no record in Card Table.');
+      } else {
+          console.log('Successfully find all cards.');
+          return result;
+      }
+  } catch (err) {
+    throw new ServerError(400, err);
+  }
+};
