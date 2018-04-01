@@ -13,7 +13,7 @@
                     <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />                        
-                        <h4>{{ index }} {{card.cardName}}</h4>
+                        <h4> {{card.cardName}}</h4>
                         <!-- <h5 style="font-size:0.5rem;">{{card.createdAt}}</h5> -->
                         <p class="sub_title">{{card.cardNotes}}</p>
                     </div>
