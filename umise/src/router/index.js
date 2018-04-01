@@ -13,6 +13,7 @@ import Messages from '@/components/Messages';
 import FriendsList from '@/components/FriendsList';
 import Account from '@/components/Account';
 import ResetPassword from '@/components/ResetPassword';
+import FacebookShare from '@/components/FacebookShare';
 
 import store from '../store/store';
 
@@ -105,6 +106,12 @@ export default new Router({
     name: 'resetPassword',
     component: ResetPassword,
     beforeEnter: loginGuard('/resetPassword'),
+  },
+  {
+    path: '/facebook',
+    name: 'facebook',
+    component: FacebookShare,
+    beforeEnter: loginGuard('/facebook'),
   },
   {
     path: '*',

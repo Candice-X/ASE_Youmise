@@ -92,13 +92,13 @@ export default {
         const result = await this.login(this.userData);
         console.log("result :", result);
         if (result === 1) {
-          this.getAllCardType();
+          // this.getAllCardType();
           this.$router.push("/dashboard");
           console.log("login success !");
         } else if (result === 2) {
           // this.$message({ message: "You need to set a new password" });
           console.log("You have to set a new password !");
-          this.getAllCardType();
+          // this.getAllCardType();
           this.$router.push("/dashboard");
         }
       } catch (e) {
