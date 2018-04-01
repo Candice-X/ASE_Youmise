@@ -100,7 +100,7 @@ export default {
       name: this.$store.getters.getUserName,
       password: this.$store.getters.getPasswprd,
       email: this.$store.getters.getUserEmail,
-      url: "http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/mycard"
+      url: "http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/facebook"
     };
   },
   name: 'HelloSocial',

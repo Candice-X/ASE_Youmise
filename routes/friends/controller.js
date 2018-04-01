@@ -30,6 +30,10 @@ exports.sendFriendRequest = async (User, FriendRequest, senderId, receiverEmail)
     if(senderId === receiverId) {
       throw new Error('You cannot send friend request to yourself!');
     }
+    const record = await FriendRequest.findOne({ where: { senderId, receiverId } });
+    if(record){
+      return record.get({ plain: true });
+    }
     const raw = await FriendRequest.create({
       senderId,
       senderUsername,
