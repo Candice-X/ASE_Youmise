@@ -49,7 +49,32 @@
        <a class="facebook" v-bind:href="'https://www.facebook.com/sharer/sharer.php?u=' + url"
        target="_blank" id="J-share-facebook"><button class="btn btn-primary btn-outline-success" >Share to Facebook</button>
      </a>
+
               </div>
+              <div class="hello">
+  <h4>Bundle of most known networks</h4>
+  <vue-goodshare></vue-goodshare>
+
+  <h4>Mobile networks</h4>
+  <vue-goodshare bundle="mobile"></vue-goodshare>
+
+  <h4>Single elements with options</h4>
+  <vue-goodshare-facebook 
+   button_design="outline"
+   page_url="https://vuejsfeed.com/" 
+   title_social="Facebook"
+   has_counter
+   has_icon 
+   ></vue-goodshare-facebook>
+
+  <vue-goodshare-twitter 
+   button_design="gradient"
+   page_url="https://vuejsfeed.com/" 
+   has_icon 
+   has_square_edges
+  ></vue-goodshare-twitter>
+
+  </div>
             </div>
 
     
@@ -64,7 +89,10 @@
 </template>
 
 <script>
-
+// import VueGoodshareFacebook from 'vue-goodshare/src/providers/Facebook.vue'
+// import VueGoodshareTwitter from 'vue-goodshare/src/providers/Twitter.vue'
+// // import mutliple
+// import VueGoodshare from 'vue-goodshare'
 export default {
   data() {
     return {
@@ -72,16 +100,23 @@ export default {
       name: this.$store.getters.getUserName,
       password: this.$store.getters.getPasswprd,
       email: this.$store.getters.getUserEmail,
-      url: "http%3A%2F%2Fdolphin.com%2Fhappy-new-year%2F"
+      url: "http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/facebook"
     };
   },
-  components: {
-   
+  name: 'HelloSocial',
+  components:{
+    // VueGoodshareTwitter,
+    // VueGoodshareFacebook,
+    // VueGoodshare
   },
   created: function() {
     this.$store.state.user.isLogin = true;
   },
 };
+
+
+
+
 </script>
 
 <style scoped>

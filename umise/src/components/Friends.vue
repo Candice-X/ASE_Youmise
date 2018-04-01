@@ -32,16 +32,62 @@
 
     </div>
   <friends-list></friends-list>
+<!-- Modal -->
+  <div class="modal fade bd-example-modal" id="add_friends" tabindex="-2" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="index:999;display:float;">
+    <div class="modal-dialog modal modal-dialog-centered" role="document" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Add New Friend</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="height:420px;">
+          <div class="row">
+             <div class="form-label-group" :class="{ invalid: $v.addFriends.email.$error }">
+                <input  v-model ="addFriends.email" id="inputEmail" class="form-control" placeholder="Email address"
+                @blur="$v.addFriends.email.$touch()" >
+                <label for="inputEmail">Friends Email address</label>
+            </div>
+            <button class="btn btn-primary btn-success btn-send" :disable ="$v.addFriends.email.$invalid" >Add a New Friends</button>
+          </div>
+
+
+        </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- end of card one -->
+
 </div>
 </template>
 
 <script>
 // import Nav from './DashboardNav';
+import { required, email } from 'vuelidate/lib/validators';
 import FriendsList from './FriendsList';
+
+
 
 export default {
   data() {
     return {
+      addFriends:{
+        email,
+      },
+
+      validations:{
+        addFriends:{
+          email:{
+            required,
+            email,
+          },
+        },
+      },
+
       friendName: 'Jack',
       cards: [
         {
@@ -50,86 +96,6 @@ export default {
           sender: 'From Kuer and Enjoy',
           senderImg:this.$store.state.card.girl,
         },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img2,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img3,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img4,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img5,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img6,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img7,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img8,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img9,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img10,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img11,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img12,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img13,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img14,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        
-
 
       ],
     };
@@ -470,5 +436,10 @@ i {
   display: block;
   float: left;
   /* min-height: 775px;  */
+}
+
+.form-label-group.invalid input {
+  border : 1px solid red;
+  background: #ffc9aa;
 }
 </style>

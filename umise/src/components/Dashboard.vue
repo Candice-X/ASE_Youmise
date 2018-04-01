@@ -13,7 +13,7 @@
                     <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />                        
-                        <h4>{{ index }} {{card.cardName}}</h4>
+                        <h4> {{card.cardName}}</h4>
                         <!-- <h5 style="font-size:0.5rem;">{{card.createdAt}}</h5> -->
                         <p class="sub_title">{{card.cardNotes}}</p>
                     </div>
@@ -130,7 +130,6 @@ export default {
   },
   methods:{
     showCard(index) {
-  
       this.oneCard = this.cardsType[index];
     },
     sendCard() {
@@ -155,16 +154,21 @@ export default {
   },
 
   mounted(){
-      axios.get("/card/card")
-      .then(res =>{
-        console.log("get all cards types", res.data);
-        // this.setAllCardType(res.data);
-       this.$store.state.card.sendCardTypes = res.data;
-       this.cardsType = this.$store.state.card.sendCardTypes;
-      })
-      .catch(error =>{
-        console.log(error);
-      });
+      try{
+        axios.get("/card/card")
+        .then(res =>{
+          console.log("get all cards types", res.data);
+          // this.setAllCardType(res.data);
+        this.$store.state.card.sendCardTypes = res.data;
+        this.cardsType = this.$store.state.card.sendCardTypes;
+        })
+        .catch(error =>{
+          console.log(error);
+        });
+      }catch(e){
+        console.log(e.message);
+      };
+      
     
   },
 
