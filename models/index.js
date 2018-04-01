@@ -57,6 +57,7 @@ db.Sequelize = Sequelize;
 db.User = sequelize.import(path.join(__dirname, 'User.js'));
 db.Card = sequelize.import(path.join(__dirname, 'Card.js'));
 db.Record = sequelize.import(path.join(__dirname, 'Record.js'));
+db.FriendRequest = sequelize.import(path.join(__dirname, 'FriendRequest.js'));
 // Testing connection: 03/20/2018 HYY
 // sequelize
 //     .authenticate()
@@ -66,4 +67,5 @@ db.Record = sequelize.import(path.join(__dirname, 'Record.js'));
 //     .catch((e)=>{
 //         console.log('Unable to connect to the database:',e);
 //     });
+
 module.exports = db;

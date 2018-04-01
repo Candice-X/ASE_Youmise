@@ -10,13 +10,13 @@
 
       <div class="form-label-group" :class="{invalid: $v.userData.username.$error }">
         <input id="inputEmail" class="form-control"  placeholder="User Name" autofocus=""
-          @blur="$v.userData.username.touch()" v-model="userData.username">
+          @blur="$v.userData.username.$touch()" v-model="userData.username">
         <label for="inputEmail">User Name</label>
       </div>
 
       <div class="form-label-group" :class="{invalid: $v.userData.password.$error }">
         <input id="inputPassword" class="form-control"  placeholder="Password" type="password"
-          @blur="$v.userData.password.touch()" v-model="userData.password">
+          @blur="$v.userData.password.$touch()" v-model="userData.password">
         <label for="inputPassword">Password</label>
       </div>
 
@@ -36,6 +36,7 @@
 import Navbar from "./Navbar";
 import { mapState, mapActions } from "vuex";
 import { required, email, minLength } from "vuelidate/lib/validators";
+import axios from 'axios';
 
 export default {
   name: "login",
@@ -73,24 +74,41 @@ export default {
   },
   
   methods: {
-    ...mapActions(["login"]),
+    ...mapActions(["login","setAllCardType"]),
+    // getAllCardType(){
+    //   axios.get("/card/card")
+    //   .then(res =>{
+    //     console.log("get all cards types", res.data);
+    //     // this.setAllCardType(res.data);
+    //    this.$store.state.card.sendCardTypes = res.data;
+    //   })
+    //   .catch(error =>{
+    //     console.log(error);
+    //   });
+    // },
+
     async handleLogin() {
       try {
         const result = await this.login(this.userData);
         console.log("result :", result);
         if (result === 1) {
+          this.getAllCardType();
           this.$router.push("/dashboard");
           console.log("login success !");
         } else if (result === 2) {
           // this.$message({ message: "You need to set a new password" });
           console.log("You have to set a new password !");
+          this.getAllCardType();
           this.$router.push("/dashboard");
         }
       } catch (e) {
         this.error = e.message;
         console.log("error :", e);
       }
-    }
+    },
+    
+    
+
   }
 };
 </script>

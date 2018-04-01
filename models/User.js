@@ -23,15 +23,29 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     firstName: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     lastName: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
+    // image: {
+    //   type: DataTypes.STRING,
+    // },
     gender:{
       type: DataTypes.ENUM('Male', 'Female')
     }
   });
 
+  User.associate = function(models) {
+    // user as sender of a message
+    models.User.hasMany(models.FriendRequest, {
+      foreignKey: 'uid',
+      sourceKey: 'receiverId',
+      onDelete: 'cascade',
+    });
+  };
+
   return User;
 }
+
+// User.belongsToMany(User, { as: 'friend', through: 'Userfriend' })
