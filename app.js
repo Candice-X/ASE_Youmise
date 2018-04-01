@@ -12,6 +12,7 @@ const cors = require("cors");
 const users = require('./routes/users');
 const cards = require('./routes/cards');
 const records = require('./routes/records');
+const friends = require('./routes/friends');
 
 
 var app = express();
@@ -26,6 +27,7 @@ app.use(express.static(path.join(`${__dirname}/umise/dist`)));
 app.use('/user', users);
 app.use('/card', cards);
 app.use('/record', records);
+app.use('/friend', friends);
 app.use('*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/umise/dist/index.html`));
 });
@@ -39,14 +41,22 @@ const PORT = process.env.PORT || 8080;
   } catch(err) {
     console.error('Unable to connect to the database:', err);
   };
-  await models.sequelize.sync();
+  // await models.sequelize.sync();
   // models.Records.belongsTo(models.Users, {foreignKey: 'userid'});
   // models.Records.belongsTo(models.Cards, {foreignKey: 'cardid'});
-  
+
   // models.User.findOne().then(user => {
   //   console.log(user.get('username'));
   // });
-  // await models.sequelize.sync({force: true});
+  await models.sequelize.sync({force: true});
+  // models.User.create({
+  //   username: 'xyh',
+  //   email: 'candice@gmail.com'
+  // });
+  // models.User.create({
+  //   username: 'xyh101',
+  //   email: 'candice101@gmail.com'
+  // });
 
 })();
 
