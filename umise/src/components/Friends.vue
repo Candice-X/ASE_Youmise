@@ -45,8 +45,8 @@
         <div class="modal-body" style="height:420px;">
           <div class="row">
              <div class="form-label-group" :class="{ invalid: $v.addFriends.email.$error }">
-                <input  id="inputEmail" class="form-control" placeholder="Email address"
-                @blur="$v.addFriends.email.$touch()" v-model ="addFriends.email">
+                <input  v-model ="addFriends.email" id="inputEmail" class="form-control" placeholder="Email address"
+                @blur="$v.addFriends.email.$touch()" >
                 <label for="inputEmail">Friends Email address</label>
             </div>
             <button class="btn btn-primary btn-success btn-send" :disable ="$v.addFriends.email.$invalid" >Add a New Friends</button>

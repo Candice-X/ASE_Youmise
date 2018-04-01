@@ -89,10 +89,10 @@
 </template>
 
 <script>
-import VueGoodshareFacebook from 'vue-goodshare/src/providers/Facebook.vue'
-import VueGoodshareTwitter from 'vue-goodshare/src/providers/Twitter.vue'
-// import mutliple
-import VueGoodshare from 'vue-goodshare'
+// import VueGoodshareFacebook from 'vue-goodshare/src/providers/Facebook.vue'
+// import VueGoodshareTwitter from 'vue-goodshare/src/providers/Twitter.vue'
+// // import mutliple
+// import VueGoodshare from 'vue-goodshare'
 export default {
   data() {
     return {
@@ -105,9 +105,9 @@ export default {
   },
   name: 'HelloSocial',
   components:{
-    VueGoodshareTwitter,
-    VueGoodshareFacebook,
-    VueGoodshare
+    // VueGoodshareTwitter,
+    // VueGoodshareFacebook,
+    // VueGoodshare
   },
   created: function() {
     this.$store.state.user.isLogin = true;
