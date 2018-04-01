@@ -41,14 +41,14 @@ const PORT = process.env.PORT || 8080;
   } catch(err) {
     console.error('Unable to connect to the database:', err);
   };
-  // await models.sequelize.sync();
+  await models.sequelize.sync();
   // models.Records.belongsTo(models.Users, {foreignKey: 'userid'});
   // models.Records.belongsTo(models.Cards, {foreignKey: 'cardid'});
 
   // models.User.findOne().then(user => {
   //   console.log(user.get('username'));
   // });
-  await models.sequelize.sync({force: true});
+  // await models.sequelize.sync({force: true});
   // models.User.create({
   //   username: 'xyh',
   //   email: 'candice@gmail.com'

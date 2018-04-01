@@ -3,7 +3,7 @@
   <h4 class="friends_list"> Friends List
        <!-- <i class="icon-close friends_list_close" @click="friend_list=false"></i> -->
        </h4> 
-       <button class="btn btn-primary btn-outline-success btn-sm" style="width:85%;" data-toggle="modal" data-target="#add_friends">Add Friend</button>
+       <button class="btn btn-primary btn-outline-success btn-sm" style="width:85%;margin:15px;" data-toggle="modal" data-target="#add_friends">Add Friend</button>
  <hr />
     <div class="friend">
       <div class="friends_img" >

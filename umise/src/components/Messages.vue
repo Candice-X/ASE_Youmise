@@ -6,32 +6,40 @@
             <h4 class="title" >Messages</h4>
             <h4 class="subTitle">Messages from your friends</h4>
 
-        <button class="btn btn-primary btn-outline-success active" >All Messages</button>
-        <button class="btn btn-primary btn-outline-success" >Unread Messages</button>
+        <button class="btn btn-primary btn-outline-success " :class= "{active: isMessage}" @click="getAllMessages" > Messages</button>
+        <button class="btn btn-primary btn-outline-success" :class= "{active: !isMessage}" @click="getFriendsRequest" >Friends Request</button>
 
-           <div class="row">
-                <div v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont" >
-                    <div class="card_img" >
-                        <img v-bind:src="card.cardImg" />
-                        <div class ="sender_cont" >
+           <div class="row" >
+                <div v-for = "(request, index) in friendRequests" :key="index" class="col-lg-4 col-md-4 col-sm-6 card_cont" >
+                    <div class="card_img" >   
+                      <div class ="sender_cont" >
                             <div class ='avatar' >
-                                <img v-bind:src="card.senderImg" />
+                                <img src="../assets/img/girl.png"/>
                             </div>
                             <div class="content">
-                                <h4>{{ card.cardName }}</h4>
-                                <p class="sub_title">{{ card.sender }}</p>
+                                <h4>{{ request.senderUsername }} send a friend request </h4>
+                                <p class="sub_title" >{{request.createdAt}}</p>
+                                <p class="sub_title">{{ request.senderUsername }} want to add you as a new friend</p>
+                                <p class="" >status: {{request.status}}</p>
                             </div>
-
+                      </div>  
+                       <div>
+                          <button class="btn btn-primary btn-success col-sm-6" @click="acceptRequest(request.friendRequestId)" >Accept</button>
+                          <button class="btn btn-primary btn-secondary col-sm-4" @click="rejectRequest(request.friendRequestId)" >Decline</button>
                         </div>
-
                     </div>
+                     
+                    <!-- button -->
+                    
                 </div>
 
 
             </div>
+            <!-- end of row -->
 
         </div>
-        <!-- <Friends></Friends> -->
+       
+
     </div>
 
 </div>
@@ -40,107 +48,90 @@
 <script>
 // import Nav from './DashboardNav';
 // import Friends from './Friends';
+import axios from "axios";
 
 export default {
   data() {
     return {
       name: 'kuer',
-      cards: [
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'From Kuer and Enjoy',
-          senderImg:this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img2,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img3,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img4,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img5,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img6,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img7,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img8,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img9,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img10,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img11,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img12,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img13,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img14,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        
+      isMessage: true,
+      // imgUrl:'',
 
-
+      friendRequests:[
+        // {
+        // friendRequestId:1,
+        // senderId:'',
+        // senderUsername:'kuer',
+        // receiverId:'',
+        // receiverUsername:'kjjkj',
+        // status:'',
+        // createdAt:'2018-01-01',
+        // updateAt:'',
+        // },
       ],
     };
   },
   components: {
-  
+   
   },
+
+  methods:{
+    async getAllMessages(){
+      this.isMessage = true;
+    },
+
+    async getFriendsRequest(){
+      this.isMessage = false;
+        try{
+          
+          if(this.$store.state.user.userID != null ){ 
+            const response = await axios.get(`/friend/listFriendRequest/${this.$store.state.user.userID}`);
+            this.friendRequests = response.data;
+            console.log(this.friendRequests);
+          }else{
+            throw new Error("You need to login first");
+          };
+
+        }catch(e){
+          console.log(e);
+          // this.errorMsg = e.response.data;
+        };
+    },
+
+    async acceptRequest(requestId){
+        try{
+          console.log("userId: ",this.$store.state.user.userID);
+          if(this.$store.state.user.userID != null ){ 
+            const response = await axios.post("/friend/updateFriendRequest/",{"friendRequestId":requestId,"status":"APPROVE"}); 
+            console.log(`You have accept ${requestId}'s friend request` );
+          }else{
+            throw new Error("You need to login first");
+          };
+          //refresh the request list
+          this.getFriendsRequest();
+
+        }catch(e){
+          console.log(e);
+          // this.errorMsg = e.response.data;
+        };
+    },
+
+    async rejectRequest(requestId){
+     
+    },
+    
+
+  },
+
+  // computed(){
+  //  imgUrl=this.$store.state.card.img1;
+  // },
+//  mounted(){
+//    this.imgUrl= this.$store.state.card.img1;
+//  },
   created: function() {
     this.$store.state.isLogin = true;
+    // this.imgUrl = this.$store.state.card.img1;
   },
 };
 </script>
@@ -163,12 +154,12 @@ body {
   width: 100%;
   text-align: left;
   margin-top: 0;
-  padding: 0;
+  padding: 10px;
 }
 
 .avatar {
   position: relative;
-  top: -10px;
+  top: -75px;
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -181,7 +172,7 @@ body {
   border-radius: 50% !important;
 }
 .content {
-  width: 150px;
+  /* width: 150px; */
   margin-left: 8px;
   display: inline-block;
   line-height: 1em;
@@ -206,22 +197,22 @@ body {
   margin-bottom: 200px;
 }
 .card_img {
-  width: 220px;
-  margin: 10px 25px;
+  width: 280px;
+  margin: 0px 25px;
   background: #dcdcdc;
-  height: 320px;
+  height: 200px;
   border-radius: 5px;
 }
-.card_img:hover {
+/* .card_img:hover {
   background: #3ac17e;
   opacity: 0.9;
   cursor: pointer;
   border: 2px dashed #fff;
   color: #fff;
-}
+} */
 .customize-icon-cont {
   border: 4px dashed #fff;
-  width: 220px;
+  width: 280px;
   margin: 10px 25px;
   background: rgba(0, 0, 0, 0.2);
   height: 320px;

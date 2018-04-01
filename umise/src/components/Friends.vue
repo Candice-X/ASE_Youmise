@@ -33,7 +33,7 @@
     </div>
   <friends-list></friends-list>
 <!-- Modal -->
-  <div class="modal fade bd-example-modal" id="add_friends" tabindex="-2" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="index:999;display:float;">
+  <div class="modal fade bd-example-modal" id="add_friends" tabindex="-2" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
     <div class="modal-dialog modal modal-dialog-centered" role="document" >
       <div class="modal-content">
         <div class="modal-header">
@@ -42,15 +42,20 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body" style="height:420px;">
-          <div class="row">
-             <div class="form-label-group" :class="{ invalid: $v.addFriends.email.$error }">
-                <input  v-model ="addFriends.email" id="inputEmail" class="form-control" placeholder="Email address"
-                @blur="$v.addFriends.email.$touch()" >
-                <label for="inputEmail">Friends Email address</label>
-            </div>
-            <button class="btn btn-primary btn-success btn-send" :disable ="$v.addFriends.email.$invalid" >Add a New Friends</button>
-          </div>
+        <div class="modal-body" >
+          
+             <!-- <div class="form-label-group" :class="{ invalid: $v.addfriends.email.$error }">
+                <input  v-model="addfriends.email" id="inputEmailfriend" class="form-control" placeholder="Email address"
+                @blur="$v.addfriends.email.$touch()">
+                <label for="inputEmailfriend">Friends Email address</label>
+            </div> -->
+                 <label for="inputEmailfriend">Friends Email address</label>
+                <input v-model="email" id="inputEmailfriend" class="form-control col-sm-12" 
+                placeholder="Email address" @blur="$v.email.$touch()" style="margin-bottom:0px;" >  
+                <p style="display:block;height:25px;color:red;">{{errorMsg}}</p>       
+         
+          <button class="btn btn-primary btn-success btn-send  col-sm-12" :disabled="$v.email.$invalid" 
+          style="margin-bottom:20px;" @click="addFriends" >Add a New Friends</button>
 
 
         </div>
@@ -67,26 +72,17 @@
 
 <script>
 // import Nav from './DashboardNav';
+
 import { required, email } from 'vuelidate/lib/validators';
 import FriendsList from './FriendsList';
-
-
+import axios from "axios";
 
 export default {
   data() {
     return {
-      addFriends:{
-        email,
-      },
+      email:'',
 
-      validations:{
-        addFriends:{
-          email:{
-            required,
-            email,
-          },
-        },
-      },
+      errorMsg:'',
 
       friendName: 'Jack',
       cards: [
@@ -100,6 +96,32 @@ export default {
       ],
     };
   },
+
+  validations:{
+    email:{         
+        email,
+        required,
+      },
+  },
+
+  methods:{
+    async addFriends() {
+     try{
+       if(this.$store.state.user.userID != null ){ 
+        const response = await axios.post("/friend/sendFriendRequest",{"senderId":this.$store.state.user.userID, "receiverEmail":this.email});
+        console.log(response.data);
+       }else{
+         throw new Error("You need to login first to add a friend");
+       }
+
+     }catch(e){
+       this.errorMsg = e.response.data;
+     };
+    },
+
+
+  },
+
   components: {
     // Nav,
     FriendsList,
