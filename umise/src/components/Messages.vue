@@ -81,6 +81,7 @@ export default {
   methods:{
     async getAllMessages(){
       this.isMessage = true;
+      this.friendRequests = [];
     },
 
     async getFriendsRequest(){
@@ -89,8 +90,9 @@ export default {
           
           if(this.$store.state.user.userID != null ){ 
             const response = await axios.get(`/friend/listFriendRequest/${this.$store.state.user.userID}`);
+            console.log("friend request response :",response.data);
             this.friendRequests = response.data;
-            console.log(this.friendRequests);
+            console.log("friends Request: ", this.friendRequests);
           }else{
             throw new Error("You need to login first");
           };

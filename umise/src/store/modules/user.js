@@ -12,6 +12,7 @@ const state = {
   loading: false,
   authenticated: 0,
   challengeData: {},
+  friendList:[],
 };
 
 const mutations = {

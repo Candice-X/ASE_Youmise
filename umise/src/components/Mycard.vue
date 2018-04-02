@@ -16,7 +16,7 @@
                 class="col-lg-3 col-md-3 col-sm-6 card_cont" >
                    <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
-                        <img v-bind:src="card.cardImg" />
+                        <img v-bind:src="card.cardImgURL" />
                         
                         <div class ="sender_cont" >
                             <div class ='avatar' >
@@ -25,6 +25,8 @@
                             <div class="content">
                                 <h4>{{ card.cardName }}</h4>
                                 <p class="sub_title">{{ card.sender }}</p>
+                                date:{{card.createDate}}
+                                status: {{card.status}}
                             </div>
 
                         </div>
@@ -57,6 +59,7 @@
                         <img v-bind:src="this.oneCard.senderImg" />
                     <div class="content_more">
                         <h4>{{ this.oneCard.cardName }}</h4>
+                        
                         <p class="sub_title">{{ this.oneCard.sender }}</p>
                         <div class="message_more">
                             How you have a great weekend, I will treat you a great dinner Next time :)
@@ -85,30 +88,33 @@
 <script>
 // import Nav from './DashboardNav';
 import { mapActions } from 'vuex';
+import axios from "axios";
+import { required, email } from "vuelidate/lib/validators";
 
 export default {
   data() {
     return {
       isReceiveModel: true,
       cards:[],
-
-
-
+      //this is for create record
       oneCard: {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'Kuer and Enjoy',
+          recordid:'',
+          senderid:null,
+          receiverid:null,
+          cardid:null,
+          cardName:'',
+          createDate:null,
+          finishDate:null,
+          cardTitle:'',
+          cardContent:'',
+          status:null,
+          cardImgURL: null,
           senderImg:this.$store.state.card.girl,
-      },    
-      cardsReceive: [
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'From Kuer and Enjoy',
-          senderImg:this.$store.state.card.girl,
-        },
-        
-      ],
+          receiverEmail:'',
+    
+      },  
+
+      cardsReceive: [],
 
 
       cardsSend: [
@@ -131,21 +137,50 @@ export default {
   },
   methods:{
     ...mapActions(['']),
-    showCard(index) {
-  
+    async showCard(index) {
+     
       this.oneCard = this.cards[index];
     },
-    showReceivedCard() {
-      this.isReceiveModel =true;
-      this.cards = this.cardsReceive;
-      
-      //test auth
-      
 
+
+    async showReceivedCard() {
+      this.isReceiveModel =true;
+      const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+     try{
+       if(userID){
+            const response = await axios.get(`/record/record/receiver/${userID}`);
+            // this.cards = response.data;
+            this.cards = this.response;
+            console.log(response.data);
+       }else{
+
+       };
+       
+      }catch(e){
+        console.log(e.message);
+      };
     },
-    showSendCard() {
+
+    async showSendCard() {
       this.isReceiveModel = false;
-      this.cards = this.cardsSend;
+       
+       const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+     try{
+       if(userID){
+            const response = await axios.get(`/record/record/send/${userID}`);
+            // this.cards = response.data;
+              this.cards = this.response;
+            console.log(response.data);
+       }else{
+
+       };
+       
+      }catch(e){
+        console.log(e.message);
+      };
+
+
+    
     },
   },
   components: {
@@ -153,7 +188,7 @@ export default {
   },
   created: function() {
     this.$store.state.isLogin = true;
-    this.cards = this.cardsReceive;
+    this.showReceivedCard();
   },
 
 };

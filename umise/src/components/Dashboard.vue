@@ -1,13 +1,13 @@
 <template>
 <div id='nav_dashboard' >
     <!--- body -->
-    <div id="send_cards" class="body_cont">
+    <div id="send_cards" class="body_cont" >
         <div class = "send_cards_container" >
             <h4 class="title" >Send Cards</h4>
        
             <h4 class="subTitle">Choose a Card and send to your friends, or you can design your own card.</h4>
            
-            <div class="row">
+            <div class="row card_row">
                 <div  v-for = "(card, index) in cardsType" :key="index" :id ="card.cardid"
                 class="col-lg-3 col-md-3 col-sm-6 card_cont" >
                     <div class="card_img" data-toggle="modal"
@@ -61,7 +61,7 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Friend</span>
                           </div>
-                          <input type="text" v-model="oneCard.to" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
+                          <input type="text" v-model="oneCard.receiverEmail"  @blur="$v.oneCard.receiverEmail.$touch()" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                         <div class="form-group">         
                             <select  class="form-control" id="exampleFormControlSelect1">
@@ -76,7 +76,7 @@
                         <textarea v-model="oneCard.message" class="form-control message_more" maxlength="140">How you have a great weekend, I will treat you a great dinner Next time :)
                         </textarea>
                     </div>
-                    <button class="btn btn-primary btn-success btn-send" @click="sendCard" >Send to Friends</button>
+                    <button class="btn btn-primary btn-success btn-send" @click="sendCard" :disabled="$v.oneCard.receiverEmail.$invalid" >Send to Friends</button>
                 </div>
 
 
@@ -101,6 +101,7 @@
 import Friends from './Friends';
 import {mapState, mapActions, mapGetters} from "vuex";
 import axios from "axios";
+import { required, email } from "vuelidate/lib/validators";
 
 export default {
   data() {
@@ -115,14 +116,33 @@ export default {
           cardNotes:'',
           sender: null,
           senderImg:this.$store.state.card.girl,
-          to:'',
+          receiverEmail:'',
           // expire:'Forever',
           message:'',
       }, 
+
+      sendCardRecord:{
+          senderid: '',
+          receiverid: '',
+          cardid:'',
+          expireDate: null,
+          finishDate: null,
+          cardContent: '',
+          cardTitle:'',
+          receiverEmail:'',
+      },
       
     };
   },
-  // computed: {...mapGetters(["getAllCardTypeFromState"]),},
+      // computed: {...mapGetters(["getAllCardTypeFromState"]),},
+    validations:{
+      oneCard:{
+        receiverEmail:{
+          email,
+          required,
+        },
+      },
+    },
 
   components: {
     Friends,
@@ -131,9 +151,33 @@ export default {
     showCard(index) {
       this.oneCard = this.cardsType[index];
     },
-    sendCard() {
-      console.log(this.oneCard);
-      jQuery("#Dashboard_send").modal('hide');
+    //send card to friends
+    async sendCard() {
+      try{
+        const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+
+        console.log("userid :",userID);
+        if(userID){
+          this.sendCardRecord.senderid = userID;
+          this.sendCardRecord.receiverEmail= this.oneCard.receiverEmail;
+          this.sendCardRecord.cardid = this.oneCard.cardid;
+          this.sendCardRecord.expireDate = null;
+          this.sendCardRecord.cardContent = this.oneCard.message;
+          this.sendCardRecord.cardTitle = this.oneCard.cardName;
+          this.sendCardRecord.receiverid= null;
+
+          console.log("send record object :", this.sendCardRecord);
+          const resp = await axios.post('/record/record',this.sendCardRecord);
+
+
+           jQuery("#Dashboard_send").modal('hide');
+        }else{
+          throw new Error("Please login in first");
+        };      
+      }catch(e) {
+        console.log(e.message);
+      };    
+     
     },
 
     refreshCard(){
@@ -187,15 +231,15 @@ body {
 .card_cont {
   /* background:#dcdcdc; */
   display: block;
-  width: auto;
+  width: 220px;;
   padding: 0;
   margin: 0px;
   margin-top: 15px;
   margin-bottom: 50px;
   border-radius: 5px;
+  float:left;
 }
 .row {
-  width: auto;
   padding: 0;
   margin: 0;
   margin-left: 20px;
@@ -408,6 +452,7 @@ li:hover {
 
 @media (min-width: 992px) {
   .body_cont {
+    /* width:90%; */
     height: 100%;
     position: relative;
     display: block;
@@ -437,10 +482,11 @@ i {
 
 .body_cont {
   height: 100%;
-  width: auto;
+  width: 80%;
   position: relative;
   display: block;
   float: left;
+  display:table-cell;
   /* min-height: 775px;  */
 }
 
@@ -469,6 +515,11 @@ i {
   margin-bottom: 20px;
 }
 .btn-send{
+  width:100%;
+}
+
+.card_row{
+
   width:100%;
 }
 </style>
