@@ -100,10 +100,11 @@ export default {
       oneCard: {
           recordid:'',
           senderid:null,
+          senderName:'',
           receiverid:null,
           cardid:null,
-          cardName:'',
           createDate:null,
+          expireDate:null,
           finishDate:null,
           cardTitle:'',
           cardContent:'',
@@ -111,25 +112,14 @@ export default {
           cardImgURL: null,
           senderImg:this.$store.state.card.girl,
           receiverEmail:'',
-    
+          receiverName:'', 
       },  
 
       cardsReceive: [],
 
 
       cardsSend: [
-          {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img8,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img9,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
+         
         
       ],
 
@@ -146,11 +136,13 @@ export default {
     async showReceivedCard() {
       this.isReceiveModel =true;
       const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+      console.log("show received card:", userID);
      try{
        if(userID){
-            const response = await axios.get(`/record/record/receiver/${userID}`);
+            // const response = await axios.get(`/record/record/receiver/${userID}`);
+            const response = await axios.get(`/record/record`);
             // this.cards = response.data;
-            this.cards = this.response;
+            this.cards = this.response.data;
             console.log(response.data);
        }else{
 
@@ -165,11 +157,12 @@ export default {
       this.isReceiveModel = false;
        
        const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+       console.log("show send card:", userID);
      try{
        if(userID){
-            const response = await axios.get(`/record/record/send/${userID}`);
+            const response = await axios.get(`/record/record/sender/${userID}`);
             // this.cards = response.data;
-              this.cards = this.response;
+              this.cards = this.response.data;
             console.log(response.data);
        }else{
 
