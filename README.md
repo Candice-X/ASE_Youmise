@@ -32,6 +32,7 @@ or with `yarn`:
 
 
 ## Some HELPFUL git commands:
+
 ### For merging:
 * In develop branch: git merge master
 * One way:
@@ -41,6 +42,7 @@ or with `yarn`:
 * The other way:
     * git checkout development
     * git push origin development:master
+
 ### Cleaning current working directory:
 * When you are working on file A, and want to implement some changes on file B and you do not want to stage changes in file A, then:
     * git stash (will help you cleaning the working directory)

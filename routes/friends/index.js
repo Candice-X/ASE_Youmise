@@ -46,4 +46,15 @@ router.get('/listFriends/:uid', async (req, res) => {
   }
 });
 
+router.delete('/deleteFriends/:uid1/:uid2', async(req, res) => {
+try {
+    const user1 = req.params.uid1;
+    const user2 = req.params.uid2;
+    const result = await controller.deleteFriends(models.Friendship, user1, user2);
+    res.json(result);
+} catch (err) {
+    res.status(400).send(err.message);
+}
+});
+
 module.exports = router;

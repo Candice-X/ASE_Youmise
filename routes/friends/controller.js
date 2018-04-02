@@ -30,7 +30,7 @@ exports.sendFriendRequest = async (User, Friendship, FriendRequest, senderId, re
     if(senderId === receiverId) {
       throw new Error('You cannot send friend request to yourself!');
     }
-    const friendship = Friendship.findOne({ where: { userId: senderId, friendId: receiverId } })
+    const friendship = await Friendship.findOne({ where: { userId: senderId, friendId: receiverId } })
     if(friendship) {
       throw new Error('You are already friends!');
     }
@@ -131,3 +131,25 @@ exports.listFriends = async (User, Friendship, userId) =>{
     throw new ServerError(400, err.message);
   }
 };
+
+// exports.deleteFriends = async (Friendship, userId1, userId2) =>{
+//   try{
+//     const user = await User.findOne({ where: { uid: userId } });
+//     if(!user){
+//       throw new Error('User not found!');
+//     }
+//     const friendships = await Friendship.findAll({ where: { userId } });
+//     // const records = await FriendRequest.findAll({ where: { receiverId } });
+//     let friends = [];
+//     for(let i in friendships){
+//       let friendId = friendships[i].friendId;
+//       let friend = await User.findOne({ where: { uid: friendId }});
+//       console.log(friend);
+//       friends.push(friend);
+//     }
+//     return { message };
+//   } catch(err) {
+//     console.log(err);
+//     throw new ServerError(400, err.message);
+//   }
+// };
