@@ -19,7 +19,7 @@ describe('POST /record/record 123', ()=>{
             .post('/record/record')
             .send({
                 senderid: records[2].senderid,
-                receiverid: records[2].receiverid,
+                receiverEmail: users[3].email,
                 cardid: records[2].cardid,
                 expireDate: null,
                 cardContent: "chenfu invite xxx for dinner.",
@@ -28,6 +28,7 @@ describe('POST /record/record 123', ()=>{
             .expect(200)
             .expect((res)=>{
                 expect(res.body.cardTitle).toBe(records[2].cardTitle);
+                expect(res.body.receiverid).toBe(users[3].uid);
             })
             .end((err,res)=>{
                 if(err){

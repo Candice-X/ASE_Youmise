@@ -2,14 +2,17 @@ const ServerError = require('../../utils/ServerError');
 const config = require('../../config');
 // var moment = require('moment');
 
-exports.dbCreateRecord = async (Record, senderid, receiverid, cardid, expireDate, cardContent, cardTitle) => {
+exports.dbCreateRecord = async (Record, User, senderid, receiverEmail, cardid, expireDate, cardContent, cardTitle) => {
     try{
         let result;
         let status = 1;
-        if (!receiverid){ 
+        if (!receiverEmail){ 
             status = 2;
         }
         let createDate = new Date();
+        const receiver = await User.findAll({where: {email: receiverEmail}, raw: true});
+        console.log(`receiver find ${receiver[0]}`);
+        receiverid = receiver[0].uid;
         const raw = await Record.create({
             senderid,
             receiverid,

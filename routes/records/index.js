@@ -14,7 +14,7 @@ const router = express.Router();
 // Create Record
 router.post('/record', async (req, res) => {
   try {
-    const result = await controller.dbCreateRecord(models.Record, req.body.senderid, req.body.receiverid, req.body.cardid, req.body.expireDate, req.body.cardContent, req.body.cardTitle);
+    const result = await controller.dbCreateRecord(models.Record, models.User, req.body.senderid, req.body.receiverEmail, req.body.cardid, req.body.expireDate, req.body.cardContent, req.body.cardTitle);
     
     res.json(result);
   } catch (err) {
