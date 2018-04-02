@@ -59,11 +59,35 @@ router.get('/record/sender/:id', async(req, res) => {
   }
 });
 
-// Fetch all records by senderid
+// Fetch all records between senderid and friendid
+router.get('/record/sender/:id/friend/:friendid', async(req, res) => {
+  try {
+    const senderid = req.params.id;
+    const receiverid = req.params.friendid
+    let result = await controller.dbFindBySenderAndFriend(models.Record,models.User, models.Card, senderid, receiverid);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+// Fetch all records by receiverid
 router.get('/record/receiver/:id', async(req, res) => {
   try {
     const receiverid = req.params.id;
     let result = await controller.dbFindByReceiver(models.Record,models.User, models.Card, receiverid, null);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+// Fetch all records between receiverid and friendid
+router.get('/record/receiver/:id/friend/:friendid', async(req, res) => {
+  try {
+    const receiverid = req.params.id;
+    const senderid = req.params.friendid
+    let result = await controller.dbFindByReceiverAndFriend(models.Record,models.User, models.Card, receiverid, senderid);
     res.json(result);
   } catch (err) {
     res.status(400).send(err.message);
@@ -94,6 +118,7 @@ router.get('/record/:id', async(req, res) => {
       res.status(err.statusCode).send(err.message);
     }
   });
+
 
 // Fetch records by recordid
 router.patch('/record/:id', async(req, res) => {
