@@ -49,18 +49,18 @@ const PORT = process.env.PORT || 8080;
   //   console.log(user.get('username'));
   // });
   // await models.sequelize.sync({force: true});
-  models.User.create({
-    username: 'xyh',
-    email: 'candice@gmail.com'
-  });
-  models.User.create({
-    username: 'xyh101',
-    email: 'candice101@gmail.com'
-  });
-  models.User.create({
-    username: 'xyh102',
-    email: 'candice102@gmail.com'
-  });
+  // models.User.create({
+  //   username: 'xyh',
+  //   email: 'candice@gmail.com'
+  // });
+  // models.User.create({
+  //   username: 'xyh101',
+  //   email: 'candice101@gmail.com'
+  // });
+  // models.User.create({
+  //   username: 'xyh102',
+  //   email: 'candice102@gmail.com'
+  // });
 
 })();
 
