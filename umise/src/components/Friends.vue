@@ -83,7 +83,6 @@ export default {
       email:'',
 
       errorMsg:'',
-
       friendName: 'Jack',
       cards: [
         {
@@ -119,6 +118,7 @@ export default {
      };
     },
 
+  
 
   },
 

@@ -5,24 +5,28 @@
         <div class = "send_cards_container" >
             <!-- <h4 class="title" >My Cards</h4>
             <h4 class="subTitle">Card with  </h4> -->
-
+      <center>
         <button class="btn btn-primary btn-outline-success" 
         :class="{ active: isReceiveModel }" @click="showReceivedCard">Cards Received</button>
         <button class="btn btn-primary btn-outline-success" 
         :class="{ active: !isReceiveModel }" @click="showSendCard" >Cards Sent</button>
+        </center>
             <div class="row">
                 <div v-for = "(card, index) in cards" :key="index" 
                 class="col-lg-3 col-md-3 col-sm-6 card_cont" >
                    <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
-                        <img v-bind:src="card.cardImg" />
+                        <img v-bind:src="card.cardImgURL" />
+                        
                         <div class ="sender_cont" >
                             <div class ='avatar' >
-                                <img v-bind:src="card.senderImg" />
+                                <img src="../assets/img/girl.png" />
                             </div>
                             <div class="content">
                                 <h4>{{ card.cardName }}</h4>
                                 <p class="sub_title">{{ card.sender }}</p>
+                                date:{{card.createDate}}
+                                status: {{card.status}}
                             </div>
 
                         </div>
@@ -55,6 +59,7 @@
                         <img v-bind:src="this.oneCard.senderImg" />
                     <div class="content_more">
                         <h4>{{ this.oneCard.cardName }}</h4>
+                        
                         <p class="sub_title">{{ this.oneCard.sender }}</p>
                         <div class="message_more">
                             How you have a great weekend, I will treat you a great dinner Next time :)
@@ -83,104 +88,35 @@
 <script>
 // import Nav from './DashboardNav';
 import { mapActions } from 'vuex';
+import axios from "axios";
+import { required, email } from "vuelidate/lib/validators";
 
 export default {
   data() {
     return {
       isReceiveModel: true,
       cards:[],
+      //this is for create record
       oneCard: {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'Kuer and Enjoy',
+          recordid:'',
+          senderid:null,
+          receiverid:null,
+          cardid:null,
+          cardName:'',
+          createDate:null,
+          finishDate:null,
+          cardTitle:'',
+          cardContent:'',
+          status:null,
+          cardImgURL: null,
           senderImg:this.$store.state.card.girl,
-      },    
-      cardsReceive: [
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'From Kuer and Enjoy',
-          senderImg:this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img2,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img3,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img4,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img5,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img6,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img7,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img8,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img9,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img10,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img11,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img12,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img13,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img14,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-      ],
+          receiverEmail:'',
+    
+      },  
+
+      cardsReceive: [],
+
+
       cardsSend: [
           {
           cardName: 'Dinning Card',
@@ -194,57 +130,57 @@ export default {
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.girl,
         },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img10,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img11,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img12,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img13,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img14,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
+        
       ],
 
     };
   },
   methods:{
     ...mapActions(['']),
-    showCard(index) {
-  
+    async showCard(index) {
+     
       this.oneCard = this.cards[index];
     },
-    showReceivedCard() {
-      this.isReceiveModel =true;
-      this.cards = this.cardsReceive;
-      
-      //test auth
-      
 
+
+    async showReceivedCard() {
+      this.isReceiveModel =true;
+      const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+     try{
+       if(userID){
+            const response = await axios.get(`/record/record/receiver/${userID}`);
+            // this.cards = response.data;
+            this.cards = this.response;
+            console.log(response.data);
+       }else{
+
+       };
+       
+      }catch(e){
+        console.log(e.message);
+      };
     },
-    showSendCard() {
+
+    async showSendCard() {
       this.isReceiveModel = false;
-      this.cards = this.cardsSend;
+       
+       const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+     try{
+       if(userID){
+            const response = await axios.get(`/record/record/send/${userID}`);
+            // this.cards = response.data;
+              this.cards = this.response;
+            console.log(response.data);
+       }else{
+
+       };
+       
+      }catch(e){
+        console.log(e.message);
+      };
+
+
+    
     },
   },
   components: {
@@ -252,7 +188,7 @@ export default {
   },
   created: function() {
     this.$store.state.isLogin = true;
-    this.cards = this.cardsReceive;
+    this.showReceivedCard();
   },
 
 };

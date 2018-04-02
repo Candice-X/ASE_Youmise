@@ -1,5 +1,6 @@
 <template>
-  
+
+
 <div id='account' >
     <!--- body -->
     <div id="send_cards" class="body_cont">
@@ -50,6 +51,7 @@
        target="_blank" id="J-share-facebook"><button class="btn btn-primary btn-outline-success" >Share to Facebook</button>
      </a>
 
+
               </div>
               <div class="hello">
   <h4>Bundle of most known networks</h4>
@@ -89,10 +91,6 @@
 </template>
 
 <script>
-// import VueGoodshareFacebook from 'vue-goodshare/src/providers/Facebook.vue'
-// import VueGoodshareTwitter from 'vue-goodshare/src/providers/Twitter.vue'
-// // import mutliple
-// import VueGoodshare from 'vue-goodshare'
 export default {
   data() {
     return {
@@ -105,16 +103,9 @@ export default {
   },
   name: 'HelloSocial',
   components:{
-    // VueGoodshareTwitter,
-    // VueGoodshareFacebook,
-    // VueGoodshare
   },
-  created: function() {
-    this.$store.state.user.isLogin = true;
-  },
+
 };
-
-
 
 
 </script>
