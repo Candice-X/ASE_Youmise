@@ -40,6 +40,12 @@ exports.dbFetchAll = async (Record, User, Card) => {
                 const sender = await User.findAll({ where: { uid: result[i].senderid},raw: true });
                 const card = await Card.findAll({  where: { cardid: result[i].cardid}, raw: true });
                 let receiver;
+                let senderusername = "wrong user";
+                let senderemail = "wrong user"
+                if (sender){
+                    senderusername = sender[0].username;
+                    senderemail =sender[0].email;
+                }
                 if (result.receiverid !== null){
                     receiver = await User.findAll({ where: {uid: result[i].receiverid},raw: true });
                     res.push({
@@ -52,8 +58,8 @@ exports.dbFetchAll = async (Record, User, Card) => {
                         cardContent: result[i].cardContent,
                         cardTitle: result[i].cardTitle,
                         status: result[i].status,
-                        senderName: sender[0].username,
-                        senderEmail: sender[0].email,
+                        senderName: senderusername,
+                        senderEmail: senderemail,
                         receiverName: receiver[0].username,
                         receiverEmail: receiver[0].email,
                         cardImgURL: card[0].cardImgURL
