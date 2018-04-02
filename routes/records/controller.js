@@ -46,7 +46,7 @@ exports.dbFetchAll = async (Record, User, Card) => {
                     senderusername = sender[0].username;
                     senderemail =sender[0].email;
                 }
-                if (result.receiverid !== null){
+                if (result[i].receiverid !== null){
                     receiver = await User.findAll({ where: {uid: result[i].receiverid},raw: true });
                     res.push({
                         recordid: result[i].recordid, 
