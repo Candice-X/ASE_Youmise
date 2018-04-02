@@ -7,22 +7,12 @@ const {app} = require('./../../app');
 const models = require('./../../models');
 
 
-const {cards, populateCards, records, populateRecords} = require('./../seed/seed');
+const {cards, populateCards, users, populateUsers, records, populateRecords } = require('./../seed/seed');
 
 beforeEach(populateCards);
+beforeEach(populateUsers);
 beforeEach(populateRecords);
- //run before every test case
- // This part is not work.. Not sure what will happen if not close connection, just keep here for now.
-//  after(async ()=>{
-//     await models.sequelize.connectionManager.close().then((done) =>
-//     {
-//         console.log('shut down gracefully');
-//         // setTimeout(function() {
-//         //     done();  // MAGIC == EVIL.
-//         // }, 1000);
-//         done();
-//     });   
-// });
+
 describe('POST /record/record 123', ()=>{
     it('should create a new record', (done)=>{
         request(app)
@@ -74,6 +64,7 @@ describe('GET /record/record', ()=>{
             .expect(200)
             .expect((res)=>{
                 expect(res.body.length).toBe(2);
+                expect(res.body[0].senderName).toBeTruthy();
             })
             .end(done);
     })
@@ -85,7 +76,9 @@ describe('GET /record/record/sender/senderid', ()=>{
             .get(`/record/record/sender/${records[0].senderid}`)
             .expect(200)
             .expect((res)=>{
+                console.log(`this is the response ${res.body}`);
                 expect(res.body.length).toBe(1);
+                expect(res.body[0].senderName).toBe(users[0].username);
             })
             .end(done);
     })
@@ -133,6 +126,8 @@ describe('GET /record/:id',()=>{
             .expect(200)
             .expect((res)=>{
                 expect(res.body.cardTitle).toBe(records[0].cardTitle);
+                console.log(`res.body${JSON.stringify(res)}`);
+                expect(res.body.senderName).toBe(users[0].username);
             })
             .end(done);
     });

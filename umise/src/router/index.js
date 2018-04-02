@@ -16,9 +16,15 @@ import ResetPassword from '@/components/ResetPassword';
 import FacebookShare from '@/components/FacebookShare';
 
 import store from '../store/store';
+import Meta from 'vue-meta'
 
 
 Vue.use(Router);
+Vue.use(Meta, {
+  keyName: 'metaInfo', // the component option name that vue-meta looks for meta info on.
+  attribute: 'data-vue-meta', // the attribute name vue-meta adds to the tags it observes
+});
+
 // path:"*", redirect(/)
 
 const authToLink =['/', '/login', '/signup', 'dashboard', '/mycard', '/friends', 'about', 'messages'];
