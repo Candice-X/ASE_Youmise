@@ -1,17 +1,13 @@
 <template>
   <div>
   	hello cat!
+  	 <img src="https://s3.us-east-2.amazonaws.com/umisefrontendimages/11.png">
   </div>
 </template>
 
 
 <script>
   export default {
-    metaInfo: {
-    meta: [
-          { property: 'og:url', content: 'http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/facebook' }, 
-      { property: 'og:image', content: 'http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg' }
-    ]
-    }
+    
     }
 </script>
