@@ -89,6 +89,7 @@ export default {
 
     async handleLogin() {
       try {
+        this.error ="";
         const result = await this.login(this.userData);
         console.log("result :", result);
         if (result === 1) {

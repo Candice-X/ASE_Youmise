@@ -52,7 +52,7 @@
       <div class="form-label-group">
 
         <input id="validateCode" class="form-control" placeholder="UserName" autofocus="" type=""
-        @blur ="$v.user.confirmationCode" v-model ="user.confirmationCode" >
+        @blur ="$v.user.confirmationCode.$touch()" v-model ="user.confirmationCode" >
         
       
 
@@ -95,8 +95,7 @@ export default {
     };
   },
   validations: {
-  
-  user: {
+    user: {
       email:{
       email,
       required,

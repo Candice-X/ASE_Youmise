@@ -104,9 +104,7 @@ export default {
   name: 'HelloSocial',
   components:{
   },
-  created: function() {
-    this.$store.state.user.isLogin = true;
-  },
+
 };
 
 

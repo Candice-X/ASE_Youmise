@@ -38,14 +38,20 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function(models) {
     // user as sender of a message
-    models.User.hasMany(models.FriendRequest, {
+    User.hasMany(models.Friendship, {
+      foreignKey: 'uid',
+      sourceKey: 'userId',
+      onDelete: 'cascade'
+    });
+
+    User.hasMany(models.FriendRequest, {
       foreignKey: 'uid',
       sourceKey: 'receiverId',
       onDelete: 'cascade',
     });
+
+
   };
 
   return User;
 }
-
-// User.belongsToMany(User, { as: 'friend', through: 'Userfriend' })
