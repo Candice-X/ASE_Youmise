@@ -58,6 +58,7 @@ db.User = sequelize.import(path.join(__dirname, 'User.js'));
 db.Card = sequelize.import(path.join(__dirname, 'Card.js'));
 db.Record = sequelize.import(path.join(__dirname, 'Record.js'));
 db.FriendRequest = sequelize.import(path.join(__dirname, 'FriendRequest.js'));
+db.Friendship = sequelize.import(path.join(__dirname, 'Friendship.js'));
 // Testing connection: 03/20/2018 HYY
 // sequelize
 //     .authenticate()

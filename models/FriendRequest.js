@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     senderUsername: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: false,
       validate: {
         isAlphanumeric: true
@@ -34,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     receiverUsername: {
       type: DataTypes.STRING,
-      unique: true,
       allowNull: false,
       validate: {
         isAlphanumeric: true
