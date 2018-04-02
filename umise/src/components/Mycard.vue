@@ -5,20 +5,22 @@
         <div class = "send_cards_container" >
             <!-- <h4 class="title" >My Cards</h4>
             <h4 class="subTitle">Card with  </h4> -->
-
+      <center>
         <button class="btn btn-primary btn-outline-success" 
         :class="{ active: isReceiveModel }" @click="showReceivedCard">Cards Received</button>
         <button class="btn btn-primary btn-outline-success" 
         :class="{ active: !isReceiveModel }" @click="showSendCard" >Cards Sent</button>
+        </center>
             <div class="row">
                 <div v-for = "(card, index) in cards" :key="index" 
                 class="col-lg-3 col-md-3 col-sm-6 card_cont" >
                    <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImg" />
+                        
                         <div class ="sender_cont" >
                             <div class ='avatar' >
-                                <img v-bind:src="card.senderImg" />
+                                <img src="../assets/img/girl.png" />
                             </div>
                             <div class="content">
                                 <h4>{{ card.cardName }}</h4>
@@ -89,6 +91,9 @@ export default {
     return {
       isReceiveModel: true,
       cards:[],
+
+
+
       oneCard: {
           cardName: 'Dinning Card',
           cardImg: this.$store.state.card.img1,
@@ -102,85 +107,10 @@ export default {
           sender: 'From Kuer and Enjoy',
           senderImg:this.$store.state.card.girl,
         },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img2,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img3,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img4,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img5,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img6,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img7,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img8,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img9,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img10,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img11,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img12,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img13,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img14,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
+        
       ],
+
+
       cardsSend: [
           {
           cardName: 'Dinning Card',
@@ -194,36 +124,7 @@ export default {
           sender: 'From Kuer and Enjoy',
           senderImg: this.$store.state.card.girl,
         },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img10,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img11,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img12,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img13,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img14,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
+        
       ],
 
     };

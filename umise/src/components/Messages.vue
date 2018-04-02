@@ -23,9 +23,12 @@
                                 <p class="" >status: {{request.status}}</p>
                             </div>
                       </div>  
-                       <div>
+                       <div v-if="request.status==='SENT'">
                           <button class="btn btn-primary btn-success col-sm-6" @click="acceptRequest(request.friendRequestId)" >Accept</button>
                           <button class="btn btn-primary btn-secondary col-sm-4" @click="rejectRequest(request.friendRequestId)" >Decline</button>
+                        </div>
+                        <div v-else>
+                            <button class="btn btn-secondary btn-primary col-sm-10" style="font-size:0.8em;" disabled >You have <strong>{{request.status}} </strong> this request</button>
                         </div>
                     </div>
                      
@@ -56,7 +59,7 @@ export default {
       name: 'kuer',
       isMessage: true,
       // imgUrl:'',
-
+      
       friendRequests:[
         // {
         // friendRequestId:1,
@@ -117,7 +120,22 @@ export default {
     },
 
     async rejectRequest(requestId){
-     
+      try{
+          console.log("userId: ",this.$store.state.user.userID);
+          if(this.$store.state.user.userID != null ){ 
+            const response = await axios.post("/friend/updateFriendRequest/",{"friendRequestId":requestId,"status":"REJECTED"}); 
+            console.log(`You have accept ${requestId}'s friend request` );
+          }else{
+            throw new Error("You need to login first");
+          };
+          //refresh the request list
+          this.getFriendsRequest();
+
+        }catch(e){
+          console.log(e);
+          // this.errorMsg = e.response.data;
+        };
+  
     },
     
 

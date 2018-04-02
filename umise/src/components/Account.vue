@@ -109,9 +109,7 @@ export default {
     // VueGoodshareFacebook,
     // VueGoodshare
   },
-  created: function() {
-    this.$store.state.user.isLogin = true;
-  },
+
 };
 
 
