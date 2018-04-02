@@ -16,9 +16,12 @@ import ResetPassword from '@/components/ResetPassword';
 import FacebookShare from '@/components/FacebookShare';
 
 import store from '../store/store';
+import Meta from 'vue-meta'
 
 
 Vue.use(Router);
+Vue.use(Meta);
+
 // path:"*", redirect(/)
 
 const authToLink =['/', '/login', '/signup', 'dashboard', '/mycard', '/friends', 'about', 'messages'];
