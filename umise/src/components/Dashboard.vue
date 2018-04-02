@@ -111,7 +111,6 @@ export default {
       oneCard: {
           cardid:null,
           cardName: '',
-          cardid:null,
           cardImgURL: null,
           cardNotes:'',
           sender: null,
