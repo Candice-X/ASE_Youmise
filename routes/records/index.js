@@ -1,3 +1,5 @@
+// import { LexModelBuildingService } from 'aws-sdk';
+
 const express = require('express');
 const AWS = require('aws-sdk');
 
@@ -28,7 +30,7 @@ router.post('/record', async (req, res) => {
 // Fetch all records by administrator
 router.get('/record', async(req, res) => {
   try {
-    let result = await controller.dbFetchAll(models.Record);
+    let result = await controller.dbFetchAll(models.Record, models.User, models.Card);
     res.json(result);
   } catch (err) {
     res.status(400).send(err.message);
@@ -40,7 +42,7 @@ router.get('/record/sender/:id/:status', async(req, res) => {
   try {
     const senderid = req.params.id;
     const status = req.params.status;
-    let result = await controller.dbFindBySender(models.Record, senderid, status);
+    let result = await controller.dbFindBySender(models.Record,models.User, models.Card, senderid, status);
     res.json(result);
   } catch (err) {
     res.status(err.statusCode).send(err.message);
@@ -50,7 +52,7 @@ router.get('/record/sender/:id/:status', async(req, res) => {
 router.get('/record/sender/:id', async(req, res) => {
   try {
     const senderid = req.params.id;
-    let result = await controller.dbFindBySender(models.Record, senderid, null);
+    let result = await controller.dbFindBySender(models.Record,models.User, models.Card, senderid, null);
     res.json(result);
   } catch (err) {
     res.status(400).send(err.message);
@@ -61,7 +63,7 @@ router.get('/record/sender/:id', async(req, res) => {
 router.get('/record/receiver/:id', async(req, res) => {
   try {
     const receiverid = req.params.id;
-    let result = await controller.dbFindByReceiver(models.Record, receiverid, null);
+    let result = await controller.dbFindByReceiver(models.Record,models.User, models.Card, receiverid, null);
     res.json(result);
   } catch (err) {
     res.status(400).send(err.message);
@@ -72,7 +74,7 @@ router.get('/record/receiver/:id/:status', async(req, res) => {
   try {
     const receiverid = req.params.id;
     const status = req.params.status;
-    let result = await controller.dbFindByReceiver(models.Record, receiverid, status);
+    let result = await controller.dbFindByReceiver(models.Record,models.User, models.Card, receiverid, status);
     res.json(result);
   } catch (err) {
     res.status(400).send(err.message);
@@ -83,7 +85,7 @@ router.get('/record/receiver/:id/:status', async(req, res) => {
 router.get('/record/:id', async(req, res) => {
     try {
         const recordid = req.params.id;
-        let result = await controller.dbFindById(models.Record, recordid);
+        let result = await controller.dbFindById(models.Record,models.User, models.Card, recordid);
         if(result.length === 0){
           res.status(err.statusCode).send();
         }

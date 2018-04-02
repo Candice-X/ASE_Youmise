@@ -54,6 +54,43 @@ const ReceiverOneId = generateUUID();
 const ReceiverTwoId = generateUUID();
 const ReceiverThreeId = generateUUID();
 
+const users = [{
+    uid: SenderOneId,
+    username: "chenfu",
+    email : "chenfu@123.com",
+    firstName: "Fu",
+    lastName: "Chen",
+    gender: "Male"
+},{
+    uid: ReceiverOneId,
+    username: "hyy",
+    email : "hyy@123.com",
+    firstName: "yy",
+    lastName: "h",
+    gender: "Female"
+},{
+    uid: SenderTwoId,
+    username: "xyh",
+    email : "xyh@123.com",
+    firstName: "yh",
+    lastName: "x",
+    gender: "Female"
+},{
+    uid: ReceiverTwoId,
+    username: "weg",
+    email : "weg@123.com",
+    firstName: "eg",
+    lastName: "w",
+    gender: "Male"
+},{
+    uid: SenderThreeId,
+    username: "zss",
+    email : "zss@123.com",
+    firstName: "ss",
+    lastName: "z",
+    gender: "Female"
+}];
+
 const records = [{
     recordid: RecordOneId,
     senderid: SenderOneId,
@@ -105,6 +142,28 @@ const populateCards = (done)=>{
         return Promise.all([cardOne, cardTwo])
     }).then(()=> done());
 }
+const populateUsers = (done)=>{
+    models.User.destroy({
+        where: {},
+        truncate: true
+    }).then(()=>{
+        const userOne = models.User.create(users[0]).then((user)=>{
+            return user;
+            
+    });
+        const userTwo =  models.User.create(users[1]).then((user)=>{
+            return user;
+    });
+        const userThree =  models.User.create(users[2]).then((user)=>{
+            return user;
+    });
+        const userFour =  models.User.create(users[3]).then((user)=>{
+            return user;
+    });
+
+        return Promise.all([userOne, userTwo, userThree, userFour])
+    }).then(()=> done());
+}
 
 const populateRecords = (done)=>{
     models.Record.destroy({
@@ -121,5 +180,7 @@ const populateRecords = (done)=>{
         return Promise.all([recordOne, recordTwo])
     }).then(()=> done());
 }
-module.exports = {cards, populateCards, records, populateRecords};
+
+
+module.exports = {cards, populateCards, users, populateUsers, records, populateRecords};
 
