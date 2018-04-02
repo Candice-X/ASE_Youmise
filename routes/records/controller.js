@@ -42,7 +42,7 @@ exports.dbFetchAll = async (Record, User, Card) => {
                 let receiver;
                 let senderusername = "wrong user";
                 let senderemail = "wrong user"
-                if (sender){
+                if (sender.length !== 0){
                     senderusername = sender[0].username;
                     senderemail =sender[0].email;
                 }
