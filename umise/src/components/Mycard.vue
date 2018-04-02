@@ -7,7 +7,7 @@
             <h4 class="subTitle">Card with  </h4> -->
       <center>
         <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: isReceiveModel }" @click="showReceivedCard">Cards Received</button>
+        :class="{ active: isReceiveModel }" @click="showReceivedCard">My Cards</button>
         <button class="btn btn-primary btn-outline-success" 
         :class="{ active: !isReceiveModel }" @click="showSendCard" >Cards Sent</button>
         </center>
@@ -23,10 +23,8 @@
                                 <img src="../assets/img/girl.png" />
                             </div>
                             <div class="content">
-                                <h4>{{ card.cardName }}</h4>
-                                <p class="sub_title">{{ card.sender }}</p>
-                                date:{{card.createDate}}
-                                status: {{card.status}}
+                                <h4>{{ card.cardTitle }}</h4>
+                                <p class="sub_title">{{ card.senderName }}</p>
                             </div>
 
                         </div>
@@ -52,17 +50,18 @@
                 <div class="col-sm-1"></div>
                 <div class="col-lg-5 col-md-5 col-sm-5 card_cont" >
                     <div class="card_img" >
-                        <img v-bind:src = "this.oneCard.cardImg" />
+                        <img v-bind:src = "this.oneCard.cardImgURL" />
                     </div>
                 </div>
                 <div class ="sender_cont_more col-lg-5 col-md-5 col-sm-5" > 
                         <img v-bind:src="this.oneCard.senderImg" />
                     <div class="content_more">
-                        <h4>{{ this.oneCard.cardName }}</h4>
-                        
-                        <p class="sub_title">{{ this.oneCard.sender }}</p>
+                        <h4>{{ this.oneCard.cardTitle }}</h4>
+                          <p>Date:{{this.oneCard.createDate}}</p> 
+                          <p> Status: {{this.oneCard.status}}</p> 
+                        <p class="sub_title">From: {{ this.oneCard.senderName }}</p>
                         <div class="message_more">
-                            How you have a great weekend, I will treat you a great dinner Next time :)
+                           {{this.oneCard.cardContent}} :)
                         </div>
                     </div>
                     <button class="btn btn-primary btn-success btn-send" >Use Card</button>
@@ -142,7 +141,7 @@ export default {
             // const response = await axios.get(`/record/record/receiver/${userID}`);
             const response = await axios.get(`/record/record`);
             // this.cards = response.data;
-            this.cards = this.response.data;
+            this.cards = response.data;
             console.log(response.data);
        }else{
 
@@ -162,7 +161,7 @@ export default {
        if(userID){
             const response = await axios.get(`/record/record/sender/${userID}`);
             // this.cards = response.data;
-              this.cards = this.response.data;
+              this.cards = response.data;
             console.log(response.data);
        }else{
 

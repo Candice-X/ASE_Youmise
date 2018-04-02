@@ -4,8 +4,6 @@ models.Card.create(models.Card.create({
     cardImgURL: 'https://s3.us-east-2.amazonaws.com/umisefrontendimages/card2.png',
     cardNote: 'card 1',
 });
-
-
 models.Card.create({
     types: 2,
     cardName: 'Warning Card',

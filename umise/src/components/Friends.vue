@@ -6,19 +6,25 @@
             <h4 class="title" >Card Communication with {{friendName }}</h4>
             <h4 class="subTitle">Card history with friends, the received card and card sent from each other </h4>
 
-        <button class="btn btn-primary btn-outline-success active" >Cards Received</button>
-        <button class="btn btn-primary btn-outline-success" >Cards Sent</button>
+         <center>
+        <button class="btn btn-primary btn-outline-success" 
+        :class="{ active: isReceiveModel }" @click="showReceivedCard">Card Received</button>
+        <button class="btn btn-primary btn-outline-success" 
+        :class="{ active: !isReceiveModel }" @click="showSendCard" >Cards Sent</button>
+        </center>
             <div class="row">
                 <div v-for = "(card, index) in cards" :key="index" class="col-lg-4 col-md-6 col-sm-12 card_cont" >
-                    <div class="card_img" >
-                        <img v-bind:src="card.cardImg" />
+                    <div class="card_img" data-toggle="modal"
+                    data-target="#Dashboard_send" @click= "showCard(index)">
+                        <img v-bind:src="card.cardImgURL" />
+                        
                         <div class ="sender_cont" >
                             <div class ='avatar' >
-                                <img v-bind:src="card.senderImg" />
+                                <img src="../assets/img/girl.png" />
                             </div>
                             <div class="content">
-                                <h4>{{ card.cardName }}</h4>
-                                <p class="sub_title">{{ card.sender }}</p>
+                                <h4>{{ card.cardTitle }}</h4>
+                                <p class="sub_title">{{ card.senderName }}</p>
                             </div>
 
                         </div>
@@ -83,16 +89,30 @@ export default {
       email:'',
 
       errorMsg:'',
-      friendName: 'Jack',
-      cards: [
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'From Kuer and Enjoy',
+      friendId:'',
+      
+      cards:[],
+      //this is for create record
+      oneCard: {
+          recordid:'',
+          senderid:null,
+          senderName:'',
+          receiverid:null,
+          cardid:null,
+          createDate:null,
+          expireDate:null,
+          finishDate:null,
+          cardTitle:'',
+          cardContent:'',
+          status:null,
+          cardImgURL: null,
           senderImg:this.$store.state.card.girl,
-        },
+          receiverEmail:'',
+          receiverName:'', 
+      },  
 
-      ],
+
+
     };
   },
 
@@ -117,6 +137,50 @@ export default {
        this.errorMsg = e.response.data;
      };
     },
+
+async showReceivedCard() {
+      this.isReceiveModel =true;
+      const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+      console.log("show received card:", userID);
+     try{
+       if(userID){
+            // const response = await axios.get(`/record/record/receiver/${userID}`);
+            const response = await axios.get(`/record/record`);
+            // this.cards = response.data;
+            this.cards = response.data;
+            console.log(response.data);
+       }else{
+
+       };
+       
+      }catch(e){
+        console.log(e.message);
+      };
+    },
+
+    async showSendCard() {
+      this.isReceiveModel = false;
+       
+       const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+       console.log("show send card:", userID);
+     try{
+       if(userID){
+            const response = await axios.get(`/record/record/sender/${userID}`);
+            // this.cards = response.data;
+              this.cards = response.data;
+            console.log(response.data);
+       }else{
+
+       };
+       
+      }catch(e){
+        console.log(e.message);
+      };
+
+
+    
+    },
+
 
   
 
