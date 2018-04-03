@@ -52,3 +52,7 @@ or with `yarn`:
 
 ### Cleaning working directory for unstaged changes:
 * git checkout -- .
+
+### Umise Front End Start Locally
+* cd umise/
+* npm run serve

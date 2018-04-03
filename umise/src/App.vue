@@ -29,6 +29,9 @@ export default {
 <style>
 @import "assets/css/font-awesome.min.css";
 
+body{
+  font-size:0.9em;
+}
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -3,12 +3,12 @@
     <!--- body -->
     <div id="my_cards" class="body_cont">
         <div class = "send_cards_container" >
-            <h4 class="title" >Card Communication with {{friendName }}</h4>
+            <h4 class="title" >Card Communication with </h4>
             <h4 class="subTitle">Card history with friends, the received card and card sent from each other </h4>
 
          <center>
         <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: isReceiveModel }" @click="showReceivedCard">Card Received</button>
+        :class="{ active: isReceiveModel }"  @click="showReceivedCard">Card Received</button>
         <button class="btn btn-primary btn-outline-success" 
         :class="{ active: !isReceiveModel }" @click="showSendCard" >Cards Sent</button>
         </center>
@@ -37,7 +37,7 @@
         </div>
 
     </div>
-  <friends-list></friends-list>
+  <friends-list v-on:refreshFriendCards="showReceivedCard" ></friends-list>
 <!-- Modal -->
   <div class="modal fade bd-example-modal" id="add_friends" tabindex="-2" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
     <div class="modal-dialog modal modal-dialog-centered" role="document" >
@@ -87,10 +87,10 @@ export default {
   data() {
     return {
       email:'',
-
+      isReceiveModel:false,
       errorMsg:'',
       friendId:'',
-      
+
       cards:[],
       //this is for create record
       oneCard: {
@@ -141,11 +141,12 @@ export default {
 async showReceivedCard() {
       this.isReceiveModel =true;
       const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+      const friendId = this.$store.state.user.currentFriendId;
       console.log("show received card:", userID);
      try{
-       if(userID){
-            // const response = await axios.get(`/record/record/receiver/${userID}`);
-            const response = await axios.get(`/record/record`);
+       if(userID && friendId){
+            const response = await axios.get(`/record/record/receiver/${userID}/friend/${friendId}`);
+            // const response = await axios.get(`/record/record`);
             // this.cards = response.data;
             this.cards = response.data;
             console.log(response.data);
@@ -162,15 +163,16 @@ async showReceivedCard() {
       this.isReceiveModel = false;
        
        const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
-       console.log("show send card:", userID);
+       const friendId = this.$store.state.user.currentFriendId;
+       console.log("show send card friend id:", friendId);
      try{
-       if(userID){
-            const response = await axios.get(`/record/record/sender/${userID}`);
+       if(userID && friendId){
+            const response = await axios.get(`/record/record/sender/${userID}/friend/${friendId}`);
             // this.cards = response.data;
               this.cards = response.data;
             console.log(response.data);
        }else{
-
+        
        };
        
       }catch(e){
@@ -180,9 +182,6 @@ async showReceivedCard() {
 
     
     },
-
-
-  
 
   },
 

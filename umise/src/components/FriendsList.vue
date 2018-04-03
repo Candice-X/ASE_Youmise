@@ -6,7 +6,8 @@
        <button class="btn btn-primary btn-outline-success btn-sm" style="width:85%;margin:15px;" data-toggle="modal" data-target="#add_friends">Add Friend</button>
  <hr />
     
-    <div v-for="(friend, index) in friendsList" :key="index" class="friend" @click="">
+    <div v-for="(friend, index) in friendsList" :key="index" class="friend" 
+    :class="{friend_active:friend.uid === currentFriendId}" @click="setCurrentFriend(friend.uid)">
       <div class="friends_img" >
         <img src="../assets/img/girl.png" />
       </div>
@@ -35,6 +36,7 @@ export default {
     return{
       friend_list: true,
       friendsList:[],
+      currentFriendId:'',
     }
   },
   methods:{
@@ -56,6 +58,13 @@ export default {
       };
   },
 
+  setCurrentFriend(friendId){
+    this.currentFriendId = friendId;
+    this.$store.state.user.currentFriendId = friendId;
+    this.$emit('refreshFriendCards');
+
+    console.log("friend card show");
+  },
 
   },
   components: {
