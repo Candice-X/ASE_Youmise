@@ -9,7 +9,7 @@
            
             <div class="row card_row">
                 <div  v-for = "(card, index) in cardsType" :key="index" :id ="card.cardid"
-                class="col-lg-3 col-md-3 col-sm-6 card_cont" >
+                class="col-lg-3 col-md-4 col-sm-6 card_cont" >
                     <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />                        
@@ -19,7 +19,7 @@
                     </div>
                 </div>          
 
-                 <div class="col-md-3 col-md-3 col-sm-6 card_cont">
+                 <div class="col-md-3 col-md-4 col-sm-6 card_cont">
                     <div class="card_img customize-icon-cont" >
                         <div class="customize-icon">
                         <i class="icon-settings "></i>
@@ -31,15 +31,24 @@
 
             </div>
         </div>
+
+
         <div>
-     
+    
+ <!-- alert message -->
+    <button @click="showAlert()" >sfasfasdfas</button>
+
+    <div class="send_card_alert" style="display:none;" >
+      <p> Send Card to <strong style="color:green;font-weight:600;">{{this.oneCard.receiverEmail}} </strong>  Successfully! </p>
+    </div>
+   <!-- end of alert -->
 
 <!-- Modal -->
   <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Card Info{{this.oneCard.cardName}}</h5>
+          <!-- <h5 class="modal-title" id="exampleModalLongTitle">{{this.oneCard.cardName}}</h5> -->
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -49,7 +58,18 @@
             
                 <div class="col-lg-5 col-md-5 col-sm-5 card_cont" >
                     <div class="card_img_more" >
+
                         <img v-bind:src = "this.oneCard.cardImgURL" />
+                        <div class ="sender_cont" >
+                            <div class ='avatar' >
+                                <img src="../assets/img/girl.png" />
+                            </div>
+                            <div class="content">
+                                <h7>{{ this.oneCard.cardName }}</h7>
+                                <p class="sub_title">{{ this.$store.state.user.userName }}</p>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
                    <div class ="sender_cont_more col-lg-5 col-md-5 col-sm-5" > 
@@ -76,6 +96,7 @@
                         <textarea v-model="oneCard.message" class="form-control message_more" maxlength="140">How you have a great weekend, I will treat you a great dinner Next time :)
                         </textarea>
                     </div>
+                   <p style="color:red;"> {{this.errMsg}}</p>
                     <button class="btn btn-primary btn-success btn-send" @click="sendCard" :disabled="$v.oneCard.receiverEmail.$invalid" >Send to Friends</button>
                 </div>
 
@@ -108,6 +129,7 @@ export default {
     return {
       name: 'kuer',
       cardsType: [],
+      errMsg:'',
       // used to send card to others
       oneCard: {
           cardid:null,
@@ -154,6 +176,7 @@ export default {
     //send card to friends
     async sendCard() {
       try{
+        this.errMsg ='';
         const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
 
         console.log("userid :",userID);
@@ -171,18 +194,23 @@ export default {
 
 
            jQuery("#Dashboard_send").modal('hide');
+           this.showAlert();
         }else{
           throw new Error("Please login in first");
         };      
       }catch(e) {
+        this.errMsg = e.message;
         console.log(e.message);
       };    
      
     },
 
-    refreshCard(){
-      // this.cardsType = this.$store.state.card.sendCardTypes;
-      // console.log("cardsType : ",this.$store.state.card.sendCardTypes);
+    async showAlert(){
+         jQuery(".send_card_alert").fadeIn();
+      setTimeout(() => {
+         jQuery(".send_card_alert").fadeOut();
+      },3500);
+     
     },
     // ...mapActions(["getAllCardType"]), // this.$store.dispatch("getAllCardType"),
     // ...mapGetters(["getAllCardTypeFromState"]),
@@ -228,6 +256,30 @@ body {
   color: #868e96;
 }
 
+.send_card_alert{
+  margin:auto;
+  z-index:99;
+  text-align:center;
+  width:25rem; 
+  background:#ffc9aa;
+  border-radius:5px;
+  height:5rem;
+position:fixed;
+top:0px;
+left:0px;
+bottom:0px;
+right:0px;
+
+}
+.send_card_alert p{
+  padding:0;
+  text-align:center;
+  margin-top:1rem;
+  padding-top:1em;
+  line-height:2em;
+  display:block;
+
+}
 .card_cont {
   /* background:#dcdcdc; */
   display: block;
@@ -235,7 +287,7 @@ body {
   padding: 0;
   margin: 0px;
   margin-top: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   border-radius: 5px;
   float:left;
 }
@@ -263,10 +315,11 @@ body {
 .card_img_more {
   width: 220px;
   margin: 10px 25px;
-  background: #dcdcdc;
+  background: #3ac17e;
   height: 320px;
   border-radius: 5px;
   border: 2px dashed #fff;
+  color:#fff;
 }
 .card_img_more:hover {
   background: #3ac17e;
@@ -347,15 +400,6 @@ body {
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Saira Extra Condensed", serif;
-  font-weight: 700;
-}
 
 h1 {
   font-size: 6rem;
@@ -374,7 +418,6 @@ h2 {
 }
 .subheading {
   font-weight: 500;
-  font-family: "Saira Extra Condensed", serif;
   font-size: 1.35rem;
 }
 li {
@@ -457,7 +500,7 @@ li:hover {
     position: relative;
     display: block;
     margin-top: 0px !important;
-    margin-left: 17rem !important;
+    padding-left: 17rem !important;
     /* min-height: 775px; */
   }
 }
@@ -482,7 +525,7 @@ i {
 
 .body_cont {
   height: 100%;
-  width: 80%;
+  width: 100%;
   position: relative;
   display: block;
   float: left;
@@ -501,7 +544,35 @@ i {
 .content_more{
   margin-top:15px;
 }
+.sender_cont {
+  width: 100%;
+  text-align: left;
+  margin-top: 0;
+  padding: 0;
+  position: relative;
+}
 
+.avatar {
+  position: relative;
+  top: -10px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: 10px;
+}
+.avatar img {
+  width: 40px;
+  height: 40px !important;
+  border-radius: 50% !important;
+}
+.content {
+  width: 150px;
+  margin-left: 8px;
+  display: inline-block;
+  line-height: 1.5em;
+  padding-top:5px;
+}
 .message_more{
   background: #eeeeee;
   border-radius: 5px;

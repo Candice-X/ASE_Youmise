@@ -10,6 +10,11 @@
         <button class="btn btn-primary btn-outline-success" :class= "{active: !isMessage}" @click="getFriendsRequest" >Friends Request</button>
 
            <div class="row" >
+                <!-- if empty -->
+              <div class="empty_msg" style="" v-if="friendRequests.length===0">
+                You don't have any Messages right now
+                <!-- <button class="btn btn-secondary btn-primary"> Add Friends </button> -->
+              </div>
                 <div v-for = "(request, index) in friendRequests" :key="index" class="col-lg-4 col-md-4 col-sm-6 card_cont" >
                     <div class="card_img" >   
                       <div class ="sender_cont" >
@@ -28,7 +33,7 @@
                           <button class="btn btn-primary btn-secondary col-sm-4" @click="rejectRequest(request.friendRequestId)" >Decline</button>
                         </div>
                         <div v-else>
-                            <button class="btn btn-secondary btn-primary col-sm-10" style="font-size:0.8em;" disabled >You have <strong>{{request.status}} </strong> this request</button>
+                            <button class="btn btn-secondary btn-primary col-sm-10" style="font-size:0.8em;" disabled >You have <strong>{{request.status}} </strong> </button>
                         </div>
                     </div>
                      
@@ -39,6 +44,11 @@
 
             </div>
             <!-- end of row -->
+
+         
+           
+
+
 
         </div>
        
@@ -165,7 +175,13 @@ body {
   padding-top: 54px;
   color: #868e96;
 }
-
+.empty_msg{
+  margin:auto;
+  text-align:center;
+  margin-top:10em;
+  color:white;
+  font-size:1rem;
+}
 .send_cards_container button {
   color: #ffffff;
   margin-left: 15px;
@@ -205,7 +221,7 @@ body {
   padding: 0;
   margin: 0px;
   margin-top: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   border-radius: 5px;
 }
 .row {
@@ -307,7 +323,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Saira Extra Condensed", serif;
   font-weight: 700;
 }
 
@@ -329,7 +344,6 @@ h2 {
 }
 .subheading {
   font-weight: 500;
-  font-family: "Saira Extra Condensed", serif;
   font-size: 1.35rem;
 }
 li {
@@ -450,7 +464,7 @@ section.resume-section .resume-item .resume-date {
     position: relative;
     display: block;
     margin-top: 0px !important;
-    margin-left: 17rem !important;
+    padding-left: 17rem !important;
     /* min-height: 775px; */
   }
 }
@@ -475,7 +489,7 @@ i {
 
 .body_cont {
   height: 100%;
-  width: auto;
+  width: 100%;
   position: relative;
   display: block;
   float: left;

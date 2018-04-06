@@ -13,7 +13,13 @@
         :class="{ active: !isReceiveModel }" @click="showSendCard" >Cards Sent</button>
         </center>
             <div class="row">
-                <div v-for = "(card, index) in cards" :key="index" class="col-lg-4 col-md-6 col-sm-12 card_cont" >
+                <div class="empty_msg" style="" v-if="cards.length===0">
+                You don't have any Card right now <br/>
+                <router-link class="btn btn-secondary btn-primary" to="/dashboard"> 
+                Send Card to Friends </router-link>
+               </div>
+
+                <div v-for = "(card, index) in cards" :key="index" class="col-lg-6 col-md-6 col-sm-12 card_cont" >
                     <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />
@@ -35,6 +41,11 @@
 
             </div>   
         </div>
+        <!-- alert message -->
+    <div class="friend_alert" style="display:none;" >
+      <p> Friend request send to {{this.email}} Successfully! </p>
+    </div>
+   <!-- end of alert -->
 
     </div>
   <friends-list v-on:refreshFriendCards="showReceivedCard" ></friends-list>
@@ -69,11 +80,12 @@
         </div>
 
       </div>
-    </div>
-  </div>
-  <!-- end of card one -->
+    </div> <!-- end of card one Modal -->
 
-</div>
+  
+
+  </div>
+
 </template>
 
 <script>
@@ -128,17 +140,19 @@ export default {
      try{
        if(this.$store.state.user.userID != null ){ 
         const response = await axios.post("/friend/sendFriendRequest",{"senderId":this.$store.state.user.userID, "receiverEmail":this.email});
-        console.log(response.data);
+        console.log(response);
+        jQuery("#add_friends").modal('hide');
+        this.showAlert();
        }else{
          throw new Error("You need to login first to add a friend");
        }
 
      }catch(e){
-       this.errorMsg = e.response.data;
+       this.errorMsg = e.message;
      };
     },
 
-async showReceivedCard() {
+    async showReceivedCard() {
       this.isReceiveModel =true;
       const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
       const friendId = this.$store.state.user.currentFriendId;
@@ -176,12 +190,21 @@ async showReceivedCard() {
        };
        
       }catch(e){
+        this.errorMsg = e.message;
         console.log(e.message);
+
       };
-
-
-    
+ 
     },
+
+    async showAlert(){
+         jQuery(".friend_alert").fadeIn();
+      setTimeout(() => {
+         jQuery(".friend_alert").fadeOut();
+      },3500);
+     
+    },
+    
 
   },
 
@@ -205,7 +228,38 @@ body {
   padding-top: 54px;
   color: #868e96;
 }
+.empty_msg{
+  margin:auto;
+  text-align:center;
+  margin-top:10em;
+  color:white;
+  font-size:1rem;
+}
 
+.friend_alert{
+  margin:auto;
+   z-index:99;
+  text-align:center;
+  width:25rem; 
+  background:#ffc9aa;
+  border-radius:5px;
+  height:5rem;
+position:fixed;
+top:0px;
+left:0px;
+bottom:0px;
+right:0px;
+
+}
+.friend_alert p{
+  padding:0;
+  text-align:center;
+  margin-top:1rem;
+  padding-top:1em;
+  line-height:2em;
+  display:block;
+
+}
 .send_cards_container button {
   color: #ffffff;
   margin-left: 15px;
@@ -245,7 +299,7 @@ body {
   padding: 0;
   margin: 0px;
   margin-top: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   border-radius: 5px;
 }
 .row {
@@ -325,7 +379,7 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  min-height: 786px;
+  min-height: 790px;
   overflow-x: hidden;
 }
 
@@ -341,15 +395,7 @@ body {
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Saira Extra Condensed", serif;
-  font-weight: 700;
-}
+
 
 h1 {
   font-size: 6rem;
@@ -369,7 +415,6 @@ h2 {
 }
 .subheading {
   font-weight: 500;
-  font-family: "Saira Extra Condensed", serif;
   font-size: 1.35rem;
 }
 li {
@@ -490,8 +535,8 @@ section.resume-section .resume-item .resume-date {
     position: relative;
     display: block;
     margin-top: 0px !important;
-    margin-left: 17rem !important;
-    margin-right:15rem !important;
+    padding-left: 17rem !important;
+    padding-right:15rem !important;
     /* min-height: 775px; */
   }
 }
@@ -516,7 +561,7 @@ i {
 
 .body_cont {
   height: 100%;
-  width: auto;
+  width: 100%;
   position: relative;
   display: block;
   float: left;

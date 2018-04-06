@@ -12,8 +12,13 @@
         :class="{ active: !isReceiveModel }" @click="showSendCard" >Cards Sent</button>
         </center>
             <div class="row">
+                    <!-- if empty -->
+              <div class="empty_msg" style="" v-if="cards.length===0">
+                You don't have any Card right now
+                <router-link class="btn btn-secondary btn-primary" to="/dashboard"> Send Card to Friends </router-link>
+              </div>
                 <div v-for = "(card, index) in cards" :key="index" 
-                class="col-lg-3 col-md-3 col-sm-6 card_cont" >
+                class="col-lg-3 col-md-4 col-sm-6 card_cont" >
                    <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />
@@ -49,15 +54,26 @@
           <div class="row">
                 <div class="col-sm-1"></div>
                 <div class="col-lg-5 col-md-5 col-sm-5 card_cont" >
-                    <div class="card_img" >
+                    <div class="card_img card_img_more" >
                         <img v-bind:src = "this.oneCard.cardImgURL" />
+                         <div class ="sender_cont" >
+                            <div class ='avatar' >
+                                <img src="../assets/img/girl.png" />
+                            </div>
+                            <div class="content">
+                                <h4>{{ this.oneCard.cardTitle }}</h4>
+                                <p class="sub_title">{{ this.oneCard.senderName}}</p>
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
                 <div class ="sender_cont_more col-lg-5 col-md-5 col-sm-5" > 
                         <img v-bind:src="this.oneCard.senderImg" />
                     <div class="content_more">
                         <h4>{{ this.oneCard.cardTitle }}</h4>
-                          <p>Date:{{this.oneCard.createDate}}</p> 
+                          <p class="create_data">{{this.oneCard.createDate}}</p> 
                           <p> Status: {{this.oneCard.status}}</p> 
                         <p class="sub_title">From: {{ this.oneCard.senderName }}</p>
                         <div class="message_more">
@@ -196,6 +212,14 @@ body {
   color: #868e96;
 }
 
+.empty_msg{
+  margin:auto;
+  text-align:center;
+  margin-top:10em;
+  color:white;
+  font-size:1rem;
+}
+
 .send_cards_container button {
   color: #ffffff;
   margin-left: 15px;
@@ -235,7 +259,7 @@ body {
   padding: 0;
   margin: 0px;
   margin-top: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   border-radius: 5px;
 }
 .row {
@@ -260,6 +284,23 @@ body {
   border: 2px dashed #fff;
   color: #fff;
 }
+.card_img_more {
+  width: 220px;
+  margin: 10px 25px;
+  background: #3ac17e;
+  height: 320px;
+  border-radius: 5px;
+  border: 2px dashed #fff;
+  color:#fff;
+}
+.card_img_more:hover {
+  background: #3ac17e;
+  opacity: 0.9;
+  cursor: pointer;
+  border: 2px dashed #fff;
+  color: #fff;
+}
+
 .customize-icon-cont {
   border: 4px dashed #fff;
   width: 220px;
@@ -331,16 +372,6 @@ body {
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Saira Extra Condensed", serif;
-  font-weight: 700;
-}
-
 h1 {
   font-size: 6rem;
   line-height: 5.5rem;
@@ -359,7 +390,6 @@ h2 {
 }
 .subheading {
   font-weight: 500;
-  font-family: "Saira Extra Condensed", serif;
   font-size: 1.35rem;
 }
 li {
@@ -480,7 +510,7 @@ section.resume-section .resume-item .resume-date {
     position: relative;
     display: block;
     margin-top: 0px !important;
-    margin-left: 17rem !important;
+    padding-left: 17rem !important;
     /* min-height: 775px; */
   }
 }
@@ -505,7 +535,7 @@ i {
 
 .body_cont {
   height: 100%;
-  width: auto;
+  width: 100%;
   position: relative;
   display: block;
   float: left;
@@ -531,5 +561,9 @@ i {
 }
 .btn-send{
   width:100%;
+}
+.create_data{
+  font-size:0.8em;
+  color:#bbb;
 }
 </style>
