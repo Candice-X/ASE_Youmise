@@ -58,18 +58,17 @@ describe('POST /message/message ', ()=>{
     }); 
 });
 
-// describe('GET /record/record', ()=>{
-//     it('should get all records', (done)=>{
-//         request(app)
-//             .get('/record/record')
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.length).toBe(2);
-//                 expect(res.body[0].senderName).toBeTruthy();
-//             })
-//             .end(done);
-//     })
-// })
+describe('GET /message/message', ()=>{
+    it('should get all records', (done)=>{
+        request(app)
+            .get('/record/record')
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.length).toBe(2);
+            })
+            .end(done);
+    })
+})
 
 // describe('GET /record/record/sender/senderid', ()=>{
 //     it('should get all records', (done)=>{

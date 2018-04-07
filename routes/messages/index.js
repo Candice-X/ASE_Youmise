@@ -28,9 +28,9 @@ router.post('/message', async (req, res) => {
 
 });
 // Fetch all messages by administrator
-router.get('/record', async(req, res) => {
+router.get('/message', async(req, res) => {
   try {
-    let result = await controller.dbFetchAll(models.Record, models.User, models.Card);
+    let result = await controller.dbFetchAll(models.Message, models.Record);
     res.json(result);
   } catch (err) {
     res.status(400).send(err.message);
