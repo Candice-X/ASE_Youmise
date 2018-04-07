@@ -1,5 +1,3 @@
-var log = require('why-is-node-running');
-
 const expect = require('expect');
 const request = require('supertest');
 const _ = require('lodash');

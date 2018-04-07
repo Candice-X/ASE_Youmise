@@ -126,6 +126,34 @@ const records = [{
     status: 1
 }];
 
+const MessageOneId = generateUUID();
+const MessageTwoId = generateUUID();
+const MessageThreeId = generateUUID();
+const messages = [{
+    messageid: MessageOneId,
+    senderid: SenderOneId,
+    receiverid: ReceiverOneId,
+    recordid: RecordOneId,
+    status: 1,
+    title: "Movie invitation",
+    msgContent: "This is a move invitation sent by chenfu."
+},{
+    messageid: MessageTwoId,
+    senderid: SenderTwoId,
+    receiverid: ReceiverTwoId,
+    recordid: RecordTwoId,
+    status: 1,
+    title: "Dinner invitation",
+    msgContent: "This is a dinner invitation sent by ergou."
+},{
+    messageid: MessageThreeId,
+    senderid: SenderThreeId,
+    receiverid: ReceiverThreeId,
+    recordid: RecordThreeId,
+    status: 1,
+    title: "Drink invitation",
+    msgContent: "This is a Drinks invitation sent by hyy."
+}];
 
 const populateCards = (done)=>{
     models.Card.destroy({
@@ -180,7 +208,21 @@ const populateRecords = (done)=>{
         return Promise.all([recordOne, recordTwo])
     }).then(()=> done());
 }
+const populateMessages = (done)=>{
+    models.Message.destroy({
+        where: {},
+        truncate: true
+    }).then(()=>{
+        const messageOne = models.Message.create(messages[0]).then((message)=>{
+            return message;
+            
+    });
+        const messageTwo =  models.Message.create(messages[1]).then((message)=>{
+            return message;
+    });
+        return Promise.all([messageOne, messageTwo])
+    }).then(()=> done());
+}
 
-
-module.exports = {cards, populateCards, users, populateUsers, records, populateRecords};
+module.exports = {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages};
 
