@@ -35,7 +35,7 @@ exports.dbFetchAll = async (Message, Record) => {
                 }
                 if (record !== null){
                     res.push({
-                        recordid: result[i].messageid, 
+                        messageid: result[i].messageid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         recordid: result[i].recordid,
@@ -47,7 +47,7 @@ exports.dbFetchAll = async (Message, Record) => {
                     });
                 } else {
                     res.push({
-                        recordid: result[i].messageid, 
+                        messageid: result[i].messageid, 
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         recordid: result[i].recordid,
