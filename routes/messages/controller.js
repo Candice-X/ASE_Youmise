@@ -29,11 +29,11 @@ exports.dbFetchAll = async (Message, Record) => {
         } else {
             let res = []
             for (var i = 0, len = result.length; i < len; i++){
-                let record = null
+                let record;
                 if (result[i].recordid !== null){
                     record = await Record.findAll({  where: { recordid: result[i].recordid}, raw: true });
                 }
-                if (record !== null){
+                if (record){
                     res.push({
                         messageid: result[i].messageid,
                         senderid: result[i].senderid,
@@ -42,8 +42,8 @@ exports.dbFetchAll = async (Message, Record) => {
                         status: result[i].status,
                         title: result[i].title,
                         msgContent: result[i].msgContent,
-                        cardContent: record.cardContent,
-                        cardTitle: record.cardTitle
+                        cardContent: record[0].cardContent,
+                        cardTitle: record[0].cardTitle
                     });
                 } else {
                     res.push({
@@ -66,61 +66,56 @@ exports.dbFetchAll = async (Message, Record) => {
     }
   };
 
-// exports.dbFindById = async (Message, Record, messageid) => {
-//     try {
-//         const result = await Message.findAll({ where: { recordid: recordid }, raw: true });
-//         if (record.length === 0) {
-//             throw new ServerError(400, err.message);
-//         } else {
-//             console.log(`Successfully find card: ${JSON.stringify(record[0])}`);
-//             const sender = await User.findAll({ where: { uid: record[0].senderid},raw: true });
-//             console.log(`sender: ${JSON.stringify(sender[0])}`);
-//             const card = await Card.findAll({  where: { cardid: record[0].cardid}, raw: true });
-//             console.log(`card: ${JSON.stringify(card[0])}`);
-//             let receiver;
-//             if (record[0].receiverid !== null){
-//                 receiver = await User.findAll({ where: {uid: record[0].receiverid},raw: true });
-//                 console.log(`Successfully find receiver: ${JSON.stringify(receiver[0])}`);
-//                 return {
-//                     recordid: record[0].recordid, 
-//                     senderid: record[0].senderid,
-//                     receiverid: record[0].receiverid,
-//                     cardid: record[0].cardid,
-//                     createDate: record[0].createDate,
-//                     expireDate: record[0].expireDate,
-//                     cardContent: record[0].cardContent,
-//                     cardTitle: record[0].cardTitle,
-//                     status: record[0].status,
-//                     senderName: sender[0].username,
-//                     senderEmail: sender[0].email,
-//                     receiverName: receiver[0].username,
-//                     receiverEmail: receiver[0].email,
-//                     cardImgURL: card[0].cardImgURL
-//                 };
-//             } else {
-//                 return {
-//                     recordid: record[0].recordid, 
-//                     senderid: record[0].senderid,
-//                     receiverid: record[0].receiverid,
-//                     cardid: record[0].cardid,
-//                     createDate: record[0].createDate,
-//                     expireDate: record[0].expireDate,
-//                     cardContent: record[0].cardContent,
-//                     cardTitle: record[0].cardTitle,
-//                     status: record[0].status, 
-//                     senderName: sender[0].username,
-//                     senderEmail: sender[0].email,
-//                     receiverName: null,
-//                     receiverEmail: null,
-//                     cardImgURL: card[0].cardImgURL
-//                 }
-//             }          
+exports.dbFindById = async (Message, Record, messageid) => {
+    try {
+        const result = await Message.findAll({ where: { recordid: recordid }, raw: true });
+        if (record.length === 0) {
+            throw new ServerError(400, err.message);
+        } else {
+            console.log(`Successfully find card: ${JSON.stringify(record[0])}`);
+            const sender = await User.findAll({ where: { uid: record[0].senderid},raw: true });
+            console.log(`sender: ${JSON.stringify(sender[0])}`);
+            const card = await Card.findAll({  where: { cardid: record[0].cardid}, raw: true });
+            console.log(`card: ${JSON.stringify(card[0])}`);
+            let receiver;
+            if (record[0].receiverid !== null){
+                receiver = await User.findAll({ where: {uid: record[0].receiverid},raw: true });
+                console.log(`Successfully find receiver: ${JSON.stringify(receiver[0])}`);
+                return {
+                    recordid: record[0].recordid, 
+                    senderid: record[0].senderid,
+                    receiverid: record[0].receiverid,
+                    cardid: record[0].cardid,
+                    createDate: record[0].createDate,
+                    expireDate: record[0].expireDate,
+                    cardContent: record[0].cardContent,
+                    cardTitle: record[0].cardTitle,
+                    status: record[0].status,
+                    senderName: sender[0].username,
+                    senderEmail: sender[0].email,
+                    receiverName: receiver[0].username,
+                    receiverEmail: receiver[0].email,
+                    cardImgURL: card[0].cardImgURL
+                };
+            } else {
+                return {
+                    messageid: result[i].messageid, 
+                    senderid: result[i].senderid,
+                    receiverid: result[i].receiverid,
+                    recordid: result[i].recordid,
+                    status: result[i].status,
+                    title: result[i].title,
+                    msgContent: result[i].msgContent,
+                    cardContent: null,
+                    cardTitle: null
+                }
+            }          
 
-//         }
-//     } catch (err) {
-//         throw new ServerError(400, err.message);
-//     }
-//   };
+        }
+    } catch (err) {
+        throw new ServerError(400, err.message);
+    }
+  };
 
 //   exports.dbFindBySender = async (Record,User, Card, senderid, status) => {
 //     try {

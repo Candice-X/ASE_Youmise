@@ -59,12 +59,13 @@ describe('POST /message/message ', ()=>{
 });
 
 describe('GET /message/message', ()=>{
-    it('should get all records', (done)=>{
+    it('should get all messages', (done)=>{
         request(app)
-            .get('/record/record')
+            .get('/message/message')
             .expect(200)
             .expect((res)=>{
                 expect(res.body.length).toBe(2);
+                expect(res.body[0].cardTitle).toBeTruthy();
             })
             .end(done);
     })
