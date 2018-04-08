@@ -22,7 +22,7 @@ exports.dbCreateMessage = async (Message, senderid, receiverid, recordid, title,
         throw new ServerError(400, err.message);
     }
 }
-exports.dbFetchAll = async (Message, Record) => {
+exports.dbFetchAll = async (Message, Record, Card) => {
     try {
       let result = await Message.findAll({ raw: true });
         if (!result){
@@ -34,6 +34,11 @@ exports.dbFetchAll = async (Message, Record) => {
                     record = await Record.findAll({  where: { recordid: result[i].recordid}, raw: true });
                 }
                 if (record){
+                    let card = await Card.findAll({  where: { cardid: record[0].cardid}, raw: true });
+                    let cardtype = null;
+                    if (card){
+                        cardtype = card[0].types;
+                    }
                     res.push({
                         messageid: result[i].messageid,
                         senderid: result[i].senderid,
@@ -43,7 +48,8 @@ exports.dbFetchAll = async (Message, Record) => {
                         title: result[i].title,
                         msgContent: result[i].msgContent,
                         cardContent: record[0].cardContent,
-                        cardTitle: record[0].cardTitle
+                        cardTitle: record[0].cardTitle,
+                        cardtype: cardtype
                     });
                 } else {
                     res.push({
@@ -55,7 +61,8 @@ exports.dbFetchAll = async (Message, Record) => {
                         title: result[i].title,
                         msgContent: result[i].msgContent,
                         cardContent: null,
-                        cardTitle: null
+                        cardTitle: null,
+                        cardtype: cardtype
                     });
                 }
             }          
@@ -68,8 +75,8 @@ exports.dbFetchAll = async (Message, Record) => {
 
 exports.dbFindById = async (Message, Record, messageid) => {
     try {
-        const result = await Message.findAll({ where: { recordid: recordid }, raw: true });
-        if (record.length === 0) {
+        const result = await Message.findAll({ where: { messageid: messageid }, raw: true });
+        if (result.length === 0) {
             throw new ServerError(400, err.message);
         } else {
             console.log(`Successfully find card: ${JSON.stringify(record[0])}`);
