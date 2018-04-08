@@ -7,14 +7,15 @@ const {app} = require('./../../app');
 const models = require('./../../models');
 
 
-const {cards, populateCards, users, populateUsers, records, populateRecords } = require('./../seed/seed');
+const {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages } = require('./../seed/seed');
 
 beforeEach(populateCards);
 beforeEach(populateUsers);
 beforeEach(populateRecords);
+beforeEach(populateMessages);
 
 describe('POST /record/record 123', ()=>{
-    it('should create a new record', (done)=>{
+    it('should create a new record and a new message', (done)=>{
         request(app)
             .post('/record/record')
             .send({
@@ -24,6 +25,8 @@ describe('POST /record/record 123', ()=>{
                 expireDate: null,
                 cardContent: "chenfu invite xxx for dinner.",
                 cardTitle: "dinner invitation",
+                title: messages[2].title,
+                msgContent: messages[2].msgContent
             })
             .expect(200)
             .expect((res)=>{
@@ -37,6 +40,10 @@ describe('POST /record/record 123', ()=>{
                 models.Record.findAll({ where: { cardTitle: records[2].cardTitle }, raw : true }).then((record)=>{
                     expect(record.length).toBe(1);
                     expect(record[0].cardTitle).toBe(records[2].cardTitle);
+                }).catch((e)=> done(e));
+                models.Message.findAll({ where: { title: messages[2].title }, raw : true }).then((message)=>{
+                    expect(message.length).toBe(1);
+                    expect(message[0].title).toBe(messages[2].title);
                     done();
                 }).catch((e)=> done(e));
             });

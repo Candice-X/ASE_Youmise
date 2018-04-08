@@ -8,9 +8,6 @@ before(function () {
 });
 
 
-// models.Records.belongsTo(models.Users, {foreignKey: 'userid'});
-// models.Records.belongsTo(models.Cards, {foreignKey: 'cardid'});
-
 function generateUUID() {
     let d = new Date().getTime();
     let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

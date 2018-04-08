@@ -13,7 +13,7 @@ exports.dbCreateRecord = async (Record, User, senderid, receiverEmail, cardid, e
         let receiverid = null;
         if (receiverEmail !== null){
             const receiver = await User.findAll({where: {email: receiverEmail}, raw: true});
-            console.log(`receiver find ${receiver[0]}`);
+            console.log(`receiver find ${JSON.stringify(receiver)}`);
             receiverid = receiver[0].uid;
         }
         const raw = await Record.create({
