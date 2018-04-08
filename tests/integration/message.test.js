@@ -66,24 +66,25 @@ describe('GET /message/message', ()=>{
             .expect((res)=>{
                 expect(res.body.length).toBe(2);
                 expect(res.body[0].cardTitle).toBeTruthy();
+                expect(res.body[0].cardtype).toBeTruthy();
             })
             .end(done);
     })
 })
 
-describe('GET /message/message/sender/senderid', ()=>{
-    it('should get all messages by sender', (done)=>{
-        request(app)
-            .get(`/message/message/sender/${records[0].senderid}`)
-            .expect(200)
-            .expect((res)=>{
-                console.log(`this is the response ${res.body}`);
-                expect(res.body.length).toBe(1);
-                expect(res.body[0].senderName).toBe(users[0].username);
-            })
-            .end(done);
-    })
-})
+// describe('GET /message/message/sender/senderid', ()=>{
+//     it('should get all messages by sender', (done)=>{
+//         request(app)
+//             .get(`/message/message/sender/${records[0].senderid}`)
+//             .expect(200)
+//             .expect((res)=>{
+//                 console.log(`this is the response ${res.body}`);
+//                 expect(res.body.length).toBe(1);
+//                 expect(res.body[0].senderName).toBe(users[0].username);
+//             })
+//             .end(done);
+//     })
+// })
 
 // describe('GET /record/record/sender/senderid/friend/friendid', ()=>{
 //     it('should get all records', (done)=>{
