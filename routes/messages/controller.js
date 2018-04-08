@@ -80,29 +80,24 @@ exports.dbFindById = async (Message, Record, Card, messageid) => {
         if (!result) {
             throw new ServerError(400, err.message);
         } else {
-            const record = await Record.findAll({ where: { uid: record[0].senderid},raw: true });
-            console.log(`sender: ${JSON.stringify(sender[0])}`);
-            // const card = await Card.findAll({  where: { cardid: record[0].cardid}, raw: true });
-            // console.log(`card: ${JSON.stringify(card[0])}`);
-            let receiver;
-            if (record[0].receiverid !== null){
-                receiver = await User.findAll({ where: {uid: record[0].receiverid},raw: true });
-                console.log(`Successfully find receiver: ${JSON.stringify(receiver[0])}`);
+            const record = await Record.findAll({ where: { recordid: result[0].recordid},raw: true });
+            if (record){
+                const card = await Card.findAll({  where: { cardid: record[0].cardid}, raw: true });
+                let cardtype;
+                if (card){
+                    cardtype = card[0].types;
+                }
                 return {
-                    recordid: record[0].recordid, 
-                    senderid: record[0].senderid,
-                    receiverid: record[0].receiverid,
-                    cardid: record[0].cardid,
-                    createDate: record[0].createDate,
-                    expireDate: record[0].expireDate,
+                    messageid: result[i].messageid,
+                    senderid: result[i].senderid,
+                    receiverid: result[i].receiverid,
+                    recordid: result[i].recordid,
+                    status: result[i].status,
+                    title: result[i].title,
+                    msgContent: result[i].msgContent,
                     cardContent: record[0].cardContent,
                     cardTitle: record[0].cardTitle,
-                    status: record[0].status,
-                    senderName: sender[0].username,
-                    senderEmail: sender[0].email,
-                    receiverName: receiver[0].username,
-                    receiverEmail: receiver[0].email,
-                    cardImgURL: card[0].cardImgURL
+                    cardtype: cardtype
                 };
             } else {
                 return {

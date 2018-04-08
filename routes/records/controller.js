@@ -65,7 +65,8 @@ exports.dbFetchAll = async (Record, User, Card) => {
                         senderEmail: senderemail,
                         receiverName: receiver[0].username,
                         receiverEmail: receiver[0].email,
-                        cardImgURL: card[0].cardImgURL
+                        cardImgURL: card[0].cardImgURL,
+                        cardNote: card[0].cardNote
                     });
                 } else {
                     res.push({
@@ -82,7 +83,8 @@ exports.dbFetchAll = async (Record, User, Card) => {
                         senderEmail: sender[0].email,
                         receiverName: null,
                         receiverEmail: null,
-                        cardImgURL: card[0].cardImgURL
+                        cardImgURL: card[0].cardImgURL,
+                        cardNote: card[0].cardNote
                     });
                 }
             }          
@@ -122,7 +124,8 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                     senderEmail: sender[0].email,
                     receiverName: receiver[0].username,
                     receiverEmail: receiver[0].email,
-                    cardImgURL: card[0].cardImgURL
+                    cardImgURL: card[0].cardImgURL,
+                    cardNote: card[0].cardNote
                 };
             } else {
                 return {
@@ -139,7 +142,8 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                     senderEmail: sender[0].email,
                     receiverName: null,
                     receiverEmail: null,
-                    cardImgURL: card[0].cardImgURL
+                    cardImgURL: card[0].cardImgURL,
+                    cardNote: card[0].cardNote
                 }
             }          
 
@@ -182,7 +186,8 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                         senderEmail: sender[0].email,
                         receiverName: receiver[0].username,
                         receiverEmail: receiver[0].email,
-                        cardImgURL: card[0].cardImgURL
+                        cardImgURL: card[0].cardImgURL,
+                        cardNote: card[0].cardNote
                     });
                 } else {
                     res.push({
@@ -199,7 +204,8 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                         senderEmail: sender[0].email,
                         receiverName: null,
                         receiverEmail: null,
-                        cardImgURL: card[0].cardImgURL
+                        cardImgURL: card[0].cardImgURL,
+                        cardNote: card[0].cardNote
                     });
                 }
             }          
@@ -243,7 +249,8 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                         senderEmail: sender[0].email,
                         receiverName: receiver[0].username,
                         receiverEmail: receiver[0].email,
-                        cardImgURL: card[0].cardImgURL
+                        cardImgURL: card[0].cardImgURL,
+                        cardNote: card[0].cardNote
                     });
                 } else {
                     res.push({
@@ -260,7 +267,8 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                         senderEmail: sender[0].email,
                         receiverName: null,
                         receiverEmail: null,
-                        cardImgURL: card[0].cardImgURL
+                        cardImgURL: card[0].cardImgURL,
+                        cardNote: card[0].cardNote
                     });
                 }
             }          
@@ -304,7 +312,8 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                         senderEmail: sender[0].email,
                         receiverName: receiver[0].username,
                         receiverEmail: receiver[0].email,
-                        cardImgURL: card[0].cardImgURL
+                        cardImgURL: card[0].cardImgURL,
+                        cardNote: card[0].cardNote
                     });
                 } else {
                     res.push({
@@ -321,7 +330,8 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                         senderEmail: sender[0].email,
                         receiverName: null,
                         receiverEmail: null,
-                        cardImgURL: card[0].cardImgURL
+                        cardImgURL: card[0].cardImgURL,
+                        cardNote: card[0].cardNote
                     });
                 }
             }          
@@ -367,7 +377,8 @@ try {
                         senderEmail: sender[0].email,
                         receiverName: receiver[0].username,
                         receiverEmail: receiver[0].email,
-                        cardImgURL: card[0].cardImgURL
+                        cardImgURL: card[0].cardImgURL,
+                        cardNote: card[0].cardNote
                     });
                 } else {
                     res.push({
@@ -384,7 +395,8 @@ try {
                         senderEmail: sender[0].email,
                         receiverName: null,
                         receiverEmail: null,
-                        cardImgURL: card[0].cardImgURL
+                        cardImgURL: card[0].cardImgURL,
+                        cardNote: card[0].cardNote
                     });
                 }
             }          
