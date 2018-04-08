@@ -21,7 +21,7 @@ router.post('/record', async (req, res) => {
       const receiver = await models.User.findAll({where: {email: req.body.receiverEmail}, raw: true});
       receiverid = receiver[0].uid;
     }
-    if (receiverid !== null) { 
+    if (receiverid !== null) {
       // If receiverid == null, then unknown receiver, donot sent message to receiver.
       // We should sent message when receiverid being updated.
       // record message
@@ -38,7 +38,7 @@ router.post('/record', async (req, res) => {
     } else {
       res.status(400).send();
     }
-    
+
   }
 
 });
@@ -162,5 +162,24 @@ router.delete('/record/:id', async(req, res) => {
   } catch (err) {
       res.status(400).send(err.message);
   }
-  });
+});
+
+router.post('/usecard', async (req, res) => {
+  try {
+    const result = await controller.dbUseCard(models.Message, models.Record, req.body.recordid, req.body.title, req.body.msgContent);
+    res.json(result);
+  } catch (err) {
+    res.status(err.statusCode).send(err.message);
+  }
+});
+
+router.post('/usecardreply', async (req, res) => {
+  try {
+    const result = await controller.dbUseCardReply(models.Message, models.Record, req.body.recordid, req.body.recordstatus, req.body.title, req.body.msgContent);
+    res.json(result);
+  } catch (err) {
+    res.status(err.statusCode).send(err.message);
+  }
+});
+
 module.exports = router;

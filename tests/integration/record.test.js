@@ -62,7 +62,7 @@ describe('POST /record/record 123', ()=>{
                     done();
                 }).catch((e)=> done(e));
             });
-    }); 
+    });
 });
 
 describe('GET /record/record', ()=>{
@@ -119,6 +119,94 @@ describe('GET /record/record/receiver/receiverid/friend/friendid', ()=>{
             .end(done);
     })
 })
+
+describe('POST /record/usecard', ()=>{
+    it('should update record status and send a new message', (done)=>{
+        request(app)
+            .post('/record/usecard')
+            .send({
+                recordid: records[0].recordid,
+                title: 'Dinner Invitation',
+                msgContent: 'This is a dinner invitation from yx',
+            })
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.senderid).toBe(records[0].receiverid);
+            })
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.Record.findOne({ where: { recordid: records[0].recordid }, raw : true }).then((record)=>{
+                    expect(record.status).toBe(6);
+                }).catch((e)=> done(e));
+                models.Message.findAll({ raw : true }).then((message)=>{
+                    expect(message.length).toBe(3);
+                    done();
+                }).catch((e)=> done(e));
+            });
+    });
+    it('should not send message with invalid data',(done)=>{
+        request(app)
+            .post('/record/usecard')
+            .send()
+            .expect(400)
+            .end((err, res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.Message.findAll({ raw: true }).then((res)=>{
+                    expect(res.length).toBe(2);
+                    done();
+                }).catch((e)=> done(e));
+            });
+    });
+});
+
+describe('POST /record/usecard', ()=>{
+    it('should update record status and send a new message', (done)=>{
+        request(app)
+            .post('/record/usecardreply')
+            .send({
+                recordid: records[0].recordid,
+                recordstatus: 1,
+                title: 'REJECTED',
+                msgContent: 'Oh~ No! Your friend reject your invitation.',
+            })
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.senderid).toBe(records[0].senderid);
+            })
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.Record.findOne({ where: { recordid: records[0].recordid }, raw : true }).then((record)=>{
+                    expect(record.status).toBe(1);
+                }).catch((e)=> done(e));
+                models.Message.findAll({ raw : true }).then((message)=>{
+                    expect(message.length).toBe(3);
+                    done();
+                }).catch((e)=> done(e));
+            });
+    });
+    it('should not send message with invalid data',(done)=>{
+        request(app)
+            .post('/record/usecard')
+            .send()
+            .expect(400)
+            .end((err, res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.Message.findAll({ raw: true }).then((res)=>{
+                    expect(res.length).toBe(2);
+                    done();
+                }).catch((e)=> done(e));
+            });
+    });
+});
+
 // describe('GET /record/record/sender/senderid/status', ()=>{
 //     it('should get all records', (done)=>{
 //         request(app)
@@ -190,7 +278,7 @@ describe('GET /record/record/receiver/receiverid/friend/friendid', ()=>{
 //                 models.Record.findAll({ where: { recordid: records[0].recordid }, raw : true }).then((record)=>{
 //                     expect(record.length).toBe(0);
 //                     done();
-//                 }).catch((e)=>done(e));  
+//                 }).catch((e)=>done(e));
 //             });
 //     });
 //     it('should return 400 if card not found', (done)=>{
@@ -236,7 +324,7 @@ describe('GET /record/record/receiver/receiverid/friend/friendid', ()=>{
 //                     console.log(`find result update ${JSON.stringify(res[0])}`);
 //                     expect(res[0].finishDate).toBeTruthy();
 //                     done();
-//                 }).catch((e)=>done(e));  
+//                 }).catch((e)=>done(e));
 //             });
 //     });
 // });

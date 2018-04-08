@@ -4,7 +4,7 @@ const config = require('../../config');
 
 exports.dbCreateMessage = async (Message, senderid, receiverid, recordid, title, msgContent) => {
     try{
-        let result;  
+        let result;
         let status = 1;
         let createDate = new Date();
         const raw = await Message.create({
@@ -55,7 +55,7 @@ exports.dbFetchAll = async (Message, Record, Card) => {
                     });
                 } else {
                     res.push({
-                        messageid: result[i].messageid, 
+                        messageid: result[i].messageid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         recordid: result[i].recordid,
@@ -67,7 +67,7 @@ exports.dbFetchAll = async (Message, Record, Card) => {
                         cardtype: null
                     });
                 }
-            }          
+            }
             return res;
         }
     } catch (err) {
@@ -114,7 +114,7 @@ exports.dbFindById = async (Message, Record, Card, messageid) => {
                     cardTitle: null,
                     cardtype: null
                 }
-            }          
+            }
 
         }
     } catch (err) {
@@ -170,7 +170,7 @@ exports.dbFindBySender = async (Message, Record, Card, senderid, status) => {
                         cardtype: null
                     });
                 }
-            }          
+            }
             return res;
             // return records;
         }
@@ -227,7 +227,7 @@ try {
                         cardtype: null
                     });
                 }
-            }          
+            }
             return res;
     }
 } catch (err) {
@@ -235,9 +235,9 @@ try {
 }
 };
 
-exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid,friendid) => {
+exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid, friendid) => {
     try {
-        let result;    
+        let result;
         result = await Message.findAll({ where: { senderid: senderid, receiverid: friendid}, raw: true });
         if (!result) {
             throw new ServerError(400, 'message for this sender and friend does not exist.');
@@ -278,7 +278,7 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid,friendi
                         cardtype: null
                     });
                 }
-            }          
+            }
             return res;
         }
     } catch (err) {
@@ -289,7 +289,7 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid,friendi
 
   exports.dbFindByReceiverAndFriend = async (Message, Record, Card, receiverid, friendid) => {
     try {
-        let result;    
+        let result;
         result = await Message.findAll({ where: { senderid: friendid, receiverid: receiverid}, raw: true });
         if (!result) {
             throw new ServerError(400, 'message for this receiverer and friend does not exist.');
@@ -330,7 +330,7 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid,friendi
                         cardtype: null
                     });
                 }
-            }          
+            }
             return res;
         }
     } catch (err) {
@@ -356,7 +356,7 @@ exports.dbDeleteById = async (Message, messageid) => {
     try {
         let message = await Message.findAll({ where: {messageid : messageid}, raw:true });
         let result = await Message.destroy({ where: {messageid : messageid}, raw:true});
-       
+
         if (message.length === 0) {
             throw new ServerError(400, "message does not exist");
         }
