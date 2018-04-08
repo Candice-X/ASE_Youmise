@@ -30,7 +30,7 @@ router.post('/message', async (req, res) => {
 // Fetch all messages by administrator
 router.get('/message', async(req, res) => {
   try {
-    let result = await controller.dbFetchAll(models.Message, models.Record);
+    let result = await controller.dbFetchAll(models.Message, models.Record, models.Card);
     res.json(result);
   } catch (err) {
     res.status(400).send(err.message);
