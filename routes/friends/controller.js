@@ -59,7 +59,7 @@ exports.addFriendship = async (User, Friendship, userId, friendId) => {
       throw new Error('User not found!');
     }
     const friend = await User.findOne({ where: { uid: friendId } });
-    if(!user){
+    if(!friend){
       throw new Error('Friend not found!');
     }
     const friendship = await Friendship.create({
@@ -132,24 +132,29 @@ exports.listFriends = async (User, Friendship, userId) =>{
   }
 };
 
-// exports.deleteFriends = async (Friendship, userId1, userId2) =>{
-//   try{
-//     const user = await User.findOne({ where: { uid: userId } });
-//     if(!user){
-//       throw new Error('User not found!');
-//     }
-//     const friendships = await Friendship.findAll({ where: { userId } });
-//     // const records = await FriendRequest.findAll({ where: { receiverId } });
-//     let friends = [];
-//     for(let i in friendships){
-//       let friendId = friendships[i].friendId;
-//       let friend = await User.findOne({ where: { uid: friendId }});
-//       console.log(friend);
-//       friends.push(friend);
-//     }
-//     return { message };
-//   } catch(err) {
-//     console.log(err);
-//     throw new ServerError(400, err.message);
-//   }
-// };
+exports.deleteFriends = async (User, Friendship, userId1, userId2) =>{
+  try{
+    const user = await User.findOne({ where: { uid: userId1 } });
+    if(!user){
+      throw new Error('User not found!');
+    }
+    const friend = await User.findOne({ where: { uid: userId2 } });
+    if(!friend){
+      throw new Error('The friend you want to delete is not found!');
+    }
+    const friendUsername = friend.get('username');
+    const friendship = await Friendship.findOne({ where: { userId: userId1, friendId: userId2 } });
+    // const records = await FriendRequest.findAll({ where: { receiverId } });
+    if(!friendship){
+      throw new console.error('You haven\'t been friends.');
+    }
+
+    let result =await Friendship.destroy({ where: { userId: userId1, friendId: userId2 }});
+    let result2 =await Friendship.destroy({ where: { userId: userId2, friendId: userId1 }});
+    const message = `You have deleted ${friendUsername} as your friend.`;
+    return { message };
+  } catch(err) {
+    console.log(err);
+    throw new ServerError(400, err.message);
+  }
+};
