@@ -13,7 +13,7 @@ const users = require('./routes/users');
 const cards = require('./routes/cards');
 const records = require('./routes/records');
 const friends = require('./routes/friends');
-
+const messages = require('./routes/messages');
 
 var app = express();
 
@@ -28,6 +28,7 @@ app.use('/user', users);
 app.use('/card', cards);
 app.use('/record', records);
 app.use('/friend', friends);
+app.use('/message', messages);
 app.use('*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/umise/dist/index.html`));
 });
