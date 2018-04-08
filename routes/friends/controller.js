@@ -88,8 +88,8 @@ exports.updateFriendRequest = async (User, Friendship, FriendRequest, friendRequ
     let result = raw.get({ plain: true });
     const senderId = await raw.get('senderId');
     const receiverId = await raw.get('receiverId');
-    const friendship1 = exports.addFriendship(User, Friendship, senderId, receiverId);
-    const friendship2 = exports.addFriendship(User, Friendship, receiverId, senderId);
+    const friendship1 = await exports.addFriendship(User, Friendship, senderId, receiverId);
+    const friendship2 = await exports.addFriendship(User, Friendship, receiverId, senderId);
     return result;
   } catch(err) {
     console.log(err);
