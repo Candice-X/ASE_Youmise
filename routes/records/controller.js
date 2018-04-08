@@ -1,12 +1,13 @@
 const ServerError = require('../../utils/ServerError');
 const config = require('../../config');
+const MessageController = require('../messages/controller');
 // var moment = require('moment');
 
 exports.dbCreateRecord = async (Record, User, senderid, receiverEmail, cardid, expireDate, cardContent, cardTitle) => {
     try{
         let result;
         let status = 1;
-        if (!receiverEmail){ 
+        if (!receiverEmail){
             status = 2;
         }
         let createDate = new Date();
@@ -52,7 +53,7 @@ exports.dbFetchAll = async (Record, User, Card) => {
                 if (result[i].receiverid !== null){
                     receiver = await User.findAll({ where: {uid: result[i].receiverid},raw: true });
                     res.push({
-                        recordid: result[i].recordid, 
+                        recordid: result[i].recordid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         cardid: result[i].cardid,
@@ -70,7 +71,7 @@ exports.dbFetchAll = async (Record, User, Card) => {
                     });
                 } else {
                     res.push({
-                        recordid: result[i].recordid, 
+                        recordid: result[i].recordid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         cardid: result[i].cardid,
@@ -78,7 +79,7 @@ exports.dbFetchAll = async (Record, User, Card) => {
                         expireDate: result[i].expireDate,
                         cardContent: result[i].cardContent,
                         cardTitle: result[i].cardTitle,
-                        status: result[i].status, 
+                        status: result[i].status,
                         senderName: sender[0].username,
                         senderEmail: sender[0].email,
                         receiverName: null,
@@ -87,13 +88,13 @@ exports.dbFetchAll = async (Record, User, Card) => {
                         cardNote: card[0].cardNote
                     });
                 }
-            }          
+            }
             return res;
         }
     } catch (err) {
       throw new ServerError(400, err.message);
     }
-  };
+};
 
 exports.dbFindById = async (Record, User, Card, recordid) => {
     try {
@@ -111,7 +112,7 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                 receiver = await User.findAll({ where: {uid: record[0].receiverid},raw: true });
                 console.log(`Successfully find receiver: ${JSON.stringify(receiver[0])}`);
                 return {
-                    recordid: record[0].recordid, 
+                    recordid: record[0].recordid,
                     senderid: record[0].senderid,
                     receiverid: record[0].receiverid,
                     cardid: record[0].cardid,
@@ -129,7 +130,7 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                 };
             } else {
                 return {
-                    recordid: record[0].recordid, 
+                    recordid: record[0].recordid,
                     senderid: record[0].senderid,
                     receiverid: record[0].receiverid,
                     cardid: record[0].cardid,
@@ -137,7 +138,7 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                     expireDate: record[0].expireDate,
                     cardContent: record[0].cardContent,
                     cardTitle: record[0].cardTitle,
-                    status: record[0].status, 
+                    status: record[0].status,
                     senderName: sender[0].username,
                     senderEmail: sender[0].email,
                     receiverName: null,
@@ -145,15 +146,15 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                     cardImgURL: card[0].cardImgURL,
                     cardNote: card[0].cardNote
                 }
-            }          
+            }
 
         }
     } catch (err) {
         throw new ServerError(400, err.message);
     }
-  };
+};
 
-  exports.dbFindBySender = async (Record,User, Card, senderid, status) => {
+exports.dbFindBySender = async (Record,User, Card, senderid, status) => {
     try {
         let result;
         if (status === null){
@@ -173,7 +174,7 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                 if (result[i].receiverid !== null){
                     receiver = await User.findAll({ where: {uid: result[i].receiverid},raw: true });
                     res.push({
-                        recordid: result[i].recordid, 
+                        recordid: result[i].recordid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         cardid: result[i].cardid,
@@ -191,7 +192,7 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                     });
                 } else {
                     res.push({
-                        recordid: result[i].recordid, 
+                        recordid: result[i].recordid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         cardid: result[i].cardid,
@@ -199,7 +200,7 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                         expireDate: result[i].expireDate,
                         cardContent: result[i].cardContent,
                         cardTitle: result[i].cardTitle,
-                        status: result[i].status, 
+                        status: result[i].status,
                         senderName: sender[0].username,
                         senderEmail: sender[0].email,
                         receiverName: null,
@@ -208,7 +209,7 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                         cardNote: card[0].cardNote
                     });
                 }
-            }          
+            }
             return res;
             // return records;
         }
@@ -217,11 +218,11 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
     }
   };
 
-exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) => {
+exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid, friendid) => {
     try {
-        let result;   
-        console.log(`this is the senderid: ${senderid}`);   
-        console.log(`this is the receiverid: ${friendid}`);   
+        let result;
+        console.log(`this is the senderid: ${senderid}`);
+        console.log(`this is the receiverid: ${friendid}`);
         result = await Record.findAll({ where: { senderid: senderid, receiverid: friendid}, raw: true });
         if (!result) {
             throw new ServerError(400, 'record not exists.');
@@ -235,7 +236,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                 if (result[i].receiverid !== null){
                     receiver = await User.findAll({ where: {uid: result[i].receiverid},raw: true });
                     res.push({
-                        recordid: result[i].recordid, 
+                        recordid: result[i].recordid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         cardid: result[i].cardid,
@@ -253,7 +254,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                     });
                 } else {
                     res.push({
-                        recordid: result[i].recordid, 
+                        recordid: result[i].recordid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         cardid: result[i].cardid,
@@ -261,7 +262,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                         expireDate: result[i].expireDate,
                         cardContent: result[i].cardContent,
                         cardTitle: result[i].cardTitle,
-                        status: result[i].status, 
+                        status: result[i].status,
                         senderName: sender[0].username,
                         senderEmail: sender[0].email,
                         receiverName: null,
@@ -270,7 +271,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                         cardNote: card[0].cardNote
                     });
                 }
-            }          
+            }
             return res;
             // return records;
         }
@@ -280,11 +281,11 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
     }
   };
 
-  exports.dbFindByReceiverAndFriend = async (Record,User, Card, receiverid, friendid) => {
+  exports.dbFindByReceiverAndFriend = async (Record, User, Card, receiverid, friendid) => {
     try {
-        let result;   
-        console.log(`this is the senderid: ${receiverid}`);   
-        console.log(`this is the receiverid: ${friendid}`);   
+        let result;
+        console.log(`this is the senderid: ${receiverid}`);
+        console.log(`this is the receiverid: ${friendid}`);
         result = await Record.findAll({ where: { senderid: friendid, receiverid: receiverid}, raw: true });
         if (!result) {
             throw new ServerError(400, 'record not exists.');
@@ -298,7 +299,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                 if (result[i].receiverid !== null){
                     receiver = await User.findAll({ where: {uid: result[i].receiverid},raw: true });
                     res.push({
-                        recordid: result[i].recordid, 
+                        recordid: result[i].recordid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         cardid: result[i].cardid,
@@ -316,7 +317,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                     });
                 } else {
                     res.push({
-                        recordid: result[i].recordid, 
+                        recordid: result[i].recordid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         cardid: result[i].cardid,
@@ -324,7 +325,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                         expireDate: result[i].expireDate,
                         cardContent: result[i].cardContent,
                         cardTitle: result[i].cardTitle,
-                        status: result[i].status, 
+                        status: result[i].status,
                         senderName: sender[0].username,
                         senderEmail: sender[0].email,
                         receiverName: null,
@@ -333,7 +334,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                         cardNote: card[0].cardNote
                     });
                 }
-            }          
+            }
             return res;
             // return records;
         }
@@ -363,7 +364,7 @@ try {
                 if (result[i].receiverid !== null){
                     receiver = await User.findAll({ where: {uid: result[i].receiverid},raw: true });
                     res.push({
-                        recordid: result[i].recordid, 
+                        recordid: result[i].recordid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         cardid: result[i].cardid,
@@ -381,7 +382,7 @@ try {
                     });
                 } else {
                     res.push({
-                        recordid: result[i].recordid, 
+                        recordid: result[i].recordid,
                         senderid: result[i].senderid,
                         receiverid: result[i].receiverid,
                         cardid: result[i].cardid,
@@ -389,7 +390,7 @@ try {
                         expireDate: result[i].expireDate,
                         cardContent: result[i].cardContent,
                         cardTitle: result[i].cardTitle,
-                        status: result[i].status, 
+                        status: result[i].status,
                         senderName: sender[0].username,
                         senderEmail: sender[0].email,
                         receiverName: null,
@@ -398,7 +399,7 @@ try {
                         cardNote: card[0].cardNote
                     });
                 }
-            }          
+            }
             return res;
         // return records;
     }
@@ -414,9 +415,12 @@ exports.dbUpdateById = async (Record, recordid, receiverid, status) => {
             if (status === 5){
                 finishDate = new Date();
             }
-            let updateRecord = await Record.findOne({where : {recordid: recordid}});
-            let result = await updateRecord.updateAttributes({
-                receiverid : receiverid, 
+            let record = await Record.findOne({where : {recordid: recordid}});
+            if(!record){
+              throw new Error('Record not found');
+            }
+            let result = await record.updateAttributes({
+                receiverid : receiverid,
                 status: status,
                 finishDate: finishDate
             });
@@ -426,12 +430,60 @@ exports.dbUpdateById = async (Record, recordid, receiverid, status) => {
         throw new ServerError(400, err.message);
     }
 };
+// card receiver use card
+exports.dbUseCard = async (Message, Record, recordid, title, msgContent) => {
+  try {
+    let record = await Record.findOne({ where : { recordid } });
+    if(!record){
+      throw new Error('Record not found!');
+    }
+    if(record.get('status') === 5){
+      throw new Error('You have already used this card!');
+    }
+    if(record.get('status') === 4){
+      throw new Error('Card expired.');
+    }
+    const senderid = record.get('receiverid');
+    const receiverid = record.get('senderid');
+    const message = await MessageController.dbCreateMessage(Message, senderid, receiverid, recordid, title, msgContent);
+    const status = 6;
+    const updateRecord = await exports.dbUpdateById(Record, recordid, senderid, status);
+    return message;
+  } catch (err) {
+    console.log(err);
+    throw new ServerError(400, err.message);
+  }
+};
+
+//recordstatus can be 1 or 5, 1 is reject, 5 is approve;
+exports.dbUseCardReply = async (Message, Record, recordid, recordstatus, title, msgContent) => {
+  try {
+    let record = await Record.findOne({where : {recordid: recordid}});
+    if(!record){
+      throw new Error('Record not found');
+    }
+    const senderid = record.get('senderid');
+    const receiverid = record.get('receiverid');
+    if(record.get('status') === 5){
+      throw new Error('You have already used this card!');
+    }
+    if(record.get('status') === 4){
+      throw new Error('Card expired.');
+    }
+    const message = await MessageController.dbCreateMessage(Message, senderid, receiverid, recordid, title, msgContent);
+    const updateRecord = await exports.dbUpdateById(Record, recordid, senderid, recordstatus);
+    return message;
+  } catch (err) {
+    console.log(err);
+    throw new ServerError(400, err.message);
+  }
+};
 
 exports.dbDeleteById = async (Record, recordid) => {
     try {
         let record = await Record.findAll({ where: {recordid : recordid}, raw:true });
         let result = await Record.destroy({ where: {recordid : recordid}, raw:true});
-       
+
         if (record.length === 0) {
             throw new ServerError(400);
         }

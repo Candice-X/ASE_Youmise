@@ -3,8 +3,8 @@ const models = require('./../../models');
 const {Card} = require('./../../routes/cards/controller');
 const moment = require('moment');
 
-before(function () {
-    return require('../../models').sequelize.sync();
+before(async () => {
+    return await require('../../models').sequelize.sync({ force: true });
 });
 
 
@@ -159,31 +159,53 @@ const messages = [{
     msgContent: "This is a Drinks invitation sent by hyy."
 }];
 
-// const FriendRequestOneId = 1;
-// const FriendRequestTwoId = 2;
-// const FriendRequestThreeId = 3;
-// const friendRequests = [{
-//     FriendRequestId: FriendRequestOneId,
-//     senderid: SenderOneId,
-//     senderUsername: "chenfu",
-//     receiverid: ReceiverOneId,
-//     receiverUsername: 'hyy',
-//     status: 'SENT',
-// },{
-//     FriendRequestId: FriendRequestTwoId,
-//     senderid: SenderTwoId,
-//     senderUsername: "xyh",
-//     receiverid: ReceiverTwoId,
-//     receiverUsername: 'weg',
-//     status: 'SENT',
-// },{
-//     FriendRequestId: FriendRequestThreeId,
-//     senderid: SenderThreeId,
-//     senderUsername: "zss",
-//     receiverid: ReceiverThreeId,
-//     receiverUsername: 'xjm',
-//     status: 'SENT',
-// }];
+const FriendRequestOneId = 1;
+const FriendRequestTwoId = 2;
+const FriendRequestThreeId = 3;
+const friendRequests = [{
+    friendRequestId: FriendRequestOneId,
+    senderId: SenderOneId,
+    senderUsername: "chenfu",
+    receiverId: ReceiverOneId,
+    receiverUsername: 'hyy',
+    status: 'SENT',
+},{
+    friendRequestId: FriendRequestTwoId,
+    senderId: SenderTwoId,
+    senderUsername: "xyh",
+    receiverId: ReceiverTwoId,
+    receiverUsername: 'weg',
+    status: 'SENT',
+},{
+    friendRequestId: FriendRequestThreeId,
+    senderId: SenderThreeId,
+    senderUsername: "zss",
+    receiverId: ReceiverThreeId,
+    receiverUsername: 'xjm',
+    status: 'SENT',
+}];
+
+const FriendshipOneId = 1;
+const FriendshipTwoId = 2;
+const FriendshipThreeId = 3;
+const FriendshipFourId = 3;
+const friendships = [{
+    friendshipId: FriendshipOneId,
+    userId: SenderOneId,
+    friendId: ReceiverOneId,
+},{
+    friendshipId: FriendshipTwoId,
+    userId: ReceiverOneId,
+    friendId: SenderOneId,
+},{
+    friendshipId: FriendshipThreeId,
+    userId: SenderTwoId,
+    friendId: ReceiverTwoId,
+},{
+    friendshipId: FriendshipFourId,
+    userId: ReceiverTwoId,
+    friendId: SenderTwoId,
+}];
 
 const populateCards = (done)=>{
     models.Card.destroy({
@@ -254,21 +276,41 @@ const populateMessages = (done)=>{
     }).then(()=> done());
 };
 
-// const populateFriendRequests = (done)=>{
-//     models.FriendRequest.destroy({
-//         where: {},
-//         truncate: true
-//     }).then(()=>{
-//         const FriendRequestOne = models.FriendRequest.create(friendRequests[0]).then((friendRequest)=>{
-//             return friendRequest;
-//
-//     });
-//         const FriendRequestTwo =  models.FriendRequest.create(friendRequests[1]).then((friendRequest)=>{
-//             return friendRequest;
-//     });
-//         return Promise.all([friendRequestOne, friendRequestTwo])
-//     }).then(()=> done());
-// };
+const populateFriendRequests = (done)=>{
+    models.FriendRequest.destroy({
+        where: {},
+        truncate: true
+    }).then(()=>{
+        const FriendRequestOne = models.FriendRequest.create(friendRequests[0]).then((friendRequest)=>{
+            return friendRequest;
 
-// module.exports = {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages, friendRequests, populateFriendRequests};
-module.exports = {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages};
+    });
+        const FriendRequestTwo =  models.FriendRequest.create(friendRequests[1]).then((friendRequest)=>{
+            return friendRequest;
+    });
+        return Promise.all([FriendRequestOne, FriendRequestTwo])
+    }).then(()=> {
+      done();
+    });
+};
+
+const populateFriendships = (done)=>{
+    models.Friendship.destroy({
+        where: {},
+        truncate: true
+    }).then(()=>{
+        const FriendshipOne = models.Friendship.create(friendships[0]).then((friendship)=>{
+            return friendship;
+
+    });
+        const FriendshipTwo =  models.Friendship.create(friendships[1]).then((friendship)=>{
+            return friendship;
+    });
+        return Promise.all([FriendshipOne, FriendshipTwo])
+    }).then(()=> {
+      done();
+    });
+};
+
+module.exports = {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages, friendRequests, populateFriendRequests, friendships, populateFriendships};
+// module.exports = {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages};

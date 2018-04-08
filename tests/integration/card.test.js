@@ -19,7 +19,7 @@ beforeEach(populateCards);
 //         //     done();  // MAGIC == EVIL.
 //         // }, 1000);
 //         done();
-//     });   
+//     });
 // });
 
 describe('POST /card', ()=>{
@@ -28,9 +28,9 @@ describe('POST /card', ()=>{
         request(app)
             .post('/card/card')
             .send({
-                types: cards[2].types, 
-                cardName: cards[2].cardName, 
-                cardImgURL: cards[2].cardImgURL, 
+                types: cards[2].types,
+                cardName: cards[2].cardName,
+                cardImgURL: cards[2].cardImgURL,
                 cardNote: cards[2].cardNote
             })
             .expect(200)
@@ -62,7 +62,7 @@ describe('POST /card', ()=>{
                     done();
                 }).catch((e)=> done(e));
             });
-    }); 
+    });
 });
 
 describe('GET /card', ()=>{
@@ -111,7 +111,7 @@ describe('DELETE /card/:id', ()=>{
                 models.Card.findAll({ where: { cardid: cards[0].cardid }, raw : true }).then((card)=>{
                     expect(card.length).toBe(0);
                     done();
-                }).catch((e)=>done(e));  
+                }).catch((e)=>done(e));
             });
     });
     it('should return 400 if card not found', (done)=>{
@@ -137,7 +137,7 @@ describe('PATCH /card/:id',()=>{
         request(app)
             .patch(`/card/card/${cardid}`)
             .send({
-                cardName : null, 
+                cardName : null,
                 cardImgURL: null,
                 cardNote: "Change note"
             })
@@ -152,8 +152,7 @@ describe('PATCH /card/:id',()=>{
                 models.Card.findAll({ where: { cardid: cardid }, raw : true }).then((card)=>{
                     expect(card[0].cardName).toBeTruthy();
                     done();
-                }).catch((e)=>done(e));  
+                }).catch((e)=>done(e));
             });
     });
 });
-

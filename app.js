@@ -43,9 +43,9 @@ const PORT = process.env.PORT || 8080;
     console.error('Unable to connect to the database:', err);
   };
   await models.sequelize.sync();
-  // models.Records.belongsTo(models.Users, {foreignKey: 'userid'});
-  // models.Records.belongsTo(models.Cards, {foreignKey: 'cardid'});
-    
+  // models.Record.belongsTo(models.User, {foreignKey: 'userid'});
+  // models.Record.belongsTo(models.Card, {foreignKey: 'cardid'});
+
 // models.Card.create({
 //     types: 1,
 //     cardName: 'Drink Card',
