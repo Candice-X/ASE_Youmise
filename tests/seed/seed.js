@@ -89,6 +89,13 @@ const users = [{
     firstName: "ss",
     lastName: "z",
     gender: "Female"
+},{
+    uid: SenderThreeId,
+    username: "xjm",
+    email : "xjm@123.com",
+    firstName: "jm",
+    lastName: "x",
+    gender: "Male"
 }];
 
 const records = [{
@@ -155,6 +162,32 @@ const messages = [{
     msgContent: "This is a Drinks invitation sent by hyy."
 }];
 
+// const FriendRequestOneId = 1;
+// const FriendRequestTwoId = 2;
+// const FriendRequestThreeId = 3;
+// const friendRequests = [{
+//     FriendRequestId: FriendRequestOneId,
+//     senderid: SenderOneId,
+//     senderUsername: "chenfu",
+//     receiverid: ReceiverOneId,
+//     receiverUsername: 'hyy',
+//     status: 'SENT',
+// },{
+//     FriendRequestId: FriendRequestTwoId,
+//     senderid: SenderTwoId,
+//     senderUsername: "xyh",
+//     receiverid: ReceiverTwoId,
+//     receiverUsername: 'weg',
+//     status: 'SENT',
+// },{
+//     FriendRequestId: FriendRequestThreeId,
+//     senderid: SenderThreeId,
+//     senderUsername: "zss",
+//     receiverid: ReceiverThreeId,
+//     receiverUsername: 'xjm',
+//     status: 'SENT',
+// }];
+
 const populateCards = (done)=>{
     models.Card.destroy({
         where: {},
@@ -162,14 +195,14 @@ const populateCards = (done)=>{
     }).then(()=>{
         const cardOne = models.Card.create(cards[0]).then((card)=>{
             return card;
-            
+
     });
         const cardTwo =  models.Card.create(cards[1]).then((card)=>{
             return card;
     });
         return Promise.all([cardOne, cardTwo])
     }).then(()=> done());
-}
+};
 const populateUsers = (done)=>{
     models.User.destroy({
         where: {},
@@ -177,7 +210,7 @@ const populateUsers = (done)=>{
     }).then(()=>{
         const userOne = models.User.create(users[0]).then((user)=>{
             return user;
-            
+
     });
         const userTwo =  models.User.create(users[1]).then((user)=>{
             return user;
@@ -191,7 +224,7 @@ const populateUsers = (done)=>{
 
         return Promise.all([userOne, userTwo, userThree, userFour])
     }).then(()=> done());
-}
+};
 
 const populateRecords = (done)=>{
     models.Record.destroy({
@@ -200,14 +233,14 @@ const populateRecords = (done)=>{
     }).then(()=>{
         const recordOne = models.Record.create(records[0]).then((record)=>{
             return record;
-            
+
     });
         const recordTwo =  models.Record.create(records[1]).then((record)=>{
             return record;
     });
         return Promise.all([recordOne, recordTwo])
     }).then(()=> done());
-}
+};
 const populateMessages = (done)=>{
     models.Message.destroy({
         where: {},
@@ -215,14 +248,30 @@ const populateMessages = (done)=>{
     }).then(()=>{
         const messageOne = models.Message.create(messages[0]).then((message)=>{
             return message;
-            
+
     });
         const messageTwo =  models.Message.create(messages[1]).then((message)=>{
             return message;
     });
         return Promise.all([messageOne, messageTwo])
     }).then(()=> done());
-}
+};
 
+// const populateFriendRequests = (done)=>{
+//     models.FriendRequest.destroy({
+//         where: {},
+//         truncate: true
+//     }).then(()=>{
+//         const FriendRequestOne = models.FriendRequest.create(friendRequests[0]).then((friendRequest)=>{
+//             return friendRequest;
+//
+//     });
+//         const FriendRequestTwo =  models.FriendRequest.create(friendRequests[1]).then((friendRequest)=>{
+//             return friendRequest;
+//     });
+//         return Promise.all([friendRequestOne, friendRequestTwo])
+//     }).then(()=> done());
+// };
+
+// module.exports = {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages, friendRequests, populateFriendRequests};
 module.exports = {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages};
-
