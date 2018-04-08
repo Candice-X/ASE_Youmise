@@ -28,7 +28,8 @@ exports.sendFriendRequest = async (User, Friendship, FriendRequest, senderId, re
     const receiverUsername = receiver.get('username');
     const receiverId = receiver.get('uid');
     if(senderId === receiverId) {
-      throw new Error('You cannot send friend request to yourself!');
+      const message = 'You cannot send friend request to yourself!';
+      return {message};
     }
     const friendship = await Friendship.findOne({ where: { userId: senderId, friendId: receiverId } })
     if(friendship) {
