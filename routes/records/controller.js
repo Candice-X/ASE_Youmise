@@ -162,7 +162,7 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
             result = await Record.findAll({ where: { senderid: senderid, status: status}, raw: true });
         }
         if (!result) {
-            console.log('record not exists.')
+            throw new ServerError(400, 'record not exists.');
         } else {
             console.log(`Successfully find ${result.length} matching records.`);
             let res = []
@@ -170,7 +170,7 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
                 const sender = await User.findAll({ where: { uid: result[i].senderid},raw: true });
                 const card = await Card.findAll({  where: { cardid: result[i].cardid}, raw: true });
                 let receiver;
-                if (result.receiverid !== null){
+                if (result[i].receiverid !== null){
                     receiver = await User.findAll({ where: {uid: result[i].receiverid},raw: true });
                     res.push({
                         recordid: result[i].recordid, 
@@ -213,7 +213,6 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
             // return records;
         }
     } catch (err) {
-        console.log(err.message);
         throw new ServerError(400, err.message);
     }
   };
@@ -225,7 +224,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
         console.log(`this is the receiverid: ${friendid}`);   
         result = await Record.findAll({ where: { senderid: senderid, receiverid: friendid}, raw: true });
         if (!result) {
-            console.log('record not exists.')
+            throw new ServerError(400, 'record not exists.');
         } else {
             console.log(`Successfully find ${result.length} matching records.`);
             let res = []
@@ -233,7 +232,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                 const sender = await User.findAll({ where: { uid: result[i].senderid},raw: true });
                 const card = await Card.findAll({  where: { cardid: result[i].cardid}, raw: true });
                 let receiver;
-                if (result.receiverid !== null){
+                if (result[i].receiverid !== null){
                     receiver = await User.findAll({ where: {uid: result[i].receiverid},raw: true });
                     res.push({
                         recordid: result[i].recordid, 
@@ -288,7 +287,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
         console.log(`this is the receiverid: ${friendid}`);   
         result = await Record.findAll({ where: { senderid: friendid, receiverid: receiverid}, raw: true });
         if (!result) {
-            console.log('record not exists.')
+            throw new ServerError(400, 'record not exists.');
         } else {
             console.log(`Successfully find ${result.length} matching records.`);
             let res = []
@@ -296,7 +295,7 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid,friendid) =
                 const sender = await User.findAll({ where: { uid: result[i].senderid},raw: true });
                 const card = await Card.findAll({  where: { cardid: result[i].cardid}, raw: true });
                 let receiver;
-                if (result.receiverid !== null){
+                if (result[i].receiverid !== null){
                     receiver = await User.findAll({ where: {uid: result[i].receiverid},raw: true });
                     res.push({
                         recordid: result[i].recordid, 
@@ -353,7 +352,7 @@ try {
         result = await Record.findAll({ where: { receiverid: receiverid, status: status}, raw: true });
     }
     if (!result) {
-        console.log('record not exists.')
+        throw new ServerError(400, 'record not exists.');
     } else {
         console.log(`Successfully find ${result.length} matching records.`);
         let res = []
@@ -361,7 +360,7 @@ try {
                 const sender = await User.findAll({ where: { uid: result[i].senderid},raw: true });
                 const card = await Card.findAll({  where: { cardid: result[i].cardid}, raw: true });
                 let receiver;
-                if (result.receiverid !== null){
+                if (result[i].receiverid !== null){
                     receiver = await User.findAll({ where: {uid: result[i].receiverid},raw: true });
                     res.push({
                         recordid: result[i].recordid, 

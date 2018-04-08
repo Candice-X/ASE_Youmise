@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'test'){
     sequelize = new Sequelize(config.DB_NAME,process.env.DB_USERNAME, process.env.DB_PASSWORD , {
         host: config.DB_HOST,
         port: 3306,
-        logging: console.log,
+        logging: false,
         maxConcurrentQueries: 100,
         dialect: 'mysql',
         operatorsAliases: Op,

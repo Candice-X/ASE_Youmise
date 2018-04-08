@@ -72,165 +72,160 @@ describe('GET /message/message', ()=>{
     })
 })
 
-// describe('GET /message/message/sender/senderid', ()=>{
-//     it('should get all messages by sender', (done)=>{
-//         request(app)
-//             .get(`/message/message/sender/${records[0].senderid}`)
-//             .expect(200)
-//             .expect((res)=>{
-//                 console.log(`this is the response ${res.body}`);
-//                 expect(res.body.length).toBe(1);
-//                 expect(res.body[0].senderName).toBe(users[0].username);
-//             })
-//             .end(done);
-//     })
-// })
+describe('GET /message/message/sender/senderid', ()=>{
+    it('should get all messages by sender', (done)=>{
+        request(app)
+            .get(`/message/message/sender/${messages[0].senderid}`)
+            .expect(200)
+            .expect((res)=>{
+                console.log(`this is the response ${res.body}`);
+                expect(res.body.length).toBe(1);
+                expect(res.body[0].recordid).toBe(records[0].recordid);
+            })
+            .end(done);
+    })
+})
 
-// describe('GET /record/record/sender/senderid/friend/friendid', ()=>{
-//     it('should get all records', (done)=>{
-//         request(app)
-//             .get(`/record/record/sender/${records[0].senderid}/friend/${records[0].receiverid}`)
-//             .expect(200)
-//             .expect((res)=>{
-//                 console.log(`this is the response ${res.body}`);
-//                 expect(res.body.length).toBe(1);
-//                 expect(res.body[0].senderName).toBe(users[0].username);
-//             })
-//             .end(done);
-//     })
-// })
+describe('GET /message/message/sender/senderid/friend/friendid', ()=>{
+    it('should get all messages', (done)=>{
+        request(app)
+            .get(`/message/message/sender/${messages[0].senderid}/friend/${messages[0].receiverid}`)
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.length).toBe(1);
+                expect(res.body[0].title).toBe(messages[0].title);
+            })
+            .end(done);
+    })
+})
 
-// describe('GET /record/record/receiver/receiverid/friend/friendid', ()=>{
-//     it('should get all records', (done)=>{
-//         request(app)
-//             .get(`/record/record/receiver/${records[0].receiverid}/friend/${records[0].senderid}`)
-//             .expect(200)
-//             .expect((res)=>{
-//                 console.log(`this is the response ${res.body}`);
-//                 expect(res.body.length).toBe(1);
-//                 expect(res.body[0].senderName).toBe(users[0].username);
-//             })
-//             .end(done);
-//     })
-// })
-// describe('GET /record/record/sender/senderid/status', ()=>{
-//     it('should get all records', (done)=>{
-//         request(app)
-//             .get(`/record/record/sender/${records[0].senderid}/${records[0].status}`)
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.length).toBe(1);
-//             })
-//             .end(done);
-//     })
-// })
+describe('GET /message/message/receiver/receiverid/friend/friendid', ()=>{
+    it('should get all messages', (done)=>{
+        request(app)
+            .get(`/message/message/receiver/${messages[0].receiverid}/friend/${messages[0].senderid}`)
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.length).toBe(1);
+                expect(res.body[0].cardtype).toBe(cards[0].types);
+            })
+            .end(done);
+    })
+})
+describe('GET /message/message/sender/senderid/status', ()=>{
+    it('should get all messages', (done)=>{
+        request(app)
+            .get(`/message/message/sender/${messages[0].senderid}/${messages[0].status}`)
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.length).toBe(1);
+            })
+            .end(done);
+    })
+})
 
-// describe('GET /record/record/receiver/receiverid', ()=>{
-//     it('should get all records', (done)=>{
-//         request(app)
-//             .get(`/record/record/receiver/${records[0].receiverid}`)
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.length).toBe(1);
-//             })
-//             .end(done);
-//     })
-// })
+describe('GET /message/message/receiver/receiverid', ()=>{
+    it('should get all messages', (done)=>{
+        request(app)
+            .get(`/message/message/receiver/${messages[0].receiverid}`)
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.length).toBe(1);
+            })
+            .end(done);
+    })
+})
 
-// describe('GET /record/record/receiver/receiverid/status', ()=>{
-//     it('should get all records', (done)=>{
+describe('GET /message/message/receiver/receiverid/status', ()=>{
+    it('should get all messages', (done)=>{
+        request(app)
+            .get(`/message/message/receiver/${messages[0].receiverid}/${messages[0].status}`)
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.length).toBe(1);
+            })
+            .end(done);
+    })
+})
+
+describe('GET /message/:id',()=>{
+    it('should return message',(done)=>{
+        request(app)
+            .get(`/message/message/${messages[0].messageid}`)
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.title).toBe(messages[0].title);
+                expect(res.body.cardtype).toBeTruthy();
+            })
+            .end(done);
+    });
+    it('should return 400 for non-object ids',(done)=>{
+        var wrongId = "abcd3";
+        request(app)
+            .get(`/message/message/${wrongId}`)
+            .expect(400)
+            .end(done);
+    });
+});
+
+describe('DELETE /message/:id', ()=>{
+    it('should remove a message',(done)=>{
+        request(app)
+            .delete(`/message/message/${messages[0].messageid}`)
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.recordid).toBe(messages[0].recordid);
+            })
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.Message.findAll({ where: { messageid: messages[0].messageid }, raw : true }).then((message)=>{
+                    expect(message.length).toBe(0);
+                    done();
+                }).catch((e)=>done(e));  
+            });
+    });
+    it('should return 400 if message not found', (done)=>{
+        var wrongId = "abcd3";
+        request(app)
+            .delete(`/message/message/${wrongId}`)
+            .expect(400)
+            .end(done);
+    });
+//     it('should return 404 if id is invalid',(done)=>{
 //         request(app)
-//             .get(`/record/record/receiver/${records[0].receiverid}/${records[0].status}`)
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.length).toBe(1);
-//             })
-//             .end(done);
-//     })
-// })
-// describe('GET /record/:id',()=>{
-//     it('should return record',(done)=>{
-//         request(app)
-//             .get(`/record/record/${records[0].recordid}`)
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.cardTitle).toBe(records[0].cardTitle);
-//                 console.log(`res.body${JSON.stringify(res)}`);
-//                 expect(res.body.senderName).toBe(users[0].username);
-//             })
-//             .end(done);
+//         .delete('/todos/123abc')
+//         .set('x-auth', users[1].tokens[0].token)
+//         .expect(404)
+//         .end(done);
 //     });
-//     it('should return 400 for non-object ids',(done)=>{
-//         var wrongId = "abcd3";
-//         request(app)
-//             .get(`/record/record/${wrongId}`)
-//             .expect(400)
-//             .end(done);
-//     });
-// });
+});
 
-// describe('DELETE /record/:id', ()=>{
-//     it('should remove a record',(done)=>{
-//         request(app)
-//             .delete(`/record/record/${records[0].recordid}`)
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.recordid).toBe(records[0].recordid);
-//             })
-//             .end((err,res)=>{
-//                 if(err){
-//                     return done(err);
-//                 }
-//                 models.Record.findAll({ where: { recordid: records[0].recordid }, raw : true }).then((record)=>{
-//                     expect(record.length).toBe(0);
-//                     done();
-//                 }).catch((e)=>done(e));  
-//             });
-//     });
-//     it('should return 400 if card not found', (done)=>{
-//         var wrongId = "abcd3";
-//         request(app)
-//             .delete(`/record/record/${wrongId}`)
-//             .expect(400)
-//             .end(done);
-//     });
-// //     it('should return 404 if id is invalid',(done)=>{
-// //         request(app)
-// //         .delete('/todos/123abc')
-// //         .set('x-auth', users[1].tokens[0].token)
-// //         .expect(404)
-// //         .end(done);
-// //     });
-// });
-
-// describe('PATCH /record/:id',()=>{
-//     it('should update the record', (done)=>{
-//         var recordid = records[1].recordid;
-//         request(app)
-//             .patch(`/record/record/${recordid}`)
-//             .send({
-//                 senderid: null,
-//                 receiverid: records[2].receiverid,
-//                 cardid: null,
-//                 expireDate: null,
-//                 cardContent: null,
-//                 cardTitle: null,
-//                 status: 5
-//             })
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.cardTitle).toBe("movie invitation");
-//             })
-//             .end((err,res)=>{
-//                 if(err){
-//                     return done(err);
-//                 }
-
-//                 models.Record.findAll({ where: { recordid: recordid }, raw : true }).then((res)=>{
-//                     console.log(`find result update ${JSON.stringify(res[0])}`);
-//                     expect(res[0].finishDate).toBeTruthy();
-//                     done();
-//                 }).catch((e)=>done(e));  
-//             });
-//     });
-// });
+describe('PATCH /message/:id',()=>{
+    it('should update the message', (done)=>{
+        request(app)
+            .patch(`/message/message/${messages[0].messageid}`)
+            .send({
+                senderid: null,
+                receiverid: null,
+                recordid: null,
+                status: 5,
+                title: null,
+                msgContent: null
+            })
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.title).toBe(messages[0].title);
+            })
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.Message.findAll({ where: { messageid: messages[0].messageid }, raw : true }).then((res)=>{
+                    console.log(`find result update ${JSON.stringify(res[0])}`);
+                    expect(res[0].status).toBe(5);
+                    done();
+                }).catch((e)=>done(e));  
+            });
+    });
+});
