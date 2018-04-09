@@ -7,11 +7,14 @@
             <h4 class="subTitle">Card with  </h4> -->
       <center>
         <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: isReceiveModel }" @click="showReceivedCard">My Cards</button>
+        :class="{ active: isReceiveModel==='received' }" @click="showReceivedCard">Cards Received</button>
         <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: !isReceiveModel }" @click="showSendCard" >Cards Sent</button>
+        :class="{ active: isReceiveModel ==='sent' }" @click="showSendCard" >Cards Sent</button>
+        <button class="btn btn-primary btn-outline-success" 
+        :class="{ active: isReceiveModel==='request' }" @click="showRequest" >Card in Use</button>
+
         </center>
-            <div class="row">
+            <div class="row" >
                     <!-- if empty -->
               <div class="empty_msg" style="" v-if="cards.length===0">
                 You don't have any Card right now
@@ -23,7 +26,7 @@
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />
                         
-                        <div class ="sender_cont" >
+                        <div class ="sender_cont " >
                             <div class ='avatar' >
                                 <img src="../assets/img/girl.png" />
                             </div>
@@ -38,38 +41,105 @@
                 </div>
 
 
-            </div>
-        </div>
-<!-- Modal -->
-  <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="height:380px;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Card Info</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" style="height:420px;">
-          <div class="row">
-                <div class="col-sm-1"></div>
-                <div class="col-lg-5 col-md-5 col-sm-5 card_cont" >
-                    <div class="card_img card_img_more" >
-                        <img v-bind:src = "this.oneCard.cardImgURL" />
-                         <div class ="sender_cont" >
+            </div><!-- end of row -->
+
+             <!-- <div class="row" v-if="isReceiveModel==='request'">
+           
+                <div v-for = "(req, index) in requests" :key="index" class="col-lg-4 col-md-4 col-sm-6 card_cont" >
+                    <div class="card_img" >   
+                      <div class ="sender_cont" >
                             <div class ='avatar' >
-                                <img src="../assets/img/girl.png" />
+                                <img src="../assets/img/girl.png"/>
                             </div>
                             <div class="content">
-                                <h4>{{ this.oneCard.cardTitle }}</h4>
-                                <p class="sub_title">{{ this.oneCard.senderName}}</p>
+                                <h4>{{ req.senderUsername }} want to use the card </h4>
+                                <p class="sub_title" >{{req.createdAt}}</p>
+                                <p class="sub_title">{{ req.senderUsername }} want to use the card</p>
+                                <p class="" >status: {{req.status}}</p>
+                            </div>
+                      </div>  
+                       <div v-if="message.status==='SENT'">
+                          <button class="btn btn-primary btn-success col-sm-6" @click="acceptRequest(req.friendRequestId)" >Mark it Done</button>
+                          <!-- <button class="btn btn-primary btn-secondary col-sm-4" @click="rejectRequest(req.friendRequestId)" >Decline</button> -->
+                        <!-- </div>
+                        <div v-else>
+                            <button class="btn btn-secondary btn-primary col-sm-10" style="font-size:0.8em;" disabled >
+                              You have <strong>{{req.status}} </strong> </button>
+                        </div>
+                    </div>
+                     
+                   
+                    
+                </div>
+
+
+            </div> --> 
+            <!-- end of row -->
+
+
+        </div>
+
+ <!-- alert message -->
+    <div class="send_card_alert" style="display:none;" >
+      <p> Send use card request to <strong style="color:green;font-weight:600;">{{this.oneCard.receiverEmail}} </strong>  Successfully! </p>
+    </div>
+   <!-- end of alert -->
+
+<!-- Modal -->
+  <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" 
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="background:rgba(1,1,1,0.6)">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px;padding:0;border:0;">
+      <div class="modal-content" style="background:none;">
+       
+        <div class="modal-body" style="height:680px;">          
+                <div class=" card_cont " >
+                  
+                    <div class="card_img card_img_more"  >
+                        <img v-bind:src = "this.oneCard.cardImgURL" />
+                         <div class ="sender_cont sender_cont_one "  >
+                            <div class ='avatar one_avatar' >
+                                <img src="../assets/img/girl.png" />
+                                 <p class="userName">{{ this.oneCard.senderName }}</p>
+                            </div>
+                            <div class="content_one one_send_cont">
+                                <!-- <h4>{{ this.oneCard.cardTitle }}</h4>
+                                <p class="sub_title">{{ this.oneCard.senderName}}</p> -->
+                                <p>{{this.oneCard.cardContent}}</p>
+                         
                             </div>
 
                         </div>
-
+                       <div class="promise_msg">
+                          <p>{{this.oneCard.cardNote}}</p>
+                      </div>
                     </div>
+                      <!-- use card -->
+                      <div>
+                        <div  v-if="isReceiveModel==='received' && this.oneCard.status ===1" class="use_card " @click="useCard" >
+                              <a > Use This Promise Card</a>
+                        </div>
+                        
+                         <div  v-if="this.oneCard.status ===5" class="use_card " style="background:pink;">
+                              <a> Promise Completed</a>
+                        </div>
+                         <div  v-if=" this.oneCard.status ===6 && this.$store.state.user.userID !== this.oneCard.receiverid" class="use_card " style="background:green;">
+                              <a  > Promise Card in Using</a>
+                              
+                        </div>
+                         <div  v-if="this.oneCard.status ===6 && this.$store.state.user.userID === this.oneCard.receiverid " class="use_card " @click="useCard">
+                                 <a > Mark Promise Complete</a>
+                        </div>
+                        <div  v-if="this.oneCard.status ===4" class="use_card " style="background:red;">
+                              <a> Promise Card Expired</a>
+                        </div>
+                        <div  v-if="isReceiveModel==='sent' && this.oneCard.status ===1" class="use_card " style="">
+                              <a> Promise Card Sent to Friend</a>
+                        </div>
+                       </div>
+                    <!-- end use card -->
+
                 </div>
-                <div class ="sender_cont_more col-lg-5 col-md-5 col-sm-5" > 
+                <!-- <div class ="sender_cont_more col-lg-5 col-md-5 col-sm-5" > 
                         <img v-bind:src="this.oneCard.senderImg" />
                     <div class="content_more">
                         <h4>{{ this.oneCard.cardTitle }}</h4>
@@ -81,10 +151,8 @@
                         </div>
                     </div>
                     <button class="btn btn-primary btn-success btn-send" >Use Card</button>
-                </div>
-
-
-            </div>
+                </div> -->
+           
 
         </div>
 
@@ -109,53 +177,55 @@ import { required, email } from "vuelidate/lib/validators";
 export default {
   data() {
     return {
-      isReceiveModel: true,
+      isReceiveModel: 'received',
       cards:[],
+      requests:[],
       //this is for create record
       oneCard: {
-          recordid:'',
-          senderid:null,
-          senderName:'',
-          receiverid:null,
-          cardid:null,
-          createDate:null,
-          expireDate:null,
-          finishDate:null,
-          cardTitle:'',
-          cardContent:'',
-          status:null,
-          cardImgURL: null,
+          // recordid:'',
+          // senderid:null,
+          // senderName:'',
+          // cardNote:'',
+          // receiverid:null,
+          // cardid:null,
+          // createDate:null,
+          // expireDate:null,
+          // finishDate:null,
+          // cardTitle:'',
+          // cardContent:'',
+          // status:null,
+          // cardImgURL: null,
           senderImg:this.$store.state.card.girl,
-          receiverEmail:'',
-          receiverName:'', 
+          // title:'',
+          // msgContent:'',
+          // receiverEmail:'',
+          // receiverName:'', 
       },  
 
       cardsReceive: [],
 
 
-      cardsSend: [
-         
-        
-      ],
+      cardsSend: [],
 
     };
   },
   methods:{
     ...mapActions(['']),
-    async showCard(index) {
-     
+    async showCard(index) {   
       this.oneCard = this.cards[index];
+      // this.oneCard.recordid = this.cards[index].recordid;
+      // console.log('show card:', this.oneCard);
     },
 
 
     async showReceivedCard() {
-      this.isReceiveModel =true;
+      this.isReceiveModel ='received';
       const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
       console.log("show received card:", userID);
      try{
        if(userID){
-            // const response = await axios.get(`/record/record/receiver/${userID}`);
-            const response = await axios.get(`/record/record`);
+            const response = await axios.get(`/record/record/receiver/${userID}`);
+            // const response = await axios.get(`/record/record`);
             // this.cards = response.data;
             this.cards = response.data;
             console.log(response.data);
@@ -169,7 +239,7 @@ export default {
     },
 
     async showSendCard() {
-      this.isReceiveModel = false;
+      this.isReceiveModel = 'sent';
        
        const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
        console.log("show send card:", userID);
@@ -185,11 +255,89 @@ export default {
        
       }catch(e){
         console.log(e.message);
-      };
-
-
-    
+      }; 
     },
+
+  // card in use
+   async showRequest() {
+      this.isReceiveModel = 'request';
+       
+      const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+      // console.log("show send card:", userID);
+     try{
+       if(userID){
+            const response = await axios.get(`/record/record/receiver/${userID}/6`);
+
+            const response2 = await axios.get(`/record/record/sender/${userID}/6`);
+            
+            const res = response.data.concat(response2.data);
+            // this.cards = response.data;
+            this.cards = res;
+            console.log(response.data);
+       }else{
+
+       };
+       
+      }catch(e){
+        console.log(e.message);
+      }; 
+    },
+    // send card 
+    // record status:
+    // 1: 有效的卡片，具有收卡人，发卡人，在有效期内，
+    // 2：已发送但是没有接收人，
+    // 3： 邀请卡类型，接收人为多人（不建议新增这个状态。。。）
+    // 4： 过期卡
+    // 5： 已使用
+    // 6： 使用中，等待对方确认(这个多余了， 确认以后再update就好了
+     async useCard(){
+      const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+
+      // let rec = this.onCard.recordid;
+      console.log("record:",this.oneCard);
+      // console.log("onecard",this.oneCard);
+     
+      // console.log(`/record/record/${recordid}`);
+     try{
+       if(userID){
+         if(this.oneCard.status === 1){
+          this.oneCard.status = 6;
+         }else if(this.oneCard.status===6)
+         {
+           //mark as complete
+           this.oneCard.status = 5;
+         }else{
+           return "status cannot change";
+         }
+            jQuery("#Dashboard_send").modal('hide');
+
+            
+            this.oneCard["title"]=this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle;
+            this.oneCard["msgContent"]=this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle+ " which you sent to him/her at "+ this.oneCard.createDate+". Last time you said: "+ this.oneCard.cardContent;
+            const response = await axios.patch(`/record/record/${this.oneCard.recordid}`,this.oneCard);
+
+            // this.cards = response.data;
+            // console.log(response.data);
+        // await 
+          
+            jQuery(".send_card_alert").fadeIn();
+            setTimeout(() => {
+            jQuery(".send_card_alert").fadeOut();
+            },3500);
+            //alert
+
+       }else{
+
+       };
+       
+      }catch(e){
+      
+        console.log("usercard: ",e.message);
+      }; 
+    },
+
+
+
   },
   components: {
     // Nav,
@@ -229,6 +377,10 @@ body {
   text-align: left;
   margin-top: 0;
   padding: 0;
+}
+.sender_cont_one{
+  position: relative;
+  margin-top:-100px;
 }
 
 .avatar {
@@ -279,23 +431,24 @@ body {
 }
 .card_img:hover {
   background: #3ac17e;
-  opacity: 0.9;
+  /* opacity: 1; */
   cursor: pointer;
   border: 2px dashed #fff;
   color: #fff;
 }
 .card_img_more {
-  width: 220px;
-  margin: 10px 25px;
+  /* width: 220px; */
+  /* margin: 10px 25px; */
   background: #3ac17e;
-  height: 320px;
+  /* height: 320px; */
+  margin:0;
   border-radius: 5px;
   border: 2px dashed #fff;
   color:#fff;
 }
 .card_img_more:hover {
-  background: #3ac17e;
-  opacity: 0.9;
+  /* background: #3ac17e; */
+  /* opacity: 0.9; */
   cursor: pointer;
   border: 2px dashed #fff;
   color: #fff;
@@ -318,7 +471,8 @@ body {
   top: 80px;
 }
 .customize-icon {
-  opacity: 0.8;
+  /* opacity: 0.8; */
+  opacity:1;
   border-radius: 5px 5px 0 0;
   width: 100%;
   height: 180px;
@@ -566,4 +720,134 @@ i {
   font-size:0.8em;
   color:#bbb;
 }
-</style>
+
+.card_img_more {
+  width: 330px;
+  /* margin: 10px 25px; */
+  background: #3ac17e;
+  height: 500px;
+  border-radius: 5px;
+  border: 2px dashed #fff;
+  color:#fff;
+}
+.card_img_more:hover {
+  /* background: #3ac17e; */
+  /* opacity: 1; */
+  cursor: pointer;
+  border: 2px dashed #fff;
+  color: #fff;
+}
+/* .card_img_more:hover + .use_card{
+  display:block;
+  background:red;
+} */
+.card_img_more img {
+  border-radius: 5px 5px 0 0;
+  width: 100%;
+  height: 500px;
+}
+.userName{
+  color:#fff;
+  font-size:0.8em;
+  text-align:center;
+}
+.content_one {
+  width: 240px;
+  height: 80px;
+  font-size: 0.8em;
+  padding:5px;
+  background:#dcdcdc;
+  border-radius:5px;
+  color:#222;
+  margin-left: 8px;
+  display: inline-block;
+  word-wrap:normal;
+  line-height: 1.5em;
+  padding-top:5px;
+  opacity: 1;
+  margin-left:10px;
+  overflow: hidden;
+}
+.message_more{
+  background: #eeeeee;
+  border-radius: 5px;
+  
+  display: block;
+  text-align: left;
+  padding:15px;
+  margin:10px;
+  height:100px;
+  font-size:0.85em;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.one_send_cont{
+  margin-top:10px;
+}
+.one_avatar{
+  float:left;
+  margin-top:20px;
+}
+
+
+.promise_msg{
+  word-wrap: normal;
+  width: 210px;
+  height:110px;
+  overflow: hidden;
+  position: relative;
+  color:#fff;
+  font-size: 0.9em;
+  margin:auto;
+  top:-260px;
+  text-align:left;
+  line-height: 1.5em;
+  
+}
+.use_card{
+  display: block;
+  z-index:999;
+  /* opacity:0.8; */
+  position: relative;
+  width:330px;
+  margin-top:-3px;
+  border-radius: 0 0 5px 5px;
+  color:#fff;
+  height:60px;
+  padding:5px;
+  padding-top:15px;
+  background:#3ac17e;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+.user_card:hover{
+  background:red;
+}
+
+.send_card_alert{
+  margin:auto;
+  z-index:99;
+  text-align:center;
+  width:25rem; 
+  background:#ffc9aa;
+  border-radius:5px;
+  height:5rem;
+  position:fixed;
+  top:0px;
+  left:0px;
+  bottom:0px;
+  right:0px;
+
+}
+.send_card_alert p{
+  padding:0;
+  text-align:center;
+  margin-top:1rem;
+  padding-top:1em;
+  line-height:2em;
+  display:block;
+
+}
+
+
+</style> 

@@ -145,7 +145,17 @@ router.patch('/record/:id', async(req, res) => {
           res.status(400).send();
         }
         let result = await controller.dbUpdateById(models.Record, recordid, updates.receiverid, updates.status);
+        let receiverid = null;
+        if(updates.receiverid !== null){ 
+          if (req.body.title === null || req.body.msgContent === null){
+            res.status(400).send("need to update message, wilhe title or msgContent is null");
+          }
+          // We should sent message when receiverid being updated.
+          const message = await messageController.dbCreateMessage(models.Message, result.senderid, updates.receiverid, result.recordid, req.body.title, req.body.msgContent);
+          console.log(`message sent successs`);
+        }
         res.json(result);
+
     } catch (err) {
       res.status(400).send(err.message);
     }
