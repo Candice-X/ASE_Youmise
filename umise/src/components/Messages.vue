@@ -9,10 +9,47 @@
         <button class="btn btn-primary btn-outline-success " :class= "{active: isMessage}" @click="getAllMessages" > Messages</button>
         <button class="btn btn-primary btn-outline-success" :class= "{active: !isMessage}" @click="getFriendsRequest" >Friends Request</button>
 
-           <div class="row" >
+           <div class="row" v-if="isMessage">
+                <!-- if empty -->
+              <div class="empty_msg" style="" v-if="messages.length===0">
+                You don't have any Messages right now
+                <!-- <button class="btn btn-secondary btn-primary"> Add Friends </button> -->
+              </div>
+                <div v-for = "(message, index) in messages" :key="index" class="col-lg-4 col-md-4 col-sm-6 card_cont" >
+                    <div class="card_img" >   
+                      <div class ="sender_cont" >
+                            <div class ='avatar' style="position:relative; top:10px; float:left;">
+                                <img src="../assets/img/girl.png"/>
+                            </div>
+                            <div class="content" style="width:190px;">
+                                <h4>{{ message.title }} </h4>
+                                <!-- <p class="sub_title" >{{message.cardTitle}}</p> -->
+                                <p class="sub_title">{{ message.cardContent }} </p>
+                                <p class="" >status: {{message.msgContent}}</p>
+                            </div>
+                      </div>  
+                       <div v-if="message.status==='SENT'">
+                          <button class="btn btn-primary btn-success col-sm-6" @click="acceptRequest(message.friendRequestId)" >Accept</button>
+                          <button class="btn btn-primary btn-secondary col-sm-4" @click="rejectRequest(message.friendRequestId)" >Decline</button>
+                        </div>
+                        <div v-else>
+                            <!-- <button class="btn btn-secondary btn-primary col-sm-10" style="font-size:0.8em;" disabled >You have <strong>{{message.status}} </strong> </button> -->
+                        </div>
+                    </div>
+                     
+                    <!-- button -->
+                    
+                </div>
+
+
+            </div>
+            <!-- end of row -->
+
+
+            <div class="row" v-if="!isMessage">
                 <!-- if empty -->
               <div class="empty_msg" style="" v-if="friendRequests.length===0">
-                You don't have any Messages right now
+                You don't have any Friend Request right now
                 <!-- <button class="btn btn-secondary btn-primary"> Add Friends </button> -->
               </div>
                 <div v-for = "(request, index) in friendRequests" :key="index" class="col-lg-4 col-md-4 col-sm-6 card_cont" >
@@ -44,7 +81,6 @@
 
             </div>
             <!-- end of row -->
-
          
            
 
@@ -69,7 +105,7 @@ export default {
       name: 'kuer',
       isMessage: true,
       // imgUrl:'',
-      
+      messages:[],
       friendRequests:[
         // {
         // friendRequestId:1,
@@ -91,7 +127,20 @@ export default {
   methods:{
     async getAllMessages(){
       this.isMessage = true;
-      this.friendRequests = [];
+    const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+     try{
+       if(userID){
+            const response = await axios.get(`/message/message/sender/${userID}`);
+            // const response = await axios.get(`/record/record`);
+            // this.cards = response.data;
+            this.messages = response.data;
+            console.log(response.data);
+       }else{
+
+       };    
+      }catch(e){
+        console.log(e.message);
+      };
     },
 
     async getFriendsRequest(){
@@ -162,6 +211,7 @@ export default {
   created: function() {
     this.$store.state.isLogin = true;
     // this.imgUrl = this.$store.state.card.img1;
+    this.getAllMessages();
   },
 };
 </script>
