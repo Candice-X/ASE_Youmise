@@ -36,7 +36,7 @@
     "expect": "^21.1.0",
     "lodash": "^4.17.5",
     "mocha": "^3.5.3",
-    "nodemon": "^1.10.2",
+    "nodemon": "^1.17.3",
     "sequelize-mock": "^0.10.2",
     "supertest": "^2.0.0"
   },

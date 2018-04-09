@@ -5,6 +5,7 @@ const AWS = require('aws-sdk');
 
 const controller = require('./controller');
 const models = require('../../models');
+const messageController = require('./../messages/controller');
 // Add foreign key to records.
 
 const config = require('../../config');
@@ -15,7 +16,21 @@ const router = express.Router();
 router.post('/record', async (req, res) => {
   try {
     const result = await controller.dbCreateRecord(models.Record, models.User, req.body.senderid, req.body.receiverEmail, req.body.cardid, req.body.expireDate, req.body.cardContent, req.body.cardTitle);
-    
+    let receiverid = null;
+    if(req.body.receiverEmail !== null){
+      const receiver = await models.User.findAll({where: {email: req.body.receiverEmail}, raw: true});
+      receiverid = receiver[0].uid;
+    }
+    if (receiverid !== null) {
+      // If receiverid == null, then unknown receiver, donot sent message to receiver.
+      // We should sent message when receiverid being updated.
+      // record message
+      console.log("kaishi zhao message");
+      console.log(`this is result ${JSON.stringify(result)}`);
+      const message = await messageController.dbCreateMessage(models.Message, req.body.senderid, receiverid, result.recordid, req.body.title, req.body.msgContent);
+      console.log(`message sent successs`);
+    }
+
     res.json(result);
   } catch (err) {
     if (err.statusCode){
@@ -23,7 +38,7 @@ router.post('/record', async (req, res) => {
     } else {
       res.status(400).send();
     }
-    
+
   }
 
 });
@@ -130,7 +145,17 @@ router.patch('/record/:id', async(req, res) => {
           res.status(400).send();
         }
         let result = await controller.dbUpdateById(models.Record, recordid, updates.receiverid, updates.status);
+        let receiverid = null;
+        if(updates.receiverid !== null){ 
+          if (req.body.title === null || req.body.msgContent === null){
+            res.status(400).send("need to update message, wilhe title or msgContent is null");
+          }
+          // We should sent message when receiverid being updated.
+          const message = await messageController.dbCreateMessage(models.Message, result.senderid, updates.receiverid, result.recordid, req.body.title, req.body.msgContent);
+          console.log(`message sent successs`);
+        }
         res.json(result);
+
     } catch (err) {
       res.status(400).send(err.message);
     }
@@ -147,5 +172,24 @@ router.delete('/record/:id', async(req, res) => {
   } catch (err) {
       res.status(400).send(err.message);
   }
-  });
+});
+
+router.post('/usecard', async (req, res) => {
+  try {
+    const result = await controller.dbUseCard(models.Message, models.Record, req.body.recordid, req.body.title, req.body.msgContent);
+    res.json(result);
+  } catch (err) {
+    res.status(err.statusCode).send(err.message);
+  }
+});
+
+router.post('/usecardreply', async (req, res) => {
+  try {
+    const result = await controller.dbUseCardReply(models.Message, models.Record, req.body.recordid, req.body.recordstatus, req.body.title, req.body.msgContent);
+    res.json(result);
+  } catch (err) {
+    res.status(err.statusCode).send(err.message);
+  }
+});
+
 module.exports = router;

@@ -3,7 +3,6 @@ const request = require('supertest');
 const _ = require('lodash');
 const sequelize = require('sequelize');
 
-const {app} = require('./../../app');
 const models = require('./../../models');
 const controller = require('./../../routes/cards/controller');
 
@@ -20,7 +19,7 @@ describe('create', ()=>{
         var note = 'Note test 3';
         const card = await controller.dbCreateCard(models.Card, cards[2].types, cards[2].cardName, cards[2].cardImgURL, cards[2].cardNote);
         expect(card.cardNote).toBe(cards[2].cardNote);
-    }); 
+    });
 });
 
 describe('GET /card', ()=>{

@@ -1,14 +1,47 @@
-// const expect = require('expect');
-// const request = require('supertest');
-// const _ = require('lodash');
-// const sequelize = require('sequelize');
+const expect = require('expect');
+const request = require('supertest');
+const _ = require('lodash');
+const sequelize = require('sequelize');
 
-// const {app} = require('./../../app');
-// const models = require('./../../models');
+const models = require('./../../models');
+const recordController = require('./../../routes/records/controller');
 
-// const {cards, populateCards} = require('./../seed/seed');
+const {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages} = require('./../seed/seed');
 
-// beforeEach(populateCards);
+beforeEach(populateCards);
+beforeEach(populateRecords);
+beforeEach(populateMessages);
+
+describe('Use card', ()=>{
+  it('should update record status and send a message to friend - unit test', async ()=>{
+    let before = await models.Message.findAll({ where: {receiverid: users[0].uid} });
+    // Record[0]: users[0]->users[1]
+    // Message: users[1]->users[0]
+    const title = 'Dinner Invitation';
+    const msgContent = 'This is a invitation sent by yinghai.';
+    const friendship = await recordController.dbUseCard(models.Message, models.Record, records[0].recordid, title, msgContent);
+    let after = await models.Message.findAll({ where: {receiverid: users[0].uid }});
+    const record = await models.Record.findOne({ where: {recordid: records[0].recordid}});
+    expect(after.length).toBe(before.length + 1);
+    expect(record.status).toBe(6);
+  });
+});
+
+describe('Reply card', ()=>{
+  it('should update record status and send a message to friend - unit test', async ()=>{
+    let before = await models.Message.findAll({ where: {senderid: users[0].uid} });
+    // Record[0]: users[0]->users[1]
+    // Message: users[1]->users[0]
+    const recordstatus = 5;
+    const title = 'Dinner Invitation';
+    const msgContent = 'This is a invitation sent by yinghai.';
+    const friendship = await recordController.dbUseCardReply(models.Message, models.Record, records[0].recordid, recordstatus, title, msgContent);
+    let after = await models.Message.findAll({ where: {senderid: users[0].uid }});
+    const record = await models.Record.findOne({ where: {recordid: records[0].recordid}});
+    expect(after.length).toBe(before.length + 1);
+    expect(record.status).toBe(5);
+  });
+});
 //  //run before every test case
 
 // describe('POST /card', ()=>{
@@ -17,9 +50,9 @@
 //         request(app)
 //             .post('/card/card')
 //             .send({
-//                 types: cards[2].types, 
-//                 cardName: cards[2].cardName, 
-//                 cardImgURL: cards[2].cardImgURL, 
+//                 types: cards[2].types,
+//                 cardName: cards[2].cardName,
+//                 cardImgURL: cards[2].cardImgURL,
 //                 cardNote: cards[2].cardNote
 //             })
 //             .expect(200)
@@ -51,7 +84,7 @@
 //                     done();
 //                 }).catch((e)=> done(e));
 //             });
-//     }); 
+//     });
 // });
 
 // describe('GET /card', ()=>{
@@ -100,7 +133,7 @@
 //                 models.Card.findAll({ where: { cardid: cards[0].cardid }, raw : true }).then((card)=>{
 //                     expect(card.length).toBe(0);
 //                     done();
-//                 }).catch((e)=>done(e));  
+//                 }).catch((e)=>done(e));
 //             });
 //     });
 //     it('should return 400 if card not found', (done)=>{
@@ -126,7 +159,7 @@
 //         request(app)
 //             .patch(`/card/card/${cardid}`)
 //             .send({
-//                 cardName : null, 
+//                 cardName : null,
 //                 cardImgURL: null,
 //                 cardNote: "Change note"
 //             })
@@ -141,7 +174,7 @@
 //                 models.Card.findAll({ where: { cardid: cardid }, raw : true }).then((card)=>{
 //                     expect(card[0].cardName).toBeTruthy();
 //                     done();
-//                 }).catch((e)=>done(e));  
+//                 }).catch((e)=>done(e));
 //             });
 //     });
 // });
