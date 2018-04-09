@@ -163,7 +163,7 @@ describe('POST /record/usecard', ()=>{
     });
 });
 
-describe('POST /record/usecard', ()=>{
+describe('POST /record/usecardreply', ()=>{
     it('should update record status and send a new message', (done)=>{
         request(app)
             .post('/record/usecardreply')

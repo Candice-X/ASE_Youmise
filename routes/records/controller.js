@@ -480,18 +480,18 @@ exports.dbUseCardReply = async (Message, Record, recordid, recordstatus, title, 
 };
 
 exports.dbDeleteById = async (Record, recordid) => {
-    try {
-        let record = await Record.findAll({ where: {recordid : recordid}, raw:true });
-        let result = await Record.destroy({ where: {recordid : recordid}, raw:true});
+  try {
+      let record = await Record.findAll({ where: {recordid : recordid}, raw:true });
+      let result = await Record.destroy({ where: {recordid : recordid}, raw:true});
 
-        if (record.length === 0) {
-            throw new ServerError(400);
-        }
-        return record[0];
-    } catch (err) {
-        const message = err.errors.reduce((prev, { message }) => {
-            return `${prev}${message}; `;
-            }, '');
-        throw new ServerError(400, err.message);
-    }
+      if (record.length === 0) {
+          throw new ServerError(400);
+      }
+      return record[0];
+  } catch (err) {
+      const message = err.errors.reduce((prev, { message }) => {
+          return `${prev}${message}; `;
+          }, '');
+      throw new ServerError(400, err.message);
+  }
 };

@@ -1,17 +1,20 @@
 const expect = require('expect');
 const request = require('supertest');
-const _ = require('lodash');
-const sequelize = require('sequelize');
 
 const models = require('./../../models');
 const controller = require('./../../routes/friends/controller');
+const sequelize = require('sequelize');
 
 const {users, populateUsers, friendships, populateFriendships} = require('./../seed/seed');
 
 beforeEach(populateUsers);
 beforeEach(populateFriendships);
 
-describe('create', ()=>{
+after(()=>{
+  return require('../../models').sequelize.connectionManager.close().then(() => console.log('shut down gracefully'));
+});
+
+describe('Create', ()=>{
   it('should add a new friendships unit test', async ()=>{
     let before = await models.Friendship.findAll({ raw: true});
     const friendship = await controller.addFriendship(models.User, models.Friendship, users[0].uid, users[1].uid);

@@ -7,7 +7,6 @@ before(async () => {
     return await require('../../models').sequelize.sync({ force: true });
 });
 
-
 function generateUUID() {
     let d = new Date().getTime();
     let uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

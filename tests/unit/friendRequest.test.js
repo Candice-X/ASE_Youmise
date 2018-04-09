@@ -11,14 +11,14 @@ const {users, populateUsers, friendRequests, populateFriendRequests} = require('
 
 
  //run before every test case
- after(()=>{
-    return require('../../models').sequelize.connectionManager.close().then(() => console.log('shut down gracefully'));
+after(()=>{
+  return require('../../models').sequelize.connectionManager.close().then(() => console.log('shut down gracefully'));
 });
 
 beforeEach(populateUsers);
 beforeEach(populateFriendRequests);
 
-describe('create', ()=>{
+describe('Create', ()=>{
   it('should create a new friendRequest unit test', async ()=>{
     let Before = await models.FriendRequest.findAll({ raw : true });
     const friendRequest = await controller.sendFriendRequest(models.User, models.Friendship, models.FriendRequest, users[1].uid, users[2].email);
@@ -28,7 +28,7 @@ describe('create', ()=>{
 });
 
 
-describe('update', ()=>{
+describe('Update', ()=>{
   it('should update a existing friendRequest unit test', async ()=>{
     let before = await models.Friendship.findAll({ raw: true});
     const friendRequest = await controller.updateFriendRequest(models.User, models.Friendship, models.FriendRequest, 1, 'APPROVED');
