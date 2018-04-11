@@ -3,7 +3,30 @@
     <dashboard-nav v-if="this.$store.state.user.isLogin"></dashboard-nav>
     
     <router-view/>
+    <!-- loading div -->
+    <div  v-if="this.$store.state.user.loading" class="loading_cont">
+    <div class="container">
+        <div class="dot-container">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>  
+      </div>
+      <div class="dot-container">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>  
+      </div>
+      <div class="dot-container">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>  
+      </div>
+    </div>
+    </div>
+  
+
   </div>
+  
 </template>
 
 <script>
@@ -47,5 +70,121 @@ a:hover {
 }
 .modal-dialog-centered{
   overflow: hidden;
+}
+
+.loading_cont{
+  position:absolute;
+   width:100%; 
+   display:block;
+    z-index:999;
+    margin:auto;
+    text-align:center;
+     background:none;
+     padding-left:360px;
+     top:380px;
+}
+/* loading */
+.container, 
+.dot-container {
+  /* position: relative; */
+  width: 100px;
+  height: 100px;
+  
+}
+.container {
+    transform-origin: center;
+    animation: anirotate 10s linear infinite;
+}
+.dot-container {
+  position: absolute;
+  /* border: 0px solid #fff; */
+  border-radius: 50px;
+  
+  
+}
+
+.dot-container:nth-child(2) {
+    transform: rotate(40deg);
+    .dot {
+      /* //animation-delay: -0.35s; */
+      animation-delay: -0.5s;
+    }
+  }
+  .container:nth-child(3) {
+    transform: rotate(80deg);
+    .dot {
+      /* //animation-delay: -0.35s; */
+      animation-delay: -1s;
+    }
+  }
+
+.dot {
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  background: #fff;
+  border-radius: 5px;
+  transform: translate(0, 0);
+  
+}
+.dot:nth-child(1) {
+    top: 0;
+    left: calc(50% - 5px);
+    animation: ani1 2s infinite;
+  }
+  .dot:nth-child(2) {
+    bottom: calc(28% - 5px);
+    left: calc(11% - 5px);
+    animation: ani2 2s infinite;
+  }
+  .dot:nth-child(3) {
+    bottom: calc(28% - 5px);
+    right: calc(11% - 5px);
+    animation: ani3 2s infinite;
+
+  }
+
+[hidden] {
+  display: none;
+}
+
+@keyframes anirotate {
+  0% {
+    transform: rotate(0deg);
+
+  }
+  100% {
+    transform: rotate(-359deg);
+  }
+}
+
+@keyframes ani1 {
+  0% {
+    transform: translate(0, 0);
+
+  }
+  100% {
+    transform: translate(-40px, 67px);
+  }
+}
+
+@keyframes ani2 {
+  0% {
+    transform: translate(0, 0);
+
+  }
+  100% {
+    transform: translate(77px, 0);
+  }
+}
+
+@keyframes ani3 {
+  0% {
+    transform: translate(0, 0);
+
+  }
+  100% {
+    transform: translate(-39px, -67px);
+  }
 }
 </style>

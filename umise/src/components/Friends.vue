@@ -224,8 +224,10 @@ export default {
     async addFriends() {
      try{
        if(this.$store.state.user.userID != null ){ 
+          this.$store.state.user.loading = true;
         const response = await axios.post("/friend/sendFriendRequest",{"senderId":this.$store.state.user.userID, "receiverEmail":this.email});
         console.log(response);
+         this.$store.state.user.loading = false;
         jQuery("#add_friends").modal('hide');
         this.showAlert();
        }else{
@@ -235,6 +237,7 @@ export default {
      }catch(e){
        console.log(e);
        this.errorMsg = e.message;
+        this.$store.state.user.loading = false;
      };
     },
 
@@ -245,17 +248,20 @@ export default {
       console.log("show received card:", userID);
      try{
        if(userID && friendId){
+          this.$store.state.user.loading = true;
             const response = await axios.get(`/record/record/receiver/${userID}/friend/${friendId}`);
             // const response = await axios.get(`/record/record`);
             // this.cards = response.data;
             this.cards = response.data;
             console.log(response.data);
+             this.$store.state.user.loading = false;
        }else{
 
        };
        
       }catch(e){
         console.log(e.message);
+         this.$store.state.user.loading = false;
       };
     },
 
@@ -267,10 +273,12 @@ export default {
        console.log("show send card friend id:", friendId);
      try{
        if(userID && friendId){
+          this.$store.state.user.loading = true;
             const response = await axios.get(`/record/record/sender/${userID}/friend/${friendId}`);
             // this.cards = response.data;
               this.cards = response.data;
             console.log(response.data);
+             this.$store.state.user.loading = false;
        }else{
         
        };
@@ -278,6 +286,7 @@ export default {
       }catch(e){
         this.errorMsg = e.message;
         console.log(e.message);
+         this.$store.state.user.loading = false;
 
       };
  

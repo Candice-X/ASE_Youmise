@@ -131,15 +131,18 @@ export default {
     const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
      try{
        if(userID){
+          this.$store.state.user.loading = true;
             const response = await axios.get(`/message/message/sender/${userID}`);
             // const response = await axios.get(`/record/record`);
             // this.cards = response.data;
             this.messages = response.data;
             console.log(response.data);
+             this.$store.state.user.loading = false;
        }else{
 
        };    
       }catch(e){
+         this.$store.state.user.loading = false;
         console.log(e.message);
       };
     },
@@ -149,16 +152,19 @@ export default {
         try{
           
           if(this.$store.state.user.userID != null ){ 
+             this.$store.state.user.loading = true;
             const response = await axios.get(`/friend/listFriendRequest/${this.$store.state.user.userID}`);
             console.log("friend request response :",response.data);
             this.friendRequests = response.data;
             console.log("friends Request: ", this.friendRequests);
+             this.$store.state.user.loading = false;
           }else{
             throw new Error("You need to login first");
           };
 
         }catch(e){
           console.log(e);
+           this.$store.state.user.loading = false;
           // this.errorMsg = e.response.data;
         };
     },
@@ -167,8 +173,10 @@ export default {
         try{
           console.log("userId: ",this.$store.state.user.userID);
           if(this.$store.state.user.userID != null ){ 
+             this.$store.state.user.loading = true;
             const response = await axios.post("/friend/updateFriendRequest/",{"friendRequestId":requestId,"status":"APPROVED"}); 
             console.log(`You have accept ${requestId}'s friend request` );
+             this.$store.state.user.loading = false;
           }else{
             throw new Error("You need to login first");
           };
@@ -176,6 +184,7 @@ export default {
           this.getFriendsRequest();
 
         }catch(e){
+           this.$store.state.user.loading = false;
           console.log(e);
           // this.errorMsg = e.response.data;
         };
@@ -185,8 +194,10 @@ export default {
       try{
           console.log("userId: ",this.$store.state.user.userID);
           if(this.$store.state.user.userID != null ){ 
+             this.$store.state.user.loading = true;
             const response = await axios.post("/friend/updateFriendRequest/",{"friendRequestId":requestId,"status":"REJECTED"}); 
             console.log(`You have accept ${requestId}'s friend request` );
+             this.$store.state.user.loading = false;
           }else{
             throw new Error("You need to login first");
           };
@@ -195,6 +206,7 @@ export default {
 
         }catch(e){
           console.log(e);
+           this.$store.state.user.loading = false;
           // this.errorMsg = e.response.data;
         };
   

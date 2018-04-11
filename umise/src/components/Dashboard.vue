@@ -263,9 +263,10 @@ export default {
           this.sendCardRecord["msgContent"]=this.oneCard.sender + " send a card { " + this.oneCard.cardName+ " } to "+ this.oneCard.receiverEmail +" at "+ new Date()+".";
 
           console.log("send record object :", this.sendCardRecord);
+          this.$store.state.user.loading = true;
           const resp = await axios.post('/record/record',this.sendCardRecord);
 
-
+           this.$store.state.user.loading = false;
            jQuery("#Dashboard_send").modal('hide');
            this.showAlert();
         }else{
@@ -274,6 +275,7 @@ export default {
       }catch(e) {
         this.errMsg = e.message;
         console.log(e.message);
+         this.$store.state.user.loading = false;
       };    
      
     },
@@ -282,6 +284,7 @@ export default {
           try{
             const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
             if(userID){
+               this.$store.state.user.loading = true;
                 const response = await axios.get(`/friend//listFriends/${userID}`);
                 console.log(response.data);
                 this.searchFriendList = response.data;
@@ -289,11 +292,13 @@ export default {
                 this.friendsList = this.$store.state.user.friendList;
                 
                 console.log("friendsList :", this.friendsList);
+                 this.$store.state.user.loading = false;
             }else{
 
             };
           }catch(e){
             console.log(e.message);
+             this.$store.state.user.loading = false;
           };
       },
 
@@ -320,13 +325,14 @@ export default {
 
   mounted(){
       try{
+         this.$store.state.user.loading = true;
         axios.get("/card/card")
         .then(res =>{
           console.log("get all cards types", res.data);
           // this.setAllCardType(res.data);
         this.$store.state.card.sendCardTypes = res.data;
         this.cardsType = this.$store.state.card.sendCardTypes;
-
+        this.$store.state.user.loading = false;
 
         })
         .catch(error =>{
@@ -334,6 +340,7 @@ export default {
         });
       }catch(e){
         console.log(e.message);
+         this.$store.state.user.loading = false;
       };
     this.getFriendsList();
     

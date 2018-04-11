@@ -12,8 +12,15 @@
         :class="{ active: isReceiveModel ==='sent' }" @click="showSendCard" >Cards Sent</button>
         <button class="btn btn-primary btn-outline-success" 
         :class="{ active: isReceiveModel==='request' }" @click="showRequest" >Card in Use</button>
+ </center>
+        <form class="form-inline">
+           
+            <input class="form-control form-control-sm search_bar " type="text" placeholder="Search" v-model="search" @keyup="searchCard" 
+            @focus="setDefault" aria-label="Search">
+             <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+        </form>
 
-        </center>
+       
             <div class="row" >
                     <!-- if empty -->
               <div class="empty_msg" style="" v-if="cards.length===0">
@@ -85,6 +92,9 @@
       <p> Send use card request to <strong style="color:green;font-weight:600;">{{this.oneCard.receiverEmail}} </strong>  Successfully! </p>
     </div>
    <!-- end of alert -->
+
+
+
 
 <!-- Modal -->
   <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" 
@@ -179,8 +189,11 @@ export default {
   data() {
     return {
       isReceiveModel: 'received',
+      search:'',
       cards:[],
+      tempCards:[],
       requests:[],
+      loading:'true',
       //this is for create record
       oneCard: {
           // recordid:'',
@@ -218,13 +231,42 @@ export default {
       // console.log('show card:', this.oneCard);
     },
      
-     async GetFormattedDate(d){
-      // var todayTime = new Date(d);
-      // var month = format(todayTime .getMonth() + 1);
-      // var day = format(todayTime .getDate());
-      // var year = format(todayTime .getFullYear());
-      // return month + "/" + day + "/" + year;
+    setDefault(){
+
     },
+
+
+// search card from all cards 
+    searchCard(){
+      let re = this.search.toUpperCase();
+      // let n = this.cards.length;
+      let n = this.tempCards.length;
+      if(re.length ===0){
+        this.cards = this.tempCards;// tempCard is used to store the temp cards info
+        return;
+      }
+      if(re.length>0 && n>0){
+        this.cards = [];
+        // let reg = new RegExp('.*'+re+'.*');
+        let reg = new RegExp(re);
+
+        for(let i =0; i<n;i++){       
+          // console.log("before:", this.friendsList[i].username.toUpperCase());
+          // console.log("reg:", reg);
+         let temp =  reg.exec(this.tempCards[i].cardTitle.toUpperCase()) || reg.exec(this.tempCards[i].senderName.toUpperCase());
+        if(temp!==null){
+          this.cards.push(this.tempCards[i]);
+        }
+        //  let temp =  this.friendsList[i].username.toUpperCase().exec(reg);
+        // let temp = reg.exec(this.friendsList[i].username.toUpperCase());
+        
+        };
+      };
+
+    },
+
+
+
 
     async showReceivedCard() {
       this.isReceiveModel ='received';
@@ -232,17 +274,21 @@ export default {
       console.log("show received card:", userID);
      try{
        if(userID){
+            this.$store.state.user.loading = true;
             const response = await axios.get(`/record/record/receiver/${userID}`);
             // const response = await axios.get(`/record/record`);
             // this.cards = response.data;
             this.cards = response.data;
+            this.tempCards= response.data;
             console.log(response.data);
+            this.$store.state.user.loading = false;
        }else{
 
        };
        
       }catch(e){
         console.log(e.message);
+         this.$store.state.user.loading = false;
       };
     },
 
@@ -253,16 +299,20 @@ export default {
        console.log("show send card:", userID);
      try{
        if(userID){
+             this.$store.state.user.loading = true;
             const response = await axios.get(`/record/record/sender/${userID}`);
             // this.cards = response.data;
               this.cards = response.data;
+              this.tempCards = response.data;
             console.log(response.data);
+             this.$store.state.user.loading = false;
        }else{
 
        };
        
       }catch(e){
         console.log(e.message);
+         this.$store.state.user.loading = false;
       }; 
     },
 
@@ -280,6 +330,7 @@ export default {
       // console.log("show send card:", userID);
      try{
        if(userID){
+            this.$store.state.user.loading = true;
             const response = await axios.get(`/record/record/receiver/${userID}/6`);
 
             const response2 = await axios.get(`/record/record/sender/${userID}/6`);
@@ -288,12 +339,14 @@ export default {
             // this.cards = response.data;
             this.cards = res;
             console.log(response.data);
+             this.$store.state.user.loading = false;
        }else{
 
        };
        
       }catch(e){
         console.log(e.message);
+         this.$store.state.user.loading = false;
       }; 
     },
     // send card 
@@ -870,5 +923,11 @@ i {
   margin-top:-18px;
   color:#555;
 }
-
+.search_bar{
+  float:right;
+  width:auto;
+  position: absolute;
+  right:40px;
+  top:60px;
+}
 </style> 
