@@ -46,6 +46,7 @@ try {
     const cardid = req.params.id;
     let result = await controller.dbDeleteById(models.Card, cardid);
     if (result.length === 0){
+      // throw new Error(400, "card does not exist");
       res.status(400).send();
     }
     res.json(result);

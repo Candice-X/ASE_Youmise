@@ -4,7 +4,7 @@ const {Card} = require('./../../routes/cards/controller');
 const moment = require('moment');
 
 before(async () => {
-    return await require('../../models').sequelize.sync({ force: true });
+    return await require('../../models').sequelize.sync();
 });
 
 
