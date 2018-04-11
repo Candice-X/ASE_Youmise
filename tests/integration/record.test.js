@@ -84,7 +84,6 @@ describe('GET /record/record/sender/senderid', ()=>{
             .get(`/record/record/sender/${records[0].senderid}`)
             .expect(200)
             .expect((res)=>{
-                console.log(`this is the response ${res.body}`);
                 expect(res.body.length).toBe(1);
                 expect(res.body[0].senderName).toBe(users[0].username);
             })
@@ -98,7 +97,6 @@ describe('GET /record/record/sender/senderid/friend/friendid', ()=>{
             .get(`/record/record/sender/${records[0].senderid}/friend/${records[0].receiverid}`)
             .expect(200)
             .expect((res)=>{
-                console.log(`this is the response ${res.body}`);
                 expect(res.body.length).toBe(1);
                 expect(res.body[0].senderName).toBe(users[0].username);
             })
@@ -112,7 +110,6 @@ describe('GET /record/record/receiver/receiverid/friend/friendid', ()=>{
             .get(`/record/record/receiver/${records[0].receiverid}/friend/${records[0].senderid}`)
             .expect(200)
             .expect((res)=>{
-                console.log(`this is the response ${res.body}`);
                 expect(res.body.length).toBe(1);
                 expect(res.body[0].senderName).toBe(users[0].username);
             })
@@ -174,7 +171,7 @@ describe('POST /record/usecard', ()=>{
     });
 });
 
-describe('POST /record/usecard', ()=>{
+describe('POST /record/usecardreply', ()=>{
     it('should update record status and send a new message', (done)=>{
         request(app)
             .post('/record/usecardreply')
@@ -249,7 +246,6 @@ describe('GET /record/:id',()=>{
             .expect(200)
             .expect((res)=>{
                 expect(res.body.cardTitle).toBe(records[0].cardTitle);
-                console.log(`res.body${JSON.stringify(res)}`);
                 expect(res.body.senderName).toBe(users[0].username);
             })
             .end(done);
@@ -315,7 +311,6 @@ describe('PATCH /record/:id',()=>{
                     return done(err);
                 }
                 models.Record.findAll({ where: { recordid: recordid }, raw : true }).then((res)=>{
-                    console.log(`find result update ${JSON.stringify(res[0])}`);
                     expect(res[0].finishDate).toBeTruthy();
                 }).catch((e)=>done(e));  
                 models.Message.findAll({ where: { title: messages[2].title }, raw : true }).then((message)=>{

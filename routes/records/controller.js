@@ -1,7 +1,6 @@
 const ServerError = require('../../utils/ServerError');
 const config = require('../../config');
 const MessageController = require('../messages/controller');
-// var moment = require('moment');
 
 exports.dbCreateRecord = async (Record, User, senderid, receiverEmail, cardid, expireDate, cardContent, cardTitle) => {
     try{
@@ -14,7 +13,6 @@ exports.dbCreateRecord = async (Record, User, senderid, receiverEmail, cardid, e
         let receiverid = null;
         if (receiverEmail !== null){
             const receiver = await User.findAll({where: {email: receiverEmail}, raw: true});
-            console.log(`receiver find ${JSON.stringify(receiver)}`);
             receiverid = receiver[0].uid;
         }
         const raw = await Record.create({
@@ -28,7 +26,6 @@ exports.dbCreateRecord = async (Record, User, senderid, receiverEmail, cardid, e
             status
         });
         result = raw.get({ plain: true });
-        console.log(`new record has been create : ${result} `);
         return result;
     } catch (err) {
         throw new ServerError(400, err.message);
@@ -36,7 +33,9 @@ exports.dbCreateRecord = async (Record, User, senderid, receiverEmail, cardid, e
 }
 exports.dbFetchAll = async (Record, User, Card) => {
     try {
-      let result = await Record.findAll({ raw: true });
+      let result = await Record.findAll({ order: [
+        ['createdAt', 'DESC']
+      ],raw: true });
         if (!result){
         } else {
             let res = []
@@ -98,15 +97,14 @@ exports.dbFetchAll = async (Record, User, Card) => {
 
 exports.dbFindById = async (Record, User, Card, recordid) => {
     try {
-        const record = await Record.findAll({ where: { recordid: recordid }, raw: true });
+        const record = await Record.findAll({ where: { recordid: recordid },order: [
+            ['createdAt', 'DESC']
+          ], raw: true });
         if (record.length === 0) {
             throw new ServerError(400, err.message);
         } else {
-            console.log(`Successfully find card: ${JSON.stringify(record[0])}`);
             const sender = await User.findAll({ where: { uid: record[0].senderid},raw: true });
-            console.log(`sender: ${JSON.stringify(sender[0])}`);
             const card = await Card.findAll({  where: { cardid: record[0].cardid}, raw: true });
-            console.log(`card: ${JSON.stringify(card[0])}`);
             let receiver;
             if (record[0].receiverid !== null){
                 receiver = await User.findAll({ where: {uid: record[0].receiverid},raw: true });
@@ -158,9 +156,13 @@ exports.dbFindBySender = async (Record,User, Card, senderid, status) => {
     try {
         let result;
         if (status === null){
-            result = await Record.findAll({ where: { senderid: senderid}, raw: true });
+            result = await Record.findAll({ where: { senderid: senderid},order: [
+                ['createdAt', 'DESC']
+              ], raw: true });
         } else {
-            result = await Record.findAll({ where: { senderid: senderid, status: status}, raw: true });
+            result = await Record.findAll({ where: { senderid: senderid, status: status}, order: [
+                ['createdAt', 'DESC']
+              ], raw: true });
         }
         if (!result) {
             throw new ServerError(400, 'record not exists.');
@@ -221,9 +223,9 @@ exports.dbFindBySender = async (Record,User, Card, senderid, status) => {
 exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid, friendid) => {
     try {
         let result;
-        console.log(`this is the senderid: ${senderid}`);
-        console.log(`this is the receiverid: ${friendid}`);
-        result = await Record.findAll({ where: { senderid: senderid, receiverid: friendid}, raw: true });
+        result = await Record.findAll({ where: { senderid: senderid, receiverid: friendid}, order: [
+            ['createdAt', 'DESC']
+          ], raw: true });
         if (!result) {
             throw new ServerError(400, 'record not exists.');
         } else {
@@ -284,9 +286,9 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid, friendid) 
   exports.dbFindByReceiverAndFriend = async (Record, User, Card, receiverid, friendid) => {
     try {
         let result;
-        console.log(`this is the senderid: ${receiverid}`);
-        console.log(`this is the receiverid: ${friendid}`);
-        result = await Record.findAll({ where: { senderid: friendid, receiverid: receiverid}, raw: true });
+        result = await Record.findAll({ where: { senderid: friendid, receiverid: receiverid}, order: [
+            ['createdAt', 'DESC']
+          ], raw: true });
         if (!result) {
             throw new ServerError(400, 'record not exists.');
         } else {
@@ -339,7 +341,6 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid, friendid) 
             // return records;
         }
     } catch (err) {
-        console.log(err.message);
         throw new ServerError(400, err.message);
     }
   };
@@ -348,9 +349,13 @@ exports.dbFindByReceiver = async (Record, User, Card, receiverid, status) => {
 try {
     let result;
     if (status === null){
-        result = await Record.findAll({ where: { receiverid: receiverid}, raw: true });
+        result = await Record.findAll({ where: { receiverid: receiverid}, order: [
+            ['createdAt', 'DESC']
+          ], raw: true });
     } else {
-        result = await Record.findAll({ where: { receiverid: receiverid, status: status}, raw: true });
+        result = await Record.findAll({ where: { receiverid: receiverid, status: status}, order: [
+            ['createdAt', 'DESC']
+          ], raw: true });
     }
     if (!result) {
         throw new ServerError(400, 'record not exists.');
@@ -483,7 +488,6 @@ exports.dbDeleteById = async (Record, recordid) => {
     try {
         let record = await Record.findAll({ where: {recordid : recordid}, raw:true });
         let result = await Record.destroy({ where: {recordid : recordid}, raw:true});
-
         if (record.length === 0) {
             throw new ServerError(400);
         }

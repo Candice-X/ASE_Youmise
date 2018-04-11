@@ -25,8 +25,6 @@ router.post('/record', async (req, res) => {
       // If receiverid == null, then unknown receiver, donot sent message to receiver.
       // We should sent message when receiverid being updated.
       // record message
-      console.log("kaishi zhao message");
-      console.log(`this is result ${JSON.stringify(result)}`);
       const message = await messageController.dbCreateMessage(models.Message, req.body.senderid, receiverid, result.recordid, req.body.title, req.body.msgContent);
       console.log(`message sent successs`);
     }

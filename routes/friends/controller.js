@@ -80,7 +80,7 @@ exports.updateFriendRequest = async (User, Friendship, FriendRequest, friendRequ
       throw new Error('Record not found!');
     }
     if( status === 'REJECTED'){
-      let result = FriendRequest.destroy({ where: { friendRequestId }});
+      let result = await FriendRequest.destroy({ where: { friendRequestId }});
       const message = 'You rejected the user\'s friend request!';
       return { message };
     }

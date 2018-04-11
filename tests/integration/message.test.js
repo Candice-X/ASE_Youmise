@@ -78,7 +78,6 @@ describe('GET /message/message/sender/senderid', ()=>{
             .get(`/message/message/sender/${messages[0].senderid}`)
             .expect(200)
             .expect((res)=>{
-                console.log(`this is the response ${res.body}`);
                 expect(res.body.length).toBe(1);
                 expect(res.body[0].recordid).toBe(records[0].recordid);
             })
@@ -222,7 +221,6 @@ describe('PATCH /message/:id',()=>{
                     return done(err);
                 }
                 models.Message.findAll({ where: { messageid: messages[0].messageid }, raw : true }).then((res)=>{
-                    console.log(`find result update ${JSON.stringify(res[0])}`);
                     expect(res[0].status).toBe(5);
                     done();
                 }).catch((e)=>done(e));  
