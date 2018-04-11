@@ -106,7 +106,7 @@ exports.dbFindById = async (Message, Record, Card, messageid) => {
                     cardContent: record[0].cardContent,
                     cardTitle: record[0].cardTitle,
                     cardtype: cardtype,
-                    createdAt: result[i].createdAt
+                    createdAt: result[0].createdAt
                 };
             } else {
                 return {
@@ -120,7 +120,7 @@ exports.dbFindById = async (Message, Record, Card, messageid) => {
                     cardContent: null,
                     cardTitle: null,
                     cardtype: null,
-                    createdAt: result[i].createdAt
+                    createdAt: result[0].createdAt
                 }
             }
 
@@ -167,7 +167,7 @@ exports.dbFindBySender = async (Message, Record, Card, senderid, status) => {
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
                         cardtype: cardtype,
-                        createdAt: result[i].createdAt
+                        createdAt: result[0].createdAt
                     });
                 } else {
                     res.push({
@@ -181,7 +181,7 @@ exports.dbFindBySender = async (Message, Record, Card, senderid, status) => {
                         cardContent: null,
                         cardTitle: null,
                         cardtype: null,
-                        createdAt: result[i].createdAt
+                        createdAt: result[0].createdAt
                     });
                 }
             }
@@ -230,7 +230,7 @@ try {
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
                         cardtype: cardtype,
-                        createdAt: result[i].createdAt
+                        createdAt: result[0].createdAt
                     });
                 } else {
                     res.push({
@@ -244,7 +244,7 @@ try {
                         cardContent: null,
                         cardTitle: null,
                         cardtype: null,
-                        createdAt: result[i].createdAt
+                        createdAt: result[0].createdAt
                     });
                 }
             }
@@ -285,7 +285,7 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid, friend
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
                         cardtype: cardtype,
-                        createdAt: result[i].createdAt
+                        createdAt: result[0].createdAt
                     });
                 } else {
                     res.push({
@@ -299,7 +299,7 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid, friend
                         cardContent: null,
                         cardTitle: null,
                         cardtype: null,
-                        createdAt: result[i].createdAt
+                        createdAt: result[0].createdAt
                     });
                 }
             }
@@ -341,7 +341,7 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid, friend
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
                         cardtype: cardtype,
-                        createdAt: result[i].createdAt
+                        createdAt: result[0].createdAt
                     });
                 } else {
                     res.push({
@@ -355,7 +355,7 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid, friend
                         cardContent: null,
                         cardTitle: null,
                         cardtype: null,
-                        createdAt: result[i].createdAt
+                        createdAt: result[0].createdAt
                     });
                 }
             }
