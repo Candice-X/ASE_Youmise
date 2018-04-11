@@ -34,7 +34,7 @@ exports.dbCreateRecord = async (Record, User, senderid, receiverEmail, cardid, e
 exports.dbFetchAll = async (Record, User, Card) => {
     try {
       let result = await Record.findAll({ order: [
-        ['createdAt', 'ASC']
+        ['createdAt', 'DESC']
       ],raw: true });
         if (!result){
         } else {
@@ -97,7 +97,9 @@ exports.dbFetchAll = async (Record, User, Card) => {
 
 exports.dbFindById = async (Record, User, Card, recordid) => {
     try {
-        const record = await Record.findAll({ where: { recordid: recordid }, raw: true });
+        const record = await Record.findAll({ where: { recordid: recordid },order: [
+            ['createdAt', 'DESC']
+          ], raw: true });
         if (record.length === 0) {
             throw new ServerError(400, err.message);
         } else {
@@ -154,9 +156,13 @@ exports.dbFindBySender = async (Record,User, Card, senderid, status) => {
     try {
         let result;
         if (status === null){
-            result = await Record.findAll({ where: { senderid: senderid}, raw: true });
+            result = await Record.findAll({ where: { senderid: senderid},order: [
+                ['createdAt', 'DESC']
+              ], raw: true });
         } else {
-            result = await Record.findAll({ where: { senderid: senderid, status: status}, raw: true });
+            result = await Record.findAll({ where: { senderid: senderid, status: status}, order: [
+                ['createdAt', 'DESC']
+              ], raw: true });
         }
         if (!result) {
             throw new ServerError(400, 'record not exists.');
@@ -217,7 +223,9 @@ exports.dbFindBySender = async (Record,User, Card, senderid, status) => {
 exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid, friendid) => {
     try {
         let result;
-        result = await Record.findAll({ where: { senderid: senderid, receiverid: friendid}, raw: true });
+        result = await Record.findAll({ where: { senderid: senderid, receiverid: friendid}, order: [
+            ['createdAt', 'DESC']
+          ], raw: true });
         if (!result) {
             throw new ServerError(400, 'record not exists.');
         } else {
@@ -278,7 +286,9 @@ exports.dbFindBySenderAndFriend = async (Record,User, Card, senderid, friendid) 
   exports.dbFindByReceiverAndFriend = async (Record, User, Card, receiverid, friendid) => {
     try {
         let result;
-        result = await Record.findAll({ where: { senderid: friendid, receiverid: receiverid}, raw: true });
+        result = await Record.findAll({ where: { senderid: friendid, receiverid: receiverid}, order: [
+            ['createdAt', 'DESC']
+          ], raw: true });
         if (!result) {
             throw new ServerError(400, 'record not exists.');
         } else {
@@ -339,9 +349,13 @@ exports.dbFindByReceiver = async (Record, User, Card, receiverid, status) => {
 try {
     let result;
     if (status === null){
-        result = await Record.findAll({ where: { receiverid: receiverid}, raw: true });
+        result = await Record.findAll({ where: { receiverid: receiverid}, order: [
+            ['createdAt', 'DESC']
+          ], raw: true });
     } else {
-        result = await Record.findAll({ where: { receiverid: receiverid, status: status}, raw: true });
+        result = await Record.findAll({ where: { receiverid: receiverid, status: status}, order: [
+            ['createdAt', 'DESC']
+          ], raw: true });
     }
     if (!result) {
         throw new ServerError(400, 'record not exists.');
