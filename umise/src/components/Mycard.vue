@@ -280,7 +280,7 @@ export default {
             // this.cards = response.data;
             this.cards = response.data;
             this.tempCards= response.data;
-            console.log(response.data);
+            // console.log(response.data);
             this.$store.state.user.loading = false;
        }else{
 
@@ -304,7 +304,7 @@ export default {
             // this.cards = response.data;
               this.cards = response.data;
               this.tempCards = response.data;
-            console.log(response.data);
+            // console.log(response.data);
              this.$store.state.user.loading = false;
        }else{
 
@@ -338,7 +338,7 @@ export default {
             const res = response.data.concat(response2.data);
             // this.cards = response.data;
             this.cards = res;
-            console.log(response.data);
+            // console.log(response.data);
              this.$store.state.user.loading = false;
        }else{
 

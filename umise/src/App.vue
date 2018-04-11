@@ -5,7 +5,7 @@
     <router-view/>
     <!-- loading div -->
     <div  v-if="this.$store.state.user.loading" class="loading_cont">
-    <div class="container">
+    <div class="container_dot">
         <div class="dot-container">
           <div class="dot"></div>
           <div class="dot"></div>
@@ -84,14 +84,14 @@ a:hover {
      top:380px;
 }
 /* loading */
-.container, 
+.container_dot, 
 .dot-container {
   /* position: relative; */
   width: 100px;
   height: 100px;
   
 }
-.container {
+.container_dot {
     transform-origin: center;
     animation: anirotate 10s linear infinite;
 }

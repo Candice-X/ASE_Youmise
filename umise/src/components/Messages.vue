@@ -136,8 +136,9 @@ export default {
             // const response = await axios.get(`/record/record`);
             // this.cards = response.data;
             this.messages = response.data;
+            this.$store.state.user.loading = false;
             console.log(response.data);
-             this.$store.state.user.loading = false;
+             
        }else{
 
        };    
@@ -153,10 +154,8 @@ export default {
           
           if(this.$store.state.user.userID != null ){ 
              this.$store.state.user.loading = true;
-            const response = await axios.get(`/friend/listFriendRequest/${this.$store.state.user.userID}`);
-            console.log("friend request response :",response.data);
-            this.friendRequests = response.data;
-            console.log("friends Request: ", this.friendRequests);
+            const response = await axios.get(`/friend/listFriendRequest/${this.$store.state.user.userID}`); 
+            this.friendRequests = response.data;  
              this.$store.state.user.loading = false;
           }else{
             throw new Error("You need to login first");
@@ -175,7 +174,7 @@ export default {
           if(this.$store.state.user.userID != null ){ 
              this.$store.state.user.loading = true;
             const response = await axios.post("/friend/updateFriendRequest/",{"friendRequestId":requestId,"status":"APPROVED"}); 
-            console.log(`You have accept ${requestId}'s friend request` );
+           
              this.$store.state.user.loading = false;
           }else{
             throw new Error("You need to login first");
@@ -196,7 +195,7 @@ export default {
           if(this.$store.state.user.userID != null ){ 
              this.$store.state.user.loading = true;
             const response = await axios.post("/friend/updateFriendRequest/",{"friendRequestId":requestId,"status":"REJECTED"}); 
-            console.log(`You have accept ${requestId}'s friend request` );
+           
              this.$store.state.user.loading = false;
           }else{
             throw new Error("You need to login first");

@@ -262,7 +262,7 @@ export default {
           this.sendCardRecord["title"]=this.sendCardRecord.receiverEmail + " send card" + this.oneCard.cardName;
           this.sendCardRecord["msgContent"]=this.oneCard.sender + " send a card { " + this.oneCard.cardName+ " } to "+ this.oneCard.receiverEmail +" at "+ new Date()+".";
 
-          console.log("send record object :", this.sendCardRecord);
+          // console.log("send record object :", this.sendCardRecord);
           this.$store.state.user.loading = true;
           const resp = await axios.post('/record/record',this.sendCardRecord);
 
@@ -291,7 +291,7 @@ export default {
                 this.$store.state.user.friendList = response.data;
                 this.friendsList = this.$store.state.user.friendList;
                 
-                console.log("friendsList :", this.friendsList);
+                // console.log("friendsList :", this.friendsList);
                  this.$store.state.user.loading = false;
             }else{
 

@@ -226,7 +226,7 @@ export default {
        if(this.$store.state.user.userID != null ){ 
           this.$store.state.user.loading = true;
         const response = await axios.post("/friend/sendFriendRequest",{"senderId":this.$store.state.user.userID, "receiverEmail":this.email});
-        console.log(response);
+        
          this.$store.state.user.loading = false;
         jQuery("#add_friends").modal('hide');
         this.showAlert();
@@ -253,7 +253,7 @@ export default {
             // const response = await axios.get(`/record/record`);
             // this.cards = response.data;
             this.cards = response.data;
-            console.log(response.data);
+         
              this.$store.state.user.loading = false;
        }else{
 
@@ -277,7 +277,7 @@ export default {
             const response = await axios.get(`/record/record/sender/${userID}/friend/${friendId}`);
             // this.cards = response.data;
               this.cards = response.data;
-            console.log(response.data);
+           
              this.$store.state.user.loading = false;
        }else{
         
@@ -335,7 +335,7 @@ export default {
 
             
             this.oneCard["title"]=this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle;
-            this.oneCard["msgContent"]=this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle+ " which you sent to him/her at "+ this.oneCard.createDate+". Last time you said: "+ this.oneCard.cardContent;
+            this.oneCard["msgContent"]=this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle+ " which you sent to him/her at "+ this.oneCard.createDate.tostring(0,10)+". Last time you said: "+ this.oneCard.cardContent;
             const response = await axios.patch(`/record/record/${this.oneCard.recordid}`,this.oneCard);
 
             jQuery(".card_send_alert").fadeIn();
