@@ -53,7 +53,8 @@ exports.dbFetchAll = async (Message, Record, Card) => {
                         msgContent: result[i].msgContent,
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
-                        cardtype: cardtype
+                        cardtype: cardtype,
+                        createdAt: result[i].createdAt
                     });
                 } else {
                     res.push({
@@ -66,7 +67,8 @@ exports.dbFetchAll = async (Message, Record, Card) => {
                         msgContent: result[i].msgContent,
                         cardContent: null,
                         cardTitle: null,
-                        cardtype: null
+                        cardtype: null,
+                        createdAt: result[i].createdAt
                     });
                 }
             }
@@ -103,7 +105,8 @@ exports.dbFindById = async (Message, Record, Card, messageid) => {
                     msgContent: result[0].msgContent,
                     cardContent: record[0].cardContent,
                     cardTitle: record[0].cardTitle,
-                    cardtype: cardtype
+                    cardtype: cardtype,
+                    createdAt: result[i].createdAt
                 };
             } else {
                 return {
@@ -116,7 +119,8 @@ exports.dbFindById = async (Message, Record, Card, messageid) => {
                     msgContent: result[0].msgContent,
                     cardContent: null,
                     cardTitle: null,
-                    cardtype: null
+                    cardtype: null,
+                    createdAt: result[i].createdAt
                 }
             }
 
@@ -162,7 +166,8 @@ exports.dbFindBySender = async (Message, Record, Card, senderid, status) => {
                         msgContent: result[0].msgContent,
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
-                        cardtype: cardtype
+                        cardtype: cardtype,
+                        createdAt: result[i].createdAt
                     });
                 } else {
                     res.push({
@@ -175,7 +180,8 @@ exports.dbFindBySender = async (Message, Record, Card, senderid, status) => {
                         msgContent: result[0].msgContent,
                         cardContent: null,
                         cardTitle: null,
-                        cardtype: null
+                        cardtype: null,
+                        createdAt: result[i].createdAt
                     });
                 }
             }
@@ -223,7 +229,8 @@ try {
                         msgContent: result[0].msgContent,
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
-                        cardtype: cardtype
+                        cardtype: cardtype,
+                        createdAt: result[i].createdAt
                     });
                 } else {
                     res.push({
@@ -236,7 +243,8 @@ try {
                         msgContent: result[0].msgContent,
                         cardContent: null,
                         cardTitle: null,
-                        cardtype: null
+                        cardtype: null,
+                        createdAt: result[i].createdAt
                     });
                 }
             }
@@ -276,7 +284,8 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid, friend
                         msgContent: result[0].msgContent,
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
-                        cardtype: cardtype
+                        cardtype: cardtype,
+                        createdAt: result[i].createdAt
                     });
                 } else {
                     res.push({
@@ -289,7 +298,8 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid, friend
                         msgContent: result[0].msgContent,
                         cardContent: null,
                         cardTitle: null,
-                        cardtype: null
+                        cardtype: null,
+                        createdAt: result[i].createdAt
                     });
                 }
             }
@@ -330,7 +340,8 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid, friend
                         msgContent: result[0].msgContent,
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
-                        cardtype: cardtype
+                        cardtype: cardtype,
+                        createdAt: result[i].createdAt
                     });
                 } else {
                     res.push({
@@ -343,7 +354,8 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid, friend
                         msgContent: result[0].msgContent,
                         cardContent: null,
                         cardTitle: null,
-                        cardtype: null
+                        cardtype: null,
+                        createdAt: result[i].createdAt
                     });
                 }
             }
