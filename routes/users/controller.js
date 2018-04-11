@@ -131,6 +131,30 @@ exports.dbFetchAll = async (User) => {
           return result;
       }
   } catch (err) {
-    throw new ServerError(400, err);
+    throw new ServerError(400, err.message);
   }
 };
+
+exports.addAvatar = async (User, s3, uid, avatar) => {
+  try{
+    const user = await User.findOne({ where: { uid } });
+    if(!user){
+      throw new Error('Sender not found!');
+    }
+    const base64Data = new Buffer(avatar.replace(/^data:image\/\w+;base64,/, ""),'base64')
+    const data = {
+      Bucket: config.S3_bucket,
+      Key: uid,
+      Body: base64Data,
+      ContentEncoding: 'base64',
+      ContentType: 'image/jpeg',
+      ACL: 'public-read',
+    };
+    const result = await s3.putObject(data).promise();
+    console.log(result);
+    const url = `https://${data.Bucket}.s3.amazonaws.com/${data.Key}`
+    return { url };
+  } catch(err){
+    throw new ServerError(400, err.message);
+  }
+}
