@@ -25,7 +25,8 @@
                                 <h4>{{ message.title }} </h4>
                                 <!-- <p class="sub_title" >{{message.cardTitle}}</p> -->
                                 <p class="sub_title">{{ message.cardContent }} </p>
-                                <p class="" >status: {{message.msgContent}}</p>
+                                <p class="" >Content: <br/>{{message.msgContent}}</p>
+                                
                             </div>
                       </div>  
                        <div v-if="message.status==='SENT'">
@@ -60,9 +61,9 @@
                             </div>
                             <div class="content">
                                 <h4>{{ request.senderUsername }} send a friend request </h4>
-                                <p class="sub_title" >{{request.createdAt}}</p>
-                                <p class="sub_title">{{ request.senderUsername }} want to add you as a new friend</p>
-                                <p class="" >status: {{request.status}}</p>
+                                <p class="sub_title" >{{request.createdAt.substring(0,10)}}</p>
+                                <p class="sub_title"> {{ request.senderUsername }} want to add you as a new friendddddddddd</p>
+                                <p class="" >Status: {{request.status}}</p>
                             </div>
                       </div>  
                        <div v-if="request.status==='SENT'">
@@ -258,7 +259,7 @@ body {
   border-radius: 50% !important;
 }
 .content {
-  /* width: 150px; */
+  width: 200px;
   margin-left: 8px;
   display: inline-block;
   line-height: 1em;
@@ -544,5 +545,13 @@ i {
   display: block;
   float: left;
   /* min-height: 775px;  */
+}
+.time{
+
+  float:right;
+  height:20px;
+  font-size:10px;
+  margin-top:-18px;
+  color:#555;
 }
 </style>

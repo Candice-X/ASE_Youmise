@@ -33,7 +33,7 @@
                             <div class="content">
                                 <h4>{{ card.cardTitle }}</h4>
                                 <p class="sub_title">{{ card.senderName }}</p>
-                                <span class="time">{{ card.createDate }}</span>
+                                <span class="time">{{card.createDate.substring(0,10)}}</span>
                             </div>
 
                         </div>
@@ -217,7 +217,14 @@ export default {
       // this.oneCard.recordid = this.cards[index].recordid;
       // console.log('show card:', this.oneCard);
     },
-
+     
+     async GetFormattedDate(d){
+      // var todayTime = new Date(d);
+      // var month = format(todayTime .getMonth() + 1);
+      // var day = format(todayTime .getDate());
+      // var year = format(todayTime .getFullYear());
+      // return month + "/" + day + "/" + year;
+    },
 
     async showReceivedCard() {
       this.isReceiveModel ='received';
@@ -258,6 +265,12 @@ export default {
         console.log(e.message);
       }; 
     },
+
+  
+
+
+
+
 
   // card in use
    async showRequest() {
@@ -854,7 +867,7 @@ i {
   float:right;
   height:20px;
   font-size:10px;
-  margin-top:-12px;
+  margin-top:-18px;
   color:#555;
 }
 
