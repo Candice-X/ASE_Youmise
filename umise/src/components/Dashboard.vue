@@ -83,29 +83,37 @@
                         <label>Friend </label>
                         <div class="input-group friend_list_cont">
                          <!-- <div class="friend_place_hoder">Choose A Friend</div> -->
-                          <input type="text" v-model="oneCard.receiverEmail"  @blur="$v.oneCard.receiverEmail.$touch()" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
+                          <input type="text" v-model="oneCard.receiverName"  @focus="showFriendList=true"  
+                          @blur="$v.oneCard.receiverName.$touch()" @keyup="autoComplete" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
+                         
                         </div>
-                          <!-- <div v-for="(friend, index) in friendsList" :key="index" class="friend" style="">
+                        <!-- popup friend div -->
+                        <div class="friend_float_div" v-if="showFriendList" >
+                        <div v-if="searchFriendList.length===0">
+                            <p style="color:white;text-align:center;margin-top:100px;">You do not have friend named: {{this.oneCard.receiverName}} </p>
+                        </div>
+                        <div v-else v-for="(friend, index) in searchFriendList" :key="index" class="friend" @click="chooseFriend(index)" >
                               <div class="friends_img" >                        
                                 <img src="../assets/img/girl.png" />
                               </div>
                               <div class="friens_info">
-                                <p>{{friend.username}} </p>
+                                <span>{{friend.username}} </span>
                                 <div class="card_info" >
                                   <p>{{friend.email}}</p>
                                 </div>
                               </div>  
-                            </div> -->
-
-
+                            </div>
+                        </div>
+                      <!-- end of pop up friend div  -->
+                      <br/>
                         <label>Expire Date</label>
                         <div class="form-group">         
                             <select  class="form-control" id="exampleFormControlSelect1">
                               <option value='Forever' checked >Never</option>
-                              <!-- <option value="1" >1 Day</option>
+                              <option value="1" >1 Day</option>
                               <option>1 Week</option>
                               <option>1 Month</option>
-                              <option>1 Year</option> -->
+                              <option>1 Year</option>
                             </select>
                           </div>
                         <label>Message</label>
@@ -114,7 +122,7 @@
                     </div>
                    <p style="color:red;"> {{this.errMsg}}</p>
                    <br/>
-                    <button class="btn btn-primary btn-success btn-send" @click="sendCard" :disabled="$v.oneCard.receiverEmail.$invalid" >Send to Friends</button>
+                    <button class="btn btn-primary btn-success btn-send" @click="sendCard" :disabled="$v.oneCard.receiverName.$invalid" >Send to Friends</button>
                 </div>
 
 
@@ -136,10 +144,11 @@
 
 <script>
 // import Nav from './DashboardNav';
+import { required, email } from "vuelidate/lib/validators";
 import Friends from './Friends';
 import {mapState, mapActions, mapGetters} from "vuex";
 import axios from "axios";
-import { required, email } from "vuelidate/lib/validators";
+
 
 export default {
   data() {
@@ -148,7 +157,9 @@ export default {
       cardsType: [],
       errMsg:'',
       friendsList:[],
+     
       // used to send card to others
+      showFriendList:false,
       oneCard: {
           cardid:null,
           cardName: '',
@@ -159,7 +170,9 @@ export default {
           receiverEmail:'',
           // expire:'Forever',
           message:'',
+          receiverName:'',
       }, 
+      searchFriendList:[],
 
       sendCardRecord:{
           senderid: '',
@@ -177,8 +190,7 @@ export default {
       // computed: {...mapGetters(["getAllCardTypeFromState"]),},
     validations:{
       oneCard:{
-        receiverEmail:{
-          email,
+        receiverName:{
           required,
         },
       },
@@ -186,11 +198,51 @@ export default {
 
   components: {
     Friends,
+
   },
   methods:{
     showCard(index) {
       this.oneCard = this.cardsType[index];
     },
+
+
+  chooseFriend(index){
+    //  console.log(index);
+      this.oneCard.receiverName = this.searchFriendList[index].username;
+      this.oneCard.receiverEmail = this.searchFriendList[index].email;
+      this.showFriendList =false;
+      console.log(this.oneCard.receiverName);
+      // console.log("username:",this.searchFriendList[index].username);
+    },
+
+    //friendList
+    autoComplete(){
+      let re = this.oneCard.receiverName.toUpperCase();
+      let n = this.friendsList.length;
+      if(re.length ===0){
+        this.searchFriendList = this.friendsList;
+        return;
+      }
+      if(re.length>0 && n>0){
+        this.searchFriendList = [];
+        // let reg = new RegExp('.*'+re+'.*');
+        let reg = new RegExp(re);
+
+        for(let i =0; i<n;i++){       
+          // console.log("before:", this.friendsList[i].username.toUpperCase());
+          // console.log("reg:", reg);
+         let temp =  reg.exec(this.friendsList[i].username.toUpperCase());
+        if(temp!==null){
+          this.searchFriendList.push(this.friendsList[i]);
+        }
+        //  let temp =  this.friendsList[i].username.toUpperCase().exec(reg);
+        // let temp = reg.exec(this.friendsList[i].username.toUpperCase());
+        console.log("test:",temp);
+        };
+      };
+
+    },
+
     //send card to friends
     async sendCard() {
       try{
@@ -232,8 +284,10 @@ export default {
             if(userID){
                 const response = await axios.get(`/friend//listFriends/${userID}`);
                 console.log(response.data);
+                this.searchFriendList = response.data;
                 this.$store.state.user.friendList = response.data;
                 this.friendsList = this.$store.state.user.friendList;
+                
                 console.log("friendsList :", this.friendsList);
             }else{
 
@@ -243,7 +297,7 @@ export default {
           };
       },
 
-
+  
 
     async showAlert(){
          jQuery(".send_card_alert").fadeIn();
@@ -281,7 +335,7 @@ export default {
       }catch(e){
         console.log(e.message);
       };
-this.getFriendsList();
+    this.getFriendsList();
     
   },
 
@@ -291,6 +345,7 @@ this.getFriendsList();
 <style scoped>
 @import '../assets/css/font-awesome.min.css';
 @import '../assets/css/simple-line-icons.css';
+
 
 body {
   font-family: "Open Sans", serif;
@@ -693,25 +748,44 @@ i {
   padding:0;
 }
 
-.friends {
+/* .friends {
   position: relative;
   background: rgba(0, 0, 0, 0.9);
   height: 100%;
   width: 240px;
   color:#fff;
   padding-top:10px;
-}
+} */
+
 .friend {
-  width:240px;
+  width:100%;
   float:left;
+  /* float:left; */
   margin:0;
-  padding:0;
+  padding:10px;
   height:55px;
-  border-radius: 0px;
+  
   cursor: pointer;
   border-bottom:1px solid rgba(100,100,100,0.3);
 }
+.friend_float_div{
+  position:absolute;
+  float:left;
+  height:auto;
+  height:265px;
+  overflow:scroll;
+  width:343px;
+  /* padding:0; */
+  /* top:-2px; */
+  margin-top:0px;
+  background:rgba(0, 0, 0, 0.9);
+  /* border-radius:0 0 5px 5px; */
 
+}
+
+.friend_float_div::-webkit-scrollbar-thumb {
+    background: #888; 
+}
 .friends_img {
   width:50px;
   height:50px;
@@ -733,11 +807,12 @@ i {
   padding:0;
   margin-left:5px;
   padding-right:15px;
+  font-weight: 800;
 }
 
 .friends_img img{
-  width:35px;
-  height:35px;
+  width:30px;
+  height:30px;
   margin:5px;
 }
 .friens_info { 
@@ -745,7 +820,11 @@ i {
   float:left;
   height:100%;
   width:165px;
+  color:white;
   text-align:left;
 
+}
+.friend:hover{
+  background:#444444;
 }
 </style>

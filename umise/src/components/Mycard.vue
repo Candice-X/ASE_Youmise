@@ -33,6 +33,7 @@
                             <div class="content">
                                 <h4>{{ card.cardTitle }}</h4>
                                 <p class="sub_title">{{ card.senderName }}</p>
+                                <span class="time">{{ card.createDate }}</span>
                             </div>
 
                         </div>
@@ -848,6 +849,13 @@ i {
   display:block;
 
 }
+.time{
 
+  float:right;
+  height:20px;
+  font-size:10px;
+  margin-top:-12px;
+  color:#555;
+}
 
 </style> 
