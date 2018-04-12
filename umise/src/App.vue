@@ -31,29 +31,25 @@
 
 <script>
 import Navbar from "./components/Navbar";
-import DashboardNav from './components/DashboardNav';
-
-
+import DashboardNav from "./components/DashboardNav";
 
 export default {
-  name: 'App',
+  name: "App",
   data() {
-    return {
-      
-    }
+    return {};
   },
   components: {
     Navbar,
-    DashboardNav,
-  },
+    DashboardNav
+  }
 };
 </script>
 
 <style>
 @import "assets/css/font-awesome.min.css";
 
-body{
-  font-size:0.9em;
+body {
+  font-size: 0.9em;
 }
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -68,55 +64,54 @@ a:active,
 a:hover {
   outline: none;
 }
-.modal-dialog-centered{
+.modal-dialog-centered {
   overflow: hidden;
 }
 
-.loading_cont{
-  position:absolute;
-   width:100%; 
-   display:block;
-    z-index:999;
-    margin:auto;
-    text-align:center;
-     background:none;
-     padding-left:360px;
-     top:380px;
+.loading_cont {
+  position: absolute;
+  width: 100%;
+  display: block;
+  z-index: 999;
+  margin: auto;
+  text-align: center;
+  background: none;
+  padding-left: 300px;
+  margin:auto;
+  top: 380px;
 }
 /* loading */
-.container_dot, 
+.container_dot,
 .dot-container {
   /* position: relative; */
   width: 100px;
   height: 100px;
-  
 }
 .container_dot {
-    transform-origin: center;
-    animation: anirotate 10s linear infinite;
+  margin:auto;
+  transform-origin: center;
+  animation: anirotate 10s linear infinite;
 }
 .dot-container {
   position: absolute;
   /* border: 0px solid #fff; */
   border-radius: 50px;
-  
-  
 }
 
 .dot-container:nth-child(2) {
-    transform: rotate(40deg);
-    .dot {
-      /* //animation-delay: -0.35s; */
-      animation-delay: -0.5s;
-    }
+  transform: rotate(40deg);
+  .dot {
+    /* //animation-delay: -0.35s; */
+    animation-delay: -0.5s;
   }
-  .container:nth-child(3) {
-    transform: rotate(80deg);
-    .dot {
-      /* //animation-delay: -0.35s; */
-      animation-delay: -1s;
-    }
+}
+.container:nth-child(3) {
+  transform: rotate(80deg);
+  .dot {
+    /* //animation-delay: -0.35s; */
+    animation-delay: -1s;
   }
+}
 
 .dot {
   position: absolute;
@@ -125,24 +120,22 @@ a:hover {
   background: #fff;
   border-radius: 5px;
   transform: translate(0, 0);
-  
 }
 .dot:nth-child(1) {
-    top: 0;
-    left: calc(50% - 5px);
-    animation: ani1 2s infinite;
-  }
-  .dot:nth-child(2) {
-    bottom: calc(28% - 5px);
-    left: calc(11% - 5px);
-    animation: ani2 2s infinite;
-  }
-  .dot:nth-child(3) {
-    bottom: calc(28% - 5px);
-    right: calc(11% - 5px);
-    animation: ani3 2s infinite;
-
-  }
+  top: 0;
+  left: calc(50% - 5px);
+  animation: ani1 2s infinite;
+}
+.dot:nth-child(2) {
+  bottom: calc(28% - 5px);
+  left: calc(11% - 5px);
+  animation: ani2 2s infinite;
+}
+.dot:nth-child(3) {
+  bottom: calc(28% - 5px);
+  right: calc(11% - 5px);
+  animation: ani3 2s infinite;
+}
 
 [hidden] {
   display: none;
@@ -151,7 +144,6 @@ a:hover {
 @keyframes anirotate {
   0% {
     transform: rotate(0deg);
-
   }
   100% {
     transform: rotate(-359deg);
@@ -161,7 +153,6 @@ a:hover {
 @keyframes ani1 {
   0% {
     transform: translate(0, 0);
-
   }
   100% {
     transform: translate(-40px, 67px);
@@ -171,7 +162,6 @@ a:hover {
 @keyframes ani2 {
   0% {
     transform: translate(0, 0);
-
   }
   100% {
     transform: translate(77px, 0);
@@ -181,7 +171,6 @@ a:hover {
 @keyframes ani3 {
   0% {
     transform: translate(0, 0);
-
   }
   100% {
     transform: translate(-39px, -67px);

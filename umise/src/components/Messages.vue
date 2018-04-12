@@ -298,7 +298,7 @@ body {
   width: 280px;
   margin: 0px 25px;
   background: #dcdcdc;
-  height: 200px;
+  height: 220px;
   border-radius: 5px;
 }
 /* .card_img:hover {
