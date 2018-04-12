@@ -84,7 +84,7 @@
                         <div class="input-group friend_list_cont">
                          <!-- <div class="friend_place_hoder">Choose A Friend</div> -->
                           <input type="text" v-model="oneCard.receiverName"  @focus="showFriendList=true"  
-                          @blur="$v.oneCard.receiverName.$touch()" @keyup="autoComplete" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
+                          @blur="showFriendList=false" @keyup="autoComplete" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
                          
                         </div>
                         <!-- popup friend div -->
