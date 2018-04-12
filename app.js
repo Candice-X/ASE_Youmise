@@ -47,17 +47,18 @@ const PORT = process.env.PORT || 8080;
   // models.Record.belongsTo(models.User, {foreignKey: 'userid'});
   // models.Record.belongsTo(models.Card, {foreignKey: 'cardid'});
   //
-  models.Card.create(models.Card.create({
+  models.Card.create({
       types: 1,
       cardName: 'Drink Card',
       cardImgURL: 'https://s3.us-east-2.amazonaws.com/umisefrontendimages/Drink_Card.png',
-      cardNote: "I promise I'll buy you a drink next time! Let's find a fun place!",
+      cardNote: 'I promise I\'ll buy you a drink next time! Let\'s find a fun place!',
   });
+
   models.Card.create({
       types: 1,
       cardName: 'Warning Card',
       cardImgURL: 'https://s3.us-east-2.amazonaws.com/umisefrontendimages/Warning_Card.png',
-      cardNote: 'Warning！'
+      cardNote: 'Warning!',
   });
 
   models.Card.create({
@@ -128,12 +129,11 @@ const PORT = process.env.PORT || 8080;
   });
 
   models.Card.create({
-    "types": 1,
-    "cardName": "A Pretty Day",
-    "cardImgURL": "https://s3.us-east-2.amazonaws.com/umisefrontendimages/pink.jpg",
-    "cardNote": "I Promise I will stay with you all the day. Whenever you need me, I will always be with you by your side. If you want me to stay with you, just give me the signal!"
+    types: 1,
+    cardName: "A Pretty Day",
+    cardImgURL: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/pink.jpg",
+    cardNote: "I Promise I will stay with you all the day. Whenever you need me, I will always be with you by your side. If you want me to stay with you, just give me the signal!"
   });
-
 
   models.Card.create({
     "types": 1,
