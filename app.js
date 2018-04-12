@@ -42,7 +42,7 @@ const PORT = process.env.PORT || 8080;
   } catch(err) {
     console.error('Unable to connect to the database:', err);
   };
-  // await models.sequelize.sync();
+  await models.sequelize.sync();
 //   await models.sequelize.sync({force: true});
   // models.Record.belongsTo(models.User, {foreignKey: 'userid'});
   // models.Record.belongsTo(models.Card, {foreignKey: 'cardid'});
