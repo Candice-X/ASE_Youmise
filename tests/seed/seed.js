@@ -56,6 +56,7 @@ const users = [{
     email : "chenfu@123.com",
     firstName: "Fu",
     lastName: "Chen",
+    avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
     gender: "Male"
 },{
     uid: ReceiverOneId,
@@ -63,6 +64,7 @@ const users = [{
     email : "hyy@123.com",
     firstName: "yy",
     lastName: "h",
+    avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
     gender: "Female"
 },{
     uid: SenderTwoId,
@@ -70,6 +72,7 @@ const users = [{
     email : "xyh@123.com",
     firstName: "yh",
     lastName: "x",
+    avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
     gender: "Female"
 },{
     uid: ReceiverTwoId,
@@ -77,6 +80,7 @@ const users = [{
     email : "weg@123.com",
     firstName: "eg",
     lastName: "w",
+    avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
     gender: "Male"
 },{
     uid: SenderThreeId,
@@ -84,6 +88,7 @@ const users = [{
     email : "zss@123.com",
     firstName: "ss",
     lastName: "z",
+    avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
     gender: "Female"
 },{
     uid: SenderThreeId,
@@ -91,6 +96,7 @@ const users = [{
     email : "xjm@123.com",
     firstName: "jm",
     lastName: "x",
+    avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
     gender: "Male"
 }];
 
