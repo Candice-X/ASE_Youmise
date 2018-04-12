@@ -139,7 +139,7 @@ exports.addAvatar = async (User, s3, uid, avatar) => {
   try{
     const user = await User.findOne({ where: { uid } });
     if(!user){
-      throw new Error('Sender not found!');
+      throw new Error('User not found!');
     }
     const base64Data = new Buffer(avatar.replace(/^data:image\/\w+;base64,/, ""),'base64')
     const data = {
@@ -150,11 +150,24 @@ exports.addAvatar = async (User, s3, uid, avatar) => {
       ContentType: 'image/jpeg',
       ACL: 'public-read',
     };
-    const result = await s3.putObject(data).promise();
-    console.log(result);
-    const url = `https://${data.Bucket}.s3.amazonaws.com/${data.Key}`
-    return { url };
+    await s3.putObject(data).promise();
+    const url = `https://${data.Bucket}.s3.amazonaws.com/${data.Key}`;
+    const result = await user.updateAttributes({ avatarUrl: url });
+    return result;
   } catch(err){
+    throw new ServerError(400, err.message);
+  }
+}
+
+exports.getUserAvatar = async (User, uid) => {
+  try{
+    const user = await User.findOne({ where: { uid } });
+    if(!user){
+      throw new Error('User not found!');
+    }
+    const avatarUrl = user.get('avatarUrl');
+    return {avatarUrl};
+  } catch(err) {
     throw new ServerError(400, err.message);
   }
 }

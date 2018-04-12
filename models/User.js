@@ -28,12 +28,13 @@ module.exports = (sequelize, DataTypes) => {
     lastName: {
       type: DataTypes.STRING,
     },
-    // image: {
-    //   type: DataTypes.STRING,
-    // },
+    avatarUrl: {
+      type: DataTypes.STRING,
+      defaultValue: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
+    },
     gender:{
       type: DataTypes.ENUM('Male', 'Female')
-    }
+    },
   });
 
   User.associate = function(models) {

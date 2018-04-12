@@ -90,4 +90,15 @@ router.get('/user', async(req, res) => {
   }
 });
 
+router.get('/avatar/:uid', async(req, res) => {
+  try {
+    const uid = req.params.uid;
+    console.log
+    const result = await controller.getUserAvatar(models.User, uid);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+})
+
 module.exports = router;
