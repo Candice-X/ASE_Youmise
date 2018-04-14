@@ -1,16 +1,18 @@
 <template>
-
-
 <div id='account' >
     <!--- body -->
+<!-- <meta property="og:url"     content="http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/facebook" />
+<meta property="og:type"    content="article" />
+<meta property="og:title"   content="When Great Minds Don’t Think Alike" />
+<meta property="og:description" content="How much does culture influence creative thinking?" />
+<meta property="og:image"     content="https://s3.us-east-2.amazonaws.com/umisefrontendimages/Drink_Card.png" /> -->
     <div id="send_cards" class="body_cont">
 
         <div class = "send_cards_container" >
             <h4 class="title" ><i class="icon-home" ></i>Account Information</h4><br/>
-            <h4 class="subTitle">Your information is listed below: </h4>
-            <hr id='hrstyle'><br/>
-
-            <div class="container">
+            
+      
+            <div class="container_1">
               <div class="row">
                 <div class="col-lg-2">
                   <h5>User Name : </h5>
@@ -47,21 +49,22 @@
                   <p></p>
                 </div>
                <hr id='hrstyle'><br/><br/>
-       <a class="facebook" v-bind:href="'https://www.facebook.com/sharer/sharer.php?u=' + url"
-       target="_blank" id="J-share-facebook"><button class="btn btn-primary btn-outline-success" >Share to Facebook</button>
-     </a>
+       <a class="facebook" v-bind:href="'https://www.facebook.com/sharer/sharer.php?u=' + this.url"
+       target="_blank" id="J-share-facebook">
+       <button class="btn btn-primary btn-outline-success" >Share to Facebook</button>
+       </a>
 
 
               </div>
               <div class="hello">
   <h4>Bundle of most known networks</h4>
-  <vue-goodshare></vue-goodshare>
+  <!-- <vue-goodshare></vue-goodshare> -->
 
   <h4>Mobile networks</h4>
-  <vue-goodshare bundle="mobile"></vue-goodshare>
+  <!-- <vue-goodshare bundle="mobile"></vue-goodshare> -->
 
   <h4>Single elements with options</h4>
-  <vue-goodshare-facebook 
+  <!-- <vue-goodshare-facebook 
    button_design="outline"
    page_url="https://vuejsfeed.com/" 
    title_social="Facebook"
@@ -74,7 +77,7 @@
    page_url="https://vuejsfeed.com/" 
    has_icon 
    has_square_edges
-  ></vue-goodshare-twitter>
+  ></vue-goodshare-twitter> -->
 
   </div>
             </div>
@@ -86,8 +89,6 @@
 </div>
 
 
-
-        <!-- <Friends></Friends> -->
 </template>
 
 <script>
