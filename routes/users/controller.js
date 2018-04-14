@@ -120,3 +120,54 @@ exports.confirmforgetPassword = async (cognito, confirmationCode, password, user
     throw new ServerError(400, err.message);
   }
 };
+
+exports.dbFetchAll = async (User) => {
+  try {
+    const result = await User.findAll({ raw: true });
+      if (!result){
+        console.log('There is no record in Card Table.');
+      } else {
+          console.log('Successfully find all cards.');
+          return result;
+      }
+  } catch (err) {
+    throw new ServerError(400, err.message);
+  }
+};
+
+exports.addAvatar = async (User, s3, uid, avatar) => {
+  try{
+    const user = await User.findOne({ where: { uid } });
+    if(!user){
+      throw new Error('User not found!');
+    }
+    const base64Data = new Buffer(avatar.replace(/^data:image\/\w+;base64,/, ""),'base64')
+    const data = {
+      Bucket: config.S3_bucket,
+      Key: uid,
+      Body: base64Data,
+      ContentEncoding: 'base64',
+      ContentType: 'image/jpeg',
+      ACL: 'public-read',
+    };
+    await s3.putObject(data).promise();
+    const url = `https://${data.Bucket}.s3.amazonaws.com/${data.Key}`;
+    const result = await user.updateAttributes({ avatarUrl: url });
+    return result;
+  } catch(err){
+    throw new ServerError(400, err.message);
+  }
+}
+
+exports.getUserAvatar = async (User, uid) => {
+  try{
+    const user = await User.findOne({ where: { uid } });
+    if(!user){
+      throw new Error('User not found!');
+    }
+    const avatarUrl = user.get('avatarUrl');
+    return {avatarUrl};
+  } catch(err) {
+    throw new ServerError(400, err.message);
+  }
+}

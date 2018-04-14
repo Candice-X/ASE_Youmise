@@ -6,7 +6,13 @@ const models = require('../../models');
 const config = require('../../config');
 
 const router = express.Router();
-AWS.config.update({ region: 'us-east-2' });
+AWS.config.update({
+  region: 'us-east-2',
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+ });
+
+const s3= new AWS.S3();
 
 const cognito = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
 
@@ -65,5 +71,34 @@ router.post('/confirmforgetPassword', async(req, res) => {
     res.status(err.statusCode).send(err.message);
   }
 });
+
+router.post('/addAvatar', async(req, res) => {
+  try {
+    const avatar = await controller.addAvatar(models.User, s3, req.body.uid, req.body.avatar);
+    res.json(avatar);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+router.get('/user', async(req, res) => {
+  try {
+    let result = await controller.dbFetchAll(models.User);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+router.get('/avatar/:uid', async(req, res) => {
+  try {
+    const uid = req.params.uid;
+    console.log
+    const result = await controller.getUserAvatar(models.User, uid);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+})
 
 module.exports = router;

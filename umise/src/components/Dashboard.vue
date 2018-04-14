@@ -1,23 +1,25 @@
 <template>
 <div id='nav_dashboard' >
     <!--- body -->
-    <div id="send_cards" class="body_cont">
+    <div id="send_cards" class="body_cont" >
         <div class = "send_cards_container" >
             <h4 class="title" >Send Cards</h4>
+       
             <h4 class="subTitle">Choose a Card and send to your friends, or you can design your own card.</h4>
-            
-            <div class="row">
-                <div  v-for = "(card, index) in cards" :key="index"
-                class="col-lg-3 col-md-3 col-sm-6 card_cont" >
+           
+            <div class="row card_row">
+                <div  v-for = "(card, index) in cardsType" :key="index" :id ="card.cardid"
+                class="col-lg-3 col-md-4 col-sm-6 card_cont" >
                     <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
-                        <img v-bind:src="card.cardImg" />                        
-                        <h4>{{ index }} {{card.cardName}}</h4>
-                        <p class="sub_title">{{card.sender}}</p>
+                        <img v-bind:src="card.cardImgURL" />                        
+                        <h4> {{card.cardName}}</h4>
+                        <!-- <h5 style="font-size:0.5rem;">{{card.createdAt}}</h5> -->
+                        <!-- <p class="sub_title">{{card.cardNote}}</p> -->
                     </div>
                 </div>          
 
-                 <div class="col-md-3 col-md-3 col-sm-6 card_cont">
+                 <div class="col-md-3 col-md-4 col-sm-6 card_cont">
                     <div class="card_img customize-icon-cont" >
                         <div class="customize-icon">
                         <i class="icon-settings "></i>
@@ -29,52 +31,98 @@
 
             </div>
         </div>
+
+
         <div>
-     
+    
+ <!-- alert message -->
+    <div class="send_card_alert" style="display:none;" >
+      <p> Send Card to <strong style="color:green;font-weight:600;">{{this.oneCard.receiverEmail}} </strong>  Successfully! </p>
+    </div>
+   <!-- end of alert -->
 
 <!-- Modal -->
   <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Card Info</h5>
+          <!-- <h5 class="modal-title" id="exampleModalLongTitle">{{this.oneCard.cardName}}</h5> -->
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body" style="height:420px;">
+        <div class="modal-body" style="height:560px;">
           <div class="row">
             
-                <div class="col-lg-5 col-md-5 col-sm-5 card_cont" >
+                <div class="col-lg-6 col-md-6 col-sm-6 card_cont card_cont_one" >
                     <div class="card_img_more" >
-                        <img v-bind:src = "this.oneCard.cardImg" />
+
+                        <img v-bind:src = "this.oneCard.cardImgURL" />
+                        <div class ="sender_cont" >
+                            <div class ='avatar' >
+                                <img src="../assets/img/girl.png" />
+                                 <p class="userName">{{ this.$store.state.user.userName }}</p>
+                            </div>
+                            <div class="content">
+                                <!-- <h7>{{ this.oneCard.cardName }}</h7> -->
+                                <p>{{this.oneCard.message}}</p>
+                               
+                            </div>       
+                        </div>
+                        <div class="promise_msg">
+                          <p>{{this.oneCard.cardNote}}</p>
+                        </div>
                     </div>
                 </div>
-                   <div class ="sender_cont_more col-lg-5 col-md-5 col-sm-5" > 
+                   <div class ="sender_cont_more col-lg-6 col-md-6 col-sm-6" > 
                        
                     <div class="content_more">
-                        <h4>{{ this.oneCard.cardName }}</h4>
-                        <p class="sub_title">{{ this.oneCard.sender }}</p>
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Friend</span>
-                          </div>
-                          <input type="text" v-model="oneCard.to" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
+                        <center><h4>{{ this.oneCard.cardName }}</h4></center>
+                        <!-- <p>This is a short introduction of the Gift card </p> -->
+                        <!-- <p class="sub_title">{{ this.oneCard.cardNote }}</p> -->
+                        <label>Friend </label>
+                        <div class="input-group friend_list_cont">
+                         <!-- <div class="friend_place_hoder">Choose A Friend</div> -->
+                          <input type="text" v-model="oneCard.receiverName"  @focus="showFriendList=true"  
+                           @keyup="autoComplete" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
+                         
                         </div>
+                        <!-- popup friend div -->
+                        <div class="friend_float_div" v-if="showFriendList" >
+                        <div v-if="searchFriendList.length===0">
+                            <p style="color:white;text-align:center;margin-top:100px;">You do not have friend named: {{this.oneCard.receiverName}} </p>
+                        </div>
+                        <div v-if="searchFriendList.length!==0" v-for="(friend, index) in searchFriendList" :key="index" class="friend" @click="chooseFriend(index)" >
+                              <div class="friends_img" >                        
+                                <img src="../assets/img/girl.png" />
+                              </div>
+                              <div class="friens_info">
+                                <span>{{friend.username}} </span>
+                                <div class="card_info" >
+                                  <p>{{friend.email}}</p>
+                                </div>
+                              </div>  
+                            </div>
+                        </div>
+                      <!-- end of pop up friend div  -->
+                      <br/>
+                        <label>Expire Date</label>
                         <div class="form-group">         
                             <select  class="form-control" id="exampleFormControlSelect1">
-                              <option value='Forever' checked >Forever</option>
+                              <option value='Forever' checked >Never</option>
                               <option value="1" >1 Day</option>
                               <option>1 Week</option>
                               <option>1 Month</option>
                               <option>1 Year</option>
                             </select>
                           </div>
-
-                        <textarea v-model="oneCard.message" class="form-control message_more" maxlength="140">How you have a great weekend, I will treat you a great dinner Next time :)
+                        <label>Message</label>
+                        <textarea v-model="oneCard.message" class="form-control message_more" maxlength="140" placeholder="Please input your message send to your friends">How you have a great weekend, I will treat you a great dinner Next time :)
                         </textarea>
                     </div>
-                    <button class="btn btn-primary btn-success btn-send" @click="sendCard" >Send to Friends</button>
+                   <p style="color:red;"> {{this.errMsg}}</p>
+                   <br/>
+                    <button class="btn btn-primary btn-success btn-send" @click="sendCard" :disabled="$v.oneCard.receiverName.$invalid" >Send to Friends</button>
                 </div>
 
 
@@ -96,169 +144,208 @@
 
 <script>
 // import Nav from './DashboardNav';
+import { required, email } from "vuelidate/lib/validators";
 import Friends from './Friends';
+import {mapState, mapActions, mapGetters} from "vuex";
+import axios from "axios";
 
 
 export default {
   data() {
     return {
-      name: 'kuer',
+      // name: 'kuer',
+      cardsType: [],
+      errMsg:'',
+      friendsList:[],
+     
+      // used to send card to others
+      showFriendList:false,
       oneCard: {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'From Kuer and Enjoy',
+          cardid:null,
+          cardName: '',
+          cardImgURL: null,
+          cardNote:'',
+          sender: null,
           senderImg:this.$store.state.card.girl,
-          to:'',
+          receiverEmail:'',
           // expire:'Forever',
           message:'',
-      },    
-      cards: [
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'From Kuer and Enjoy',
-          senderImg:this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img2,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img3,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img4,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img5,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img6,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img7,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img8,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img9,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img10,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img11,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img12,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img13,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img14,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-           to:'',
-          // expire:'Forever',
-          message:'',
-        },
+          receiverName:'',
+      }, 
+      searchFriendList:[],
 
-      ],
+      sendCardRecord:{
+          senderid: '',
+          receiverid: '',
+          cardid:'',
+          expireDate: null,
+          finishDate: null,
+          cardContent: '',
+          cardTitle:'',
+          receiverEmail:'',
+      },
+      
     };
   },
+      // computed: {...mapGetters(["getAllCardTypeFromState"]),},
+    validations:{
+      oneCard:{
+        receiverName:{
+          required,
+        },
+      },
+    },
+
   components: {
     Friends,
+
   },
   methods:{
     showCard(index) {
+      this.oneCard = this.cardsType[index];
+    },
+
+
+    chooseFriend(index){
+     console.log(index);
+      this.oneCard.receiverName = this.searchFriendList[index].username;
+      this.oneCard.receiverEmail = this.searchFriendList[index].email;
+      this.showFriendList =false;
+      console.log(this.oneCard.receiverName);
+      // console.log("username:",this.searchFriendList[index].username);
+    },
+
+    //friendList
+    autoComplete(){
+      let re = this.oneCard.receiverName.toUpperCase();
+      let n = this.friendsList.length;
+      if(re.length ===0){
+        this.searchFriendList = this.friendsList;
+        return;
+      }
+      if(re.length>0 && n>0){
+        this.searchFriendList = [];
+        // let reg = new RegExp('.*'+re+'.*');
+        let reg = new RegExp(re);
+
+        for(let i =0; i<n;i++){       
+          // console.log("before:", this.friendsList[i].username.toUpperCase());
+          // console.log("reg:", reg);
+         let temp =  reg.exec(this.friendsList[i].username.toUpperCase());
+        if(temp!==null){
+          this.searchFriendList.push(this.friendsList[i]);
+        }
+        //  let temp =  this.friendsList[i].username.toUpperCase().exec(reg);
+        // let temp = reg.exec(this.friendsList[i].username.toUpperCase());
+        console.log("test:",temp);
+        };
+      };
+
+    },
+
+    //send card to friends
+    async sendCard() {
+      try{
+        this.errMsg ='';
+        const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+
+        console.log("userid :",userID);
+        if(userID){
+          this.sendCardRecord.senderid = userID;
+          this.sendCardRecord.receiverEmail= this.oneCard.receiverEmail;
+          this.sendCardRecord.cardid = this.oneCard.cardid;
+          this.sendCardRecord.expireDate = null;
+          this.sendCardRecord.cardContent = this.oneCard.message;
+          this.sendCardRecord.cardTitle = this.oneCard.cardName;
+          this.sendCardRecord.receiverid= null;
+
+          this.sendCardRecord["title"]=this.sendCardRecord.receiverEmail + " send card" + this.oneCard.cardName;
+          this.sendCardRecord["msgContent"]=this.oneCard.sender + " send a card { " + this.oneCard.cardName+ " } to "+ this.oneCard.receiverEmail +" at "+ new Date()+".";
+
+          // console.log("send record object :", this.sendCardRecord);
+          this.$store.state.user.loading = true;
+          const resp = await axios.post('/record/record',this.sendCardRecord);
+
+           this.$store.state.user.loading = false;
+           jQuery("#Dashboard_send").modal('hide');
+           this.showAlert();
+        }else{
+          throw new Error("Please login in first");
+        };      
+      }catch(e) {
+        this.errMsg = e.message;
+        console.log(e.message);
+         this.$store.state.user.loading = false;
+      };    
+     
+    },
+
+      async getFriendsList(){
+          try{
+            const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+            if(userID){
+               this.$store.state.user.loading = true;
+                const response = await axios.get(`/friend//listFriends/${userID}`);
+                console.log(response.data);
+                this.searchFriendList = response.data;
+                this.$store.state.user.friendList = response.data;
+                this.friendsList = this.$store.state.user.friendList;
+                
+                // console.log("friendsList :", this.friendsList);
+                 this.$store.state.user.loading = false;
+            }else{
+
+            };
+          }catch(e){
+            console.log(e.message);
+             this.$store.state.user.loading = false;
+          };
+      },
+
   
-      this.oneCard = this.cards[index];
+
+    async showAlert(){
+         jQuery(".send_card_alert").fadeIn();
+      setTimeout(() => {
+         jQuery(".send_card_alert").fadeOut();
+      },3500);
+     
     },
-    sendCard() {
-      console.log(this.oneCard);
-      jQuery("#Dashboard_send").modal('hide');
-    },
+    // ...mapActions(["getAllCardType"]), // this.$store.dispatch("getAllCardType"),
+    // ...mapGetters(["getAllCardTypeFromState"]),
+    
+
   },
+
   created: function() {
     this.$store.state.user.isLogin = true;
+    // this.cardsType = this.$store.getters.getAllCardTypeFromState;
+    // console.log("cards type:",cardsType);
   },
+
+  mounted(){
+      try{
+         this.$store.state.user.loading = true;
+        axios.get("/card/card")
+        .then(res =>{
+          console.log("get all cards types", res.data);
+          // this.setAllCardType(res.data);
+        this.$store.state.card.sendCardTypes = res.data;
+        this.cardsType = this.$store.state.card.sendCardTypes;
+        this.$store.state.user.loading = false;
+
+        })
+        .catch(error =>{
+          console.log(error);
+        });
+      }catch(e){
+        console.log(e.message);
+         this.$store.state.user.loading = false;
+      };
+    this.getFriendsList();
+    
+  },
+
 };
 </script>
 
@@ -266,24 +353,49 @@ export default {
 @import '../assets/css/font-awesome.min.css';
 @import '../assets/css/simple-line-icons.css';
 
+
 body {
   font-family: "Open Sans", serif;
   padding-top: 54px;
   color: #868e96;
 }
 
+.send_card_alert{
+  margin:auto;
+  z-index:99;
+  text-align:center;
+  width:25rem; 
+  background:#ffc9aa;
+  border-radius:5px;
+  height:5rem;
+position:fixed;
+top:0px;
+left:0px;
+bottom:0px;
+right:0px;
+
+}
+.send_card_alert p{
+  padding:0;
+  text-align:center;
+  margin-top:1rem;
+  padding-top:1em;
+  line-height:2em;
+  display:block;
+
+}
 .card_cont {
   /* background:#dcdcdc; */
   display: block;
-  width: auto;
+  width: 220px;;
   padding: 0;
   margin: 0px;
   margin-top: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   border-radius: 5px;
+  float:left;
 }
 .row {
-  width: auto;
   padding: 0;
   margin: 0;
   margin-left: 20px;
@@ -297,6 +409,22 @@ body {
   height: 320px;
   border-radius: 5px;
 }
+
+.promise_msg{
+  word-wrap: normal;
+  width: 210px;
+  height:110px;
+  overflow: hidden;
+  z-index: 999;
+  position: relative;
+  color:#fff;
+  font-size: 0.9em;
+  margin:auto;
+  top:-250px;
+  text-align:left;
+  line-height: 1.5em;
+  
+}
 .card_img:hover {
   background: #3ac17e;
   opacity: 0.9;
@@ -305,12 +433,13 @@ body {
   color: #fff;
 }
 .card_img_more {
-  width: 220px;
-  margin: 10px 25px;
-  background: #dcdcdc;
-  height: 320px;
+  width: 330px;
+  /* margin: 10px 25px; */
+  background: #3ac17e;
+  height: 500px;
   border-radius: 5px;
   border: 2px dashed #fff;
+  color:#fff;
 }
 .card_img_more:hover {
   background: #3ac17e;
@@ -319,9 +448,6 @@ body {
   border: 2px dashed #fff;
   color: #fff;
 }
-
-
-
 
 .customize-icon-cont {
   border: 4px dashed #fff;
@@ -348,8 +474,15 @@ body {
 .card_cont img {
   border-radius: 5px 5px 0 0;
   width: 100%;
-  height: 260px;
+  height: 280px;
 }
+
+.card_img_more img {
+  border-radius: 5px 5px 0 0;
+  width: 100%;
+  height: 495px;
+}
+
 .send_cards_container {
   height: auto;
   margin-top: 50px;
@@ -394,15 +527,6 @@ body {
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Saira Extra Condensed", serif;
-  font-weight: 700;
-}
 
 h1 {
   font-size: 6rem;
@@ -421,7 +545,6 @@ h2 {
 }
 .subheading {
   font-weight: 500;
-  font-family: "Saira Extra Condensed", serif;
   font-size: 1.35rem;
 }
 li {
@@ -499,11 +622,12 @@ li:hover {
 
 @media (min-width: 992px) {
   .body_cont {
+    /* width:90%; */
     height: 100%;
     position: relative;
     display: block;
     margin-top: 0px !important;
-    margin-left: 17rem !important;
+    padding-left: 17rem !important;
     /* min-height: 775px; */
   }
 }
@@ -528,10 +652,11 @@ i {
 
 .body_cont {
   height: 100%;
-  width: auto;
+  width: 100%;
   position: relative;
   display: block;
   float: left;
+  display:table-cell;
   /* min-height: 775px;  */
 }
 
@@ -546,7 +671,47 @@ i {
 .content_more{
   margin-top:15px;
 }
+.sender_cont {
+  width: 100%;
+  text-align: left;
+  margin-top: -90px;
+  padding: 0;
+  position: relative;
+}
 
+.avatar {
+  position: relative;
+  top:0px;
+  /* top: -10px; */
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  margin-left: 10px;
+  float:left;
+}
+.avatar img {
+  width: 40px;
+  height: 40px !important;
+  border-radius: 50% !important;
+}
+.content {
+  width: 240px;
+  height: 80px;
+  font-size: 13px;
+  padding:5px;
+  background:#dcdcdc;
+  border-radius:5px;
+  color:#222;
+  margin-left: 8px;
+  display: inline-block;
+  word-wrap:normal;
+  line-height: 1.5em;
+  padding-top:5px;
+  opacity: 0.7;
+  margin-left:10px;
+  overflow: hidden;
+}
 .message_more{
   background: #eeeeee;
   border-radius: 5px;
@@ -561,5 +726,112 @@ i {
 }
 .btn-send{
   width:100%;
+}
+
+.card_row{
+
+  width:100%;
+}
+
+.userName{
+  color:#fff;
+  font-size:0.8em;
+  text-align:center;
+}
+.content_more label{
+  text-align:left;
+  padding:5px;
+  margin-left:0px;
+}
+.content_more {
+  text-align:left;
+}
+
+.friend_list_cont{
+  width:100%;
+  max-height:400px;
+  display:blcok;
+  margin:0;
+  padding:0;
+}
+
+/* .friends {
+  position: relative;
+  background: rgba(0, 0, 0, 0.9);
+  height: 100%;
+  width: 240px;
+  color:#fff;
+  padding-top:10px;
+} */
+
+.friend {
+  width:100%;
+  float:left;
+  /* float:left; */
+  margin:0;
+  padding:10px;
+  height:55px;
+  
+  cursor: pointer;
+  border-bottom:1px solid rgba(100,100,100,0.3);
+}
+.friend_float_div{
+  position:absolute;
+  float:left;
+  height:auto;
+  height:265px;
+  overflow:scroll;
+  width:343px;
+  /* padding:0; */
+  /* top:-2px; */
+  margin-top:0px;
+  background:rgba(0, 0, 0, 0.9);
+  /* border-radius:0 0 5px 5px; */
+
+}
+
+.friend_float_div::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+.friends_img {
+  width:50px;
+  height:50px;
+  display: block; 
+  position: relative;
+  top:0;
+  margin:0px;
+  padding:0;
+  float: left;
+  margin-left:8px;
+}
+.card_info {
+  font-size:0.7rem;
+  color:#dcdcdc;
+  cursor: pointer;
+}
+.card_info span {
+  margin:0;
+  padding:0;
+  margin-left:5px;
+  padding-right:15px;
+  font-weight: 800;
+}
+
+.friends_img img{
+  width:30px;
+  height:30px;
+  margin:5px;
+}
+.friens_info { 
+  display: block;
+  float:left;
+  height:100%;
+  width:165px;
+  color:white;
+  text-align:left;
+
+}
+.friend:hover{
+  background:#444444;
 }
 </style>

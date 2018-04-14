@@ -1,8 +1,10 @@
 <template>
-  
+
+
 <div id='account' >
     <!--- body -->
     <div id="send_cards" class="body_cont">
+
         <div class = "send_cards_container" >
             <h4 class="title" ><i class="icon-home" ></i>Account Information</h4><br/>
             <h4 class="subTitle">Your information is listed below: </h4>
@@ -44,38 +46,68 @@
                 <div class="col-lg-10">
                   <p></p>
                 </div>
+               <hr id='hrstyle'><br/><br/>
+       <a class="facebook" v-bind:href="'https://www.facebook.com/sharer/sharer.php?u=' + url"
+       target="_blank" id="J-share-facebook"><button class="btn btn-primary btn-outline-success" >Share to Facebook</button>
+     </a>
+
 
               </div>
+              <div class="hello">
+  <h4>Bundle of most known networks</h4>
+  <vue-goodshare></vue-goodshare>
+
+  <h4>Mobile networks</h4>
+  <vue-goodshare bundle="mobile"></vue-goodshare>
+
+  <h4>Single elements with options</h4>
+  <vue-goodshare-facebook 
+   button_design="outline"
+   page_url="https://vuejsfeed.com/" 
+   title_social="Facebook"
+   has_counter
+   has_icon 
+   ></vue-goodshare-facebook>
+
+  <vue-goodshare-twitter 
+   button_design="gradient"
+   page_url="https://vuejsfeed.com/" 
+   has_icon 
+   has_square_edges
+  ></vue-goodshare-twitter>
+
+  </div>
             </div>
 
     
       </div>
   </div>
+   
 </div>
+
 
 
         <!-- <Friends></Friends> -->
 </template>
 
 <script>
-
 export default {
   data() {
     return {
       
       name: this.$store.getters.getUserName,
       password: this.$store.getters.getPasswprd,
-      email: this.$store.getters.getUserEmail
-
+      email: this.$store.getters.getUserEmail,
+      url: "http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/facebook"
     };
   },
-  components: {
-   
+  name: 'HelloSocial',
+  components:{
   },
-  created: function() {
-    this.$store.state.user.isLogin = true;
-  },
+
 };
+
+
 </script>
 
 <style scoped>
@@ -96,7 +128,7 @@ body {
   padding: 0;
   margin: 0px;
   margin-top: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   border-radius: 5px;
 }
 .row {
@@ -202,18 +234,6 @@ body {
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Saira Extra Condensed", serif;
-  font-weight: 700;
-  color: #283747;
-
-}
-
 h1 {
   font-size: 6rem;
   line-height: 5.5rem;
@@ -231,7 +251,6 @@ h2 {
 }
 .subheading {
   font-weight: 500;
-  font-family: "Saira Extra Condensed", serif;
   font-size: 1.35rem;
 }
 li {
@@ -277,7 +296,7 @@ li:hover {
     position: relative;
     display: block;
     margin-top: 0px !important;
-    margin-left: 17rem !important;
+    padding-left: 17rem !important;
     /* min-height: 775px; */
   }
 }
@@ -289,7 +308,7 @@ li:hover {
 
 .body_cont {
   height: 100%;
-  width: auto;
+  width: 100%;
   position: relative;
   display: block;
   float: left;

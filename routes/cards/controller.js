@@ -54,9 +54,11 @@ exports.dbFindById = async (Card, cardid) => {
 };
 exports.dbDeleteById = async (Card, cardid) => {
   try {
-      let record = await Card.findAll({ where: {cardid : cardid} });
-      let result = await Card.destroy({ where: {cardid : cardid} });
-      // return Card.findAll({});
+      let record = await Card.findAll({ where: {cardid : cardid},raw: true });
+      let result = await Card.destroy({ where: {cardid : cardid}, raw: true });
+      if (result.length === 0) {
+        throw new ServerError(400, "card does not exist");
+    }
       return record[0];
   } catch (err) {
       const message = err.errors.reduce((prev, { message }) => {
@@ -80,7 +82,7 @@ exports.dbUpdateById = async (Card, cardid, cardName, cardImgURL, cardNote) => {
           }
           let updateCard = await Card.findOne({where : {cardid: cardid}});
           let result = await updateCard.updateAttributes({
-              cardName : card[0].cardName, 
+              cardName : card[0].cardName,
               cardImgURL: card[0].cardImgURL,
               cardNote: card[0].cardNote
           });

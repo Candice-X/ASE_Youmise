@@ -3,7 +3,6 @@ const request = require('supertest');
 const _ = require('lodash');
 const sequelize = require('sequelize');
 
-const {app} = require('./../../app');
 const models = require('./../../models');
 const controller = require('./../../routes/cards/controller');
 
@@ -11,16 +10,16 @@ const {cards, populateCards} = require('./../seed/seed');
 
 beforeEach(populateCards);
  //run before every test case
- after(()=>{
-    return require('../../models').sequelize.connectionManager.close().then(() => console.log('shut down gracefully'));
+after(()=>{
+  return require('../../models').sequelize.connectionManager.close().then(() => console.log('shut down gracefully'));
 });
 
-describe('create', ()=>{
+describe('Create', ()=>{
     it('should create a new card unit test', async ()=>{
         var note = 'Note test 3';
         const card = await controller.dbCreateCard(models.Card, cards[2].types, cards[2].cardName, cards[2].cardImgURL, cards[2].cardNote);
         expect(card.cardNote).toBe(cards[2].cardNote);
-    }); 
+    });
 });
 
 describe('GET /card', ()=>{

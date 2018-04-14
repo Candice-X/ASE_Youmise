@@ -5,24 +5,42 @@
         <div class = "send_cards_container" >
             <!-- <h4 class="title" >My Cards</h4>
             <h4 class="subTitle">Card with  </h4> -->
+      <center>
+        <button class="btn btn-primary btn-outline-success" 
+        :class="{ active: isReceiveModel==='received' }" @click="showReceivedCard">Cards Received</button>
+        <button class="btn btn-primary btn-outline-success" 
+        :class="{ active: isReceiveModel ==='sent' }" @click="showSendCard" >Cards Sent</button>
+        <button class="btn btn-primary btn-outline-success" 
+        :class="{ active: isReceiveModel==='request' }" @click="showRequest" >Card in Use</button>
+ </center>
+        <form class="form-inline">
+           
+            <input class="form-control form-control-sm search_bar " type="text" placeholder="Search" v-model="search" @keyup="searchCard" 
+            @focus="setDefault" aria-label="Search">
+             <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+        </form>
 
-        <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: isReceiveModel }" @click="showReceivedCard">Cards Received</button>
-        <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: !isReceiveModel }" @click="showSendCard" >Cards Sent</button>
-            <div class="row">
+       
+            <div class="row" >
+                    <!-- if empty -->
+              <div class="empty_msg" style="" v-if="cards.length===0">
+                You don't have any Card right now
+                <router-link class="btn btn-secondary btn-primary" to="/dashboard"> Send Card to Friends </router-link>
+              </div>
                 <div v-for = "(card, index) in cards" :key="index" 
-                class="col-lg-3 col-md-3 col-sm-6 card_cont" >
+                class="col-lg-3 col-md-4 col-sm-6 card_cont" >
                    <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
-                        <img v-bind:src="card.cardImg" />
-                        <div class ="sender_cont" >
+                        <img v-bind:src="card.cardImgURL" />
+                        
+                        <div class ="sender_cont " >
                             <div class ='avatar' >
-                                <img v-bind:src="card.senderImg" />
+                                <img src="../assets/img/girl.png" />
                             </div>
                             <div class="content">
-                                <h4>{{ card.cardName }}</h4>
-                                <p class="sub_title">{{ card.sender }}</p>
+                                <h4>{{ card.cardTitle }}</h4>
+                                <p class="sub_title">{{ card.senderName }}</p>
+                                <span class="time">{{card.createDate.substring(0,10)}}</span>
                             </div>
 
                         </div>
@@ -31,40 +49,121 @@
                 </div>
 
 
-            </div>
-        </div>
-<!-- Modal -->
-  <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" style="height:380px;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Card Info</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" style="height:420px;">
-          <div class="row">
-                <div class="col-sm-1"></div>
-                <div class="col-lg-5 col-md-5 col-sm-5 card_cont" >
-                    <div class="card_img" >
-                        <img v-bind:src = "this.oneCard.cardImg" />
+            </div><!-- end of row -->
+
+             <!-- <div class="row" v-if="isReceiveModel==='request'">
+           
+                <div v-for = "(req, index) in requests" :key="index" class="col-lg-4 col-md-4 col-sm-6 card_cont" >
+                    <div class="card_img" >   
+                      <div class ="sender_cont" >
+                            <div class ='avatar' >
+                                <img src="../assets/img/girl.png"/>
+                            </div>
+                            <div class="content">
+                                <h4>{{ req.senderUsername }} want to use the card </h4>
+                                <p class="sub_title" >{{req.createdAt}}</p>
+                                <p class="sub_title">{{ req.senderUsername }} want to use the card</p>
+                                <p class="" >status: {{req.status}}</p>
+                            </div>
+                      </div>  
+                       <div v-if="message.status==='SENT'">
+                          <button class="btn btn-primary btn-success col-sm-6" @click="acceptRequest(req.friendRequestId)" >Mark it Done</button>
+                          <!-- <button class="btn btn-primary btn-secondary col-sm-4" @click="rejectRequest(req.friendRequestId)" >Decline</button> -->
+                        <!-- </div>
+                        <div v-else>
+                            <button class="btn btn-secondary btn-primary col-sm-10" style="font-size:0.8em;" disabled >
+                              You have <strong>{{req.status}} </strong> </button>
+                        </div>
                     </div>
+                     
+                   
+                    
                 </div>
-                <div class ="sender_cont_more col-lg-5 col-md-5 col-sm-5" > 
+
+
+            </div> --> 
+            <!-- end of row -->
+
+
+        </div>
+
+ <!-- alert message -->
+    <div class="send_card_alert" style="display:none;" >
+      <p> Send use card request to <strong style="color:green;font-weight:600;">{{this.oneCard.receiverEmail}} </strong>  Successfully! </p>
+    </div>
+   <!-- end of alert -->
+
+
+
+
+<!-- Modal -->
+  <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" 
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="background:rgba(1,1,1,0.6)">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px;padding:0;border:0;">
+      <div class="modal-content" style="background:none;">
+       
+        <div class="modal-body" style="height:680px;">          
+                <div class=" card_cont " >
+                  
+                    <div class="card_img card_img_more"  >
+                        <img v-bind:src = "this.oneCard.cardImgURL" />
+                         <div class ="sender_cont sender_cont_one "  >
+                            <div class ='avatar one_avatar' >
+                                <img src="../assets/img/girl.png" />
+                                 <p class="userName">{{ this.oneCard.senderName }}</p>
+                            </div>
+                            <div class="content_one one_send_cont">
+                                <!-- <h4>{{ this.oneCard.cardTitle }}</h4>
+                                <p class="sub_title">{{ this.oneCard.senderName}}</p> -->
+                                <p>{{this.oneCard.cardContent}}</p>
+                         
+                            </div>
+
+                        </div>
+                       <div class="promise_msg">
+                          <p>{{this.oneCard.cardNote}}</p>
+                      </div>
+                    </div>
+                      <!-- use card -->
+                      <div>
+                        <div  v-if="isReceiveModel==='received' && this.oneCard.status ===1" class="use_card " @click="useCard" >
+                              <a > Use This Promise Card</a>
+                        </div>
+                        
+                         <div  v-if="this.oneCard.status ===5" class="use_card " style="background:pink;">
+                              <a> Promise Completed</a>
+                        </div>
+                         <div  v-if=" this.oneCard.status ===6 && this.$store.state.user.userID !== this.oneCard.receiverid" class="use_card " style="background:green;">
+                              <a  > Promise Card in Using</a>
+                              
+                        </div>
+                         <div  v-if="this.oneCard.status ===6 && this.$store.state.user.userID === this.oneCard.receiverid " class="use_card " @click="useCard">
+                                 <a > Mark Promise Complete</a>
+                        </div>
+                        <div  v-if="this.oneCard.status ===4" class="use_card " style="background:red;">
+                              <a> Promise Card Expired</a>
+                        </div>
+                        <div  v-if="isReceiveModel==='sent' && this.oneCard.status ===1" class="use_card " style="">
+                              <a> Promise Card Sent to Friend</a>
+                        </div>
+                       </div>
+                    <!-- end use card -->
+
+                </div>
+                <!-- <div class ="sender_cont_more col-lg-5 col-md-5 col-sm-5" > 
                         <img v-bind:src="this.oneCard.senderImg" />
                     <div class="content_more">
-                        <h4>{{ this.oneCard.cardName }}</h4>
-                        <p class="sub_title">{{ this.oneCard.sender }}</p>
+                        <h4>{{ this.oneCard.cardTitle }}</h4>
+                          <p class="create_data">{{this.oneCard.createDate}}</p> 
+                          <p> Status: {{this.oneCard.status}}</p> 
+                        <p class="sub_title">From: {{ this.oneCard.senderName }}</p>
                         <div class="message_more">
-                            How you have a great weekend, I will treat you a great dinner Next time :)
+                           {{this.oneCard.cardContent}} :)
                         </div>
                     </div>
                     <button class="btn btn-primary btn-success btn-send" >Use Card</button>
-                </div>
-
-
-            </div>
+                </div> -->
+           
 
         </div>
 
@@ -82,171 +181,237 @@
 
 <script>
 // import Nav from './DashboardNav';
+import { mapActions } from 'vuex';
+import axios from "axios";
+import { required, email } from "vuelidate/lib/validators";
 
 export default {
   data() {
     return {
-      isReceiveModel: true,
+      isReceiveModel: 'received',
+      search:'',
       cards:[],
+      tempCards:[],
+      requests:[],
+      loading:'true',
+      //this is for create record
       oneCard: {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'Kuer and Enjoy',
+          // recordid:'',
+          // senderid:null,
+          // senderName:'',
+          // cardNote:'',
+          // receiverid:null,
+          // cardid:null,
+          // createDate:null,
+          // expireDate:null,
+          // finishDate:null,
+          // cardTitle:'',
+          // cardContent:'',
+          // status:null,
+          // cardImgURL: null,
           senderImg:this.$store.state.card.girl,
-      },    
-      cardsReceive: [
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'From Kuer and Enjoy',
-          senderImg:this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img2,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img3,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img4,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img5,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img6,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img7,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img8,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img9,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img10,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img11,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img12,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img13,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img14,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-      ],
-      cardsSend: [
-          {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img8,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img9,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img10,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img11,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img12,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img13,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img14,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-      ],
+          // title:'',
+          // msgContent:'',
+          // receiverEmail:'',
+          // receiverName:'', 
+      },  
+
+      cardsReceive: [],
+
+
+      cardsSend: [],
 
     };
   },
   methods:{
-    showCard(index) {
-  
+    ...mapActions(['']),
+    async showCard(index) {   
       this.oneCard = this.cards[index];
+      // this.oneCard.recordid = this.cards[index].recordid;
+      // console.log('show card:', this.oneCard);
     },
-    showReceivedCard() {
-      this.isReceiveModel =true;
-      this.cards = this.cardsReceive;
+     
+    setDefault(){
+
     },
-    showSendCard() {
-      this.isReceiveModel = false;
-      this.cards = this.cardsSend;
+
+
+// search card from all cards 
+    searchCard(){
+      let re = this.search.toUpperCase();
+      // let n = this.cards.length;
+      let n = this.tempCards.length;
+      if(re.length ===0){
+        this.cards = this.tempCards;// tempCard is used to store the temp cards info
+        return;
+      }
+      if(re.length>0 && n>0){
+        this.cards = [];
+        // let reg = new RegExp('.*'+re+'.*');
+        let reg = new RegExp(re);
+
+        for(let i =0; i<n;i++){       
+          // console.log("before:", this.friendsList[i].username.toUpperCase());
+          // console.log("reg:", reg);
+         let temp =  reg.exec(this.tempCards[i].cardTitle.toUpperCase()) || reg.exec(this.tempCards[i].senderName.toUpperCase());
+        if(temp!==null){
+          this.cards.push(this.tempCards[i]);
+        }
+        //  let temp =  this.friendsList[i].username.toUpperCase().exec(reg);
+        // let temp = reg.exec(this.friendsList[i].username.toUpperCase());
+        
+        };
+      };
+
     },
+
+
+
+
+    async showReceivedCard() {
+      this.isReceiveModel ='received';
+      const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+      console.log("show received card:", userID);
+     try{
+       if(userID){
+            this.$store.state.user.loading = true;
+            const response = await axios.get(`/record/record/receiver/${userID}`);
+            // const response = await axios.get(`/record/record`);
+            // this.cards = response.data;
+            this.cards = response.data;
+            this.tempCards= response.data;
+            // console.log(response.data);
+            this.$store.state.user.loading = false;
+       }else{
+
+       };
+       
+      }catch(e){
+        console.log(e.message);
+         this.$store.state.user.loading = false;
+      };
+    },
+
+    async showSendCard() {
+      this.isReceiveModel = 'sent';
+       
+       const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+       console.log("show send card:", userID);
+     try{
+       if(userID){
+             this.$store.state.user.loading = true;
+            const response = await axios.get(`/record/record/sender/${userID}`);
+            // this.cards = response.data;
+              this.cards = response.data;
+              this.tempCards = response.data;
+            // console.log(response.data);
+             this.$store.state.user.loading = false;
+       }else{
+
+       };
+       
+      }catch(e){
+        console.log(e.message);
+         this.$store.state.user.loading = false;
+      }; 
+    },
+
+  
+
+
+
+
+
+  // card in use
+   async showRequest() {
+      this.isReceiveModel = 'request';
+       
+      const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+      // console.log("show send card:", userID);
+     try{
+       if(userID){
+            this.$store.state.user.loading = true;
+            const response = await axios.get(`/record/record/receiver/${userID}/6`);
+
+            const response2 = await axios.get(`/record/record/sender/${userID}/6`);
+            
+            const res = response.data.concat(response2.data);
+            // this.cards = response.data;
+            this.cards = res;
+            // console.log(response.data);
+             this.$store.state.user.loading = false;
+       }else{
+
+       };
+       
+      }catch(e){
+        console.log(e.message);
+         this.$store.state.user.loading = false;
+      }; 
+    },
+    // send card 
+    // record status:
+    // 1: 有效的卡片，具有收卡人，发卡人，在有效期内，
+    // 2：已发送但是没有接收人，
+    // 3： 邀请卡类型，接收人为多人（不建议新增这个状态。。。）
+    // 4： 过期卡
+    // 5： 已使用
+    // 6： 使用中，等待对方确认(这个多余了， 确认以后再update就好了
+     async useCard(){
+      const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+
+      // let rec = this.onCard.recordid;
+      console.log("record:",this.oneCard);
+      // console.log("onecard",this.oneCard);
+     
+      // console.log(`/record/record/${recordid}`);
+     try{
+       if(userID){
+         if(this.oneCard.status === 1){
+          this.oneCard.status = 6;
+         }else if(this.oneCard.status===6)
+         {
+           //mark as complete
+           this.oneCard.status = 5;
+         }else{
+           return "status cannot change";
+         }
+            jQuery("#Dashboard_send").modal('hide');
+
+            
+            this.oneCard["title"]=this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle;
+            this.oneCard["msgContent"]=this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle+ " which you sent to him/her at "+ this.oneCard.createDate+". Last time you said: "+ this.oneCard.cardContent;
+            const response = await axios.patch(`/record/record/${this.oneCard.recordid}`,this.oneCard);
+
+            // this.cards = response.data;
+            // console.log(response.data);
+        // await 
+          
+            jQuery(".send_card_alert").fadeIn();
+            setTimeout(() => {
+            jQuery(".send_card_alert").fadeOut();
+            },3500);
+            //alert
+
+       }else{
+
+       };
+       
+      }catch(e){
+      
+        console.log("usercard: ",e.message);
+      }; 
+    },
+
+
+
   },
   components: {
     // Nav,
   },
   created: function() {
     this.$store.state.isLogin = true;
-    this.cards = this.cardsReceive;
+    this.showReceivedCard();
   },
 
 };
@@ -262,6 +427,14 @@ body {
   color: #868e96;
 }
 
+.empty_msg{
+  margin:auto;
+  text-align:center;
+  margin-top:10em;
+  color:white;
+  font-size:1rem;
+}
+
 .send_cards_container button {
   color: #ffffff;
   margin-left: 15px;
@@ -271,6 +444,10 @@ body {
   text-align: left;
   margin-top: 0;
   padding: 0;
+}
+.sender_cont_one{
+  position: relative;
+  margin-top:-100px;
 }
 
 .avatar {
@@ -301,7 +478,7 @@ body {
   padding: 0;
   margin: 0px;
   margin-top: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   border-radius: 5px;
 }
 .row {
@@ -321,11 +498,29 @@ body {
 }
 .card_img:hover {
   background: #3ac17e;
-  opacity: 0.9;
+  /* opacity: 1; */
   cursor: pointer;
   border: 2px dashed #fff;
   color: #fff;
 }
+.card_img_more {
+  /* width: 220px; */
+  /* margin: 10px 25px; */
+  background: #3ac17e;
+  /* height: 320px; */
+  margin:0;
+  border-radius: 5px;
+  border: 2px dashed #fff;
+  color:#fff;
+}
+.card_img_more:hover {
+  /* background: #3ac17e; */
+  /* opacity: 0.9; */
+  cursor: pointer;
+  border: 2px dashed #fff;
+  color: #fff;
+}
+
 .customize-icon-cont {
   border: 4px dashed #fff;
   width: 220px;
@@ -343,7 +538,8 @@ body {
   top: 80px;
 }
 .customize-icon {
-  opacity: 0.8;
+  /* opacity: 0.8; */
+  opacity:1;
   border-radius: 5px 5px 0 0;
   width: 100%;
   height: 180px;
@@ -397,16 +593,6 @@ body {
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Saira Extra Condensed", serif;
-  font-weight: 700;
-}
-
 h1 {
   font-size: 6rem;
   line-height: 5.5rem;
@@ -425,7 +611,6 @@ h2 {
 }
 .subheading {
   font-weight: 500;
-  font-family: "Saira Extra Condensed", serif;
   font-size: 1.35rem;
 }
 li {
@@ -546,7 +731,7 @@ section.resume-section .resume-item .resume-date {
     position: relative;
     display: block;
     margin-top: 0px !important;
-    margin-left: 17rem !important;
+    padding-left: 17rem !important;
     /* min-height: 775px; */
   }
 }
@@ -571,7 +756,7 @@ i {
 
 .body_cont {
   height: 100%;
-  width: auto;
+  width: 100%;
   position: relative;
   display: block;
   float: left;
@@ -598,4 +783,151 @@ i {
 .btn-send{
   width:100%;
 }
-</style>
+.create_data{
+  font-size:0.8em;
+  color:#bbb;
+}
+
+.card_img_more {
+  width: 330px;
+  /* margin: 10px 25px; */
+  background: #3ac17e;
+  height: 500px;
+  border-radius: 5px;
+  border: 2px dashed #fff;
+  color:#fff;
+}
+.card_img_more:hover {
+  /* background: #3ac17e; */
+  /* opacity: 1; */
+  cursor: pointer;
+  border: 2px dashed #fff;
+  color: #fff;
+}
+/* .card_img_more:hover + .use_card{
+  display:block;
+  background:red;
+} */
+.card_img_more img {
+  border-radius: 5px 5px 0 0;
+  width: 100%;
+  height: 500px;
+}
+.userName{
+  color:#fff;
+  font-size:0.8em;
+  text-align:center;
+}
+.content_one {
+  width: 240px;
+  height: 80px;
+  font-size: 0.8em;
+  padding:5px;
+  background:#dcdcdc;
+  border-radius:5px;
+  color:#222;
+  margin-left: 8px;
+  display: inline-block;
+  word-wrap:normal;
+  line-height: 1.5em;
+  padding-top:5px;
+  opacity: 1;
+  margin-left:10px;
+  overflow: hidden;
+}
+.message_more{
+  background: #eeeeee;
+  border-radius: 5px;
+  
+  display: block;
+  text-align: left;
+  padding:15px;
+  margin:10px;
+  height:100px;
+  font-size:0.85em;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.one_send_cont{
+  margin-top:10px;
+}
+.one_avatar{
+  float:left;
+  margin-top:20px;
+}
+
+
+.promise_msg{
+  word-wrap: normal;
+  width: 210px;
+  height:110px;
+  overflow: hidden;
+  position: relative;
+  color:#fff;
+  font-size: 0.9em;
+  margin:auto;
+  top:-260px;
+  text-align:left;
+  line-height: 1.5em;
+  
+}
+.use_card{
+  display: block;
+  z-index:999;
+  /* opacity:0.8; */
+  position: relative;
+  width:330px;
+  margin-top:-3px;
+  border-radius: 0 0 5px 5px;
+  color:#fff;
+  height:60px;
+  padding:5px;
+  padding-top:15px;
+  background:#3ac17e;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+.user_card:hover{
+  background:red;
+}
+
+.send_card_alert{
+  margin:auto;
+  z-index:99;
+  text-align:center;
+  width:25rem; 
+  background:#ffc9aa;
+  border-radius:5px;
+  height:5rem;
+  position:fixed;
+  top:0px;
+  left:0px;
+  bottom:0px;
+  right:0px;
+
+}
+.send_card_alert p{
+  padding:0;
+  text-align:center;
+  margin-top:1rem;
+  padding-top:1em;
+  line-height:2em;
+  display:block;
+
+}
+.time{
+
+  float:right;
+  height:20px;
+  font-size:10px;
+  margin-top:-18px;
+  color:#555;
+}
+.search_bar{
+  float:right;
+  width:auto;
+  position: absolute;
+  right:40px;
+  top:60px;
+}
+</style> 

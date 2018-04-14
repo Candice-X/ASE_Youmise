@@ -3,13 +3,16 @@
   <h4 class="friends_list"> Friends List
        <!-- <i class="icon-close friends_list_close" @click="friend_list=false"></i> -->
        </h4> 
+       <button class="btn btn-primary btn-outline-success btn-sm" style="width:85%;margin:15px;" data-toggle="modal" data-target="#add_friends">Add Friend</button>
  <hr />
-    <div class="friend">
+    
+    <div v-for="(friend, index) in friendsList" :key="index" class="friend" 
+    :class="{friend_active:friend.uid === currentFriendId}" @click="setCurrentFriend(friend.uid)">
       <div class="friends_img" >
         <img src="../assets/img/girl.png" />
       </div>
       <div class="friens_info">
-        <h4>Frank </h4>
+        <h4>{{friend.username}} </h4>
         <div class="card_info" >
           <span class="card_send"><i class="icon-present" ></i> 77 </span>
           <span class="card_send"><i class ="icon-action-redo "></i> 126</span>
@@ -17,44 +20,8 @@
       </div>  
     </div>
 
-    <div class="friend friend_active">
-      <div class="friends_img" >
-        <img src="../assets/img/Logo.png" />
-      </div>
-      <div class="friens_info">
-        <h4>Jack </h4>
-        <div class="card_info" >
-          <span class="card_send"><i class="icon-present" ></i> 77 </span>
-          <span class="card_send"><i class ="icon-action-redo "></i> 126</span>
-        </div>
-      </div>  
-    </div>
 
-    <div class="friend">
-      <div class="friends_img" >
-        <img src="../assets/img/girl.png" />
-      </div>
-      <div class="friens_info">
-        <h4>Tony </h4>
-        <div class="card_info" >
-          <span class="card_send"><i class="icon-present" ></i> 77 </span>
-          <span class="card_send"><i class ="icon-action-redo "></i> 126</span>
-        </div>
-      </div>  
-    </div>
-
-    <div class="friend">
-      <div class="friends_img" >
-        <img src="../assets/img/Logo.png" />
-      </div>
-      <div class="friens_info">
-        <h4>Dorothy </h4>
-        <div class="card_info" >
-          <span class="card_send"><i class="icon-present" ></i> 77 </span>
-          <span class="card_send"><i class ="icon-action-redo "></i> 126</span>
-        </div>
-      </div>  
-    </div>
+<!-- modal -->
 
 
 
@@ -62,16 +29,51 @@
 </template>
 
 <script>
+import axios from "axios";
 
 export default {
   data(){
     return{
       friend_list: true,
+      friendsList:[],
+      currentFriendId:'',
     }
+  },
+  methods:{
+
+    async getFriendsList(){
+      try{
+        const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+        if(userID){
+            const response = await axios.get(`/friend//listFriends/${userID}`);
+            console.log(response.data);
+            this.$store.state.user.friendList = response.data;
+            this.friendsList = this.$store.state.user.friendList;
+            console.log("friendsList :", this.friendsList);
+        }else{
+
+        };
+      }catch(e){
+        console.log(e.message);
+      };
+  },
+
+  setCurrentFriend(friendId){
+    this.currentFriendId = friendId;
+    this.$store.state.user.currentFriendId = friendId;
+    this.$emit('refreshFriendCards');
+
+    console.log("friend card show");
+  },
+
   },
   components: {
     // Dashboard,
-  }
+  },
+  mounted(){
+    this.getFriendsList();
+},
+  
 };
 </script>
 

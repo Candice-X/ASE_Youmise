@@ -23,15 +23,36 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     firstName: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     lastName: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+    },
+    avatarUrl: {
+      type: DataTypes.STRING,
+      defaultValue: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
     },
     gender:{
       type: DataTypes.ENUM('Male', 'Female')
-    }
+    },
   });
+
+  User.associate = function(models) {
+    // user as sender of a message
+    User.hasMany(models.Friendship, {
+      foreignKey: 'uid',
+      sourceKey: 'userId',
+      onDelete: 'cascade'
+    });
+
+    User.hasMany(models.FriendRequest, {
+      foreignKey: 'uid',
+      sourceKey: 'receiverId',
+      onDelete: 'cascade',
+    });
+
+
+  };
 
   return User;
 }

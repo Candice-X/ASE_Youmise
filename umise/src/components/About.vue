@@ -237,17 +237,6 @@ body {
     margin-left: 0rem;
   }
 }
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Saira Extra Condensed", serif;
-  font-weight: 700;
-}
-
 h1 {
   font-size: 6rem;
   line-height: 5.5rem;
@@ -266,7 +255,6 @@ h2 {
 }
 .subheading {
   font-weight: 500;
-  font-family: "Saira Extra Condensed", serif;
   font-size: 1.35rem;
 }
 li {

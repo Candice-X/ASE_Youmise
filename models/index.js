@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'test'){
     sequelize = new Sequelize(config.DB_NAME,process.env.DB_USERNAME, process.env.DB_PASSWORD , {
         host: config.DB_HOST,
         port: 3306,
-        logging: console.log,
+        logging: false,
         maxConcurrentQueries: 100,
         dialect: 'mysql',
         operatorsAliases: Op,
@@ -57,6 +57,9 @@ db.Sequelize = Sequelize;
 db.User = sequelize.import(path.join(__dirname, 'User.js'));
 db.Card = sequelize.import(path.join(__dirname, 'Card.js'));
 db.Record = sequelize.import(path.join(__dirname, 'Record.js'));
+db.Message = sequelize.import(path.join(__dirname, 'Message.js'));
+db.FriendRequest = sequelize.import(path.join(__dirname, 'FriendRequest.js'));
+db.Friendship = sequelize.import(path.join(__dirname, 'Friendship.js'));
 // Testing connection: 03/20/2018 HYY
 // sequelize
 //     .authenticate()
@@ -66,4 +69,5 @@ db.Record = sequelize.import(path.join(__dirname, 'Record.js'));
 //     .catch((e)=>{
 //         console.log('Unable to connect to the database:',e);
 //     });
+
 module.exports = db;

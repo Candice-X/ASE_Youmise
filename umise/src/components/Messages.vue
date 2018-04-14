@@ -6,32 +6,90 @@
             <h4 class="title" >Messages</h4>
             <h4 class="subTitle">Messages from your friends</h4>
 
-        <button class="btn btn-primary btn-outline-success active" >All Messages</button>
-        <button class="btn btn-primary btn-outline-success" >Unread Messages</button>
+        <button class="btn btn-primary btn-outline-success " :class= "{active: isMessage}" @click="getAllMessages" > Messages</button>
+        <button class="btn btn-primary btn-outline-success" :class= "{active: !isMessage}" @click="getFriendsRequest" >Friends Request</button>
 
-           <div class="row">
-                <div v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont" >
-                    <div class="card_img" >
-                        <img v-bind:src="card.cardImg" />
-                        <div class ="sender_cont" >
-                            <div class ='avatar' >
-                                <img v-bind:src="card.senderImg" />
+           <div class="row" v-if="isMessage">
+                <!-- if empty -->
+              <div class="empty_msg" style="" v-if="messages.length===0">
+                You don't have any Messages right now
+                <!-- <button class="btn btn-secondary btn-primary"> Add Friends </button> -->
+              </div>
+                <div v-for = "(message, index) in messages" :key="index" class="col-lg-4 col-md-4 col-sm-6 card_cont" >
+                    <div class="card_img" >   
+                      <div class ="sender_cont" >
+                            <div class ='avatar' style="position:relative; top:10px; float:left;">
+                                <img src="../assets/img/girl.png"/>
                             </div>
-                            <div class="content">
-                                <h4>{{ card.cardName }}</h4>
-                                <p class="sub_title">{{ card.sender }}</p>
+                            <div class="content" style="width:190px;">
+                                <h4>{{ message.title }} </h4>
+                                <!-- <p class="sub_title" >{{message.cardTitle}}</p> -->
+                                <p class="sub_title">{{ message.cardContent }} </p>
+                                <p class="" >Content: <br/>{{message.msgContent}}</p>
+                                
                             </div>
-
+                      </div>  
+                       <div v-if="message.status==='SENT'">
+                          <button class="btn btn-primary btn-success col-sm-6" @click="acceptRequest(message.friendRequestId)" >Accept</button>
+                          <button class="btn btn-primary btn-secondary col-sm-4" @click="rejectRequest(message.friendRequestId)" >Decline</button>
                         </div>
-
+                        <div v-else>
+                            <!-- <button class="btn btn-secondary btn-primary col-sm-10" style="font-size:0.8em;" disabled >You have <strong>{{message.status}} </strong> </button> -->
+                        </div>
                     </div>
+                     
+                    <!-- button -->
+                    
                 </div>
 
 
             </div>
+            <!-- end of row -->
+
+
+            <div class="row" v-if="!isMessage">
+                <!-- if empty -->
+              <div class="empty_msg" style="" v-if="friendRequests.length===0">
+                You don't have any Friend Request right now
+                <!-- <button class="btn btn-secondary btn-primary"> Add Friends </button> -->
+              </div>
+                <div v-for = "(request, index) in friendRequests" :key="index" class="col-lg-4 col-md-4 col-sm-6 card_cont" >
+                    <div class="card_img" >   
+                      <div class ="sender_cont" >
+                            <div class ='avatar' >
+                                <img src="../assets/img/girl.png"/>
+                            </div>
+                            <div class="content">
+                                <h4>{{ request.senderUsername }} send a friend request </h4>
+                                <p class="sub_title" >{{request.createdAt.substring(0,10)}}</p>
+                                <p class="sub_title"> {{ request.senderUsername }} want to add you as a new friendddddddddd</p>
+                                <p class="" >Status: {{request.status}}</p>
+                            </div>
+                      </div>  
+                       <div v-if="request.status==='SENT'">
+                          <button class="btn btn-primary btn-success col-sm-6" @click="acceptRequest(request.friendRequestId)" >Accept</button>
+                          <button class="btn btn-primary btn-secondary col-sm-4" @click="rejectRequest(request.friendRequestId)" >Decline</button>
+                        </div>
+                        <div v-else>
+                            <button class="btn btn-secondary btn-primary col-sm-10" style="font-size:0.8em;" disabled >You have <strong>{{request.status}} </strong> </button>
+                        </div>
+                    </div>
+                     
+                    <!-- button -->
+                    
+                </div>
+
+
+            </div>
+            <!-- end of row -->
+         
+           
+
+
 
         </div>
-        <!-- <Friends></Friends> -->
+       
+
     </div>
 
 </div>
@@ -40,107 +98,132 @@
 <script>
 // import Nav from './DashboardNav';
 // import Friends from './Friends';
+import axios from "axios";
 
 export default {
   data() {
     return {
       name: 'kuer',
-      cards: [
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img1,
-          sender: 'From Kuer and Enjoy',
-          senderImg:this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img2,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img3,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img4,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img5,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img6,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img7,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img8,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img9,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img10,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img11,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img12,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.boy,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img13,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        {
-          cardName: 'Dinning Card',
-          cardImg: this.$store.state.card.img14,
-          sender: 'From Kuer and Enjoy',
-          senderImg: this.$store.state.card.girl,
-        },
-        
-
-
+      isMessage: true,
+      // imgUrl:'',
+      messages:[],
+      friendRequests:[
+        // {
+        // friendRequestId:1,
+        // senderId:'',
+        // senderUsername:'kuer',
+        // receiverId:'',
+        // receiverUsername:'kjjkj',
+        // status:'',
+        // createdAt:'2018-01-01',
+        // updateAt:'',
+        // },
       ],
     };
   },
   components: {
-  
+   
   },
+
+  methods:{
+    async getAllMessages(){
+      this.isMessage = true;
+    const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
+     try{
+       if(userID){
+          this.$store.state.user.loading = true;
+            const response = await axios.get(`/message/message/sender/${userID}`);
+            // const response = await axios.get(`/record/record`);
+            // this.cards = response.data;
+            this.messages = response.data;
+            this.$store.state.user.loading = false;
+            console.log(response.data);
+             
+       }else{
+
+       };    
+      }catch(e){
+         this.$store.state.user.loading = false;
+        console.log(e.message);
+      };
+    },
+
+    async getFriendsRequest(){
+      this.isMessage = false;
+        try{
+          
+          if(this.$store.state.user.userID != null ){ 
+             this.$store.state.user.loading = true;
+            const response = await axios.get(`/friend/listFriendRequest/${this.$store.state.user.userID}`); 
+            this.friendRequests = response.data;  
+             this.$store.state.user.loading = false;
+          }else{
+            throw new Error("You need to login first");
+          };
+
+        }catch(e){
+          console.log(e);
+           this.$store.state.user.loading = false;
+          // this.errorMsg = e.response.data;
+        };
+    },
+
+    async acceptRequest(requestId){
+        try{
+          console.log("userId: ",this.$store.state.user.userID);
+          if(this.$store.state.user.userID != null ){ 
+             this.$store.state.user.loading = true;
+            const response = await axios.post("/friend/updateFriendRequest/",{"friendRequestId":requestId,"status":"APPROVED"}); 
+           
+             this.$store.state.user.loading = false;
+          }else{
+            throw new Error("You need to login first");
+          };
+          //refresh the request list
+          this.getFriendsRequest();
+
+        }catch(e){
+           this.$store.state.user.loading = false;
+          console.log(e);
+          // this.errorMsg = e.response.data;
+        };
+    },
+
+    async rejectRequest(requestId){
+      try{
+          console.log("userId: ",this.$store.state.user.userID);
+          if(this.$store.state.user.userID != null ){ 
+             this.$store.state.user.loading = true;
+            const response = await axios.post("/friend/updateFriendRequest/",{"friendRequestId":requestId,"status":"REJECTED"}); 
+           
+             this.$store.state.user.loading = false;
+          }else{
+            throw new Error("You need to login first");
+          };
+          //refresh the request list
+          this.getFriendsRequest();
+
+        }catch(e){
+          console.log(e);
+           this.$store.state.user.loading = false;
+          // this.errorMsg = e.response.data;
+        };
+  
+    },
+    
+
+  },
+
+  // computed(){
+  //  imgUrl=this.$store.state.card.img1;
+  // },
+//  mounted(){
+//    this.imgUrl= this.$store.state.card.img1;
+//  },
   created: function() {
     this.$store.state.isLogin = true;
+    // this.imgUrl = this.$store.state.card.img1;
+    this.getAllMessages();
   },
 };
 </script>
@@ -154,7 +237,13 @@ body {
   padding-top: 54px;
   color: #868e96;
 }
-
+.empty_msg{
+  margin:auto;
+  text-align:center;
+  margin-top:10em;
+  color:white;
+  font-size:1rem;
+}
 .send_cards_container button {
   color: #ffffff;
   margin-left: 15px;
@@ -163,12 +252,12 @@ body {
   width: 100%;
   text-align: left;
   margin-top: 0;
-  padding: 0;
+  padding: 10px;
 }
 
 .avatar {
   position: relative;
-  top: -10px;
+  top: -75px;
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -181,7 +270,7 @@ body {
   border-radius: 50% !important;
 }
 .content {
-  width: 150px;
+  width: 200px;
   margin-left: 8px;
   display: inline-block;
   line-height: 1em;
@@ -194,7 +283,7 @@ body {
   padding: 0;
   margin: 0px;
   margin-top: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   border-radius: 5px;
 }
 .row {
@@ -206,22 +295,22 @@ body {
   margin-bottom: 200px;
 }
 .card_img {
-  width: 220px;
-  margin: 10px 25px;
+  width: 280px;
+  margin: 0px 25px;
   background: #dcdcdc;
-  height: 320px;
+  height: 220px;
   border-radius: 5px;
 }
-.card_img:hover {
+/* .card_img:hover {
   background: #3ac17e;
   opacity: 0.9;
   cursor: pointer;
   border: 2px dashed #fff;
   color: #fff;
-}
+} */
 .customize-icon-cont {
   border: 4px dashed #fff;
-  width: 220px;
+  width: 280px;
   margin: 10px 25px;
   background: rgba(0, 0, 0, 0.2);
   height: 320px;
@@ -296,7 +385,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Saira Extra Condensed", serif;
   font-weight: 700;
 }
 
@@ -318,7 +406,6 @@ h2 {
 }
 .subheading {
   font-weight: 500;
-  font-family: "Saira Extra Condensed", serif;
   font-size: 1.35rem;
 }
 li {
@@ -439,7 +526,7 @@ section.resume-section .resume-item .resume-date {
     position: relative;
     display: block;
     margin-top: 0px !important;
-    margin-left: 17rem !important;
+    padding-left: 17rem !important;
     /* min-height: 775px; */
   }
 }
@@ -464,10 +551,18 @@ i {
 
 .body_cont {
   height: 100%;
-  width: auto;
+  width: 100%;
   position: relative;
   display: block;
   float: left;
   /* min-height: 775px;  */
+}
+.time{
+
+  float:right;
+  height:20px;
+  font-size:10px;
+  margin-top:-18px;
+  color:#555;
 }
 </style>

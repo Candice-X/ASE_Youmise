@@ -12,6 +12,8 @@ const state = {
   loading: false,
   authenticated: 0,
   challengeData: {},
+  friendList:[],
+  currentFriendId:'',
 };
 
 const mutations = {
