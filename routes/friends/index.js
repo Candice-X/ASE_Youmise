@@ -35,6 +35,17 @@ router.get('/listFriendRequest/:uid', async (req, res) => {
   }
 });
 
+router.get('/listFriendRequestSent/:uid', async (req, res) => {
+  try {
+    const senderId = req.params.uid;
+    const result = await controller.listFriendRequestSent(models.User, models.FriendRequest, senderId);
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(err.statusCode).send(err.message);
+  }
+});
+
 router.get('/listFriends/:uid', async (req, res) => {
   try {
     const userId = req.params.uid;

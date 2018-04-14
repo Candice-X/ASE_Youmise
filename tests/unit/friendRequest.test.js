@@ -39,8 +39,15 @@ describe('Update', ()=>{
 });
 
 describe('Get', ()=>{
-  it('should return an user\s friendRequestlist', async ()=>{
+  it('should return an user\'s friendRequestlist', async ()=>{
     const friendRequest = await controller.listFriendRequest(models.User, models.FriendRequest, users[1].uid);
+    expect(friendRequest.length).toBe(1);
+  });
+});
+
+describe('Get', ()=>{
+  it('should return an user\'s sent friendRequestlist', async ()=>{
+    const friendRequest = await controller.listFriendRequestSent(models.User, models.FriendRequest, users[0].uid);
     expect(friendRequest.length).toBe(1);
   });
 });

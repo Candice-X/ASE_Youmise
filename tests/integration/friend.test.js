@@ -134,6 +134,17 @@ describe('GET /friend/listFriendRequest/:uid', ()=>{
     });
 })
 
+describe('GET /friend/listFriendRequestSent/:uid', ()=>{
+    it('should get all FriendRequests sent', async ()=>{
+      const res = await request(app).get(`/friend/listFriendRequestSent/${users[0].uid}`).expect(200);
+      expect(res.body.length).toBe(1);
+    });
+
+    it('should return error if user not exists', async()=>{
+      const res = await request(app).get(`/friend/listFriendRequestSent/${users[4].uid}`).expect(400);
+    });
+})
+
 describe('GET /friend/listFriends/:uid', ()=>{
     it('should get all Friends for user', async ()=>{
       const res = await request(app).get(`/friend/listFriends/${users[0].uid}`).expect(200);
@@ -144,6 +155,7 @@ describe('GET /friend/listFriends/:uid', ()=>{
       const res = await request(app).get(`/friend/listFriends/${users[4].uid}`).expect(400);
     });
 })
+
 
 describe('DELETE /friend/deleteFriends/:uid1/:uid2', ()=>{
     it('should remove two friendships', async()=>{
