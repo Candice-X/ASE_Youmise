@@ -44,8 +44,6 @@ const PORT = process.env.PORT || 8080;
   };
   await models.sequelize.sync();
   // await models.sequelize.sync({force: true});
-  // models.Record.belongsTo(models.User, {foreignKey: 'userid'});
-  // models.Record.belongsTo(models.Card, {foreignKey: 'cardid'});
   //
   // if(process.env.NODE_ENV === "production"){
   //   await models.Card.create({
