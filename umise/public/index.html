@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="shortcut icon" href="<%= webpackConfig.output.publicPath %>favicon.ico">
-    <!-- <link rel="stylesheet" href="vue2-autocomplete-js/dist/style/vue2-autocomplete.css"> -->
     <title>Umise-we make closer</title>
   </head>
   <body>
@@ -14,5 +13,48 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+      <!-- facebook login -->
+
+
+    <fb:login-button 
+    scope="public_profile,email"
+    onlogin="checkLoginState();">
+    </fb:login-button>
+
+      <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '190441828426608',
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v2.12'
+          });
+            
+          FB.AppEvents.logPageView();   
+            
+        };
+
+        (function(d, s, id){
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.id = id;
+          js.src = "https://connect.facebook.net/en_US/sdk.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // FB.getLoginStatus(function(response) {
+        //     statusChangeCallback(response);
+        // });
+
+        function checkLoginState() {
+          FB.getLoginStatus(function(response) {
+            
+            // statusChangeCallback(response);
+            console.log("facebook login :", response);
+          });
+        }
+
+      </script>
   </body>
+  <footer><a href="https://app.termly.io/document/privacy-policy-for-website/57e6a742-786e-4532-aa58-3c276bef31ca">Privacy Policy</a></footer>
 </html>
