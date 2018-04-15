@@ -167,6 +167,8 @@
           </li>
         </ul>
       </div>
+      <a href="https://app.termly.io/document/privacy-policy-for-website/57e6a742-786e-4532-aa58-3c276bef31ca">Privacy Policy</a>
+
     </footer>
   </div>
 </template>

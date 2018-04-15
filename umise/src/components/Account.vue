@@ -1,11 +1,11 @@
 <template>
 <div id='account' >
     <!--- body -->
-<!-- <meta property="og:url"     content="http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/facebook" />
+<meta property="og:url"     content="http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/facebook" />
 <meta property="og:type"    content="article" />
 <meta property="og:title"   content="When Great Minds Don’t Think Alike" />
 <meta property="og:description" content="How much does culture influence creative thinking?" />
-<meta property="og:image"     content="https://s3.us-east-2.amazonaws.com/umisefrontendimages/Drink_Card.png" /> -->
+<meta property="og:image"     content="https://s3.us-east-2.amazonaws.com/umisefrontendimages/Drink_Card.png" />
     <div id="send_cards" class="body_cont">
 
         <div class = "send_cards_container" >
@@ -99,7 +99,7 @@ export default {
       name: this.$store.getters.getUserName,
       password: this.$store.getters.getPasswprd,
       email: this.$store.getters.getUserEmail,
-      url: "http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com/facebook"
+      url: "http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com"
     };
   },
   name: 'HelloSocial',
