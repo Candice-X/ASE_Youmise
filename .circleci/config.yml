@@ -36,7 +36,7 @@ jobs:
           command: |
             yarn
             npm install why-is-node-running
-            yarn test
+            NODE_ENV=test npm test
 
 
   # deploy_uat:
