@@ -62,7 +62,7 @@
                             <div class="content">
                                 <h4>{{ request.senderUsername }} send a friend request </h4>
                                 <p class="sub_title" >{{request.createdAt.substring(0,10)}}</p>
-                                <p class="sub_title"> {{ request.senderUsername }} want to add you as a new friendddddddddd</p>
+                                <p class="sub_title"> {{ request.senderUsername }} want to add you as a new friend</p>
                                 <p class="" >Status: {{request.status}}</p>
                             </div>
                       </div>  
@@ -298,7 +298,7 @@ body {
   width: 280px;
   margin: 0px 25px;
   background: #dcdcdc;
-  height: 200px;
+  height: 220px;
   border-radius: 5px;
 }
 /* .card_img:hover {

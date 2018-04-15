@@ -84,7 +84,7 @@
                         <div class="input-group friend_list_cont">
                          <!-- <div class="friend_place_hoder">Choose A Friend</div> -->
                           <input type="text" v-model="oneCard.receiverName"  @focus="showFriendList=true"  
-                          @blur="showFriendList=false" @keyup="autoComplete" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
+                           @keyup="autoComplete" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
                          
                         </div>
                         <!-- popup friend div -->
@@ -92,7 +92,7 @@
                         <div v-if="searchFriendList.length===0">
                             <p style="color:white;text-align:center;margin-top:100px;">You do not have friend named: {{this.oneCard.receiverName}} </p>
                         </div>
-                        <div v-else v-for="(friend, index) in searchFriendList" :key="index" class="friend" @click="chooseFriend(index)" >
+                        <div v-if="searchFriendList.length!==0" v-for="(friend, index) in searchFriendList" :key="index" class="friend" @click="chooseFriend(index)" >
                               <div class="friends_img" >                        
                                 <img src="../assets/img/girl.png" />
                               </div>
@@ -206,8 +206,8 @@ export default {
     },
 
 
-  chooseFriend(index){
-    //  console.log(index);
+    chooseFriend(index){
+     console.log(index);
       this.oneCard.receiverName = this.searchFriendList[index].username;
       this.oneCard.receiverEmail = this.searchFriendList[index].email;
       this.showFriendList =false;

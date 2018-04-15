@@ -111,6 +111,20 @@ exports.listFriendRequest = async (User, FriendRequest, receiverId) =>{
   }
 };
 
+exports.listFriendRequestSent = async (User, FriendRequest, senderId) =>{
+  try{
+    const sender = await User.findOne({ where: { uid: senderId } });
+    if(!sender){
+      throw new Error('User not found!');
+    }
+    const records = await FriendRequest.findAll({ where: { senderId } });
+    return records;
+  } catch(err) {
+    console.log(err);
+    throw new ServerError(400, err.message);
+  }
+};
+
 exports.listFriends = async (User, Friendship, userId) =>{
   try{
     const user = await User.findOne({ where: { uid: userId } });
@@ -147,7 +161,7 @@ exports.deleteFriends = async (User, Friendship, userId1, userId2) =>{
     const friendship = await Friendship.findOne({ where: { userId: userId1, friendId: userId2 } });
     // const records = await FriendRequest.findAll({ where: { receiverId } });
     if(!friendship){
-      throw new console.error('You haven\'t been friends.');
+      throw new Error('You haven\'t been friends.');
     }
 
     let result =await Friendship.destroy({ where: { userId: userId1, friendId: userId2 }});
