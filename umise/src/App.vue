@@ -32,6 +32,7 @@
 <script>
   import Navbar from "./components/Navbar";
   import DashboardNav from "./components/DashboardNav";
+  import facebook from "./api/facebook.js";
 
   export default {
     name: "App",
@@ -40,7 +41,7 @@
     },
   
   methods:{
-
+  
   },
     components: {
       Navbar,
@@ -55,6 +56,14 @@
 
   body {
     font-size: 0.9em;
+  }
+  
+  @media only screen and (max-width: 768px){
+    body {
+      font-size:0.5em;
+      margin:0;
+      padding:0;
+    }
   }
 
   #app {

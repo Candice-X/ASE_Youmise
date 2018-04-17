@@ -19,7 +19,7 @@
                     </div>
                 </div>          
 
-                 <div class="col-md-3 col-md-4 col-sm-6 card_cont">
+                 <!-- <div class="col-md-3 col-md-4 col-sm-6 card_cont">
                     <div class="card_img customize-icon-cont" >
                         <div class="customize-icon">
                         <i class="icon-settings "></i>
@@ -27,7 +27,7 @@
                         <h4 style="color:#fff;">Customize Card</h4>
                         <p class="sub_title">Enjoy the Creations</p>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </div>
@@ -65,7 +65,7 @@
                             </div>
                             <div class="content">
                                 <!-- <h7>{{ this.oneCard.cardName }}</h7> -->
-                                <p>{{this.oneCard.message}}</p>
+                                <p class="msg">{{this.oneCard.message}}</p>
                                
                             </div>       
                         </div>
@@ -84,15 +84,15 @@
                         <div class="input-group friend_list_cont">
                          <!-- <div class="friend_place_hoder">Choose A Friend</div> -->
                           <input type="text" v-model="oneCard.receiverName"  @focus="showFriendList=true"  
-                           @keyup="autoComplete" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
+                          @blur="showFriendList=false" @keyup="autoComplete" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
                          
                         </div>
                         <!-- popup friend div -->
                         <div class="friend_float_div" v-if="showFriendList" >
                         <div v-if="searchFriendList.length===0">
-                            <p style="color:white;text-align:center;margin-top:100px;">You do not have friend named: {{this.oneCard.receiverName}} </p>
+                            <p style="color:white;text-align:center;margin-top:100px;font-size:1em;">You do not have friend named: {{this.oneCard.receiverName}} </p>
                         </div>
-                        <div v-if="searchFriendList.length!==0" v-for="(friend, index) in searchFriendList" :key="index" class="friend" @click="chooseFriend(index)" >
+                        <div v-if="searchFriendList.length!==0" v-for="(friend, index) in searchFriendList" :key="index" class="friend" @mousedown="chooseFriend(index)" >
                               <div class="friends_img" >                        
                                 <img src="../assets/img/girl.png" />
                               </div>
@@ -200,6 +200,7 @@ export default {
     Friends,
 
   },
+  
   methods:{
     showCard(index) {
       this.oneCard = this.cardsType[index];
@@ -346,6 +347,7 @@ export default {
     
   },
 
+
 };
 </script>
 
@@ -424,6 +426,9 @@ right:0px;
   text-align:left;
   line-height: 1.5em;
   
+}
+.promise_msg p{
+  font-size:1em;
 }
 .card_img:hover {
   background: #3ac17e;
@@ -712,6 +717,7 @@ i {
   margin-left:10px;
   overflow: hidden;
 }
+
 .message_more{
   background: #eeeeee;
   border-radius: 5px;
@@ -833,5 +839,8 @@ i {
 }
 .friend:hover{
   background:#444444;
+}
+.msg{
+  font-size:1em;
 }
 </style>
