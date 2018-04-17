@@ -17,26 +17,26 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
           <router-link tag="li" to="/mycard" active-class="nav_active"  class="nav-item" default>
-            <a class="nav-link js-scroll-trigger" ><i class="icon-layers"></i>My Cards</a>
+            <span class="nav-link js-scroll-trigger" ><i class="icon-layers"></i>My Cards</span>
           </router-link>
           <router-link tag="li" to="/dashboard" active-class="nav_active"  class="nav-item">
-            <a class="nav-link js-scroll-trigger" > <i class="icon-directions"></i>Send Cards</a>
+            <span class="nav-link js-scroll-trigger" > <i class="icon-directions"></i>Send Cards</span>
           </router-link>
          <router-link tag="li" to="/friends" active-class="nav_active"  class="nav-item">
-            <a class="nav-link js-scroll-trigger" ><i class="icon-people"></i>Friends</a>
+            <span class="nav-link js-scroll-trigger" ><i class="icon-people"></i>Friends</span>
         </router-link>
         <router-link tag="li" to="/messages" active-class="nav_active"  class="nav-item">
-            <a class="nav-link js-scroll-trigger" >
+            <span class="nav-link js-scroll-trigger" >
              <i class="icon-bubbles">
               </i>Messages  
               <!-- <div class="dot_indicator"> </div> -->
-              </a>
+              </span>
           </router-link>
          <router-link tag="li" to="/about" active-class="nav_active"  class="nav-item">
-            <a class="nav-link js-scroll-trigger" ><i class="icon-directions"> </i>About</a>
+            <span class="nav-link js-scroll-trigger" ><i class="icon-directions"> </i>About</span>
          </router-link>
         <li @click="logoutUser" >
-            <a class=" nav-link js-scroll-trigger logout" style="text-decoration:none;" ><i class="icon-logout"> </i>Log out</a>
+            <span class=" nav-link js-scroll-trigger logout" style="text-decoration:none;" ><i class="icon-logout"> </i>Log out</span>
         </li>
         
         </ul>
@@ -285,6 +285,11 @@ i {
   right:100px;
   margin-top:-13px;
 }
-
+.navbar-nav span{
+  cursor: pointer;
+}
+.navbar-nav li {
+  cursor: pointer;
+}
 </style>
 

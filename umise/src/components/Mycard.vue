@@ -32,7 +32,7 @@
                    <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />
-                        
+                         <div class="stamp" ><img src="https://s3.us-east-2.amazonaws.com/umisefrontendimages/stamp.png" /></div>
                         <div class ="sender_cont " >
                             <div class ='avatar' >
                                 <img src="../assets/img/girl.png" />
@@ -929,5 +929,16 @@ i {
   position: absolute;
   right:40px;
   top:60px;
+}
+.stamp{
+  position:absolute;
+  width: 60px;
+  right:30px;
+  bottom:40px;
+  height:60px;
+}
+.stamp img{
+  width:60px;
+  height:60px;
 }
 </style> 

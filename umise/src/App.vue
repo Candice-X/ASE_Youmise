@@ -57,6 +57,14 @@
   body {
     font-size: 0.9em;
   }
+  
+  @media only screen and (max-width: 768px){
+    body {
+      font-size:0.5em;
+      margin:0;
+      padding:0;
+    }
+  }
 
   #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
