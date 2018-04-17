@@ -27,8 +27,8 @@
         </router-link>
         <router-link tag="li" to="/messages" active-class="nav_active"  class="nav-item">
             <a class="nav-link js-scroll-trigger" >
-              <!-- <i class="icon-bubbles">
-              </i>Messages   -->
+             <i class="icon-bubbles">
+              </i>Messages  
               <!-- <div class="dot_indicator"> </div> -->
               </a>
           </router-link>
