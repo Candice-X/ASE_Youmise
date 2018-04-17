@@ -26,7 +26,11 @@
             <a class="nav-link js-scroll-trigger" ><i class="icon-people"></i>Friends</a>
         </router-link>
         <router-link tag="li" to="/messages" active-class="nav_active"  class="nav-item">
-            <a class="nav-link js-scroll-trigger" ><i class="icon-bubbles"></i>Messages</a>
+            <a class="nav-link js-scroll-trigger" >
+             <i class="icon-bubbles">
+              </i>Messages  
+              <!-- <div class="dot_indicator"> </div> -->
+              </a>
           </router-link>
          <router-link tag="li" to="/about" active-class="nav_active"  class="nav-item">
             <a class="nav-link js-scroll-trigger" ><i class="icon-directions"> </i>About</a>
@@ -272,8 +276,15 @@ i {
   display:block; */
 
 }
-a, a:link, a:active {
-  text-decoration: none;
+.dot_indicator{
+  background:red;
+  border-radius: 3px;
+  height:6px;
+  width:6px;
+  position: absolute;
+  right:100px;
+  margin-top:-13px;
 }
+
 </style>
 

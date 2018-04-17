@@ -221,22 +221,26 @@ export default {
   },
 
   methods:{
-    async addFriends() {
+    async addFriends() {   
      try{
+      this.errorMsg="";
        if(this.$store.state.user.userID != null ){ 
           this.$store.state.user.loading = true;
-        const response = await axios.post("/friend/sendFriendRequest",{"senderId":this.$store.state.user.userID, "receiverEmail":this.email});
+           console.log("begin:");
+        const response = await axios.post("/friend/sendFriendRequest",
+        {"senderId":this.$store.state.user.userID, "receiverEmail":this.email});
         
+        // console.log(response);
          this.$store.state.user.loading = false;
         jQuery("#add_friends").modal('hide');
         this.showAlert();
        }else{
-         throw new Error("You need to login first to add a friend");
+         console.log("You need to login first to add a friend");
        }
 
      }catch(e){
        console.log(e);
-       this.errorMsg = e.message;
+        this.errorMsg = "Receiver doesn't exist";
         this.$store.state.user.loading = false;
      };
     },
@@ -387,7 +391,7 @@ body {
   margin:auto;
    z-index:99;
   text-align:center;
-  width:25rem; 
+  width:30rem; 
   background:#ffc9aa;
   border-radius:5px;
   height:5rem;
@@ -396,6 +400,7 @@ top:0px;
 left:0px;
 bottom:0px;
 right:0px;
+font-size:1em;
 
 }
 .friend_alert p{

@@ -8,6 +8,7 @@ import router from './router';
 import axios from 'axios';
 import Vuelidate from 'vuelidate';
 
+
 Vue.use(Vuelidate);
 
 import store from './store/store';
