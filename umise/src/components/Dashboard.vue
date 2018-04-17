@@ -19,7 +19,7 @@
                     </div>
                 </div>          
 
-                 <div class="col-md-3 col-md-4 col-sm-6 card_cont">
+                 <!-- <div class="col-md-3 col-md-4 col-sm-6 card_cont">
                     <div class="card_img customize-icon-cont" >
                         <div class="customize-icon">
                         <i class="icon-settings "></i>
@@ -27,7 +27,7 @@
                         <h4 style="color:#fff;">Customize Card</h4>
                         <p class="sub_title">Enjoy the Creations</p>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </div>
