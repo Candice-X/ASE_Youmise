@@ -32,6 +32,7 @@
 <script>
   import Navbar from "./components/Navbar";
   import DashboardNav from "./components/DashboardNav";
+  import facebook from "./api/facebook.js";
 
   export default {
     name: "App",
@@ -40,7 +41,7 @@
     },
   
   methods:{
-
+  
   },
     components: {
       Navbar,

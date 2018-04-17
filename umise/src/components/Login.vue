@@ -21,12 +21,24 @@
       </div>
 
       <div class="checkbox mb-3">
-        <label>
+        <label style="color:red">
           {{ error }}
         </label>
       </div>
       <button class="btn btn-lg btn-success btn-block" :disabled="$v.userData.$invalid" @click="handleLogin" @keyup.enter="handleLogin">Sign in</button>
-      <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
+      <div>
+      <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" 
+      data-show-faces="true" data-auto-logout-link="true" data-use-continue-as="true" onlogin="checkLoginState"></div> -->
+      <br/>
+      <p style="text-align:center;">or</p>
+      <div class="btn btn-primary fb-login-button12" @click="facebookLogin" >
+        <span></span>
+        Login with facebook</div>
+      <!-- <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+      </fb:login-button> -->
+        
+      </div> <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
+      
       <router-link to="/resetPassword" tag ="a"><p style="color:#dcdcdc;text-align:center;padding-top:10px;">Forget Password ?</p> </router-link>
     </div>
   </body>
@@ -86,6 +98,44 @@ export default {
     //     console.log(error);
     //   });
     // },
+      //facebook login 
+    // checkLoginState(){
+    //   console.log("start: facebook login");
+    //   FB.getLoginStatus(function(response) {
+            
+    //         // statusChangeCallback(response);
+    //         console.log("facebook login :", response);
+    //         if(response.status ==="connected"){
+    //           console.log("connected");             
+    //         }else{
+    //           console.log("cannot login, please try again later");
+    //         }
+    // });
+    // },
+    async facebookLogin(){
+      FB.login(function(response) {
+        console.log(response);
+        if (response.authResponse) {
+          console.log('Welcome!  Fetching your information.... ');
+          FB.api('/me', function(response) {
+            console.log('Good to see you, ' + response.name + '.');
+            console.log("response",response);
+            
+            // 1. check the user, if exist, then get information, if not, create a new user
+
+
+            this.router.push("/dashboard");
+        });
+        } else {
+         console.log('User cancelled login or did not fully authorize.');
+        }
+      });
+    },
+
+    async checkFacebookUser(){
+      // 1. search for user by username?
+
+    },
 
     async handleLogin() {
       try {
@@ -215,5 +265,14 @@ img {
 .form-label-group.invalid input {
   border: 1px solid red;
   background: #ffc9aa;
+}
+.fb-login-button12{
+  background: #4c69ba;
+  background: linear-gradient(#4c69ba, #3b55a0);
+  border-color: #4c69ba;
+  border-radius: 2px;
+  color: #fff;
+  width:100%;
+  height:48px;
 }
 </style>
