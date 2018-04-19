@@ -135,6 +135,50 @@ exports.dbFetchAll = async (User) => {
   }
 };
 
+exports.dbUpdateId = async (User, uid, username, avatarUrl) => {
+  try {
+      let user = await User.findOne({where : {uid: uid}});
+      if(!user){
+        throw new Error('User not found');
+      }
+      let result;
+      if(username){
+        const find = await User.findAll({ where: { username: username},raw: true });
+        if (find.length !== 0){
+          throw new Error('Username exists');
+        }
+        else {
+          if( avatarUrl){
+            result = await user.updateAttributes({
+              username : username,
+              avatarUrl: avatarUrl
+            });
+          }
+          else{
+            result = await user.updateAttributes({
+              username : username
+            });
+          }
+        }
+      } else {
+        if (avatarUrl){
+          result = await user.updateAttributes({
+            avatarUrl: avatarUrl
+          });
+        }
+      }
+
+      if(!result){
+        throw new Error('Nothing Updated');
+      } else{
+        return result;
+      }
+  } catch (err) {
+    console.log(err);
+    throw new ServerError(400, err.message);
+  }
+};
+
 exports.addAvatar = async (User, s3, uid, avatar) => {
   try{
     const user = await User.findOne({ where: { uid } });

@@ -93,8 +93,20 @@ router.get('/user', async(req, res) => {
 router.get('/avatar/:uid', async(req, res) => {
   try {
     const uid = req.params.uid;
-    console.log
     const result = await controller.getUserAvatar(models.User, uid);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+})
+
+
+router.patch('/user/:uid', async(req, res) => {
+  try {
+    const uid = req.params.uid;
+    const username = req.body.username;
+    const avatarUrl = req.body.avatarUrl;
+    const result = await controller.dbUpdateId(models.User, uid, username, avatarUrl);
     res.json(result);
   } catch (err) {
     res.status(400).send(err.message);
