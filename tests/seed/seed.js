@@ -91,7 +91,7 @@ const users = [{
     avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
     gender: "Female"
 },{
-    uid: SenderThreeId,
+    uid: ReceiverThreeId,
     username: "xjm",
     email : "xjm@123.com",
     firstName: "jm",

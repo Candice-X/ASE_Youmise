@@ -8,7 +8,9 @@ const recordController = require('./../../routes/records/controller');
 
 const {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages} = require('./../seed/seed');
 
+
 beforeEach(populateCards);
+beforeEach(populateUsers);
 beforeEach(populateRecords);
 beforeEach(populateMessages);
 
@@ -44,137 +46,94 @@ describe('Reply card', ()=>{
 });
 //  //run before every test case
 
-// describe('POST /card', ()=>{
-//     it('should create a new card', (done)=>{
-//         var note = 'Note test 3';
-//         request(app)
-//             .post('/card/card')
-//             .send({
-//                 types: cards[2].types,
-//                 cardName: cards[2].cardName,
-//                 cardImgURL: cards[2].cardImgURL,
-//                 cardNote: cards[2].cardNote
-//             })
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.cardNote).toBe(cards[2].cardNote);
-//             })
-//             .end((err,res)=>{
-//                 if(err){
-//                     return done(err);
-//                 }
-//                 models.Card.findAll({ where: { cardNote: note }, raw : true }).then((card)=>{
-//                     expect(card.length).toBe(1);
-//                     expect(card[0].cardNote).toBe(note);
-//                     done();
-//                 }).catch((e)=> done(e));
-//             });
-//     });
-//     it('should not create card with invalid data',(done)=>{
-//         request(app)
-//             .post('/card/card')
-//             .send()
-//             .expect(400)
-//             .end((err, res)=>{
-//                 if(err){
-//                     return done(err);
-//                 }
-//                 models.Card.findAll({ raw: true }).then((res)=>{
-//                     expect(res.length).toBe(2);
-//                     done();
-//                 }).catch((e)=> done(e));
-//             });
-//     });
-// });
 
-// describe('GET /card', ()=>{
-//     it('should get all cards', (done)=>{
-//         request(app)
-//             .get('/card/card')
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.length).toBe(2);
-//             })
-//             .end(done);
-//     })
-// })
+describe('unit POST /record/record', ()=>{
+  it('should create a new record', async ()=>{
+      const record = await recordController.dbCreateRecord(models.Record, models.User, records[2].senderid, users[3].email, records[2].cardid, null, records[0].cardContent, records[0].cardTitle);
+      expect(record.cardTitle).toBe(records[0].cardTitle);
+      expect(record.receiverid).toBe(users[3].uid);
+  });
+});
 
-// describe('GET /card/:id',()=>{
-//     it('should return card',(done)=>{
-//         request(app)
-//             .get(`/card/card/${cards[0].cardid}`)
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.cardNote).toBe(cards[0].cardNote);
-//             })
-//             .end(done);
-//     });
-//     it('should return 400 for non-object ids',(done)=>{
-//         var wrongId = "abcd3";
-//         request(app)
-//             .get(`/card/card/${wrongId}`)
-//             .expect(400)
-//             .end(done);
-//     });
-// });
 
-// describe('DELETE /card/:id', ()=>{
-//     it('should remove a card',(done)=>{
-//         request(app)
-//             .delete(`/card/card/${cards[0].cardid}`)
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.cardid).toBe(cards[0].cardid);
-//             })
-//             .end((err,res)=>{
-//                 if(err){
-//                     return done(err);
-//                 }
-//                 models.Card.findAll({ where: { cardid: cards[0].cardid }, raw : true }).then((card)=>{
-//                     expect(card.length).toBe(0);
-//                     done();
-//                 }).catch((e)=>done(e));
-//             });
-//     });
-//     it('should return 400 if card not found', (done)=>{
-//         var wrongId = "abcd3";
-//         request(app)
-//             .delete(`/card/card/${wrongId}`)
-//             .expect(400)
-//             .end(done);
-//     });
-// //     it('should return 404 if id is invalid',(done)=>{
-// //         request(app)
-// //         .delete('/todos/123abc')
-// //         .set('x-auth', users[1].tokens[0].token)
-// //         .expect(404)
-// //         .end(done);
-// //     });
-// });
+describe('unit GET /record/record', ()=>{
+  it('should get all records', async ()=>{
+      const records = await recordController.dbFetchAll(models.Record, models.User, models.Card);
+      expect(records.length).toBe(2);
+      expect(records[0].senderName).toBeTruthy();
+      expect(records[0].senderURL).toBeTruthy();    
+  });
+});
 
-// describe('PATCH /card/:id',()=>{
-//     it('should update the card', (done)=>{
-//         var cardid = cards[0].cardid;
-//         var text = cards[0].cardNote;
-//         request(app)
-//             .patch(`/card/card/${cardid}`)
-//             .send({
-//                 cardName : null,
-//                 cardImgURL: null,
-//                 cardNote: "Change note"
-//             })
-//             .expect(200)
-//             .expect((res)=>{
-//                 expect(res.body.cardNote).toBe("Change note");
-//             })
-//             .end((err,res)=>{
-//                 if(err){
-//                     return done(err);
-//                 }
-//                 models.Card.findAll({ where: { cardid: cardid }, raw : true }).then((card)=>{
-//                     expect(card[0].cardName).toBeTruthy();
-//                     done();
-//                 }).catch((e)=>done(e));
-//             });
-//     });
-// });
+describe('unit GET /record/:id', ()=>{
+  it('should return record', async ()=>{
+      const res = await recordController.dbFindById(models.Record, models.User, models.Card, records[0].recordid);
+      expect(res.senderName).toBe(users[0].username);
+  });
+});
+
+describe('unit GET /record/record/sender/senderid', ()=>{
+  it('should get all records', async ()=>{
+    const res = await recordController.dbFindBySender(models.Record, models.User, models.Card, records[0].senderid, null)
+    expect(res[0].senderName).toBe(users[0].username);
+    expect(res[0].senderURL).toBeTruthy();
+  });
+});
+
+describe('unit GET /record/record/sender/senderid/status', ()=>{
+  it('should get all records', async ()=>{
+    const res = await recordController.dbFindBySender(models.Record, models.User, models.Card, records[0].senderid, 1)
+    expect(res[0].senderName).toBe(users[0].username);
+    expect(res[0].senderURL).toBeTruthy();
+  });
+});
+
+describe('unit GET /record/record/receiver/receiverid', ()=>{
+  it('should get all records',  async ()=>{
+    const res = await recordController.dbFindByReceiver(models.Record, models.User, models.Card, records[0].receiverid, null)
+    expect(res[0].receiverName).toBe(users[1].username);
+    expect(res[0].receiverURL).toBeTruthy();
+  });
+});
+
+describe('unit GET /record/record/sender/receiverid/status', ()=>{
+  it('should get all records',  async ()=>{
+    const res = await recordController.dbFindByReceiver(models.Record, models.User, models.Card, records[0].receiverid, 1)
+    expect(res[0].receiverName).toBe(users[1].username);
+    expect(res[0].receiverURL).toBeTruthy();
+  });
+});
+
+describe('unit GET /record/record/sender/senderid/friend/friendid', ()=>{
+  it('should get all records', async ()=>{
+    const res = await recordController.dbFindBySenderAndFriend (models.Record, models.User, models.Card, users[0].uid, users[1].uid)
+    expect(res[0].receiverName).toBe(users[1].username);
+    expect(res[0].receiverURL).toBeTruthy();  
+  });
+});
+
+describe('unit GET /record/record/receiver/receiverid/friend/friendid', ()=>{
+  it('should get all records', async ()=>{
+    const res = await recordController.dbFindByReceiverAndFriend(models.Record, models.User, models.Card, users[1].uid, users[0].uid)
+    expect(res[0].senderName).toBe(users[0].username);
+    expect(res[0].receiverURL).toBeTruthy();    
+  });
+});
+
+describe('DELETE /record/:id', ()=>{
+  it('should remove a record', async ()=>{
+    const res = await recordController.dbDeleteById(models.Record, records[0].recordid)
+    expect(res.recordid).toBe(records[0].recordid);
+    const find = await models.Record.findAll({ where: { recordid: records[0].recordid }, raw : true });
+    expect(find.length).toBe(0);
+  });
+});
+
+describe('PATCH /record/:id',()=>{
+  it('should update the record', async ()=>{
+    const res = await recordController.dbUpdateById(models.Record, records[0].recordid, users[5].uid, 2);
+    expect(res.cardTitle).toBe(records[0].cardTitle);
+    expect(res.receiverid).toBe(users[5].uid);
+    expect(res.status).toBe(2);
+  });
+});

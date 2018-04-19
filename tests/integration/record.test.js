@@ -14,7 +14,7 @@ beforeEach(populateUsers);
 beforeEach(populateRecords);
 beforeEach(populateMessages);
 
-describe('POST /record/record 123', ()=>{
+describe('POST /record/record ', ()=>{
     it('should create a new record and a new message', (done)=>{
         request(app)
             .post('/record/record')

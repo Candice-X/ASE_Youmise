@@ -113,7 +113,6 @@ exports.dbFindById = async (Record, User, Card, recordid) => {
             let receiver;
             if (record[0].receiverid !== null){
                 receiver = await User.findAll({ where: {uid: record[0].receiverid},raw: true });
-                console.log(`Successfully find receiver: ${JSON.stringify(receiver[0])}`);
                 return {
                     recordid: record[0].recordid,
                     senderid: record[0].senderid,
