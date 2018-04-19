@@ -201,6 +201,7 @@ li:active {
     flex-grow: 0;
     width: 100%;
     margin:auto;
+    margin-top:20px;
     margin-bottom: 0;
   }
   #sideNav .navbar-collapse .navbar-nav {
