@@ -94,7 +94,7 @@ describe('PATCH /user/:id',()=>{
                 if(err){
                     return done(err);
                 }
-                models.User.findAll({ raw: true }).then((res)=>{
+                models.User.findAll({where: { uid: uid }, raw: true }).then((res)=>{
                     expect(res[0].avatarUrl).toBe(users[0].avatarUrl);
                     expect(res[0].username).toBe(users[0].username);
                     done();
