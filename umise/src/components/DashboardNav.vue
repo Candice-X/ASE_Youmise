@@ -200,7 +200,9 @@ li:active {
     align-items: flex-start;
     flex-grow: 0;
     width: 100%;
-    margin-bottom: auto;
+    margin:auto;
+    margin-top:20px;
+    margin-bottom: 0;
   }
   #sideNav .navbar-collapse .navbar-nav {
     flex-direction: column;

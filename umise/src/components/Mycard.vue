@@ -32,7 +32,7 @@
                    <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />
-                         <div class="stamp" ><img src="https://s3.us-east-2.amazonaws.com/umisefrontendimages/stamp.png" /></div>
+                         <!-- <div class="stamp" ><img src="https://s3.us-east-2.amazonaws.com/umisefrontendimages/stamp.png" /></div> -->
                         <div class ="sender_cont " >
                             <div class ='avatar' >
                                 <img src="../assets/img/girl.png" />
@@ -425,6 +425,12 @@ body {
   font-family: "Open Sans", serif;
   padding-top: 54px;
   color: #868e96;
+  width: 100%;
+  height: 100vh;
+  min-height: 775px;
+  padding-top: 0;
+  /* margin-top:-60px; */
+  padding-bottom: 0;
 }
 
 .empty_msg{
@@ -577,7 +583,9 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  height: 100vh;
   min-height: 786px;
+  /* min-height: 786px; */
   overflow-x: hidden;
 }
 
