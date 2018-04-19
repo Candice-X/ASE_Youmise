@@ -103,7 +103,7 @@ export default {
   margin-left:10px;
   font-size:1em;
 }
-hr { 
+.friends hr { 
   /* color:#ffffff !important; */
   border-bottom:1px solid rgba(23,23,23,0.3);
   padding:0;margin:0;
