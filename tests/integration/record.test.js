@@ -14,7 +14,7 @@ beforeEach(populateUsers);
 beforeEach(populateRecords);
 beforeEach(populateMessages);
 
-describe('POST /record/record 123', ()=>{
+describe('POST /record/record ', ()=>{
     it('should create a new record and a new message', (done)=>{
         request(app)
             .post('/record/record')
@@ -73,6 +73,7 @@ describe('GET /record/record', ()=>{
             .expect((res)=>{
                 expect(res.body.length).toBe(2);
                 expect(res.body[0].senderName).toBeTruthy();
+                expect(res.body[0].senderURL).toBeTruthy();
             })
             .end(done);
     })
@@ -86,6 +87,7 @@ describe('GET /record/record/sender/senderid', ()=>{
             .expect((res)=>{
                 expect(res.body.length).toBe(1);
                 expect(res.body[0].senderName).toBe(users[0].username);
+                expect(res.body[0].senderURL).toBeTruthy();
             })
             .end(done);
     })
@@ -99,6 +101,7 @@ describe('GET /record/record/sender/senderid/friend/friendid', ()=>{
             .expect((res)=>{
                 expect(res.body.length).toBe(1);
                 expect(res.body[0].senderName).toBe(users[0].username);
+                expect(res.body[0].senderURL).toBeTruthy();
             })
             .end(done);
     })
@@ -112,6 +115,7 @@ describe('GET /record/record/receiver/receiverid/friend/friendid', ()=>{
             .expect((res)=>{
                 expect(res.body.length).toBe(1);
                 expect(res.body[0].senderName).toBe(users[0].username);
+                expect(res.body[0].senderURL).toBeTruthy();
             })
             .end(done);
     })
@@ -123,6 +127,7 @@ describe('GET /record/record/sender/senderid/status', ()=>{
             .expect(200)
             .expect((res)=>{
                 expect(res.body.length).toBe(1);
+                expect(res.body[0].senderURL).toBeTruthy();
             })
             .end(done);
     })
@@ -223,6 +228,7 @@ describe('GET /record/record/receiver/receiverid', ()=>{
             .expect(200)
             .expect((res)=>{
                 expect(res.body.length).toBe(1);
+                expect(res.body[0].senderURL).toBeTruthy();
             })
             .end(done);
     })
@@ -235,6 +241,7 @@ describe('GET /record/record/receiver/receiverid/status', ()=>{
             .expect(200)
             .expect((res)=>{
                 expect(res.body.length).toBe(1);
+                expect(res.body[0].senderURL).toBeTruthy();
             })
             .end(done);
     })
@@ -247,6 +254,7 @@ describe('GET /record/:id',()=>{
             .expect((res)=>{
                 expect(res.body.cardTitle).toBe(records[0].cardTitle);
                 expect(res.body.senderName).toBe(users[0].username);
+                expect(res.body.senderURL).toBeTruthy();
             })
             .end(done);
     });
