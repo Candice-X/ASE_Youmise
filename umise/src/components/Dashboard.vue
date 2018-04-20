@@ -817,8 +817,9 @@ i {
     position: absolute;
     top:520px;
     margin:0 auto;
-    padding:15px;
     width:325px;
+    margin-left:-50%;
+    left:325px;
   }
 
   .modal-content{
@@ -829,8 +830,10 @@ i {
     
   }
   .modal-body{
-     height:100% !important;
-  
+    height:100% !important;
+  }
+  .card_img_more{
+    margin:auto ;
   }
 }
 </style>
