@@ -45,16 +45,16 @@
   <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
       <div class="modal-content">
-        <div class="modal-header">
-          <!-- <h5 class="modal-title" id="exampleModalLongTitle">{{this.oneCard.cardName}}</h5> -->
+        <!-- <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{this.oneCard.cardName}}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div>
+        </div> -->
         <div class="modal-body" style="height:560px;">
           <div class="row">
             
-                <div class="col-lg-6 col-md-6 col-sm-6 card_cont card_cont_one" >
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 card_cont card_cont_one" >
                     <div class="card_img_more" >
 
                         <img v-bind:src = "this.oneCard.cardImgURL" />
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                   <div class ="sender_cont_more col-lg-6 col-md-6 col-sm-6" > 
+                   <div class ="sender_cont_more col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
                        
                     <div class="content_more">
                         <center><h4>{{ this.oneCard.cardName }}</h4></center>
@@ -123,6 +123,8 @@
                    <p style="color:red;"> {{this.errMsg}}</p>
                    <br/>
                     <button class="btn btn-primary btn-success btn-send" @click="sendCard" :disabled="$v.oneCard.receiverName.$invalid" >Send to Friends</button>
+                    
+                     <button class="btn btn-primary btn-outline-secondary btn-send btn-cancle" @click="cancle" >Cancle</button>
                 </div>
 
 
@@ -279,6 +281,10 @@ export default {
          this.$store.state.user.loading = false;
       };    
      
+    },
+
+    cancle(){
+       jQuery("#Dashboard_send").modal('hide');
     },
 
       async getFriendsList(){
@@ -564,7 +570,9 @@ li:hover {
   color: #000;
   border-radius: 3px;
 }
-
+.btn-cancle{
+  margin-top:30px;
+}
 
 @media (min-width: 768px) {
   .send_cards_container {
@@ -803,6 +811,26 @@ i {
 @media (max-width:768px){
   #nav_dashboard{
     padding-top:40px;
+  }
+  .sender_cont_more{
+    float:left;
+    position: absolute;
+    top:520px;
+    margin:0 auto;
+    padding:15px;
+    width:325px;
+  }
+
+  .modal-content{
+    margin:0;
+    padding:0;
+    margin-top:50px;
+    height:1090px;
+    
+  }
+  .modal-body{
+     height:100% !important;
+  
   }
 }
 </style>
