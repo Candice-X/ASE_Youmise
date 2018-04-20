@@ -43,7 +43,7 @@
 
 <!-- Modal -->
   <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
+    <div class="modal-dialog modal-lg modal-dialog-centered modal_size_ipad" role="document" >
       <div class="modal-content">
         <!-- <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLongTitle">{{this.oneCard.cardName}}</h5>
@@ -387,6 +387,9 @@ body {
   color: #868e96;
 }
 
+.modal_size_ipad{
+ 
+}
 .send_card_alert{
   margin:auto;
   z-index:99;
@@ -606,6 +609,13 @@ li:hover {
     display: block;
     margin-left: 0rem;
     /* min-height: 775px; */
+  }
+  
+  
+}
+@media (min-width: 768px) and (max-width: 992px){
+  .modal_size_ipad{
+    max-width:95%;
   }
 }
 
@@ -837,8 +847,7 @@ i {
     top:520px;
     margin:0 auto;
     width:325px;
-    margin-left:-50%;
-    left:325px;
+
   }
 
   .modal-content{
