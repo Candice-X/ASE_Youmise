@@ -31,7 +31,7 @@
       <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" 
       data-show-faces="true" data-auto-logout-link="true" data-use-continue-as="true" onlogin="checkLoginState"></div> -->
       <p style="text-align:center;">or</p>
-      <div class="btn btn-primary fb-login-button12" @click="facebookLogin" >
+      <div class="btn btn-primary fb-login-button12" scope="public_profile,email" @click="facebookLogin" >
         <span></span>
         Login with facebook</div>
       <!-- <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
@@ -87,31 +87,7 @@ export default {
   
   methods: {
     ...mapActions(["login","setAllCardType"]),
-    // getAllCardType(){
-    //   axios.get("/card/card")
-    //   .then(res =>{
-    //     console.log("get all cards types", res.data);
-    //     // this.setAllCardType(res.data);
-    //    this.$store.state.card.sendCardTypes = res.data;
-    //   })
-    //   .catch(error =>{
-    //     console.log(error);
-    //   });
-    // },
-      //facebook login 
-    // checkLoginState(){
-    //   console.log("start: facebook login");
-    //   FB.getLoginStatus(function(response) {
-            
-    //         // statusChangeCallback(response);
-    //         console.log("facebook login :", response);
-    //         if(response.status ==="connected"){
-    //           console.log("connected");             
-    //         }else{
-    //           console.log("cannot login, please try again later");
-    //         }
-    // });
-    // },
+    
     async facebookLogin(){
       FB.login(function(response) {
         console.log(response);
@@ -138,7 +114,7 @@ export default {
             }
           );
 
-            this.router.push("/dashboard");
+            this.$router.push("/dashboard");
 
         } else {
           
@@ -149,6 +125,10 @@ export default {
 
     
     },
+
+
+    // share 
+  
 
     async checkFacebookUser(){
       // 1. search for user by username?

@@ -137,6 +137,12 @@
   </div>
   <!-- end of card one -->
 
+      <div class="btn btn-primary fb-login-button12"  @click="shareToFacebook" >
+        <span></span>
+       Share to facebook</div> 
+       </div> 
+
+
 </div>
 
     </div>
@@ -208,6 +214,19 @@ export default {
       this.oneCard = this.cardsType[index];
     },
 
+    shareToFacebook()
+    {
+      FB.ui({
+        method: 'share_open_graph',
+        action_type: 'og.likes',
+        action_properties: JSON.stringify({
+          object:'https://umise.me',
+        })
+      }, function(response){
+        // Debug response (optional)
+        console.log(response);
+      });
+    },
 
     chooseFriend(index){
      console.log(index);
