@@ -9,7 +9,7 @@
            
             <div class="row card_row">
                 <div  v-for = "(card, index) in cardsType" :key="index" :id ="card.cardid"
-                class="col-lg-3 col-md-4 col-sm-6 col-xs-12 card_cont card_cont_mobile" >
+                class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 card_cont card_cont_mobile" >
                     <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />                        

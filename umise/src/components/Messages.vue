@@ -53,7 +53,7 @@
                 You don't have any Friend Request right now
                 <!-- <button class="btn btn-secondary btn-primary"> Add Friends </button> -->
               </div>
-                <div v-for = "(request, index) in friendRequests" :key="index" class="col-lg-4 col-md-4 col-sm-6 card_cont" >
+                <div v-for = "(request, index) in friendRequests" :key="index" class="col-xl-3 col-lg-4 col-md-4 col-sm-6 card_cont" >
                     <div class="card_img" >   
                       <div class ="sender_cont" >
                             <div class ='avatar' >

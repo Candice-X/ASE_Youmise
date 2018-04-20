@@ -30,7 +30,7 @@
                 <router-link class="btn btn-secondary btn-primary" to="/dashboard"> Send Card to Friends </router-link>
               </div>
                 <div v-for = "(card, index) in cards" :key="index" 
-                class="col-lg-3 col-md-4 col-sm-6 col-xs-12 card_cont card_cont_mobile" >
+                class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 card_cont card_cont_mobile" >
                    <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />
