@@ -1,9 +1,18 @@
 <template>
-  <div class="friends" v-if="friend_list" >
-  <h4 class="friends_list"> Friends List
-       <!-- <i class="icon-close friends_list_close" @click="friend_list=false"></i> -->
-       </h4> 
-       <button class="btn btn-primary btn-outline-success btn-sm" style="width:85%;margin:15px;" data-toggle="modal" data-target="#add_friends">Add Friend</button>
+<div>
+
+
+  <div class="friend_btn">
+    <button class="btn btn-primary btn-sm btn-outline-success show_friendlist" @click="friend_list=true" ><span class="nav-link js-scroll-trigger" ><i class="icon-people"></i>Friends</span></button>
+  </div>  
+
+  <div class="friends friends_mobi" v-if="friend_list" >
+
+    <!-- <div class="close_friendList">
+      <span>sss</span>
+    </div> -->
+       <button class="btn btn-primary btn-outline-success btn-sm addFriendsBtn" style="width:85%;margin:15px;" 
+       data-toggle="modal" data-target="#add_friends">Add Friend</button>
  <hr />
     
     <div v-for="(friend, index) in friendsList" :key="index" class="friend" 
@@ -20,11 +29,7 @@
       </div>  
     </div>
 
-
-<!-- modal -->
-
-
-
+  </div>
   </div>
 </template>
 
@@ -60,10 +65,14 @@ export default {
 
   setCurrentFriend(friendId){
     this.currentFriendId = friendId;
+    if(jQuery(window).width()<992){
+       this.friend_list = false;
+    };
+  
     this.$store.state.user.currentFriendId = friendId;
     this.$emit('refreshFriendCards');
 
-    console.log("friend card show");
+    
   },
 
   },
@@ -80,11 +89,55 @@ export default {
 <style>
 @import '../assets/css/simple-line-icons.css';
 
+@media (max-width:768px){
+  .friends_mobi{
+    /* display: none; */
+    width:100% !important;
+  }
+  .friends{
+     background: rgba(0, 0, 0, 0.9)!important;
+  }
+  .friend_btn{ 
+    position:fixed !important;
+    bottom:20px;
+    width:100%;
+    display:block !important;
+    margin:auto;
+  }
+  .show_friendlist{
+    width:80%;
+  }
+  .friend{
+    width:100% !important;
+  }
+  .friends_img{
+    margin-left:50px !important;
+
+  }
+  .close_friendList{
+    display:block;
+    position: fixed !important;
+    bottom:0;
+    height:40px;
+    background:red;
+  }
+}
+
+
+.close_friendList{
+  display:none;
+}
+
+
+.friend_btn{ 
+    display:none;
+  }
+
 .friends {
   position: fixed;
   right: 0;
   top: 0;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.7);
   height: 100%;
   width: 240px;
   color:#fff;
@@ -101,9 +154,10 @@ export default {
 }
 .friends_list{
   margin-left:10px;
+  margin-top:30px;
   font-size:1em;
 }
-hr { 
+.friends hr { 
   /* color:#ffffff !important; */
   border-bottom:1px solid rgba(23,23,23,0.3);
   padding:0;margin:0;
@@ -171,6 +225,15 @@ hr {
   width:165px;
   text-align:left;
 
+} 
+@media (max-width: 991px)
+{
+  .addFriendsBtn{
+    margin-top:55px !important;
+  }
+  .friend{
+    padding: 10px 0 10px 0;
+    height:70px;
+  }
 }
-
 </style>

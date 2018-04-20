@@ -57,6 +57,28 @@
   body {
     font-size: 0.9em;
   }
+  
+  @media (max-width: 768px){
+    body {
+      font-size:0.8em;
+      margin:0;
+      padding:0;
+     }
+    .card_cont_mobile{
+      /* float:none !important; */
+      margin:auto !important;
+      }
+    .card_row{
+      margin-left:0 !important;
+      }
+    .card_img{
+      margin-left:0 !important;
+       }
+  .loading_cont{
+    padding-left: 0 !important;
+      }
+
+  }
 
   #app {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
@@ -193,5 +215,6 @@
       transform: translate(-39px, -67px);
     }
   }
+
 
 </style>

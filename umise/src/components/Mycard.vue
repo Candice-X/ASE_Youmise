@@ -5,20 +5,22 @@
         <div class = "send_cards_container" >
             <!-- <h4 class="title" >My Cards</h4>
             <h4 class="subTitle">Card with  </h4> -->
-      <center>
-        <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: isReceiveModel==='received' }" @click="showReceivedCard">Cards Received</button>
-        <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: isReceiveModel ==='sent' }" @click="showSendCard" >Cards Sent</button>
-        <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: isReceiveModel==='request' }" @click="showRequest" >Card in Use</button>
- </center>
-        <form class="form-inline">
+      <div class="form-inline">
            
             <input class="form-control form-control-sm search_bar " type="text" placeholder="Search" v-model="search" @keyup="searchCard" 
             @focus="setDefault" aria-label="Search">
              <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
-        </form>
+      </div>
+     
+      <center>
+        <button class="btn btn-primary btn-outline-success" 
+        :class="{ active: isReceiveModel==='received' }" @click="showReceivedCard">Received</button>
+        <button class="btn btn-primary btn-outline-success" 
+        :class="{ active: isReceiveModel ==='sent' }" @click="showSendCard" >Sent</button>
+        <button class="btn btn-primary btn-outline-success" 
+        :class="{ active: isReceiveModel==='request' }" @click="showRequest" >In Use</button>
+ </center>
+       
 
        
             <div class="row" >
@@ -28,11 +30,11 @@
                 <router-link class="btn btn-secondary btn-primary" to="/dashboard"> Send Card to Friends </router-link>
               </div>
                 <div v-for = "(card, index) in cards" :key="index" 
-                class="col-lg-3 col-md-4 col-sm-6 card_cont" >
+                class="col-lg-3 col-md-4 col-sm-6 col-xs-12 card_cont card_cont_mobile" >
                    <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />
-                        
+                         <!-- <div class="stamp" ><img src="https://s3.us-east-2.amazonaws.com/umisefrontendimages/stamp.png" /></div> -->
                         <div class ="sender_cont " >
                             <div class ='avatar' >
                                 <img src="../assets/img/girl.png" />
@@ -99,10 +101,10 @@
 <!-- Modal -->
   <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" 
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="background:rgba(1,1,1,0.6)">
-    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px;padding:0;border:0;">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px;padding:0;border:0;margin:auto">
       <div class="modal-content" style="background:none;">
        
-        <div class="modal-body" style="height:680px;">          
+        <div class="modal-body" style="height:557px;">          
                 <div class=" card_cont " >
                   
                     <div class="card_img card_img_more"  >
@@ -425,6 +427,12 @@ body {
   font-family: "Open Sans", serif;
   padding-top: 54px;
   color: #868e96;
+  width: 100%;
+  height: 100vh;
+  min-height: 775px;
+  padding-top: 0;
+  /* margin-top:-60px; */
+  padding-bottom: 0;
 }
 
 .empty_msg{
@@ -577,7 +585,9 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  height: 100vh;
   min-height: 786px;
+  /* min-height: 786px; */
   overflow-x: hidden;
 }
 
@@ -929,5 +939,34 @@ i {
   position: absolute;
   right:40px;
   top:60px;
+}
+.stamp{
+  position:absolute;
+  width: 60px;
+  right:30px;
+  bottom:40px;
+  height:60px;
+}
+.stamp img{
+  width:60px;
+  height:60px;
+}
+
+@media (max-width:768px){
+  
+  .search_bar{
+  float:none !important;
+  width:100%;
+  position: relative;
+  display:block;
+  top:0;
+  right:0;
+  margin:15px;
+  margin-top:-15px;
+  padding:10px;
+  }
+  #mycards{
+    margin-top:55px;
+  }
 }
 </style> 

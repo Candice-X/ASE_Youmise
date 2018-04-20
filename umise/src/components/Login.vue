@@ -26,10 +26,10 @@
         </label>
       </div>
       <button class="btn btn-lg btn-success btn-block" :disabled="$v.userData.$invalid" @click="handleLogin" @keyup.enter="handleLogin">Sign in</button>
+      <router-link to="/resetPassword" tag ="a"><p style="color:#dcdcdc;text-align:center;padding-top:10px;">Forget Password ?</p> </router-link>
       <div>
       <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" 
       data-show-faces="true" data-auto-logout-link="true" data-use-continue-as="true" onlogin="checkLoginState"></div> -->
-      <br/>
       <p style="text-align:center;">or</p>
       <div class="btn btn-primary fb-login-button12" @click="facebookLogin" >
         <span></span>
@@ -39,7 +39,7 @@
         
       </div> <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
       
-      <router-link to="/resetPassword" tag ="a"><p style="color:#dcdcdc;text-align:center;padding-top:10px;">Forget Password ?</p> </router-link>
+      
     </div>
   </body>
 </template>
@@ -122,10 +122,23 @@ export default {
             console.log("response",response);
             
             // 1. check the user, if exist, then get information, if not, create a new user
+            axios.post('/user')
 
-
-            this.router.push("/dashboard");
+           
         });
+
+          // friend list of facebook  
+          FB.api(
+            '/1977995662529008/friends',
+            'GET',
+            {},
+            function(response) {
+                // Insert your code here
+            }
+          );
+
+          //  this.router.push("/dashboard");
+
         } else {
          console.log('User cancelled login or did not fully authorize.');
         }
@@ -270,7 +283,7 @@ img {
   background: #4c69ba;
   background: linear-gradient(#4c69ba, #3b55a0);
   border-color: #4c69ba;
-  border-radius: 2px;
+  border-radius: 4px;
   color: #fff;
   width:100%;
   height:48px;

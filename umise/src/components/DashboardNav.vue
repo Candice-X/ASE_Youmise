@@ -16,27 +16,28 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
-          <router-link tag="li" to="/mycard" active-class="nav_active"  class="nav-item" default>
-            <a class="nav-link js-scroll-trigger" ><i class="icon-layers"></i>My Cards</a>
+          <router-link tag="li" to="/mycard" active-class="nav_active"  class="nav-item" default 
+            >
+            <span class="nav-link js-scroll-trigger"><i class="icon-layers"></i>My Cards</span>
           </router-link>
-          <router-link tag="li" to="/dashboard" active-class="nav_active"  class="nav-item">
-            <a class="nav-link js-scroll-trigger" > <i class="icon-directions"></i>Send Cards</a>
+          <router-link tag="li" to="/dashboard" active-class="nav_active"  class="nav-item" >
+            <span class="nav-link js-scroll-trigger" > <i class="icon-directions"></i>Send Cards</span>
           </router-link>
-         <router-link tag="li" to="/friends" active-class="nav_active"  class="nav-item">
-            <a class="nav-link js-scroll-trigger" ><i class="icon-people"></i>Friends</a>
+         <router-link tag="li" to="/friends" active-class="nav_active"  class="nav-item" >
+            <span class="nav-link js-scroll-trigger" ><i class="icon-people"></i>Friends</span>
         </router-link>
-        <router-link tag="li" to="/messages" active-class="nav_active"  class="nav-item">
-            <a class="nav-link js-scroll-trigger" >
+        <router-link tag="li" to="/messages" active-class="nav_active"  class="nav-item" >
+            <span class="nav-link js-scroll-trigger" >
              <i class="icon-bubbles">
               </i>Messages  
               <!-- <div class="dot_indicator"> </div> -->
-              </a>
+              </span>
           </router-link>
-         <router-link tag="li" to="/about" active-class="nav_active"  class="nav-item">
-            <a class="nav-link js-scroll-trigger" ><i class="icon-directions"> </i>About</a>
+         <router-link tag="li" to="/about" active-class="nav_active"  class="nav-item" >
+            <span class="nav-link js-scroll-trigger" ><i class="icon-directions"> </i>About</span>
          </router-link>
         <li @click="logoutUser" >
-            <a class=" nav-link js-scroll-trigger logout" style="text-decoration:none;" ><i class="icon-logout"> </i>Log out</a>
+            <span class=" nav-link js-scroll-trigger logout" style="text-decoration:none;" ><i class="icon-logout"> </i>Log out</span>
         </li>
         
         </ul>
@@ -78,7 +79,20 @@ export default {
   methods: {
     logoutUser() {
       this.$store.dispatch('logout',this.$router);
-    }
+    },
+    
+    hideNavBar(){
+      jQuery(".navbar-nav li").click(()=>{
+        if(jQuery(window).width()<992){
+          jQuery("#navbarSupportedContent").collapse('hide');
+        }
+      });
+      // alert(jQuery(window).width());
+    },
+
+  },
+  mounted(){
+    this.hideNavBar();
   }
 
 };
@@ -200,7 +214,9 @@ li:active {
     align-items: flex-start;
     flex-grow: 0;
     width: 100%;
-    margin-bottom: auto;
+    margin:auto;
+    margin-top:20px;
+    margin-bottom: 0;
   }
   #sideNav .navbar-collapse .navbar-nav {
     flex-direction: column;
@@ -284,6 +300,21 @@ i {
   position: absolute;
   right:100px;
   margin-top:-13px;
+}
+.navbar-nav span{
+  cursor: pointer;
+}
+.navbar-nav li {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+
+  .fixed-top{
+  position:fixed !important;
+  background:rgba(0,0,0,1) !important;
+  }
+  
 }
 
 </style>

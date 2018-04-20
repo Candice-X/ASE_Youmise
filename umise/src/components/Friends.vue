@@ -3,14 +3,14 @@
     <!--- body -->
     <div id="my_cards" class="body_cont">
         <div class = "send_cards_container" >
-            <h4 class="title" >Card Communication with </h4>
+            <h4 class="title" >Card Communication </h4>
             <h4 class="subTitle">Card history with friends, the received card and card sent from each other </h4>
 
-         <center>
+        <center>
         <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: isReceiveModel==='received' }" @click="showReceivedCard">Cards Received</button>
+        :class="{ active: isReceiveModel==='received' }" @click="showReceivedCard">Received</button>
         <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: isReceiveModel ==='sent' }" @click="showSendCard" >Cards Sent</button>
+        :class="{ active: isReceiveModel ==='sent' }" @click="showSendCard" >Sent</button>
         </center>
             <div class="row">
                 <div class="empty_msg" style="" v-if="cards.length===0">
@@ -19,7 +19,7 @@
                 Send Card to Friends </router-link>
                </div>
 
-                <div v-for = "(card, index) in cards" :key="index" class="col-lg-6 col-md-6 col-sm-12 card_cont" >
+                <div v-for = "(card, index) in cards" :key="index" class="col-lg-6 col-md-6 col-sm-12 col-xs-12 card_cont card_cont_mobile" >
                     <div class="card_img" data-toggle="modal"
                     data-target="#friend_cards_specific" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />
@@ -225,8 +225,8 @@ export default {
      try{
       this.errorMsg="";
        if(this.$store.state.user.userID != null ){ 
-          this.$store.state.user.loading = true;
-           console.log("begin:");
+        this.$store.state.user.loading = true;
+            
         const response = await axios.post("/friend/sendFriendRequest",
         {"senderId":this.$store.state.user.userID, "receiverEmail":this.email});
         
@@ -234,12 +234,11 @@ export default {
          this.$store.state.user.loading = false;
         jQuery("#add_friends").modal('hide');
         this.showAlert();
-       }else{
-         console.log("You need to login first to add a friend");
-       }
+       };
 
      }catch(e){
        console.log(e);
+       console.log(e.message);
         this.errorMsg = "Receiver doesn't exist";
         this.$store.state.user.loading = false;
      };
@@ -374,11 +373,7 @@ export default {
 @import "../assets/css/font-awesome.min.css";
 @import "../assets/css/simple-line-icons.css";
 
-body {
-  font-family: "Open Sans", serif;
-  padding-top: 54px;
-  color: #868e96;
-}
+
 .empty_msg{
   margin:auto;
   text-align:center;
@@ -395,12 +390,12 @@ body {
   background:#ffc9aa;
   border-radius:5px;
   height:5rem;
-position:fixed;
-top:0px;
-left:0px;
-bottom:0px;
-right:0px;
-font-size:1em;
+  position:fixed;
+  top:0px;
+  left:0px;
+  bottom:0px;
+  right:0px;
+  font-size:0.9em;
 
 }
 .friend_alert p{
@@ -531,7 +526,8 @@ font-size:1em;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  min-height: 790px;
+  height: 100vh;
+  min-height: 786px;
   overflow-x: hidden;
 }
 
@@ -598,51 +594,6 @@ li:active {
   background: #3ac17e;
   color: #ffffff;
   border-radius: 3px;
-}
-
-#sideNav .navbar-nav .nav-item .nav-link {
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-@media (min-width: 992px) {
-  #sideNav {
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    width: 17rem;
-    height: 100vh;
-  }
-  #sideNav .navbar-brand {
-    display: flex;
-    margin: auto auto 0;
-    padding: 0.5rem;
-  }
-  #sideNav .navbar-brand .img-profile {
-    max-width: 6rem;
-    max-height: 10rem;
-    border: 0.1rem solid #3ac17e;
-  }
-  #sideNav .navbar-collapse {
-    display: flex;
-    align-items: flex-start;
-    flex-grow: 0;
-    width: 100%;
-    margin-bottom: auto;
-  }
-  #sideNav .navbar-collapse .navbar-nav {
-    flex-direction: column;
-    width: 100%;
-  }
-  #sideNav .navbar-collapse .navbar-nav .nav-item {
-    display: block;
-  }
-  #sideNav .navbar-collapse .navbar-nav .nav-item .nav-link {
-    display: block;
-  }
 }
 
 section.resume-section {
@@ -841,5 +792,11 @@ i {
   font-size:10px;
   margin-top:-18px;
   color:#555;
+}
+
+@media (max-width:786px){
+  #friends{
+    padding-top:55px;
+  }
 }
 </style>

@@ -9,7 +9,7 @@
            
             <div class="row card_row">
                 <div  v-for = "(card, index) in cardsType" :key="index" :id ="card.cardid"
-                class="col-lg-3 col-md-4 col-sm-6 card_cont" >
+                class="col-lg-3 col-md-4 col-sm-6 col-xs-12 card_cont card_cont_mobile" >
                     <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />                        
@@ -45,16 +45,16 @@
   <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
       <div class="modal-content">
-        <div class="modal-header">
-          <!-- <h5 class="modal-title" id="exampleModalLongTitle">{{this.oneCard.cardName}}</h5> -->
+        <!-- <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{this.oneCard.cardName}}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div>
+        </div> -->
         <div class="modal-body" style="height:560px;">
           <div class="row">
             
-                <div class="col-lg-6 col-md-6 col-sm-6 card_cont card_cont_one" >
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 card_cont card_cont_one" >
                     <div class="card_img_more" >
 
                         <img v-bind:src = "this.oneCard.cardImgURL" />
@@ -65,7 +65,7 @@
                             </div>
                             <div class="content">
                                 <!-- <h7>{{ this.oneCard.cardName }}</h7> -->
-                                <p>{{this.oneCard.message}}</p>
+                                <p class="msg">{{this.oneCard.message}}</p>
                                
                             </div>       
                         </div>
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                   <div class ="sender_cont_more col-lg-6 col-md-6 col-sm-6" > 
+                   <div class ="sender_cont_more col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
                        
                     <div class="content_more">
                         <center><h4>{{ this.oneCard.cardName }}</h4></center>
@@ -84,15 +84,15 @@
                         <div class="input-group friend_list_cont">
                          <!-- <div class="friend_place_hoder">Choose A Friend</div> -->
                           <input type="text" v-model="oneCard.receiverName"  @focus="showFriendList=true"  
-                           @keyup="autoComplete" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
+                          @blur="showFriendList=false" @keyup="autoComplete" class="form-control" placeholder="Friend Name" aria-label="Username" aria-describedby="basic-addon1">
                          
                         </div>
                         <!-- popup friend div -->
                         <div class="friend_float_div" v-if="showFriendList" >
                         <div v-if="searchFriendList.length===0">
-                            <p style="color:white;text-align:center;margin-top:100px;">You do not have friend named: {{this.oneCard.receiverName}} </p>
+                            <p style="color:white;text-align:center;margin-top:100px;font-size:1em;">You do not have friend named: {{this.oneCard.receiverName}} </p>
                         </div>
-                        <div v-if="searchFriendList.length!==0" v-for="(friend, index) in searchFriendList" :key="index" class="friend" @click="chooseFriend(index)" >
+                        <div v-if="searchFriendList.length!==0" v-for="(friend, index) in searchFriendList" :key="index" class="friend" @mousedown="chooseFriend(index)" >
                               <div class="friends_img" >                        
                                 <img src="../assets/img/girl.png" />
                               </div>
@@ -123,6 +123,8 @@
                    <p style="color:red;"> {{this.errMsg}}</p>
                    <br/>
                     <button class="btn btn-primary btn-success btn-send" @click="sendCard" :disabled="$v.oneCard.receiverName.$invalid" >Send to Friends</button>
+                    
+                     <button class="btn btn-primary btn-outline-secondary btn-send btn-cancle" @click="cancle" >Cancle</button>
                 </div>
 
 
@@ -200,6 +202,7 @@ export default {
     Friends,
 
   },
+  
   methods:{
     showCard(index) {
       this.oneCard = this.cardsType[index];
@@ -280,6 +283,10 @@ export default {
      
     },
 
+    cancle(){
+       jQuery("#Dashboard_send").modal('hide');
+    },
+
       async getFriendsList(){
           try{
             const userID =  this.$store.state.user.userID || localStorage.getItem("userID");
@@ -345,6 +352,7 @@ export default {
     this.getFriendsList();
     
   },
+
 
 };
 </script>
@@ -424,6 +432,9 @@ right:0px;
   text-align:left;
   line-height: 1.5em;
   
+}
+.promise_msg p{
+  font-size:1em;
 }
 .card_img:hover {
   background: #3ac17e;
@@ -513,6 +524,7 @@ right:0px;
   background-size: cover;
   min-height: 786px;
   overflow-x: hidden;
+
 }
 
 @media (min-width: 992px) {
@@ -558,50 +570,8 @@ li:hover {
   color: #000;
   border-radius: 3px;
 }
-
-#sideNav .navbar-nav .nav-item .nav-link {
-  font-weight: 600;
-  text-transform: uppercase;
-}
-
-@media (min-width: 992px) {
-  #sideNav {
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    width: 17rem;
-    height: 100vh;
-  }
-  #sideNav .navbar-brand {
-    display: flex;
-    margin: auto auto 0;
-    padding: 0.5rem;
-  }
-  #sideNav .navbar-brand .img-profile {
-    max-width: 6rem;
-    max-height: 10rem;
-    border: 0.1rem solid #3ac17e;
-  }
-  #sideNav .navbar-collapse {
-    display: flex;
-    align-items: flex-start;
-    flex-grow: 0;
-    width: 100%;
-    margin-bottom: auto;
-  }
-  #sideNav .navbar-collapse .navbar-nav {
-    flex-direction: column;
-    width: 100%;
-  }
-  #sideNav .navbar-collapse .navbar-nav .nav-item {
-    display: block;
-  }
-  #sideNav .navbar-collapse .navbar-nav .nav-item .nav-link {
-    display: block;
-  }
+.btn-cancle{
+  margin-top:30px;
 }
 
 @media (min-width: 768px) {
@@ -712,6 +682,7 @@ i {
   margin-left:10px;
   overflow: hidden;
 }
+
 .message_more{
   background: #eeeeee;
   border-radius: 5px;
@@ -729,7 +700,6 @@ i {
 }
 
 .card_row{
-
   width:100%;
 }
 
@@ -833,5 +803,37 @@ i {
 }
 .friend:hover{
   background:#444444;
+}
+.msg{
+  font-size:1em;
+}
+
+@media (max-width:768px){
+  #nav_dashboard{
+    padding-top:40px;
+  }
+  .sender_cont_more{
+    float:left;
+    position: absolute;
+    top:520px;
+    margin:0 auto;
+    width:325px;
+    margin-left:-50%;
+    left:325px;
+  }
+
+  .modal-content{
+    margin:0;
+    padding:0;
+    margin-top:50px;
+    height:1090px;
+    
+  }
+  .modal-body{
+    height:100% !important;
+  }
+  .card_img_more{
+    margin:auto ;
+  }
 }
 </style>
