@@ -74,9 +74,9 @@
     .card_img{
       margin-left:0 !important;
        }
-  .loading_cont{
-    padding-left: 0 !important;
-      }
+    .loading_cont{
+      padding-left: 0 !important;
+        }
 
   }
 
@@ -217,4 +217,7 @@
   }
 
 
+.card_row{
+  margin-bottom:30px!important;
+}
 </style>

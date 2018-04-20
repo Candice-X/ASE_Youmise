@@ -134,15 +134,20 @@ export default {
             {},
             function(response) {
                 // Insert your code here
+                console.log(response.data);
             }
           );
 
-          //  this.router.push("/dashboard");
+            this.router.push("/dashboard");
 
         } else {
+          
          console.log('User cancelled login or did not fully authorize.');
+         return null;
         }
       });
+
+    
     },
 
     async checkFacebookUser(){

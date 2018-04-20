@@ -19,7 +19,7 @@
                 Send Card to Friends </router-link>
                </div>
 
-                <div v-for = "(card, index) in cards" :key="index" class="col-lg-6 col-md-6 col-sm-12 col-xs-12 card_cont card_cont_mobile" >
+                <div v-for = "(card, index) in cards" :key="index" class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12 card_cont card_cont_mobile" >
                     <div class="card_img" data-toggle="modal"
                     data-target="#friend_cards_specific" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />
@@ -93,10 +93,10 @@
 <!-- Modal -->
   <div class="modal fade bd-example-modal-lg" id="friend_cards_specific" tabindex="-1" role="dialog" 
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="background:rgba(1,1,1,0.6)">
-    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px;padding:0;border:0;">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px;padding:0;border:0;margin:auto">
       <div class="modal-content" style="background:none;">
        
-        <div class="modal-body" style="height:680px;">          
+        <div class="modal-body" style="height:557px;">          
                 <div class=" card_cont " >
                   
                     <div class="card_img card_img_more"  >
@@ -797,6 +797,17 @@ i {
 @media (max-width:786px){
   #friends{
     padding-top:55px;
+  }
+  .modal-content{
+    margin:0;
+    padding:0;
+    margin-top:50px; 
+  }
+  .modal-body{
+    height:100% !important;
+  }
+  .card_img_more{
+    margin:auto ;
   }
 }
 </style>
