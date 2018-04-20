@@ -1,9 +1,18 @@
 <template>
-  <div class="friends" v-if="friend_list" >
-  <h4 class="friends_list"> Friends List
-       <!-- <i class="icon-close friends_list_close" @click="friend_list=false"></i> -->
-       </h4> 
-       <button class="btn btn-primary btn-outline-success btn-sm" style="width:85%;margin:15px;" data-toggle="modal" data-target="#add_friends">Add Friend</button>
+<div>
+
+
+  <div class="friend_btn">
+    <button class="btn btn-primary btn-sm btn-outline-success show_friendlist" @click="friend_list=true" ><span class="nav-link js-scroll-trigger" ><i class="icon-people"></i>Friends</span></button>
+  </div>  
+
+  <div class="friends friends_mobi" v-if="friend_list" >
+
+  <!-- <h4 class="friends_list"> Friends List
+  
+       </h4>  -->
+       <button class="btn btn-primary btn-outline-success btn-sm addFriendsBtn" style="width:85%;margin:15px;" 
+       data-toggle="modal" data-target="#add_friends">Add Friend</button>
  <hr />
     
     <div v-for="(friend, index) in friendsList" :key="index" class="friend" 
@@ -20,11 +29,7 @@
       </div>  
     </div>
 
-
-<!-- modal -->
-
-
-
+  </div>
   </div>
 </template>
 
@@ -60,10 +65,11 @@ export default {
 
   setCurrentFriend(friendId){
     this.currentFriendId = friendId;
+    this.friend_list = false;
     this.$store.state.user.currentFriendId = friendId;
     this.$emit('refreshFriendCards');
 
-    console.log("friend card show");
+    
   },
 
   },
@@ -79,6 +85,41 @@ export default {
 
 <style>
 @import '../assets/css/simple-line-icons.css';
+
+@media (max-width:768px){
+  .friends_mobi{
+    /* display: none; */
+    width:100% !important;
+  }
+  .friends{
+
+  }
+  .friend_btn{ 
+    position:fixed !important;
+    bottom:20px;
+    width:100%;
+    display:block !important;
+    margin:auto;
+  }
+  .show_friendlist{
+    width:80%;
+  }
+  .friend{
+    width:100% !important;
+  }
+  .friends_img{
+    margin-left:50px !important;
+
+  }
+}
+
+
+
+
+
+.friend_btn{ 
+    display:none;
+  }
 
 .friends {
   position: fixed;
@@ -101,6 +142,7 @@ export default {
 }
 .friends_list{
   margin-left:10px;
+  margin-top:30px;
   font-size:1em;
 }
 .friends hr { 
@@ -171,6 +213,15 @@ export default {
   width:165px;
   text-align:left;
 
+} 
+@media (max-width: 991px)
+{
+  .addFriendsBtn{
+    margin-top:55px !important;
+  }
+  .friend{
+    padding: 10px 0 10px 0;
+    height:70px;
+  }
 }
-
 </style>

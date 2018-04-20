@@ -4,11 +4,11 @@
     <div id="send_cards" class="body_cont">
         <div class = "send_cards_container" >
             <h4 class="title" >Messages</h4>
-            <h4 class="subTitle">Messages from your friends</h4>
-
-        <button class="btn btn-primary btn-outline-success " :class= "{active: isMessage}" @click="getAllMessages" > Messages</button>
+            <!-- <h4 class="subTitle">Messages from your friends</h4> -->
+        <br />
         <button class="btn btn-primary btn-outline-success" :class= "{active: !isMessage}" @click="getFriendsRequest" >Friends Request</button>
-
+        <button class="btn btn-primary btn-outline-success " :class= "{active: isMessage}" @click="getAllMessages" > Messages</button>
+       
            <div class="row" v-if="isMessage">
                 <!-- if empty -->
               <div class="empty_msg" style="" v-if="messages.length===0">
@@ -223,7 +223,7 @@ export default {
   created: function() {
     this.$store.state.isLogin = true;
     // this.imgUrl = this.$store.state.card.img1;
-    this.getAllMessages();
+    this.getFriendsRequest();
   },
 };
 </script>
@@ -565,5 +565,10 @@ i {
   font-size:10px;
   margin-top:-18px;
   color:#555;
+}
+@media (max-width:768px){
+  #message {
+    padding-top:55px;
+  }
 }
 </style>

@@ -3,14 +3,14 @@
     <!--- body -->
     <div id="my_cards" class="body_cont">
         <div class = "send_cards_container" >
-            <h4 class="title" >Card Communication with </h4>
+            <h4 class="title" >Card Communication </h4>
             <h4 class="subTitle">Card history with friends, the received card and card sent from each other </h4>
 
-         <center>
+        <center>
         <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: isReceiveModel==='received' }" @click="showReceivedCard">Cards Received</button>
+        :class="{ active: isReceiveModel==='received' }" @click="showReceivedCard">Received</button>
         <button class="btn btn-primary btn-outline-success" 
-        :class="{ active: isReceiveModel ==='sent' }" @click="showSendCard" >Cards Sent</button>
+        :class="{ active: isReceiveModel ==='sent' }" @click="showSendCard" >Sent</button>
         </center>
             <div class="row">
                 <div class="empty_msg" style="" v-if="cards.length===0">
@@ -19,7 +19,7 @@
                 Send Card to Friends </router-link>
                </div>
 
-                <div v-for = "(card, index) in cards" :key="index" class="col-lg-6 col-md-6 col-sm-12 card_cont" >
+                <div v-for = "(card, index) in cards" :key="index" class="col-lg-6 col-md-6 col-sm-12 col-xs-12 card_cont card_cont_mobile" >
                     <div class="card_img" data-toggle="modal"
                     data-target="#friend_cards_specific" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />
@@ -792,5 +792,11 @@ i {
   font-size:10px;
   margin-top:-18px;
   color:#555;
+}
+
+@media (max-width:786px){
+  #friends{
+    padding-top:55px;
+  }
 }
 </style>

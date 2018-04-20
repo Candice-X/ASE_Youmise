@@ -16,23 +16,24 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
-          <router-link tag="li" to="/mycard" active-class="nav_active"  class="nav-item" default>
-            <span class="nav-link js-scroll-trigger" ><i class="icon-layers"></i>My Cards</span>
+          <router-link tag="li" to="/mycard" active-class="nav_active"  class="nav-item" default 
+            >
+            <span class="nav-link js-scroll-trigger"><i class="icon-layers"></i>My Cards</span>
           </router-link>
-          <router-link tag="li" to="/dashboard" active-class="nav_active"  class="nav-item">
+          <router-link tag="li" to="/dashboard" active-class="nav_active"  class="nav-item" >
             <span class="nav-link js-scroll-trigger" > <i class="icon-directions"></i>Send Cards</span>
           </router-link>
-         <router-link tag="li" to="/friends" active-class="nav_active"  class="nav-item">
+         <router-link tag="li" to="/friends" active-class="nav_active"  class="nav-item" >
             <span class="nav-link js-scroll-trigger" ><i class="icon-people"></i>Friends</span>
         </router-link>
-        <router-link tag="li" to="/messages" active-class="nav_active"  class="nav-item">
+        <router-link tag="li" to="/messages" active-class="nav_active"  class="nav-item" >
             <span class="nav-link js-scroll-trigger" >
              <i class="icon-bubbles">
               </i>Messages  
               <!-- <div class="dot_indicator"> </div> -->
               </span>
           </router-link>
-         <router-link tag="li" to="/about" active-class="nav_active"  class="nav-item">
+         <router-link tag="li" to="/about" active-class="nav_active"  class="nav-item" >
             <span class="nav-link js-scroll-trigger" ><i class="icon-directions"> </i>About</span>
          </router-link>
         <li @click="logoutUser" >
@@ -78,7 +79,20 @@ export default {
   methods: {
     logoutUser() {
       this.$store.dispatch('logout',this.$router);
-    }
+    },
+    
+    hideNavBar(){
+      jQuery(".navbar-nav li").click(()=>{
+        if(jQuery(window).width()<992){
+          jQuery("#navbarSupportedContent").collapse('hide');
+        }
+      });
+      // alert(jQuery(window).width());
+    },
+
+  },
+  mounted(){
+    this.hideNavBar();
   }
 
 };
@@ -293,5 +307,15 @@ i {
 .navbar-nav li {
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+
+  .fixed-top{
+  position:fixed !important;
+  background:rgba(0,0,0,1) !important;
+  }
+  
+}
+
 </style>
 

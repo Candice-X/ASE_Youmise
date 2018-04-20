@@ -9,7 +9,7 @@
            
             <div class="row card_row">
                 <div  v-for = "(card, index) in cardsType" :key="index" :id ="card.cardid"
-                class="col-lg-3 col-md-4 col-sm-6 card_cont" >
+                class="col-lg-3 col-md-4 col-sm-6 col-xs-12 card_cont card_cont_mobile" >
                     <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />                        
@@ -518,6 +518,7 @@ right:0px;
   background-size: cover;
   min-height: 786px;
   overflow-x: hidden;
+
 }
 
 @media (min-width: 992px) {
@@ -691,7 +692,6 @@ i {
 }
 
 .card_row{
-
   width:100%;
 }
 
@@ -798,5 +798,11 @@ i {
 }
 .msg{
   font-size:1em;
+}
+
+@media (max-width:768px){
+  #nav_dashboard{
+    padding-top:40px;
+  }
 }
 </style>
