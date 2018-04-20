@@ -101,10 +101,10 @@
 <!-- Modal -->
   <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" 
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="background:rgba(1,1,1,0.6)">
-    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px;padding:0;border:0;">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="width:350px;padding:0;border:0;margin:auto">
       <div class="modal-content" style="background:none;">
        
-        <div class="modal-body" style="height:680px;">          
+        <div class="modal-body" style="height:557px;">          
                 <div class=" card_cont " >
                   
                     <div class="card_img card_img_more"  >

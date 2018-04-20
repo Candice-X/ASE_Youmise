@@ -232,8 +232,8 @@ export default {
         
         // console.log(response);
          this.$store.state.user.loading = false;
-        // jQuery("#add_friends").modal('hide');
-        // this.showAlert();
+        jQuery("#add_friends").modal('hide');
+        this.showAlert();
        };
 
      }catch(e){

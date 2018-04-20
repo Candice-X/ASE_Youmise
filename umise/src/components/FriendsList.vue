@@ -8,9 +8,9 @@
 
   <div class="friends friends_mobi" v-if="friend_list" >
 
-  <!-- <h4 class="friends_list"> Friends List
-  
-       </h4>  -->
+    <!-- <div class="close_friendList">
+      <span>sss</span>
+    </div> -->
        <button class="btn btn-primary btn-outline-success btn-sm addFriendsBtn" style="width:85%;margin:15px;" 
        data-toggle="modal" data-target="#add_friends">Add Friend</button>
  <hr />
@@ -65,7 +65,10 @@ export default {
 
   setCurrentFriend(friendId){
     this.currentFriendId = friendId;
-    this.friend_list = false;
+    if(jQuery(window).width()<992){
+       this.friend_list = false;
+    };
+  
     this.$store.state.user.currentFriendId = friendId;
     this.$emit('refreshFriendCards');
 
@@ -92,7 +95,7 @@ export default {
     width:100% !important;
   }
   .friends{
-
+     background: rgba(0, 0, 0, 0.9)!important;
   }
   .friend_btn{ 
     position:fixed !important;
@@ -111,10 +114,19 @@ export default {
     margin-left:50px !important;
 
   }
+  .close_friendList{
+    display:block;
+    position: fixed !important;
+    bottom:0;
+    height:40px;
+    background:red;
+  }
 }
 
 
-
+.close_friendList{
+  display:none;
+}
 
 
 .friend_btn{ 
@@ -125,7 +137,7 @@ export default {
   position: fixed;
   right: 0;
   top: 0;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.7);
   height: 100%;
   width: 240px;
   color:#fff;
