@@ -43,8 +43,8 @@ const PORT = process.env.PORT || 8080;
     console.error('Unable to connect to the database:', err);
   };
   await models.sequelize.sync();
-//   await models.sequelize.sync({force: true});
-  //
+// await models.sequelize.sync({force: true});
+  
 //   if(process.env.NODE_ENV !== "test"){
 //     await models.Card.create({
 //       types: 1,

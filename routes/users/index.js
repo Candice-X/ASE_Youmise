@@ -26,6 +26,20 @@ router.post('/signup', async (req, res) => {
 
 });
 
+router.post('/facebooklogin', async (req, res) => {
+  try {
+    if (req.body.facebookid === null){
+      res.status(400).send("facebook userid is empty");
+    } else {
+      const result = await controller.dbFacebookLogin(models.User, req.body.facebookid, req.body.username, req.body.email);
+      res.json(result);
+    }
+  } catch (err) {
+    res.status(err.statusCode).send(err.message);
+  }
+
+});
+
 router.post('/verification', async(req, res) => {
   try {
     const username = await controller.verification(cognito, req.body.confirmationCode, req.body.username);

@@ -102,3 +102,146 @@ describe('PATCH /user/:id',()=>{
             });
     });
 });
+
+describe('POST /user/facebooklogin',()=>{
+    it('should create a user object', (done)=>{
+        var facebookid = users[5].facebookid;
+        request(app)
+            .post(`/user/facebooklogin`)
+            .send({
+                username : users[5].username,
+                email: users[5].email,
+                facebookid: facebookid,
+            })
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.username).toBe(users[5].username);
+            })
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
+                    expect(user[0].username).toBeTruthy();
+                    expect(user[0].email).toBe(users[5].email);
+                    done(); 
+                }).catch((e)=>done(e));
+            });
+    });
+    it('should return an existing user', (done)=>{
+        var facebookid = users[1].facebookid;
+        request(app)
+            .post(`/user/facebooklogin`)
+            .send({
+                username : null,
+                email: null,
+                facebookid: facebookid,
+            })
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.username).toBe(users[1].username);
+            })
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
+                    expect(user.length).toBe(1);
+                    expect(user[0].email).toBe(users[1].email);
+                    done(); 
+                }).catch((e)=>done(e));
+            });
+    });
+    it('should not create a user with empty user name', (done)=>{
+        var facebookid = users[5].facebookid;
+        request(app)
+            .post(`/user/facebooklogin`)
+            .send({
+                username : null,
+                email: users[5].email,
+                facebookid: facebookid,
+            })
+            .expect(400)
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
+                    expect(user.length).toBe(0);
+                    done(); 
+                }).catch((e)=>done(e));
+            });
+    });
+    it('should not create a user with existing user name', (done)=>{
+        var facebookid = users[5].facebookid;
+        request(app)
+            .post(`/user/facebooklogin`)
+            .send({
+                username : users[0].email,
+                email: users[5].email,
+                facebookid: facebookid,
+            })
+            .expect(400)
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
+                    expect(user.length).toBe(0);
+                    done(); 
+                }).catch((e)=>done(e));
+            });
+    });
+    it('should not create a user with emtpy email', (done)=>{
+        var facebookid = users[5].facebookid;
+        request(app)
+            .post(`/user/facebooklogin`)
+            .send({
+                username : users[5].username,
+                email: null,
+                facebookid: facebookid,
+            })
+            .expect(400)
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
+                    expect(user.length).toBe(0);
+                    done(); 
+                }).catch((e)=>done(e));
+            });
+    });
+    it('should not create a user with duplicate email', (done)=>{
+        var facebookid = users[5].facebookid;
+        request(app)
+            .post(`/user/facebooklogin`)
+            .send({
+                username : users[5].username,
+                email: users[0].email,
+                facebookid: facebookid,
+            })
+            .expect(400)
+            .end((err,res)=>{
+                if(err){
+                    return done(err);
+                }
+                models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
+                    expect(user.length).toBe(0);
+                    done(); 
+                }).catch((e)=>done(e));
+            });
+    });
+    it('should not create a user without facebookid', (done)=>{
+        var facebookid = null;
+        request(app)
+            .post(`/user/facebooklogin`)
+            .send({
+                username : users[5].username,
+                email: users[0].email,
+                facebookid: null,
+            })
+            .expect(400)
+            .end(done);
+    });
+});
