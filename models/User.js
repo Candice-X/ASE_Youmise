@@ -35,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
     gender:{
       type: DataTypes.ENUM('Male', 'Female')
     },
+    facebookid:{
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: true
+    },
   });
 
   User.associate = function(models) {

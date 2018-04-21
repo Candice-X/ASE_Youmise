@@ -57,7 +57,8 @@ const users = [{
     firstName: "Fu",
     lastName: "Chen",
     avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
-    gender: "Male"
+    gender: "Male",
+    facebookid: null
 },{
     uid: ReceiverOneId,
     username: "hyy",
@@ -65,7 +66,8 @@ const users = [{
     firstName: "yy",
     lastName: "h",
     avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
-    gender: "Female"
+    gender: "Female",
+    facebookid: "test facebook id"
 },{
     uid: SenderTwoId,
     username: "xyh",
@@ -73,7 +75,8 @@ const users = [{
     firstName: "yh",
     lastName: "x",
     avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
-    gender: "Female"
+    gender: "Female",
+    facebookid: null
 },{
     uid: ReceiverTwoId,
     username: "weg",
@@ -81,7 +84,8 @@ const users = [{
     firstName: "eg",
     lastName: "w",
     avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
-    gender: "Male"
+    gender: "Male",
+    facebookid: null
 },{
     uid: SenderThreeId,
     username: "zss",
@@ -89,7 +93,8 @@ const users = [{
     firstName: "ss",
     lastName: "z",
     avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
-    gender: "Female"
+    gender: "Female",
+    facebookid: null
 },{
     uid: ReceiverThreeId,
     username: "xjm",
@@ -97,7 +102,8 @@ const users = [{
     firstName: "jm",
     lastName: "x",
     avatarUrl: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/girl.png",
-    gender: "Male"
+    gender: "Male",
+    facebookid: "new user"
 }];
 
 const records = [{
