@@ -93,6 +93,7 @@ export default {
     
     async facebookLogin(){
       this.facebookErr="";
+
       FB.login(function(response) {
         console.log(response);
         if (response.authResponse) {
@@ -117,7 +118,7 @@ export default {
              this.$store.state.user.name = response.name;
              
              try{
-                const resp = await axios.post('/user/facebooklogin',{"username":response.name,"email":response.email,"facebookid":response.id});
+                const resp = axios.post('/user/facebooklogin',{"username":response.name,"email":response.email,"facebookid":response.id});
                  console.log("post login:",resp.data);
              }catch(e){
                console.log(e.message);
