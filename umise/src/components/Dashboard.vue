@@ -217,15 +217,15 @@ export default {
     shareToFacebook()
     {
       FB.ui({
-        method: 'share_open_graph',
-        action_type: 'og.likes',
-        action_properties: JSON.stringify({
-          object:'https://umise.me',
-        })
-      }, function(response){
-        // Debug response (optional)
-        console.log(response);
-      });
+        method: 'share',
+        href: 'https://umise.me',
+        picture: 'https://s3.us-east-2.amazonaws.com/umisefrontendimages/Chance_Card.jpg',
+        title: 'This is my page',
+        description: "Hello, this is just a test",
+        caption: "picture caption"
+    }, function(response) {
+      console.log("feed:",response);
+    });
     },
 
     chooseFriend(index){

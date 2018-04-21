@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+
 import HelloWorld from '@/components/HelloWorld';
 import Navbar from '@/components/Navbar';
 import Login from '@/components/Login';
@@ -16,7 +17,7 @@ import ResetPassword from '@/components/ResetPassword';
 import FacebookShare from '@/components/FacebookShare';
 
 import store from '../store/store';
-import Meta from 'vue-meta'
+import Meta from 'vue-meta';
 
 
 Vue.use(Router);
@@ -27,11 +28,11 @@ Vue.use(Meta, {
 
 // path:"*", redirect(/)
 
-const authToLink =['/', '/login', '/signup', 'dashboard', '/mycard', '/friends', 'about', 'messages'];
+const authToLink =['/', '/login', '/signup', '/dashboard', '/mycard', '/friends', '/about', '/messages'];
 
 const loginGuard = link => async (to, from, next ) => {
   let { authenticated } = store.state.user;
-  if(link ==='/mycard'|| link ==='/friends' || link==='/messages') {
+  if(link ==='/mycard'|| link ==='/friends' || link==='/messages'|| link==='/account') {
       if(authenticated !==1){
         try {
           next('/login');
@@ -44,7 +45,6 @@ const loginGuard = link => async (to, from, next ) => {
     next();
   }
 };
-
 
 export default new Router({
   mode: 'history',

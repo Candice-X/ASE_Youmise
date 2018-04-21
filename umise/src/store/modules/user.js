@@ -6,8 +6,7 @@ const state = {
   userName: null,
   idToken: null,
   userID: null, 
- 
-	// UUID: null,
+  email:"",
   isLogin: false,
   facebookid:'',
   loading: false,
@@ -64,7 +63,6 @@ const mutations = {
 		state.userID = userData.userID;
 		state.isLogin = true;
 		state.authenticated = 1;
-		// state.UUID =userData.UUID;
 		},
 	
   clearAuthData(state) {
