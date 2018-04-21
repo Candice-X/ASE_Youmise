@@ -6,7 +6,7 @@ const state = {
   userName: null,
   idToken: null,
   userID: null, 
-  email:null,
+ 
 	// UUID: null,
   isLogin: false,
   facebookid:'',
@@ -116,8 +116,6 @@ const actions = {
       throw e;
     }
   },
-
-  // facebookLogin({commit},{username,facebookid,email})
 
   setLogoutTime({ commit }, expirationTime) {
     setTimeout(() => {
