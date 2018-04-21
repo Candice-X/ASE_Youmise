@@ -61,9 +61,11 @@
       </div>
 
       <label>{{validateMsg}}</label>
-      <button class="btn btn-lg btn-success btn-block" :disabled="$v.user.confirmationCode.$invalid"  @click="validateCode" >Validate Email </button>
+      <button class="btn btn-lg btn-success btn-block" :disabled="$v.user.confirmationCode.$invalid"  
+      @click="validateCode" >Validate Email </button>
       
-      <button class ="btn  btn-secondary btn-block" style="margin-top:20px;" @click="resendValidationCode" >Resend Verification Code</button>
+      <button class ="btn  btn-secondary btn-block" style="margin-top:20px;" @click="resendValidationCode" > 
+        Resend Verification Code</button>
       </div>
       </transition>
       <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
@@ -200,7 +202,7 @@ export default {
 
     resendValidationCode() {
         this.validateMsg ='Resend the verification code successfully';
-          axios.post("/user/resendConfirmation",{email:this.user.email})
+          axios.post("/user/resendConfirmation",{ "email":this.user.email })
           .then(res=>{  
             console.log("response verification!",res);
             // const data = res.data;
