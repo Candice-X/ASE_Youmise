@@ -5,24 +5,26 @@ import * as types from '../mutation-types';
 const state = {
   userName: null,
   idToken: null,
-  userID: null, 
-  email:"",
+  userID: null,
+  email: "",
   isLogin: false,
-  facebookid:'',
+  facebookid: '',
   loading: false,
   authenticated: 0,
   challengeData: {},
-  friendList:[],
-  currentFriendId:'',
+  friendList: [],
+  currentFriendId: '',
 };
 
 const mutations = {
-	[types.USER_LOGIN_REQUEST](state) {
+  [types.USER_LOGIN_REQUEST](state) {
     state.loading = true;
     state.authenticated = 0;
   },
 
-  [types.USER_LOGIN_SUCCESS](state, { idToken }) {
+  [types.USER_LOGIN_SUCCESS](state, {
+    idToken
+  }) {
     state.loading = false;
     state.authenticated = 1;
     // const keys = credentials.data.Credentials;
@@ -34,7 +36,9 @@ const mutations = {
     state.authenticated = 0;
   },
 
-  [types.USER_LOGIN_PASS_CHALLENGE_NEEDED](state, { data }) {
+  [types.USER_LOGIN_PASS_CHALLENGE_NEEDED](state, {
+    data
+  }) {
     state.loading = false;
     state.authenticated = 2;
     delete data.userAttributes.email_verified;
@@ -46,67 +50,78 @@ const mutations = {
     state.challengeData.cognitoUser = null;
   },
 
-  [types.USER_LOGIN_PASS_CHALLENGE_SUCCESS](state, { idToken }) {
+  [types.USER_LOGIN_PASS_CHALLENGE_SUCCESS](state, {
+    idToken
+  }) {
     state.loading = false;
     state.authenticated = 1;
     // const keys = credentials.data.Credentials;
-   // init(keys.AccessKeyId, keys.SecretKey, keys.SessionToken);
+    // init(keys.AccessKeyId, keys.SecretKey, keys.SessionToken);
   },
 
   [types.USER_LOGIN_PASS_CHALLENGE_FAILURE](state) {
     state.loading = false;
   },
 
-	authUser(state, userData) {
-		state.userName = userData.userName;
-		state.idToken = userData.idToken;
-		state.userID = userData.userID;
-		state.isLogin = true;
-		state.authenticated = 1;
-		},
-	
+  authUser(state, userData) {
+    state.userName = userData.userName;
+    state.idToken = userData.idToken;
+    state.userID = userData.userID;
+    state.isLogin = true;
+    state.authenticated = 1;
+  },
+
   clearAuthData(state) {
     state.idToken = null;
     state.userName = null;
-		state.userID = null;
-		state.isLogin = false;
-		state.authenticated =0;
-		// state.UUID = null;
+    state.userID = null;
+    state.isLogin = false;
+    state.authenticated = 0;
+    // state.UUID = null;
   },
 
 };
 
 const actions = {
-	async login({ commit }, { username, password }) {
+  async login({
+    commit
+  }, {
+    username,
+    password
+  }) {
     commit(types.USER_LOGIN_REQUEST);
     try {
-			const response = await apis.login(username, password);
-			
-			console.log("store login status :",response);
+      const response = await apis.login(username, password);
+
+      console.log("store login status :", response);
       if (response.status === 1) {
-				  //store in local storage
-				const now = new Date();
-				
-				const expirationDate = new Date(now.getTime() + response.data.payload.exp);
-				console.log("Time exp: ",expirationDate);
+        //store in local storage
+        const now = new Date();
 
-				const idToken = response.data.jwtToken;
-				const userID = response.data.payload['custom:uid'];
-				 
-				localStorage.setItem('idToken', idToken);
-				localStorage.setItem('userName', username);
-				localStorage.setItem('userID', userID);
-				localStorage.setItem('expirationDate', expirationDate);
-				
-				commit('authUser', {
-					'idToken': idToken,
-					'userID': userID,
-					'userName': username,
-				});
+        const expirationDate = new Date(now.getTime() + response.data.payload.exp);
+        console.log("Time exp: ", expirationDate);
 
-        commit(types.USER_LOGIN_SUCCESS, { credentials: response.data });
+        const idToken = response.data.jwtToken;
+        const userID = response.data.payload['custom:uid'];
+
+        localStorage.setItem('idToken', idToken);
+        localStorage.setItem('userName', username);
+        localStorage.setItem('userID', userID);
+        localStorage.setItem('expirationDate', expirationDate);
+
+        commit('authUser', {
+          'idToken': idToken,
+          'userID': userID,
+          'userName': username,
+        });
+
+        commit(types.USER_LOGIN_SUCCESS, {
+          credentials: response.data
+        });
       } else if (response.status === 2) {
-        commit(types.USER_LOGIN_PASS_CHALLENGE_NEEDED, { data: response.data });
+        commit(types.USER_LOGIN_PASS_CHALLENGE_NEEDED, {
+          data: response.data
+        });
       }
       return response.status;
     } catch (e) {
@@ -115,22 +130,28 @@ const actions = {
     }
   },
 
-  setLogoutTime({ commit }, expirationTime) {
+  setLogoutTime({
+    commit
+  }, expirationTime) {
     setTimeout(() => {
       commit('logout');
     }, expirationTime * 1000);
   },
 
-  logout({ commit }, routerData) {
+  logout({
+    commit
+  }, routerData) {
     commit('clearAuthData');
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('idToken');
     localStorage.removeItem('userName');
     localStorage.removeItem('userID');
     routerData.push('/login');
-	},
-	
-  tryAutoLogin({commit},routerData) {
+  },
+
+  tryAutoLogin({
+    commit
+  }, routerData) {
     const token = localStorage.getItem('idToken');
     if (!token) {
       return;
@@ -141,14 +162,14 @@ const actions = {
       return;
     }
     const userID = localStorage.getItem('userID');
-		const userName = localStorage.getItem('userName');
-		console.log('username',userName);
+    const userName = localStorage.getItem('userName');
+    console.log('username', userName);
     commit('authUser', {
       'idToken': token,
       'userID': userID,
       'userName': userName,
-		});
-		routerData.push('/mycard');
+    });
+    routerData.push('/mycard');
   },
 
 
@@ -165,14 +186,14 @@ const actions = {
 };
 
 const getters = {
-	getUserName(){
-		return state.userName;
-	},
+  getUserName() {
+    return state.userName;
+  },
 };
 
 export default {
   state,
   mutations,
-	actions,
-	getters,
+  actions,
+  getters,
 };

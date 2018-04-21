@@ -7,14 +7,12 @@ import Login from '@/components/Login';
 import Signup from '@/components/Signup';
 import Dashboard from '@/components/Dashboard';
 import Mycard from '@/components/Mycard';
-// import DashboardNav from '@/components/DashboardNav';
 import Friends from '@/components/Friends';
 import About from '@/components/About';
 import Messages from '@/components/Messages';
 import FriendsList from '@/components/FriendsList';
 import Account from '@/components/Account';
 import ResetPassword from '@/components/ResetPassword';
-import FacebookShare from '@/components/FacebookShare';
 
 import store from '../store/store';
 import Meta from 'vue-meta';
@@ -27,7 +25,6 @@ Vue.use(Meta, {
 });
 
 // path:"*", redirect(/)
-
 const authToLink =['/', '/login', '/signup', '/dashboard', '/mycard', '/friends', '/about', '/messages'];
 
 const loginGuard = link => async (to, from, next ) => {
@@ -59,12 +56,6 @@ export default new Router({
     component: Login,
     beforeEnter: loginGuard('/'),
   },
-  // {
-  //   path: '/nav',
-  //   name: 'nav',
-  //   component: Navbar,
-  //   beforeEnter: loginGuard('/'),
-  // },
   {
     path: '/signup',
     name: 'signup',
@@ -112,12 +103,6 @@ export default new Router({
     name: 'resetPassword',
     component: ResetPassword,
     beforeEnter: loginGuard('/resetPassword'),
-  },
-  {
-    path: '/facebook',
-    name: 'facebook',
-    component: FacebookShare,
-    beforeEnter: loginGuard('/facebook'),
   },
   {
     path: '*',

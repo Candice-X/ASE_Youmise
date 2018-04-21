@@ -1,31 +1,25 @@
 <template>
   <div class='hello'>
+    <Navbar></Navbar>
 
-  <Navbar></Navbar>
     <header class="masthead">
       <div class="container h-100">
         <div class="row h-100">
           <div class="col-lg-7 my-auto">
             <div class="header-content mx-auto">
               <h2 class="mb-5">Fun Way to Chat with Friend</h2>
-                <div class="page-content">
-                Sometimes in life, your friend may invite you for a dinner, but something happens
-                by accident and your friend could not make
-                it. In general, he may say something like, “I'm sorry, something just came out.
-                Maybe some other time?” Then,
-                in most cases, your friend may feel really sorry or just forget about it and you
-                may feel somewhat awkward
-                to remind him.
+              <div class="page-content">
+                Sometimes in life, your friend may invite you for a dinner, but something happens by accident and your friend could not make it. 
+                In general, he may say something like, “I'm sorry, something just came out. Maybe some other time?” Then, in most cases, your
+                friend may feel really sorry or just forget about it and you may feel somewhat awkward to remind him.
                 <br />
-                <br /> Our purpose is to avoid this kind of embarrassment and make interactions and
-                invitations between friends
-                more interesting.
-                </div>
-
-            <router-link to="/dashboard"> 
-              <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">
-                Try it now !</a>
-              </router-link> 
+                <br /> Our purpose is to avoid this kind of embarrassment and make interactions and invitations between friends more interesting.
+              </div>
+  
+              <router-link to="/dashboard">
+                <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">
+                  Try it now !</a>
+              </router-link>
             </div>
           </div>
           <div class="col-lg-5 my-auto">
@@ -46,10 +40,10 @@
         </div>
       </div>
     </header>
-
+  
     <section class="features" id="Features" style="color:#fff;">
       <div class="container">
-        <div class="section-heading text-center" >
+        <div class="section-heading text-center">
           <h2>Unlimited Features, Unlimited Fun</h2>
         </div>
         <div class="row">
@@ -107,30 +101,24 @@
         </div>
       </div>
     </section>
-
-    <section class="cta contact"  id="About">
+  
+    <section class="cta contact" id="About">
       <div class="cta-content">
         <div class="container">
           <h2>We Make Friends Closer</h2>
-            <div class="page-content">
-                Under the condition mentioned above, if using our application, your friend could just send
-                you a dinner card when he or she could not make it. The dinner card means having a meal
-                together. And this card could be used only within a period of validity.
-                <br />
-                <br />
-                Through this operation, not only neither of you would forget this appointment and have a
-                great time together, but
-                you would also feel more interesting and natural to send invitation.
-              </div>
+          <div class="page-content">
+            Under the condition mentioned above, if using our application, your friend could just send you a dinner card when he or she could not make it. The dinner card means having a meal together. And this card could be used only within a period of validity.
+            <br />
+            <br /> Through this operation, not only neither of you would forget this appointment and have a great time together, but you would also feel more interesting and natural to send invitation.
+          </div>
           <a href="#" class="btn btn-outline btn-xl js-scroll-trigger">Let's Get Started!</a>
         </div>
       </div>
-
-      <div class="container media_cont" >
+  
+      <div class="container media_cont">
         <h4>We
-          <i class="fa fa-heart"></i>
-          new friends!</h4>
-          <ul class="list-inline list-social">
+          <i class="fa fa-heart"></i> new friends!</h4>
+        <ul class="list-inline list-social">
           <li class="list-inline-item social-twitter">
             <a href="#">
               <i class="fa fa-twitter"></i>
@@ -148,10 +136,10 @@
           </li>
         </ul>
       </div>
-
+  
       <div class="overlay"></div>
     </section>
-
+  
     <footer>
       <div class="container">
         <p>&copy; Umise 2018. All Rights Reserved. Cat Named Doggie</p>
@@ -168,50 +156,52 @@
         </ul>
       </div>
       <a href="https://app.termly.io/document/privacy-policy-for-website/57e6a742-786e-4532-aa58-3c276bef31ca">Privacy Policy</a>
-
+  
     </footer>
   </div>
 </template>
 
 <script>
-import Navbar from './Navbar';
-
-export default {
-  name: 'HelloWorld',
-  components: {
-    Navbar,
-  },
-  data() {
-    return {
-      msg: 'Welcome to Your Vue.js App',
-    };
-  },
-  created: function() {
-    this.$store.state.isLogin = false;
-  },
-};
+  import Navbar from './Navbar';
+  
+  export default {
+    name: 'HelloWorld',
+    components: {
+      Navbar,
+    },
+    data() {
+      return {
+        msg: 'Welcome to Your Vue.js App',
+      };
+    },
+    created: function() {
+      this.$store.state.isLogin = false;
+    },
+  };
 </script>
 
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import "../assets/css/font-awesome.min.css";
-@import "../assets/css/simple-line-icons.css";
-@import "../assets/css/new-age.css";
-
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  @import "../assets/css/font-awesome.min.css";
+  @import "../assets/css/simple-line-icons.css";
+  @import "../assets/css/new-age.css";
+  h1,
+  h2 {
+    font-weight: normal;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+  
+  a {
+    color: #42b983;
+  }
 </style>
