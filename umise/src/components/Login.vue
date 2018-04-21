@@ -98,11 +98,13 @@ export default {
                 console.log(response.id);  
                 a.$store.state.user.facebookid = response.id;
                 a.$store.state.user.email = response.email;
-                a.$store.state.user.name = response.name;
+                a.$store.state.user.userName = response.name;
     
                 try{
+
                     const resp = axios.post('/user/facebooklogin',{"username":response.name,"email":response.email,"facebookid":response.id});
                     console.log("post login:",resp.data);
+                    a.$store.state.user.userID = resp.data.uid;
                     
                      a.$router.push("/dashboard");
                 }catch(e){

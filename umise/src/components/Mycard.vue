@@ -19,7 +19,7 @@
         :class="{ active: isReceiveModel ==='sent' }" @click="showSendCard" >Sent</button>
         <button class="btn btn-primary btn-outline-success" 
         :class="{ active: isReceiveModel==='request' }" @click="showRequest" >In Use</button>
- </center>
+      </center>
        
 
        

@@ -91,10 +91,9 @@
   export default {
     data() {
       return {
-        name: this.$store.getters.getUserName,
-        password: this.$store.getters.getPasswprd,
-        email: this.$store.getters.getUserEmail,
-        url: "http://cat-named-doggie-dev.us-east-2.elasticbeanstalk.com"
+        name: this.$store.user.userName,
+        email: this.$store.user.email,
+        url: "https://umise.me"
       };
     },
     name: "HelloSocial",
@@ -106,12 +105,6 @@
 <style scoped>
   @import "../assets/css/font-awesome.min.css";
   @import "../assets/css/simple-line-icons.css";
-
-  body {
-    font-family: "Open Sans", serif;
-    padding-top: 54px;
-    color: #868e96;
-  }
 
   .card_cont {
     /* background:#dcdcdc; */
