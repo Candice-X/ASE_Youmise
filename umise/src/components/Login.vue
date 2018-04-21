@@ -127,17 +127,17 @@
             );
   
             // friend list of facebook  
-            FB.api(
-              '/1977995662529008/friends',
-              'GET',
-              {},
-              function(response) {
-                  // Insert your code here
-                  console.log("friends list :",response.data);
-              }
-            );
+            // FB.api(
+            //   '/1977995662529008/friends',
+            //   'GET',
+            //   {},
+            //   function(response) {
+            //       // Insert your code here
+            //       console.log("friends list :",response.data);
+            //   }
+            // );
           } else {
-            this.facebookErr = "User cancelled login or did not fully authorize";
+            a.facebookErr = "User cancelled login or did not fully authorize";
             console.log('User cancelled login or did not fully authorize.');
           }
         });

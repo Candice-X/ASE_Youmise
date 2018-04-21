@@ -313,8 +313,6 @@
         };
       },
   
-  
-  
       async showAlert() {
         jQuery(".send_card_alert").fadeIn();
         setTimeout(() => {
