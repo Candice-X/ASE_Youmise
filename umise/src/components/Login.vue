@@ -93,15 +93,28 @@ export default {
         console.log(response);
         if (response.authResponse) {
           console.log('Welcome!  Fetching your information.... ');
-          FB.api('/me', function(response) {
-            console.log('Good to see you, ' + response.name + '.');
-            console.log("response",response);
+        //   FB.api('/me', function(response) {
+        //     console.log('Good to see you, ' + response.name + '.');
+        //     console.log("response",response);
             
-            // 1. check the user, if exist, then get information, if not, create a new user
-            axios.post('/user')
+        //     // 1. check the user, if exist, then get information, if not, create a new user
+        //     axios.post('/user')
 
            
-        });
+        // });
+
+        FB.api('/me', { locale: 'tr_TR', fields: 'name, email,birthday, hometown,education,gender,website,work' },
+          function(response) {
+            console.log(response.email);
+            console.log(response.name);
+            console.log(response.gender);
+            console.log(response.birthday);
+            console.log(response.hometown);
+            console.log(response.education);
+            console.log(response.website);
+            console.log(response.work);
+          }
+        );
 
           // friend list of facebook  
           FB.api(
@@ -110,7 +123,7 @@ export default {
             {},
             function(response) {
                 // Insert your code here
-                console.log(response.data);
+                console.log("friends list :",response.data);
             }
           );
 
