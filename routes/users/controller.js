@@ -33,6 +33,44 @@ exports.dbCreateUser = async (User, username, email) => {
   }
 }
 
+exports.dbFacebookLogin = async (User, facebookid, username, email) => {
+  try {
+    const result = await User.findAll({where: {facebookid: facebookid}, raw: true});
+    if (result.length !== 0){
+      return result[0];
+    } else {
+      if (username){
+        const find = await User.findAll({ where: { username: username},raw: true });
+        if (find.length !== 0){
+          throw new Error('Username exists, please try another one.');
+        }
+        else {
+          if (email === null){
+            throw new Error('Email cannot be null.');
+          }else{
+            const checkemail = await User.findAll({ where: { email: email},raw: true });
+            if (checkemail.length !== 0){
+              throw new Error('Email exists.');
+            } else{
+              let raw = await User.create({
+                username,
+                email,
+                facebookid
+              });
+              let res = raw.get({ plain: true });
+              return res;
+            }
+          }
+        }
+      } else {
+        throw new Error('Username cannot be empty');
+      }
+    }
+  } catch (err) {
+    throw new ServerError(400, err.message);
+  }
+}
+
 exports.signup = async (User, cognito, username, email, password) => {
   const result = await exports.dbCreateUser(User, username, email);
 
