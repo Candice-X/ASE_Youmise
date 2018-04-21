@@ -5,7 +5,8 @@ import * as types from '../mutation-types';
 const state = {
   userName: null,
   idToken: null,
-	userID: null, 
+  userID: null, 
+  email:null,
 	// UUID: null,
   isLogin: false,
   facebookid:'',
@@ -116,6 +117,7 @@ const actions = {
     }
   },
 
+  // facebookLogin({commit},{username,facebookid,email})
 
   setLogoutTime({ commit }, expirationTime) {
     setTimeout(() => {

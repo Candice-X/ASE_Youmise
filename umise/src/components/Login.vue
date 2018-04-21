@@ -73,11 +73,7 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapState({
-      loading: state => state.user.loading
-    })
-  },
+
   components: {
     Navbar,
   },
@@ -85,46 +81,34 @@ export default {
     this.$store.state.user.isLogin = false;
     this.$store.dispatch("tryAutoLogin", this.$router);
   },
-  mounted(){
-    this.facebookErr="";
-  },
+
   methods: {
     ...mapActions(["login","setAllCardType"]),
     
-    async facebookLogin(){
+    facebookLogin(){
       this.facebookErr="";
 
       FB.login(function(response) {
         console.log(response);
         if (response.authResponse) {
-          console.log('Welcome!  Fetching your information.... ');
-        //   FB.api('/me', function(response) {
-        //     console.log('Good to see you, ' + response.name + '.');
-        //     console.log("response",response);
-            
-        //     // 1. check the user, if exist, then get information, if not, create a new user
-        //     axios.post('/user')
-       
-           
-        // });
-
-        FB.api('/me', { locale: 'tr_TR', fields: 'id,name,email' },
-          function(response) {
-            console.log(response.email);
-            console.log(response.name);  
-            console.log(response.id);  
-             this.$store.state.user.facebookid = response.id;
-             this.$store.state.user.email = response.email;
-             this.$store.state.user.name = response.name;
-             
-             try{
-                const resp = axios.post('/user/facebooklogin',{"username":response.name,"email":response.email,"facebookid":response.id});
-                 console.log("post login:",resp.data);
-             }catch(e){
-               console.log(e.message);
-             };
-          }
-        );
+            FB.api('/me', { locale: 'tr_TR', fields: 'id,name,email' },
+              function(response) {
+                console.log(response.email);
+                console.log(response.name);  
+                console.log(response.id);  
+                this.$store.state.user.facebookid = response.id;
+                this.$store.state.user.email = response.email;
+                this.$store.state.user.name = response.name;
+                
+                try{
+                    const resp = axios.post('/user/facebooklogin',{"username":response.name,"email":response.email,"facebookid":response.id});
+                    console.log("post login:",resp.data);
+                    this.$router.push("/dashboard");
+                }catch(e){
+                    console.log(e.message);
+                };
+              }
+            );
          
           // friend list of facebook  
           // FB.api(
@@ -136,7 +120,7 @@ export default {
           //       console.log("friends list :",response.data);
           //   }
           // );
-          this.$router.push({path:'/dashboard'});
+         
 
         } else {
             this.facebookErr = "User cancelled login or did not fully authorize"; 
@@ -177,7 +161,11 @@ export default {
       }
     },
     
-    
+    computed: {
+     ...mapState({
+      loading: state => state.user.loading
+    })
+  },
 
   }
 };
