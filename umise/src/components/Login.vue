@@ -103,38 +103,39 @@ export default {
             
         //     // 1. check the user, if exist, then get information, if not, create a new user
         //     axios.post('/user')
-
+       
            
         // });
 
-        FB.api('/me', { locale: 'tr_TR', fields: 'name,email,birthday, hometown,education,gender,website,work' },
+        FB.api('/me', { locale: 'tr_TR', fields: 'id,name,email' },
           function(response) {
             console.log(response.email);
-            console.log(response.name);
-            console.log(response.gender);
-            console.log(response.birthday);
-            console.log(response.hometown);
-            console.log(response.education);
-            console.log(response.website);
-            console.log(response.work);
-
-            const resp = axios.post('/user/facebooklogin',{"username":response.name,"email":response.email,"facebookid":response.id});
-            console.log("post login:",resp.data);
+            console.log(response.name);  
+            console.log(response.id);  
+             this.$store.state.user.facebookid = response.id;
+             this.$store.state.user.email = response.email;
+             this.$store.state.user.name = response.name;
+             
+             try{
+                const resp = await axios.post('/user/facebooklogin',{"username":response.name,"email":response.email,"facebookid":response.id});
+                 console.log("post login:",resp.data);
+             }catch(e){
+               console.log(e.message);
+             };
           }
         );
-
+         
           // friend list of facebook  
-          FB.api(
-            '/1977995662529008/friends',
-            'GET',
-            {},
-            function(response) {
-                // Insert your code here
-                console.log("friends list :",response.data);
-            }
-          );
-
-            this.$router.push("/dashboard");
+          // FB.api(
+          //   '/1977995662529008/friends',
+          //   'GET',
+          //   {},
+          //   function(response) {
+          //       // Insert your code here
+          //       console.log("friends list :",response.data);
+          //   }
+          // );
+          this.$router.push({path:'/dashboard'});
 
         } else {
             this.facebookErr = "User cancelled login or did not fully authorize"; 
