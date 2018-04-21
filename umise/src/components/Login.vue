@@ -31,14 +31,15 @@
       <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" 
       data-show-faces="true" data-auto-logout-link="true" data-use-continue-as="true" onlogin="checkLoginState"></div> -->
       <p style="text-align:center;">or</p>
-      <div class="btn btn-primary fb-login-button12" scope="public_profile,email" @click="facebookLogin" >
-        <span></span>
-        Login with facebook</div>
+        <div class="btn btn-primary fb-login-button12" scope="public_profile,email" @click="facebookLogin" >
+          <span></span>
+          Login with facebook
+        </div>
       <!-- <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
       </fb:login-button> -->
-        
+        {{ facebookErr }}
       </div> <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
-      
+     
       
     </div>
   </body>
@@ -59,7 +60,7 @@ export default {
         password: ""
       },
       error: "",
-
+      facebookErr: "",
     };
   },
   validations: {
@@ -84,11 +85,14 @@ export default {
     this.$store.state.user.isLogin = false;
     this.$store.dispatch("tryAutoLogin", this.$router);
   },
-  
+  mounted(){
+    this.facebookErr="";
+  },
   methods: {
     ...mapActions(["login","setAllCardType"]),
     
     async facebookLogin(){
+      this.facebookErr="";
       FB.login(function(response) {
         console.log(response);
         if (response.authResponse) {
@@ -103,7 +107,7 @@ export default {
            
         // });
 
-        FB.api('/me', { locale: 'tr_TR', fields: 'name, email,birthday, hometown,education,gender,website,work' },
+        FB.api('/me', { locale: 'tr_TR', fields: 'name,email,birthday, hometown,education,gender,website,work' },
           function(response) {
             console.log(response.email);
             console.log(response.name);
@@ -113,6 +117,9 @@ export default {
             console.log(response.education);
             console.log(response.website);
             console.log(response.work);
+
+            const resp = axios.post('/user/facebooklogin',{"username":response.name,"email":response.email,"facebookid":response.id});
+            console.log("post login:",resp.data);
           }
         );
 
@@ -130,9 +137,8 @@ export default {
             this.$router.push("/dashboard");
 
         } else {
-          
-         console.log('User cancelled login or did not fully authorize.');
-         return null;
+            this.facebookErr = "User cancelled login or did not fully authorize"; 
+            console.log('User cancelled login or did not fully authorize.');   
         }
       });
 
