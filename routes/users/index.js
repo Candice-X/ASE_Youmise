@@ -32,7 +32,6 @@ router.post('/facebooklogin', async (req, res) => {
       res.status(400).send("facebook userid is empty");
     } else {
       const result = await controller.dbFacebookLogin(models.User, req.body.facebookid, req.body.username, req.body.email);
-      console.log(`This is result of facebooklogin ${JSON.stringify(result)}`);
       res.json(result);
     }
   } catch (err) {

@@ -39,30 +39,25 @@ exports.dbFacebookLogin = async (User, facebookid, username, email) => {
     if (result.length !== 0){
       return result[0];
     } else {
-      console.log(`this is the first time to login`);
       if (username){
         const find = await User.findAll({ where: { username: username},raw: true });
         if (find.length !== 0){
           throw new Error('Username exists, please try another one.');
         }
         else {
-          console.log(`new user`);
           if (email === null){
             throw new Error('Email cannot be null.');
           }else{
-            console.log(`email not empty`);
             const checkemail = await User.findAll({ where: { email: email},raw: true });
             if (checkemail.length !== 0){
               throw new Error('Email exists.');
             } else{
-              console.log(`ready to create user`);
               let raw = await User.create({
                 username,
                 email,
                 facebookid
               });
               let res = raw.get({ plain: true });
-              console.log(res);
               return res;
             }
           }
@@ -72,9 +67,6 @@ exports.dbFacebookLogin = async (User, facebookid, username, email) => {
       }
     }
   } catch (err) {
-    // const message = err.errors.reduce((prev, { message }) => {
-    //   return `${prev}${message}; `;
-    // }, '');
     throw new ServerError(400, err.message);
   }
 }
