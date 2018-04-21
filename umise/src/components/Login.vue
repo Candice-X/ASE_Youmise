@@ -31,14 +31,15 @@
       <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" 
       data-show-faces="true" data-auto-logout-link="true" data-use-continue-as="true" onlogin="checkLoginState"></div> -->
       <p style="text-align:center;">or</p>
-      <div class="btn btn-primary fb-login-button12" scope="public_profile,email" @click="facebookLogin" >
-        <span></span>
-        Login with facebook</div>
+        <div class="btn btn-primary fb-login-button12" scope="public_profile,email" @click="facebookLogin" >
+          <span></span>
+          Login with facebook
+        </div>
       <!-- <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
       </fb:login-button> -->
-        
+        {{ facebookErr }}
       </div> <!-- <p class="mt-5 mb-3 text-muted text-center">Don't have a account,<router-link to="/signup"> Sign up</router-link></p> -->
-      
+     
       
     </div>
   </body>
@@ -59,7 +60,7 @@ export default {
         password: ""
       },
       error: "",
-
+      facebookErr: "",
     };
   },
   validations: {
@@ -72,11 +73,7 @@ export default {
       }
     }
   },
-  computed: {
-    ...mapState({
-      loading: state => state.user.loading
-    })
-  },
+
   components: {
     Navbar,
   },
@@ -84,64 +81,57 @@ export default {
     this.$store.state.user.isLogin = false;
     this.$store.dispatch("tryAutoLogin", this.$router);
   },
-  
+
   methods: {
     ...mapActions(["login","setAllCardType"]),
     
-    async facebookLogin(){
+    facebookLogin(){
+      this.facebookErr="";
+      var a =this;
       FB.login(function(response) {
         console.log(response);
         if (response.authResponse) {
-          console.log('Welcome!  Fetching your information.... ');
-        //   FB.api('/me', function(response) {
-        //     console.log('Good to see you, ' + response.name + '.');
-        //     console.log("response",response);
-            
-        //     // 1. check the user, if exist, then get information, if not, create a new user
-        //     axios.post('/user')
-
-           
-        // });
-
-        FB.api('/me', { locale: 'tr_TR', fields: 'name, email,birthday, hometown,education,gender,website,work' },
-          function(response) {
-            console.log(response.email);
-            console.log(response.name);
-            console.log(response.gender);
-            console.log(response.birthday);
-            console.log(response.hometown);
-            console.log(response.education);
-            console.log(response.website);
-            console.log(response.work);
-          }
-        );
-
+            FB.api('/me', { locale: 'tr_TR', fields: 'id,name,email' },
+              function(response) {
+                console.log(response.email);
+                console.log(response.name);  
+                console.log(response.id);  
+                a.$store.state.user.facebookid = response.id;
+                a.$store.state.user.email = response.email;
+                a.$store.state.user.name = response.name;
+    
+                try{
+                    const resp = axios.post('/user/facebooklogin',{"username":response.name,"email":response.email,"facebookid":response.id});
+                    console.log("post login:",resp.data);
+                    
+                     a.$router.push("/dashboard");
+                }catch(e){
+                    console.log(e.message);
+                };
+              }
+            );
+         
           // friend list of facebook  
-          FB.api(
-            '/1977995662529008/friends',
-            'GET',
-            {},
-            function(response) {
-                // Insert your code here
-                console.log("friends list :",response.data);
-            }
-          );
-
-            this.$router.push("/dashboard");
+          // FB.api(
+          //   '/1977995662529008/friends',
+          //   'GET',
+          //   {},
+          //   function(response) {
+          //       // Insert your code here
+          //       console.log("friends list :",response.data);
+          //   }
+          // );
+         
 
         } else {
-          
-         console.log('User cancelled login or did not fully authorize.');
-         return null;
+            this.facebookErr = "User cancelled login or did not fully authorize"; 
+            console.log('User cancelled login or did not fully authorize.');   
         }
       });
 
     
     },
 
-
-    // share 
-  
 
     async checkFacebookUser(){
       // 1. search for user by username?
@@ -169,9 +159,12 @@ export default {
       }
     },
     
-    
-
-  }
+  },
+   computed: {
+     ...mapState({
+      loading: state => state.user.loading
+    }),
+  },
 };
 </script>
 

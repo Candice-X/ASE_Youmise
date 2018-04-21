@@ -5,10 +5,11 @@ import * as types from '../mutation-types';
 const state = {
   userName: null,
   idToken: null,
-	userID: null, 
+  userID: null, 
+ 
 	// UUID: null,
   isLogin: false,
-
+  facebookid:'',
   loading: false,
   authenticated: 0,
   challengeData: {},
@@ -115,7 +116,6 @@ const actions = {
       throw e;
     }
   },
-
 
   setLogoutTime({ commit }, expirationTime) {
     setTimeout(() => {
