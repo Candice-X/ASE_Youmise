@@ -87,6 +87,7 @@ export default {
     
     facebookLogin(){
       this.facebookErr="";
+      var a =this;
       FB.login(function(response) {
         console.log(response);
         if (response.authResponse) {
@@ -95,15 +96,15 @@ export default {
                 console.log(response.email);
                 console.log(response.name);  
                 console.log(response.id);  
-                // this.$store.state.user.facebookid = response.id;
-                // this.$store.state.user.email = response.email;
-                // this.$store.state.user.name = response.name;
-                console.log("this:");
-                
+                a.$store.state.user.facebookid = response.id;
+                a.$store.state.user.email = response.email;
+                a.$store.state.user.name = response.name;
+    
                 try{
                     const resp = axios.post('/user/facebooklogin',{"username":response.name,"email":response.email,"facebookid":response.id});
                     console.log("post login:",resp.data);
-                    // this.$router.push("/dashboard");
+                    
+                     a.$router.push("/dashboard");
                 }catch(e){
                     console.log(e.message);
                 };
@@ -132,9 +133,6 @@ export default {
     },
 
 
-    // share 
-  
-
     async checkFacebookUser(){
       // 1. search for user by username?
 
@@ -161,13 +159,12 @@ export default {
       }
     },
     
-    computed: {
+  },
+   computed: {
      ...mapState({
       loading: state => state.user.loading
-    })
+    }),
   },
-
-  }
 };
 </script>
 
