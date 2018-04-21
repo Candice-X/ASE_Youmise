@@ -102,13 +102,13 @@
               },
               function(response) {
                 console.log(response.email);
-                console.log(response.name);
+              
                 console.log(response.id);
                 a.$store.state.user.facebookid = response.id;
                 a.$store.state.user.email = response.email;
                 const username = response.name.trim().replace(/\ +/g,"_")
                 a.$store.state.user.userName = username;
-
+                console.log(usernamee);
                 try {
   
                   const resp = axios.post('/user/facebooklogin', {
@@ -116,8 +116,8 @@
                     "email": response.email,
                     "facebookid": response.id
                   });
-                  console.log("post login:", resp.data);
-                  a.$store.state.user.userID = resp.data.uid;
+                  console.log("post login:", resp);
+                  // a.$store.state.user.userID = resp.data.uid;
   
                   a.$router.push("/dashboard");
                 } catch (e) {
