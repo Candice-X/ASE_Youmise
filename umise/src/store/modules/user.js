@@ -8,7 +8,7 @@ const state = {
 	userID: null, 
 	// UUID: null,
   isLogin: false,
-
+  facebookid:'',
   loading: false,
   authenticated: 0,
   challengeData: {},
