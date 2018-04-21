@@ -58,12 +58,26 @@
     font-size: 0.9em;
   }
   
-  @media only screen and (max-width: 768px){
+  @media (max-width: 768px){
     body {
-      font-size:0.5em;
+      font-size:0.8em;
       margin:0;
       padding:0;
-    }
+     }
+    .card_cont_mobile{
+      /* float:none !important; */
+      margin:auto !important;
+      }
+    .card_row{
+      margin-left:0 !important;
+      }
+    .card_img{
+      margin-left:0 !important;
+       }
+    .loading_cont{
+      padding-left: 0 !important;
+        }
+
   }
 
   #app {
@@ -202,4 +216,8 @@
     }
   }
 
+
+.card_row{
+  margin-bottom:30px!important;
+}
 </style>

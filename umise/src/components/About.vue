@@ -6,7 +6,7 @@
             <!-- <h4 class="title" >My Cards</h4>-->
             <h2 class="title"> We are Cat Named Doggie</h2> 
             <div class="row">
-                <div v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 card_cont" >
+                <div v-for = "(card, index) in cards" :key="index" class="col-lg-3 col-md-3 col-sm-6 col-xs-12 card_cont card_cont_mobile" >
                     <div class="card_img" >
                         <img v-bind:src="card.cardImg" />
                         <div class ="sender_cont" >
@@ -35,19 +35,9 @@
 <script>
 // import Nav from './DashboardNav';
 const img1 = require("../../static/card/1.jpg");
-const img2 = require("../../static/card/2.jpg");
-const img3 = require("../../static/card/3.png");
-const img4 = require("../../static/card/4.png");
-const img5 = require("../../static/card/5.png");
-const img6 = require("../../static/card/6.png");
 const img7 = require("../../static/card/7.png");
 const img8 = require("../../static/card/8.png");
-const img9 = require("../../static/card/9.png");
-const img10 = require("../../static/card/10.png");
-const img11 = require("../../static/card/11.png");
-const img12 = require("../../static/card/12.png");
 const img13 = require("../../static/card/card1.png");
-const img14 = require("../../static/card/card2.png");
 
 const girl = require("../../static/girl.png");
 const boy = require("../../static/Logo.png");
@@ -360,5 +350,10 @@ i {
   display: block;
   float: left;
   /* min-height: 775px;  */
+}
+@media (max-width:768px){
+  #mycards{
+    padding-top:40px;
+  }
 }
 </style>

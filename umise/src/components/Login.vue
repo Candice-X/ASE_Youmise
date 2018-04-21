@@ -31,7 +31,7 @@
       <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" 
       data-show-faces="true" data-auto-logout-link="true" data-use-continue-as="true" onlogin="checkLoginState"></div> -->
       <p style="text-align:center;">or</p>
-      <div class="btn btn-primary fb-login-button12" @click="facebookLogin" >
+      <div class="btn btn-primary fb-login-button12" scope="public_profile,email" @click="facebookLogin" >
         <span></span>
         Login with facebook</div>
       <!-- <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
@@ -87,45 +87,34 @@ export default {
   
   methods: {
     ...mapActions(["login","setAllCardType"]),
-    // getAllCardType(){
-    //   axios.get("/card/card")
-    //   .then(res =>{
-    //     console.log("get all cards types", res.data);
-    //     // this.setAllCardType(res.data);
-    //    this.$store.state.card.sendCardTypes = res.data;
-    //   })
-    //   .catch(error =>{
-    //     console.log(error);
-    //   });
-    // },
-      //facebook login 
-    // checkLoginState(){
-    //   console.log("start: facebook login");
-    //   FB.getLoginStatus(function(response) {
-            
-    //         // statusChangeCallback(response);
-    //         console.log("facebook login :", response);
-    //         if(response.status ==="connected"){
-    //           console.log("connected");             
-    //         }else{
-    //           console.log("cannot login, please try again later");
-    //         }
-    // });
-    // },
+    
     async facebookLogin(){
       FB.login(function(response) {
         console.log(response);
         if (response.authResponse) {
           console.log('Welcome!  Fetching your information.... ');
-          FB.api('/me', function(response) {
-            console.log('Good to see you, ' + response.name + '.');
-            console.log("response",response);
+        //   FB.api('/me', function(response) {
+        //     console.log('Good to see you, ' + response.name + '.');
+        //     console.log("response",response);
             
-            // 1. check the user, if exist, then get information, if not, create a new user
-            axios.post('/user')
+        //     // 1. check the user, if exist, then get information, if not, create a new user
+        //     axios.post('/user')
 
            
-        });
+        // });
+
+        FB.api('/me', { locale: 'tr_TR', fields: 'name, email,birthday, hometown,education,gender,website,work' },
+          function(response) {
+            console.log(response.email);
+            console.log(response.name);
+            console.log(response.gender);
+            console.log(response.birthday);
+            console.log(response.hometown);
+            console.log(response.education);
+            console.log(response.website);
+            console.log(response.work);
+          }
+        );
 
           // friend list of facebook  
           FB.api(
@@ -134,16 +123,25 @@ export default {
             {},
             function(response) {
                 // Insert your code here
+                console.log("friends list :",response.data);
             }
           );
 
-          //  this.router.push("/dashboard");
+            this.$router.push("/dashboard");
 
         } else {
+          
          console.log('User cancelled login or did not fully authorize.');
+         return null;
         }
       });
+
+    
     },
+
+
+    // share 
+  
 
     async checkFacebookUser(){
       // 1. search for user by username?

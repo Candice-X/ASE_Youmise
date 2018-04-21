@@ -9,7 +9,7 @@
            
             <div class="row card_row">
                 <div  v-for = "(card, index) in cardsType" :key="index" :id ="card.cardid"
-                class="col-lg-3 col-md-4 col-sm-6 card_cont" >
+                class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 card_cont card_cont_mobile" >
                     <div class="card_img" data-toggle="modal"
                     data-target="#Dashboard_send" @click= "showCard(index)">
                         <img v-bind:src="card.cardImgURL" />                        
@@ -43,18 +43,18 @@
 
 <!-- Modal -->
   <div class="modal fade bd-example-modal-lg" id="Dashboard_send" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document" >
+    <div class="modal-dialog modal-lg modal-dialog-centered modal_size_ipad" role="document" >
       <div class="modal-content">
-        <div class="modal-header">
-          <!-- <h5 class="modal-title" id="exampleModalLongTitle">{{this.oneCard.cardName}}</h5> -->
+        <!-- <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">{{this.oneCard.cardName}}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div>
+        </div> -->
         <div class="modal-body" style="height:560px;">
           <div class="row">
             
-                <div class="col-lg-6 col-md-6 col-sm-6 card_cont card_cont_one" >
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 card_cont card_cont_one" >
                     <div class="card_img_more" >
 
                         <img v-bind:src = "this.oneCard.cardImgURL" />
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                   <div class ="sender_cont_more col-lg-6 col-md-6 col-sm-6" > 
+                   <div class ="sender_cont_more col-lg-6 col-md-6 col-sm-12 col-xs-12" > 
                        
                     <div class="content_more">
                         <center><h4>{{ this.oneCard.cardName }}</h4></center>
@@ -123,6 +123,8 @@
                    <p style="color:red;"> {{this.errMsg}}</p>
                    <br/>
                     <button class="btn btn-primary btn-success btn-send" @click="sendCard" :disabled="$v.oneCard.receiverName.$invalid" >Send to Friends</button>
+                    
+                     <button class="btn btn-primary btn-outline-secondary btn-send btn-cancle" @click="cancle" >Cancle</button>
                 </div>
 
 
@@ -134,6 +136,12 @@
     </div>
   </div>
   <!-- end of card one -->
+
+      <div class="btn btn-primary fb-login-button12"  @click="shareToFacebook" >
+        <span></span>
+       Share to facebook</div> 
+       </div> 
+
 
 </div>
 
@@ -206,6 +214,19 @@ export default {
       this.oneCard = this.cardsType[index];
     },
 
+    shareToFacebook()
+    {
+      FB.ui({
+        method: 'share_open_graph',
+        action_type: 'og.likes',
+        action_properties: JSON.stringify({
+          object:'https://umise.me',
+        })
+      }, function(response){
+        // Debug response (optional)
+        console.log(response);
+      });
+    },
 
     chooseFriend(index){
      console.log(index);
@@ -279,6 +300,10 @@ export default {
          this.$store.state.user.loading = false;
       };    
      
+    },
+
+    cancle(){
+       jQuery("#Dashboard_send").modal('hide');
     },
 
       async getFriendsList(){
@@ -362,6 +387,9 @@ body {
   color: #868e96;
 }
 
+.modal_size_ipad{
+ 
+}
 .send_card_alert{
   margin:auto;
   z-index:99;
@@ -518,6 +546,7 @@ right:0px;
   background-size: cover;
   min-height: 786px;
   overflow-x: hidden;
+
 }
 
 @media (min-width: 992px) {
@@ -563,7 +592,9 @@ li:hover {
   color: #000;
   border-radius: 3px;
 }
-
+.btn-cancle{
+  margin-top:30px;
+}
 
 @media (min-width: 768px) {
   .send_cards_container {
@@ -578,6 +609,13 @@ li:hover {
     display: block;
     margin-left: 0rem;
     /* min-height: 775px; */
+  }
+  
+  
+}
+@media (min-width: 768px) and (max-width: 992px){
+  .modal_size_ipad{
+    max-width:95%;
   }
 }
 
@@ -691,7 +729,6 @@ i {
 }
 
 .card_row{
-
   width:100%;
 }
 
@@ -798,5 +835,33 @@ i {
 }
 .msg{
   font-size:1em;
+}
+
+@media (max-width:768px){
+  #nav_dashboard{
+    padding-top:40px;
+  }
+  .sender_cont_more{
+    float:left;
+    position: absolute;
+    top:520px;
+    margin:0 auto;
+    width:325px;
+
+  }
+
+  .modal-content{
+    margin:0;
+    padding:0;
+    margin-top:50px;
+    height:1090px;
+    
+  }
+  .modal-body{
+    height:100% !important;
+  }
+  .card_img_more{
+    margin:auto ;
+  }
 }
 </style>
