@@ -87,7 +87,6 @@ export default {
     
     facebookLogin(){
       this.facebookErr="";
-
       FB.login(function(response) {
         console.log(response);
         if (response.authResponse) {
@@ -96,14 +95,15 @@ export default {
                 console.log(response.email);
                 console.log(response.name);  
                 console.log(response.id);  
-                this.$store.state.user.facebookid = response.id;
-                this.$store.state.user.email = response.email;
-                this.$store.state.user.name = response.name;
+                // this.$store.state.user.facebookid = response.id;
+                // this.$store.state.user.email = response.email;
+                // this.$store.state.user.name = response.name;
+                console.log("this:");
                 
                 try{
                     const resp = axios.post('/user/facebooklogin',{"username":response.name,"email":response.email,"facebookid":response.id});
                     console.log("post login:",resp.data);
-                    this.$router.push("/dashboard");
+                    // this.$router.push("/dashboard");
                 }catch(e){
                     console.log(e.message);
                 };

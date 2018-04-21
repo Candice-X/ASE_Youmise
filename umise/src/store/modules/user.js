@@ -117,8 +117,6 @@ const actions = {
     }
   },
 
-  // facebookLogin({commit},{username,facebookid,email})
-
   setLogoutTime({ commit }, expirationTime) {
     setTimeout(() => {
       commit('logout');
