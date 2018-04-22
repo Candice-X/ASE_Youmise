@@ -218,9 +218,8 @@
           };
   
         } catch (e) {
-          console.log(e);
           console.log(e.response.data);
-          this.errorMsg = "Receiver doesn't exist";
+          this.errorMsg = e.response.data;
           this.$store.state.user.loading = false;
         };
       },
@@ -327,18 +326,14 @@
   
           };
   
-        } catch (e) {
-  
+        } catch (e) { 
           console.log("usercard: ", e.response.data);
         };
       },
-  
-  
-  
+
     },
   
     components: {
-      // Nav,
       FriendsList,
     },
     created: function() {
