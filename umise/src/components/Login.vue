@@ -106,7 +106,7 @@
                 console.log(response.id);
                 a.$store.state.user.facebookid = response.id;
                 a.$store.state.user.email = response.email;
-                const username = response.name.trim().replace(/\ +/g,"")
+                const username = response.name.trim().replace(/\ +/g,"");
                 a.$store.state.user.userName = username;
                 console.log(usernamee);
                 try {
