@@ -186,7 +186,7 @@
           };
   
         } catch (e) {
-          console.log(e.message);
+          console.log(e.response.data);
           this.$store.state.user.loading = false;
         };
       },
@@ -210,7 +210,7 @@
           };
   
         } catch (e) {
-          console.log(e.message);
+          console.log(e.response.data);
           this.$store.state.user.loading = false;
         };
       },
@@ -236,7 +236,7 @@
           };
   
         } catch (e) {
-          console.log(e.message);
+          console.log(e.response.data);
           this.$store.state.user.loading = false;
         };
       },
@@ -283,7 +283,7 @@
   
         } catch (e) {
   
-          console.log("usercard: ", e.message);
+          console.log("usercard: ", e.response.data);
         };
       },
   

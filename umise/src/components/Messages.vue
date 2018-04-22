@@ -112,7 +112,7 @@
           };
         } catch (e) {
           this.$store.state.user.loading = false;
-          console.log(e.message);
+          console.log(e.response.data);
         };
       },
   
