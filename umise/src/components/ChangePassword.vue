@@ -83,7 +83,7 @@
             this.$router.push("/dashboard");
           }
         } catch (e) {
-          this.error = e.message;
+          this.error = e.response.data;
           console.log("error :", e);
         }
       }

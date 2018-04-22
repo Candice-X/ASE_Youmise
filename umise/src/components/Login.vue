@@ -101,6 +101,7 @@
                 fields: 'id,name,email'
               },
               function(response) {
+                 let resp;
                 console.log(response.email);
               
                 console.log(response.id);
@@ -110,24 +111,25 @@
                 a.$store.state.user.userName = username;
                 console.log(username);
                 try {
-  
-                  const resp = axios.post('/user/facebooklogin', {
+                  axios.post('/user/facebooklogin', {
                     "username": username,
                     "email": response.email,
                     "facebookid": response.id
+                  }).then((response)=>{
+                    resp = response;
                   });
                   console.log("post login:", resp);
                   // a.$store.state.user.userID = resp.data.uid;
-  
+                  a.$store.state.user.userID = resp.data.uid;
+
                   a.$router.push("/dashboard");
                   a.$store.state.user.authenticated = 1;
                 } catch (e) {
-                  console.log(e.message);
+                   a.facebookErr = e.response.data;
                 };
               });
           } else {
             a.facebookErr = "User cancelled login or did not fully authorize";
-            console.log('User cancelled login or did not fully authorize.');
           }
         });
   
@@ -155,7 +157,7 @@
             this.$router.push("/mycard");
           }
         } catch (e) {
-          this.error = e.message;
+          this.error = e.response.data;
           console.log("error :", e);
         }
       },

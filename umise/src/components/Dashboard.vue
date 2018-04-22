@@ -112,7 +112,7 @@
                       How you have a great weekend, I will treat you a great dinner Next time :)
                       </textarea>
                     </div>
-                    <p style="color:red;"> {{this.errMsg}}</p>
+                    <p style="color:red;margin:-13px;padding:0;"> {{this.errMsg}}</p>
                     <br/>
                     <button class="btn btn-primary btn-success btn-send" @click="sendCard" :disabled="$v.oneCard.receiverName.$invalid">Send to Friends</button>
   
@@ -272,8 +272,9 @@
             throw new Error("Please login in first");
           };
         } catch (e) {
-          this.errMsg = e.message;
-          console.log(e.message);
+          this.errMsg = e.response.data;
+          console.log(e);
+          console.log(e.response.data);
           this.$store.state.user.loading = false;
         };
   
@@ -300,7 +301,7 @@
   
           };
         } catch (e) {
-          console.log(e.message);
+          console.log(e.response.data);
           this.$store.state.user.loading = false;
         };
       },
@@ -337,7 +338,7 @@
             console.log(error);
           });
       } catch (e) {
-        console.log(e.message);
+        console.log(e.response.data);
         this.$store.state.user.loading = false;
       };
       this.getFriendsList();

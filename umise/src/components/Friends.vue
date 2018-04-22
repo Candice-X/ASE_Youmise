@@ -219,7 +219,7 @@
   
         } catch (e) {
           console.log(e);
-          console.log(e.message);
+          console.log(e.response.data);
           this.errorMsg = "Receiver doesn't exist";
           this.$store.state.user.loading = false;
         };
@@ -242,7 +242,7 @@
           };
   
         } catch (e) {
-          console.log(e.message);
+          console.log(e.response.data);
           this.$store.state.user.loading = false;
         };
       },
@@ -266,8 +266,8 @@
           };
   
         } catch (e) {
-          this.errorMsg = e.message;
-          console.log(e.message);
+          this.errorMsg = e.response.data;
+          console.log(e.response.data);
           this.$store.state.user.loading = false;
   
         };
@@ -329,7 +329,7 @@
   
         } catch (e) {
   
-          console.log("usercard: ", e.message);
+          console.log("usercard: ", e.response.data);
         };
       },
   
