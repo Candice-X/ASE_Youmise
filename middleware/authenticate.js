@@ -1,4 +1,3 @@
-var {User} = require('./../models/user');
 var jwt = require('jsonwebtoken');
 var request = require('request');
 var jwkToPem = require('jwk-to-pem');
@@ -9,7 +8,7 @@ const iss = 'https://cognito-idp.us-east-2.amazonaws.com/' + poolId;
 
 
 // var ValidateToken = (pems, token, (err, res)=>{
-//     if(err){
+//     if(err){ 
 //         throw new ServerError(400, err.message);
 //     } else {
 
