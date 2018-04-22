@@ -124,7 +124,7 @@
               <i class="fa fa-twitter"></i>
             </a>
           </li>
-          <li class="list-inline-item social-facebook">
+          <li class="list-inline-item social-facebook" @click="shareToFacebook">
             <a href="#">
               <i class="fa fa-facebook"></i>
             </a>
@@ -173,6 +173,20 @@
       return {
         msg: 'Welcome to Your Vue.js App',
       };
+    },
+    methods:{
+      shareToFacebook() {
+        FB.ui({
+          method: 'share',
+          href: 'https://umise.me',
+          picture: 'https://s3.us-east-2.amazonaws.com/umisefrontendimages/Chance_Card.jpg',
+          title: 'This is my page',
+          description: "Hello, this is just a test",
+          caption: "picture caption"
+        }, function(response) {
+          console.log("feed:", response);
+        });
+      },
     },
     created: function() {
       this.$store.state.isLogin = false;

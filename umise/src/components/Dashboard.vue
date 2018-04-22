@@ -118,8 +118,6 @@
   
                     <button class="btn btn-primary btn-outline-secondary btn-send btn-cancle" @click="cancle">Cancle</button>
                   </div>
-  
-  
                 </div>
   
               </div>
@@ -128,12 +126,6 @@
           </div>
         </div>
         <!-- end of card one -->
-  
-        <div class="btn btn-primary fb-login-button12" @click="shareToFacebook">
-          <span></span> Share to facebook</div>
-      </div>
-  
-  
     </div>
   
   </div>
@@ -143,7 +135,7 @@
 
 <script>
   // import Nav from './DashboardNav';
-  import { required, email} from "vuelidate/lib/validators";
+  import { required, email } from "vuelidate/lib/validators";
   import Friends from './Friends';
   import { mapState, mapActions, mapGetters } from "vuex";
   import axios from "axios";
