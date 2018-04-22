@@ -120,6 +120,7 @@
                   // a.$store.state.user.userID = resp.data.uid;
   
                   a.$router.push("/dashboard");
+                  a.$store.state.user.authenticated = 1;
                 } catch (e) {
                   console.log(e.message);
                 };
