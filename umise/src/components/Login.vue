@@ -106,7 +106,7 @@
                 console.log(response.id);
                 a.$store.state.user.facebookid = response.id;
                 a.$store.state.user.email = response.email;
-                const username = response.name.trim().replace(/\ +/g,"_")
+                const username = response.name.trim().replace(/\ +/g,"");
                 a.$store.state.user.userName = username;
                 console.log(usernamee);
                 try {
@@ -123,19 +123,7 @@
                 } catch (e) {
                   console.log(e.message);
                 };
-              }
-            );
-  
-            // friend list of facebook  
-            // FB.api(
-            //   '/1977995662529008/friends',
-            //   'GET',
-            //   {},
-            //   function(response) {
-            //       // Insert your code here
-            //       console.log("friends list :",response.data);
-            //   }
-            // );
+              });
           } else {
             a.facebookErr = "User cancelled login or did not fully authorize";
             console.log('User cancelled login or did not fully authorize.');
