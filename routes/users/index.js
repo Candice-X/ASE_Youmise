@@ -4,6 +4,8 @@ const AWS = require('aws-sdk');
 const controller = require('./controller');
 const models = require('../../models');
 const config = require('../../config');
+var {authenticate} = require('./../../middleware/authenticate');
+
 
 const router = express.Router();
 AWS.config.update({
@@ -104,6 +106,24 @@ router.get('/user', async(req, res) => {
   }
 });
 
+router.get('/unauth/user', async(req, res) => {
+  try {
+    let result = await controller.dbFetchAll(models.User);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
+router.get('/user', authenticate, async(req, res) => {
+  try {
+    let result = await controller.dbFetchAll(models.User);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
 router.get('/avatar/:uid', async(req, res) => {
   try {
     const uid = req.params.uid;
@@ -115,7 +135,19 @@ router.get('/avatar/:uid', async(req, res) => {
 })
 
 
-router.patch('/user/:uid', async(req, res) => {
+router.patch('/unauth/user/:uid', async(req, res) => {
+  try {
+    const uid = req.params.uid;
+    const username = req.body.username;
+    const avatarUrl = req.body.avatarUrl;
+    const result = await controller.dbUpdateId(models.User, uid, username, avatarUrl);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+})
+
+router.patch('/user/:uid', authenticate, async(req, res) => {
   try {
     const uid = req.params.uid;
     const username = req.body.username;

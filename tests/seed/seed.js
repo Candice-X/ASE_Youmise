@@ -1,7 +1,12 @@
 const sequelize = require('sequelize');
 const models = require('./../../models');
 const {Card} = require('./../../routes/cards/controller');
+const {User} = require('./../../routes/users/controller');
 const moment = require('moment');
+const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
+const password = 'ase20182018';
+const config = require('../../config');
+
 
 before(async () => {
     return await require('../../models').sequelize.sync({force:true});
@@ -16,6 +21,45 @@ function generateUUID() {
     });
     return uuid;
 }
+
+
+const poolData = {
+    UserPoolId: config.POOL_ID,
+    ClientId: config.CLIENT_ID
+  };
+  
+const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+  
+// const Idtoken = async ()=>{
+//     const user = await models.User.findAll({ where: {username: "authtest"}, raw:true});
+//     const Username = user[0].username;
+//     console.log(`youmeiyou user ${Username}`);
+//     const authenticationData = { Username, password };
+//     const authDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+  
+//       const userData = {
+//         Pool: userPool,
+//         Username,
+//       };
+//       const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+//       return new Promise((resolve, reject) => {
+//         cognitoUser.authenticateUser(authDetails, {
+//           onSuccess: result => {
+//             console.log(`reseult ${result.getIdToken()}`);
+//             resolve(result.getIdToken());
+//           },
+//           onFailure: err => reject(err),
+//         });
+//     });
+// };
+
+
+// var testIdtoken  = Idtoken().then(function(res) {
+//     console.log(res);
+//     return res;
+//   });
+
+
 const CardOneId = generateUUID();
 const CardTwoId = generateUUID();
 const CardThreeId = generateUUID();
@@ -325,3 +369,6 @@ const populateFriendships = (done)=>{
 
 module.exports = {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages, friendRequests, populateFriendRequests, friendships, populateFriendships};
 // module.exports = {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages};
+
+
+

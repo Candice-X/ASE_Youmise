@@ -112,7 +112,7 @@
           };
         } catch (e) {
           this.$store.state.user.loading = false;
-          console.log(e.response.data);
+          console.log(e.message.data);
         };
       },
   
@@ -132,7 +132,7 @@
         } catch (e) {
           console.log(e);
           this.$store.state.user.loading = false;
-          // this.errorMsg = e.response.data;
+          this.errorMsg = e.response.data;
         };
       },
   

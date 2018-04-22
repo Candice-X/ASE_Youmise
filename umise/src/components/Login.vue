@@ -101,7 +101,7 @@
                 fields: 'id,name,email'
               },
               function(response) {
-                 let resp;
+                let resp = null;
                 console.log(response.email);
               
                 console.log(response.id);
@@ -117,15 +117,16 @@
                     "facebookid": response.id
                   }).then((response)=>{
                     resp = response;
+                    console.log(response.data);
                   });
                   console.log("post login:", resp);
                   // a.$store.state.user.userID = resp.data.uid;
                   a.$store.state.user.userID = resp.data.uid;
-
-                  a.$router.push("/dashboard");
                   a.$store.state.user.authenticated = 1;
+                  a.$router.push("/dashboard");
+                 
                 } catch (e) {
-                   a.facebookErr = e.response.data;
+                   a.facebookErr = e.message;
                 };
               });
           } else {
@@ -157,7 +158,7 @@
             this.$router.push("/mycard");
           }
         } catch (e) {
-          this.error = e.response.data;
+          this.error = e.message;
           console.log("error :", e);
         }
       },
