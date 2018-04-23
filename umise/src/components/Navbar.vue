@@ -15,7 +15,7 @@
             <router-link tag="li" to="/login" active-class="btn-success-active" class="btn btn-primary btn-sm btn-outline-success left" default>
               <span  >Sign In</span>
             </router-link>
-            <router-link tag="li" to="/signup" active-class="btn-success-active" class="btn btn-primary btn-sm btn-outline-success right" default>
+            <router-link tag="li" to="/signup" active-class="btn-success-active" class="btn btn-primary btn-sm btn-outline-success right">
               <span  >Sign Up</span>
             </router-link>
           </div>
