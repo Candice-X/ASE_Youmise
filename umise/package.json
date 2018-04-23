@@ -41,8 +41,7 @@
   "babel": {
     "presets": [
       "@vue/app"
-    ],
-    "plugins": ["transform-decorators-legacy"]
+    ]
   },
   "eslintConfig": {
     "root": true,
