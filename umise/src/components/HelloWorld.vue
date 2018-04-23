@@ -17,7 +17,7 @@
               </div>
   
               <router-link to="/dashboard">
-                <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">
+                <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger" style="color:#fff">
                   Try it now !</a>
               </router-link>
             </div>
