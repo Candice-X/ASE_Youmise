@@ -24,7 +24,7 @@ beforeEach(populateUsers);
 //     });
 // });
 
-describe('PATCH /user/:id',()=>{
+describe('unauth PATCH /user/:id',()=>{
     it('should only update the user avatarUrl', (done)=>{
         var uid = users[0].uid;
         request(app)

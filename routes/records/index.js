@@ -2,7 +2,7 @@
 
 const express = require('express');
 const AWS = require('aws-sdk');
-
+const moment = require('moment');
 const controller = require('./controller');
 const models = require('../../models');
 const messageController = require('./../messages/controller');
@@ -16,6 +16,8 @@ const router = express.Router();
 router.post('/record', async (req, res) => {
   try {
     const result = await controller.dbCreateRecord(models.Record, models.User, req.body.senderid, req.body.receiverEmail, req.body.cardid, req.body.expireDate, req.body.cardContent, req.body.cardTitle);
+    const sender = await models.User.findAll({where: {uid: req.body.senderid}, raw: true});
+    const card = await models.Card.findAll({where: {cardid: req.body.cardid}, raw: true});
     let receiverid = null;
     if(req.body.receiverEmail !== null){
       const receiver = await models.User.findAll({where: {email: req.body.receiverEmail}, raw: true});
@@ -25,7 +27,14 @@ router.post('/record', async (req, res) => {
       // If receiverid == null, then unknown receiver, donot sent message to receiver.
       // We should sent message when receiverid being updated.
       // record message
-      const message = await messageController.dbCreateMessage(models.Message, req.body.senderid, receiverid, result.recordid, req.body.title, req.body.msgContent);
+      console.log(`${sender[0].username}`);
+      console.log(`${card[0].cardName}`);
+      const title = sender[0].username + ' send ' + req.body.receiverEmail + ' a ' + card[0].cardName + '.';
+      console.log(`${title}`);
+      const msgContent = sender[0].username + " send a card { " + card[0].cardName + " } to " + req.body.receiverEmail + " at " + moment().format('MMMM Do YYYY, h:mm:ss a') + ".";
+      
+      console.log(`${msgContent}`);
+      const message = await messageController.dbCreateMessage(models.Message, req.body.senderid, receiverid, result.recordid, title, msgContent);
       console.log(`message sent successs`);
     }
 
