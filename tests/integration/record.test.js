@@ -19,9 +19,9 @@ describe('POST /record/record ', ()=>{
         request(app)
             .post('/record/record')
             .send({
-                senderid: records[2].senderid,
-                receiverEmail: users[3].email,
-                cardid: records[2].cardid,
+                senderid: records[0].senderid,
+                receiverEmail: users[0].email,
+                cardid: records[0].cardid,
                 expireDate: null,
                 cardContent: "chenfu invite xxx for dinner.",
                 cardTitle: "dinner invitation",
@@ -31,7 +31,7 @@ describe('POST /record/record ', ()=>{
             .expect(200)
             .expect((res)=>{
                 expect(res.body.cardTitle).toBe(records[2].cardTitle);
-                expect(res.body.receiverid).toBe(users[3].uid);
+                expect(res.body.receiverid).toBe(users[0].uid);
             })
             .end((err,res)=>{
                 if(err){
@@ -41,9 +41,8 @@ describe('POST /record/record ', ()=>{
                     expect(record.length).toBe(1);
                     expect(record[0].cardTitle).toBe(records[2].cardTitle);
                 }).catch((e)=> done(e));
-                models.Message.findAll({ where: { title: messages[2].title }, raw : true }).then((message)=>{
-                    expect(message.length).toBe(1);
-                    expect(message[0].title).toBe(messages[2].title);
+                models.Message.findAll({raw : true }).then((message)=>{
+                    expect(message.length).toBe(3);
                     done();
                 }).catch((e)=> done(e));
             });

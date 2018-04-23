@@ -4,6 +4,7 @@ var jwkToPem = require('jwk-to-pem');
 const config = require('./../config');
 const ServerError = require('./../utils/ServerError');
 const poolId = config.POOL_ID;
+
 const iss = 'https://cognito-idp.us-east-2.amazonaws.com/' + poolId;
 
 

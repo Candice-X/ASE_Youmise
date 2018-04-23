@@ -168,7 +168,7 @@ await models.sequelize.sync();
 //     // models.User.create({
 //     //   username: 'xyh102',
 //     //   email: 'candice102@gmail.com'
-//     // });t
+//     // });
 //   }
 
 })();
