@@ -5,15 +5,37 @@
         <a class="navbar-brand js-scroll-trigger" href="#">
           <router-link to="/"> <img src="../assets/img/Logo.png" width='45' /><span class="logo"> Umise </span></router-link>
         </a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" 
+        <!-- <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" 
         data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fa fa-bars"></i>
-          </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
+          </button> -->
+        <div class="login_cont"> 
+          <div class="btn-group">
+            <router-link tag="li" to="/login" active-class="btn-success-active" class="btn btn-primary btn-sm btn-outline-success left" default>
+              <span  >Sign In</span>
+            </router-link>
+            <router-link tag="li" to="/signup" active-class="btn-success-active" class="btn btn-primary btn-sm btn-outline-success right" default>
+              <span  >Sign Up</span>
+            </router-link>
+          </div>
+
+
+        </div>
+
+        <!-- <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <router-link style="margin-left:15px;" to="/login" tag="li" active-class="active" exact>
+
+              <router-link tag="li" to="/login" active-class="nav_active" class="nav-item" default>
+                <span class="nav-link js-scroll-trigger"><i class="icon-layers"></i>Sign In</span>
+              </router-link>
+              
+              <router-link tag="li" to="/mycard" active-class="nav_active" class="nav-item" default>
+                <span class="nav-link js-scroll-trigger"><i class="icon-layers"></i>Sign Up</span>
+              </router-link> 
+
+               <router-link  to="/login" tag="li" active-class="active" exact>
                 <a class="btn btn-sm btn-outline-success" style="font-size:1em;">Sign in</a>
               </router-link>
             </li>
@@ -23,7 +45,7 @@
               </router-link>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </nav>
   </div>
@@ -120,7 +142,32 @@
     font-weight: 600;
     text-transform: uppercase;
   }
-  
+
+.login_cont li{
+  list-style: none;
+  padding:0;
+  margin:0;
+}
+
+.login_cont span{
+  padding:15px;
+  line-height: 2em;
+  margin:0;
+}
+.login_cont .left{
+  border-radius: 5px 0 0 5px !important;
+  color:#fff;
+
+}
+.login_cont .right{
+  border-radius: 0 5px 5px 0 !important;
+  color:#fff;
+}
+.login_cont .btn-success-active{
+  background:#28a745;
+
+}
+/*   
   @media (min-width: 992px) {
     #mainNav {
       border-color: transparent;
@@ -207,5 +254,5 @@
     #sideNav .navbar-collapse .navbar-nav .nav-item .nav-link {
       display: block;
     }
-  }
+  } */
 </style>
