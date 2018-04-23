@@ -118,12 +118,13 @@
                   }).then((response)=>{
                     resp = response;
                     console.log(response.data);
+                    a.$store.state.user.userID = response.data.uid;
+                    a.$store.state.user.authenticated = 1;
+                    a.$router.push("/dashboard");
                   });
-                  console.log("post login:", resp);
+
+                  // console.log("post login:", resp);
                   // a.$store.state.user.userID = resp.data.uid;
-                  a.$store.state.user.userID = resp.data.uid;
-                  a.$store.state.user.authenticated = 1;
-                  a.$router.push("/dashboard");
                  
                 } catch (e) {
                    a.facebookErr = e.message;
