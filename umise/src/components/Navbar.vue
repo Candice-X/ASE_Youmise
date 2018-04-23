@@ -5,18 +5,25 @@
         <a class="navbar-brand js-scroll-trigger" href="#">
           <router-link to="/"> <img src="../assets/img/Logo.png" width='45' /><span class="logo"> Umise </span></router-link>
         </a>
-       
-        <div class="login_cont"> 
-          <div class="btn-group">
-            <router-link tag="li" to="/login" active-class="btn-success-active" class="btn btn-primary btn-sm btn-outline-success left" default>
-              <span  >Sign In</span>
-            </router-link>
-            <router-link tag="li" to="/signup" active-class="btn-success-active" class="btn btn-primary btn-sm btn-outline-success right">
-              <span  >Sign Up</span>
-            </router-link>
-          </div>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" 
+        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fa fa-bars"></i>
+          </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <router-link style="margin-left:15px;" to="/login" tag="li" active-class="active" exact>
+                <a class="btn btn-sm btn-outline-success" style="font-size:1em;">Sign in</a>
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link style="margin-left:15px;" tag="li" to="/signup" active-class="active" exact>
+                <a class="btn btn-sm btn-outline-success" style="font-size:1em;"> Sign up</a>
+              </router-link>
+            </li>
+          </ul>
         </div>
-
       </div>
     </nav>
   </div>

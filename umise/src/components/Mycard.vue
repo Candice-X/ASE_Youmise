@@ -819,7 +819,6 @@
     z-index: 99;
     text-align: center;
     width: 25rem;
-    min-width:300px;
     background: #ffc9aa;
     border-radius: 5px;
     height: 5rem;

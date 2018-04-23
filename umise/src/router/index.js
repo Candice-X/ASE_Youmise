@@ -29,7 +29,8 @@ const authToLink =['/', '/login', '/signup', '/dashboard', '/mycard', '/friends'
 
 const loginGuard = link => async (to, from, next ) => {
   let { authenticated } = store.state.user;
-  if(link ==='/mycard'|| link ==='/friends' || link==='/messages'|| link==='/account'|| link==='/dashboard' ) {
+  if(link ==='/mycard'|| link ==='/friends' || link==='/messages'|| link==='/account'|| link==='/dashboard' ) 
+  {
       if(authenticated !==1){
         try {
           next('/login');
