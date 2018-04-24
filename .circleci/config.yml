@@ -77,10 +77,8 @@ jobs:
           name: Build front end
           command: |
             cd umise
-            # yarn
-            # yarn build --mode development
-            npm install
-            npm run-script build
+            yarn
+            yarn build --mode development
             cd ..
 
       - run: ls umise/dist
