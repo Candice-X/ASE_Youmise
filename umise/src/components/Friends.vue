@@ -784,6 +784,7 @@
   
   .time {
     float: right;
+    
     height: 20px;
     font-size: 10px;
     margin-top: -22px;
