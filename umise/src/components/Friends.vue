@@ -43,7 +43,7 @@
       </div>
       <!-- alert message -->
       <div class="friend_alert" style="display:none;">
-        <p> Friend request send to {{this.email}} Successfully! </p>
+        <p class="alert_info"> Friend request send to {{this.email}} Successfully! </p>
       </div>
       <!-- end of alert -->
       <!-- alert message -->
@@ -313,10 +313,10 @@
             }
             jQuery("#friend_cards_specific").modal('hide');
   
-            this.oneCard["title"] = this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle;
-            this.oneCard["msgContent"] = this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle + 
-            " which you sent to him/her at " + this.oneCard.createDate.tostring(0, 10) + ". Last time you said: " + 
-            this.oneCard.cardContent;
+            // this.oneCard["title"] = this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle;
+            // this.oneCard["msgContent"] = this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle + 
+            // " which you sent to him/her at " + this.oneCard.createDate.tostring(0, 10) + ". Last time you said: " + 
+            // this.oneCard.cardContent;
             const response = await axios.patch(`/record/record/${this.oneCard.recordid}`, this.oneCard);
   
             jQuery(".card_send_alert").fadeIn();
@@ -786,7 +786,7 @@
     float: right;
     height: 20px;
     font-size: 10px;
-    margin-top: -18px;
+    margin-top: -22px;
     color: #555;
   }
   
