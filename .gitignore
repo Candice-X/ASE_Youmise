@@ -1,6 +1,7 @@
 .DS_Store
+node_modules/
+umise/node_modules/
 /dist
-
 # local env files
 .env.local
 .env.*.local

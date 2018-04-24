@@ -46,7 +46,7 @@
   
       <!-- alert message -->
       <div class="send_card_alert" style="display:none;">
-        <p> Send use card request to <strong style="color:green;font-weight:600;">{{this.oneCard.receiverEmail}} </strong> Successfully! </p>
+        <p class="alert_info"> Send use card request to <strong style="color:green;font-weight:600;">{{this.oneCard.receiverEmail}} </strong> Successfully! </p>
       </div>
       <!-- end of alert -->
   
@@ -267,8 +267,8 @@
             jQuery("#Dashboard_send").modal('hide');
   
   
-            this.oneCard["title"] = this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle;
-            this.oneCard["msgContent"] = this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle + " which you sent to him/her at " + this.oneCard.createDate + ". Last time you said: " + this.oneCard.cardContent;
+            // this.oneCard["title"] = this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle;
+            // this.oneCard["msgContent"] = this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle + " which you sent to him/her at " + this.oneCard.createDate + ". Last time you said: " + this.oneCard.cardContent;
             const response = await axios.patch(`/record/record/${this.oneCard.recordid}`, this.oneCard);
   
             //show the alert messager
@@ -842,7 +842,7 @@
     float: right;
     height: 20px;
     font-size: 10px;
-    margin-top: -18px;
+    margin-top: -22px;
     color: #555;
   }
   
