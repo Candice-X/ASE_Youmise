@@ -115,7 +115,7 @@ router.get('/unauth/user', async(req, res) => {
   }
 });
 
-router.get('/user', authenticate, async(req, res) => {
+router.get('/user', async(req, res) => {
   try {
     let result = await controller.dbFetchAll(models.User);
     res.json(result);
@@ -158,5 +158,15 @@ router.patch('/user/:uid', authenticate, async(req, res) => {
     res.status(400).send(err.message);
   }
 })
+
+router.get('/user/auth', authenticate, async(req, res) => {
+  try {
+    let result = await controller.dbFetchAll(models.User);
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
 
 module.exports = router;
