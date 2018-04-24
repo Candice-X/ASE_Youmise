@@ -84,7 +84,9 @@
     /* color: #2c3e50; */
     /* margin-top: 60px; */
   }
-  
+  .alert_info{
+    font-size:0.8em;
+  }
   a,
   a:active,
   a:hover {
