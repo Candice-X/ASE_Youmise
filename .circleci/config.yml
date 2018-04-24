@@ -77,7 +77,7 @@ jobs:
           name: Build front end
           command: |
             cd umise
-            yarn
+            # yarn
             yarn build --mode development
             cd ..
 
@@ -102,7 +102,7 @@ jobs:
           name: Build front end
           command: |
             cd umise
-            yarn
+            # yarn
             yarn build --mode production
             cd ..
       - run:
