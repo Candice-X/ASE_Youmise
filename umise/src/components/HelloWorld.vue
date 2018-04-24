@@ -16,8 +16,8 @@
                 <br /> Our purpose is to avoid this kind of embarrassment and make interactions and invitations between friends more interesting.
               </div>
   
-              <router-link to="/login">
-                <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger" style="font-size:1em;color:#fff;">
+              <router-link to="/dashboard">
+                <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger" style="color:#fff">
                   Try it now !</a>
               </router-link>
             </div>

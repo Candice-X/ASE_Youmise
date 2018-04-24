@@ -25,19 +25,17 @@
     "sequelize": "^4.37.1",
     "vue": "^2.5.13",
     "vue-goodshare": "^0.9.3",
-    "vue-meta": "^1.5.0",
     "vue-router": "^3.0.1",
     "vuelidate": "^0.6.2",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-beta.6",
+    "@vue/cli-plugin-babel": "3.0.0-beta.6",
     "@vue/cli-plugin-eslint": "^3.0.0-beta.6",
     "@vue/cli-service": "^3.0.0-beta.6",
     "vue-template-compiler": "^2.5.13",
     "expect": "^23.0.0-alpha.0",
-    "sequelize-mock": "^0.10.2",
-    "mocha": "^5.0.4"
+    "sequelize-mock": "^0.10.2"
   },
   "babel": {
     "presets": [
