@@ -466,6 +466,9 @@ exports.dbUseCard = async (Message, Record, recordid, title, msgContent) => {
     if(!record){
       throw new Error('Record not found!');
     }
+    if(record.get('status') === 6){
+      throw new Error('Your card is already in use');
+    }
     if(record.get('status') === 5){
       throw new Error('You have already used this card!');
     }
