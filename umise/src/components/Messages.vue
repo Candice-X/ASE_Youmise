@@ -58,7 +58,7 @@
                   <h4>{{ request.senderUsername }} send a friend request </h4>
                   <p class="sub_title">{{request.createdAt.substring(0,10)}}</p>
                   <p class="sub_title"> {{ request.senderUsername }} want to add you as a new friend</p>
-                  <p class="">Status: {{request.status}}</p>
+                  <p class="" style="padding:0;margin-bottom:0;">Status: {{request.status}}</p>
                 </div>
               </div>
               <div v-if="request.status==='SENT'">
