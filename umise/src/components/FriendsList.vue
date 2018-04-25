@@ -14,8 +14,9 @@
         <div class="friens_info">
           <h4>{{friend.username}} </h4>
           <div class="card_info">
-            <span class="card_send"><i class="icon-present" ></i> 77 </span>
-            <span class="card_send"><i class ="icon-action-redo "></i> 126</span>
+            <span class="card_send">{{friend.email}}</span>
+            <!-- <span class="card_send"><i class="icon-present" ></i> 77 </span>
+            <span class="card_send"><i class ="icon-action-redo "></i> 126</span> -->
           </div>
         </div>
       </div>
