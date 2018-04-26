@@ -3,9 +3,21 @@ const models = require('./../../models');
 const {Card} = require('./../../routes/cards/controller');
 const {User} = require('./../../routes/users/controller');
 const moment = require('moment');
+global.fetch = require('node-fetch');
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const password = 'ase20182018';
 const config = require('../../config');
+const AWS = require('aws-sdk');
+
+AWS.config.update({
+  region: 'us-east-2',
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+ });
+
+const s3= new AWS.S3();
+
+const cognito = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
 
 
 before(async () => {
@@ -23,41 +35,56 @@ function generateUUID() {
 }
 
 
-const poolData = {
-    UserPoolId: config.POOL_ID,
-    ClientId: config.CLIENT_ID
-  };
+// const poolData = {
+//     UserPoolId: config.POOL_ID,
+//     ClientId: config.CLIENT_ID
+//   };
   
-const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+// const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
   
-// const Idtoken = async ()=>{
-//     const user = await models.User.findAll({ where: {username: "authtest"}, raw:true});
-//     const Username = user[0].username;
-//     console.log(`youmeiyou user ${Username}`);
+// const g_Idtoken = async ()=>{
+//     try{
+//     console.log(`youmeiyou jinlai ne `);
+//     const Username =  "authtest2";
 //     const authenticationData = { Username, password };
 //     const authDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
-  
-//       const userData = {
+//     const userData = {
 //         Pool: userPool,
-//         Username,
-//       };
-//       const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-//       return new Promise((resolve, reject) => {
+//         Username
+//     };
+//     const cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+//     console.log(`cognitoUser ${JSON.stringify(cognitoUser)}`);
+//     // console.log(`authenticationData ${JSON.stringify(authenticationData)}`);
+//     // console.log(`authDetails ${JSON.stringify(authDetails)}`);
+//     return new Promise((resolve, reject) => {
 //         cognitoUser.authenticateUser(authDetails, {
-//           onSuccess: result => {
-//             console.log(`reseult ${result.getIdToken()}`);
-//             resolve(result.getIdToken());
-//           },
-//           onFailure: err => reject(err),
+//             onSuccess: result => {
+//             console.log(`result ${JSON.stringify(result)}`);
+//             resolve({data: result.getIdToken()});
+//             },
+//             onFailure: err => {
+//                 reject(err);
+//             }
 //         });
 //     });
+//     } catch (e) {
+//         // console.log(`error `);
+//         throw e.message;
+//     }
 // };
 
 
-// var testIdtoken  = Idtoken().then(function(res) {
-//     console.log(res);
-//     return res;
-//   });
+// var testIdtoken  = async () => {
+//     try {
+//         const res = await g_Idtoken();
+//         return res.data;
+//     } catch (e){
+//         console.log("----------------------------------------");
+//         console.log(JSON.stringify(e));
+//         console.log("----------------------------------------");
+//         throw e.message;
+//     }
+// };
 
 
 const CardOneId = generateUUID();

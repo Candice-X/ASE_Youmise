@@ -91,13 +91,13 @@
       ...mapActions(["login", "setAllCardType"]),
   
       facebookLogin() {
+
         this.facebookErr = "";
         var a = this;
         FB.login(function(response) {
           console.log(response);
           if (response.authResponse) {
             FB.api('/me', {
-                locale: 'tr_TR',
                 fields: 'id,name,email'
               },
               function(response) {
@@ -110,6 +110,9 @@
                 let username = response.name.trim().replace(/\ +/g,"");
                 a.$store.state.user.userName = username;
                 console.log(username);
+                if(response.email==undefined){
+                  a.facebookErr = "email is undefined";
+                }
                 try {
                   axios.post('/user/facebooklogin', {
                     "username": username,
@@ -133,7 +136,7 @@
           } else {
             a.facebookErr = "User cancelled login or did not fully authorize";
           }
-        });
+        },{scope:'email,user_likes'});
   
   
       },

@@ -7,6 +7,8 @@ const {app} = require('./../../app');
 const models = require('./../../models');
 
 const {users, populateUsers} = require('./../seed/seed');
+// console.log('testIdtoken');
+// console.log(`${testIdtoken()}`);
 
 beforeEach(populateUsers);
 
@@ -14,8 +16,8 @@ beforeEach(populateUsers);
 // describe('get /authenticate user',()=>{
 //     it('should authenticate user to get all cards', (done)=>{
 //         request(app)
-//             .get('/user/user')
-//             .set('Authorization', idtoken)
+//             .get('/user/user/auth')
+//             .set('Authorization', testIdtoken)
 //             .expect(200)
 //             .expect((res)=>{
 //                 expect(res.body.length).toBe(4);
@@ -23,6 +25,19 @@ beforeEach(populateUsers);
 //             .end(done);
 //     });
 // });
+
+describe('get all user',()=>{
+    it('should authenticate user to get all cards', (done)=>{
+        request(app)
+            .get('/user/user')
+            .expect(200)
+            .expect((res)=>{
+                expect(res.body.length).toBe(4);
+            })
+            .end(done);
+    });
+});
+
 
 describe('unauth PATCH /user/:id',()=>{
     it('should only update the user avatarUrl', (done)=>{
