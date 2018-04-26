@@ -184,7 +184,7 @@ router.delete('/record/:id', async(req, res) => {
 
 router.post('/usecard', async (req, res) => {
   try {
-    const result = await controller.dbUseCard(models.Message, models.Record, req.body.recordid, req.body.title, req.body.msgContent);
+    const result = await controller.dbUseCard(models.Card, models.User, models.Message, models.Record, req.body.recordid, req.body.title, req.body.msgContent);
     res.json(result);
   } catch (err) {
     res.status(err.statusCode).send(err.message);
