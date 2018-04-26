@@ -21,7 +21,7 @@ describe('Use card', ()=>{
     // Message: users[1]->users[0]
     const title = 'Dinner Invitation';
     const msgContent = 'This is a invitation sent by yinghai.';
-    const friendship = await recordController.dbUseCard(models.Message, models.Record, records[0].recordid, title, msgContent);
+    const friendship = await recordController.dbUseCard(models.Card, models.User, models.Message, models.Record, records[0].recordid, title, msgContent);
     let after = await models.Message.findAll({ where: {receiverid: users[0].uid }});
     const record = await models.Record.findOne({ where: {recordid: records[0].recordid}});
     expect(after.length).toBe(before.length + 1);
