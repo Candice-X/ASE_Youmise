@@ -59,7 +59,7 @@ describe('unauth PATCH /user/:id',()=>{
                 models.User.findAll({ where: { uid: uid }, raw : true }).then((user)=>{
                     expect(user[0].username).toBeTruthy();
                     expect(user[0].avatarUrl).toBe("11111");
-                    done(); 
+                    done();
                 }).catch((e)=>done(e));
             });
     });
@@ -82,7 +82,7 @@ describe('unauth PATCH /user/:id',()=>{
                 models.User.findAll({ where: { uid: uid }, raw : true }).then((user)=>{
                     expect(user[0].avatarUrl).toBeTruthy();
                     expect(user[0].username).toBe("dodo");
-                    done(); 
+                    done();
                 }).catch((e)=>done(e));
             });
     });
@@ -106,7 +106,7 @@ describe('unauth PATCH /user/:id',()=>{
                 models.User.findAll({ where: { uid: uid }, raw : true }).then((user)=>{
                     expect(user[0].avatarUrl).toBe("11111");
                     expect(user[0].username).toBe("dodo");
-                    done(); 
+                    done();
                 }).catch((e)=>done(e));
             });
     });
@@ -153,7 +153,7 @@ describe('POST /user/facebooklogin',()=>{
                 models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
                     expect(user[0].username).toBeTruthy();
                     expect(user[0].email).toBe(users[5].email);
-                    done(); 
+                    done();
                 }).catch((e)=>done(e));
             });
     });
@@ -177,7 +177,7 @@ describe('POST /user/facebooklogin',()=>{
                 models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
                     expect(user.length).toBe(1);
                     expect(user[0].email).toBe(users[1].email);
-                    done(); 
+                    done();
                 }).catch((e)=>done(e));
             });
     });
@@ -197,7 +197,7 @@ describe('POST /user/facebooklogin',()=>{
                 }
                 models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
                     expect(user.length).toBe(0);
-                    done(); 
+                    done();
                 }).catch((e)=>done(e));
             });
     });
@@ -217,7 +217,7 @@ describe('POST /user/facebooklogin',()=>{
                 }
                 models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
                     expect(user.length).toBe(0);
-                    done(); 
+                    done();
                 }).catch((e)=>done(e));
             });
     });
@@ -237,11 +237,11 @@ describe('POST /user/facebooklogin',()=>{
                 }
                 models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
                     expect(user.length).toBe(0);
-                    done(); 
+                    done();
                 }).catch((e)=>done(e));
             });
     });
-    it('should not create a user with duplicate email', (done)=>{
+    it('should not merge the user with same email with facebook', (done)=>{
         var facebookid = users[5].facebookid;
         request(app)
             .post(`/user/facebooklogin`)
@@ -250,14 +250,14 @@ describe('POST /user/facebooklogin',()=>{
                 email: users[0].email,
                 facebookid: facebookid,
             })
-            .expect(400)
+            .expect(200)
             .end((err,res)=>{
                 if(err){
                     return done(err);
                 }
                 models.User.findAll({ where: { facebookid: facebookid }, raw : true }).then((user)=>{
-                    expect(user.length).toBe(0);
-                    done(); 
+                    expect(user.length).toBe(1);
+                    done();
                 }).catch((e)=>done(e));
             });
     });

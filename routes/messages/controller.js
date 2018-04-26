@@ -157,31 +157,31 @@ exports.dbFindBySender = async (Message, Record, Card, senderid, status) => {
                         cardtype = card[0].types;
                     }
                     res.push({
-                        messageid: result[0].messageid,
-                        senderid: result[0].senderid,
-                        receiverid: result[0].receiverid,
-                        recordid: result[0].recordid,
-                        status: result[0].status,
-                        title: result[0].title,
-                        msgContent: result[0].msgContent,
+                        messageid: result[i].messageid,
+                        senderid: result[i].senderid,
+                        receiverid: result[i].receiverid,
+                        recordid: result[i].recordid,
+                        status: result[i].status,
+                        title: result[i].title,
+                        msgContent: result[i].msgContent,
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
                         cardtype: cardtype,
-                        createdAt: result[0].createdAt
+                        createdAt: result[i].createdAt
                     });
                 } else {
                     res.push({
-                        messageid: result[0].messageid,
-                        senderid: result[0].senderid,
-                        receiverid: result[0].receiverid,
-                        recordid: result[0].recordid,
-                        status: result[0].status,
-                        title: result[0].title,
-                        msgContent: result[0].msgContent,
+                        messageid: result[i].messageid,
+                        senderid: result[i].senderid,
+                        receiverid: result[i].receiverid,
+                        recordid: result[i].recordid,
+                        status: result[i].status,
+                        title: result[i].title,
+                        msgContent: result[i].msgContent,
                         cardContent: null,
                         cardTitle: null,
                         cardtype: null,
-                        createdAt: result[0].createdAt
+                        createdAt: result[i].createdAt
                     });
                 }
             }
@@ -220,31 +220,31 @@ try {
                         cardtype = card[0].types;
                     }
                     res.push({
-                        messageid: result[0].messageid,
-                        senderid: result[0].senderid,
-                        receiverid: result[0].receiverid,
-                        recordid: result[0].recordid,
-                        status: result[0].status,
-                        title: result[0].title,
-                        msgContent: result[0].msgContent,
+                        messageid: result[i].messageid,
+                        senderid: result[i].senderid,
+                        receiverid: result[i].receiverid,
+                        recordid: result[i].recordid,
+                        status: result[i].status,
+                        title: result[i].title,
+                        msgContent: result[i].msgContent,
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
                         cardtype: cardtype,
-                        createdAt: result[0].createdAt
+                        createdAt: result[i].createdAt
                     });
                 } else {
                     res.push({
-                        messageid: result[0].messageid,
-                        senderid: result[0].senderid,
-                        receiverid: result[0].receiverid,
-                        recordid: result[0].recordid,
-                        status: result[0].status,
-                        title: result[0].title,
-                        msgContent: result[0].msgContent,
+                        messageid: result[i].messageid,
+                        senderid: result[i].senderid,
+                        receiverid: result[i].receiverid,
+                        recordid: result[i].recordid,
+                        status: result[i].status,
+                        title: result[i].title,
+                        msgContent: result[i].msgContent,
                         cardContent: null,
                         cardTitle: null,
                         cardtype: null,
-                        createdAt: result[0].createdAt
+                        createdAt: result[i].createdAt
                     });
                 }
             }
@@ -275,31 +275,31 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid, friend
                         cardtype = card[0].types;
                     }
                     res.push({
-                        messageid: result[0].messageid,
-                        senderid: result[0].senderid,
-                        receiverid: result[0].receiverid,
-                        recordid: result[0].recordid,
-                        status: result[0].status,
-                        title: result[0].title,
-                        msgContent: result[0].msgContent,
+                        messageid: result[i].messageid,
+                        senderid: result[i].senderid,
+                        receiverid: result[i].receiverid,
+                        recordid: result[i].recordid,
+                        status: result[i].status,
+                        title: result[i].title,
+                        msgContent: result[i].msgContent,
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
                         cardtype: cardtype,
-                        createdAt: result[0].createdAt
+                        createdAt: result[i].createdAt
                     });
                 } else {
                     res.push({
-                        messageid: result[0].messageid,
-                        senderid: result[0].senderid,
-                        receiverid: result[0].receiverid,
-                        recordid: result[0].recordid,
-                        status: result[0].status,
-                        title: result[0].title,
-                        msgContent: result[0].msgContent,
+                        messageid: result[i].messageid,
+                        senderid: result[i].senderid,
+                        receiverid: result[i].receiverid,
+                        recordid: result[i].recordid,
+                        status: result[i].status,
+                        title: result[i].title,
+                        msgContent: result[i].msgContent,
                         cardContent: null,
                         cardTitle: null,
                         cardtype: null,
-                        createdAt: result[0].createdAt
+                        createdAt: result[i].createdAt
                     });
                 }
             }
@@ -331,31 +331,31 @@ exports.dbFindBySenderAndFriend = async (Message, Record, Card, senderid, friend
                         cardtype = card[0].types;
                     }
                     res.push({
-                        messageid: result[0].messageid,
-                        senderid: result[0].senderid,
-                        receiverid: result[0].receiverid,
-                        recordid: result[0].recordid,
-                        status: result[0].status,
-                        title: result[0].title,
-                        msgContent: result[0].msgContent,
+                        messageid: result[i].messageid,
+                        senderid: result[i].senderid,
+                        receiverid: result[i].receiverid,
+                        recordid: result[i].recordid,
+                        status: result[i].status,
+                        title: result[i].title,
+                        msgContent: result[i].msgContent,
                         cardContent: record[0].cardContent,
                         cardTitle: record[0].cardTitle,
                         cardtype: cardtype,
-                        createdAt: result[0].createdAt
+                        createdAt: result[i].createdAt
                     });
                 } else {
                     res.push({
-                        messageid: result[0].messageid,
-                        senderid: result[0].senderid,
-                        receiverid: result[0].receiverid,
-                        recordid: result[0].recordid,
-                        status: result[0].status,
-                        title: result[0].title,
-                        msgContent: result[0].msgContent,
+                        messageid: result[i].messageid,
+                        senderid: result[i].senderid,
+                        receiverid: result[i].receiverid,
+                        recordid: result[i].recordid,
+                        status: result[i].status,
+                        title: result[i].title,
+                        msgContent: result[i].msgContent,
                         cardContent: null,
                         cardTitle: null,
                         cardtype: null,
-                        createdAt: result[0].createdAt
+                        createdAt: result[i].createdAt
                     });
                 }
             }
