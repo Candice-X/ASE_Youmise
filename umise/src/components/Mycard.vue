@@ -270,8 +270,8 @@
             this.oneCard["msgContent"] =null;
             // this.oneCard["title"] = this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle;
             // this.oneCard["msgContent"] = this.oneCard.receiverName + " want to use the " + this.oneCard.cardTitle + " which you sent to him/her at " + this.oneCard.createDate + ". Last time you said: " + this.oneCard.cardContent;
-            // const response = await axios.patch(`/record/record/${this.oneCard.recordid}`, this.oneCard);
-            const response = await axios.post(`/record/usecard`,this.oneCard);
+            const response = await axios.patch(`/record/record/${this.oneCard.recordid}`, this.oneCard);
+            // const response = await axios.post(`/record/usecard`,this.oneCard);
             //show the alert messager
             jQuery(".send_card_alert").fadeIn();
             setTimeout(() => {
