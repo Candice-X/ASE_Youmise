@@ -25,7 +25,7 @@
                   <h4 class="message_title">{{ message.title }} </h4>
                   <!-- <p class="sub_title" >{{message.cardTitle}}</p> -->
                   <p class="sub_title">Message: <br/>{{ message.cardContent }} </p>
-                  <p class="">{{message.msgContent}}</p>
+                  <!-- <p class="">{{message.msgContent}}</p> -->
                 </div>
               </div>
               <div v-if="message.status==='SENT'">
