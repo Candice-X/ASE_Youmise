@@ -462,10 +462,8 @@ exports.dbUpdateById = async (Record, recordid, receiverid, status) => {
 // card receiver use card
 exports.dbUseCard = async (Card, User, Message, Record, recordid, title, msgContent) => {
   try {
-      console.log("zheli neng jinlai...");
     let record = await Record.findOne({ where : { recordid: recordid } });
     if(!record){
-        console.log("zhaobudao record.");
         console.log(`you recordid ${recordid}`);
       throw new Error(400, 'Record not found!');
     }
