@@ -11,9 +11,9 @@ const {users, populateUsers, friendRequests, populateFriendRequests} = require('
 
 
  //run before every test case
-after(()=>{
-  return require('../../models').sequelize.connectionManager.close().then(() => console.log('shut down gracefully'));
-});
+// after(()=>{
+//   return require('../../models').sequelize.connectionManager.close().then(() => console.log('shut down gracefully'));
+// });
 
 beforeEach(populateUsers);
 beforeEach(populateFriendRequests);

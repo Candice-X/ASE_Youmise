@@ -35,36 +35,36 @@ exports.dbCreateUser = async (User, username, email) => {
 
 exports.dbFacebookLogin = async (User, facebookid, username, email) => {
   try {
-    const result = await User.findAll({where: {facebookid: facebookid}, raw: true});
-    if (result.length !== 0){
-      return result[0];
-    } else {
-      if (username){
-        const find = await User.findAll({ where: { username: username},raw: true });
-        if (find.length !== 0){
-          throw new Error('Username exists, please try another one.');
-        }
-        else {
-          if (email === null){
-            throw new Error('Email cannot be null.');
-          }else{
-            const checkemail = await User.findAll({ where: { email: email},raw: true });
-            if (checkemail.length !== 0){
-              throw new Error('Email exists.');
-            } else{
-              let raw = await User.create({
-                username,
-                email,
-                facebookid
-              });
-              let res = raw.get({ plain: true });
-              return res;
-            }
-          }
-        }
-      } else {
-        throw new Error('Username cannot be empty');
+    const result = await User.findOne({ where: { facebookid: facebookid } });
+    if (!result){
+      if(!email){
+        throw new Error('Email cannot be null!');
       }
+      let user = await User.findOne({ where: { email: email }});
+      if(user){
+        const result = await user.updateAttributes({ facebookid: facebookid });
+        return result;
+      }
+      if(!username){
+        throw new Error('Username cannot be empty!');
+      }
+      const usernameRegex = /(\w|\d)+/;
+      if (!usernameRegex.test(username)){
+        throw new Error('Username must be number and letters!');
+      }
+      user = await User.findOne({ where: { username }});
+      if(user){
+        throw new Error('Username already exist. Please choose another username.');
+      }
+      let raw = await User.create({
+        username,
+        email,
+        facebookid
+      });
+      let res = raw.get({ plain: true });
+      return res;
+    } else {
+      return result;
     }
   } catch (err) {
     throw new ServerError(400, err.message);
