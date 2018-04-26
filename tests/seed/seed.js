@@ -5,7 +5,7 @@ const {User} = require('./../../routes/users/controller');
 const moment = require('moment');
 global.fetch = require('node-fetch');
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
-const password = 'ase20182018';
+// const password = 'ase/20182018';
 const config = require('../../config');
 const AWS = require('aws-sdk');
 
@@ -39,9 +39,9 @@ function generateUUID() {
 //     UserPoolId: config.POOL_ID,
 //     ClientId: config.CLIENT_ID
 //   };
-  
+
 // const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-  
+
 // const g_Idtoken = async ()=>{
 //     try{
 //     console.log(`youmeiyou jinlai ne `);
@@ -396,6 +396,3 @@ const populateFriendships = (done)=>{
 
 module.exports = {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages, friendRequests, populateFriendRequests, friendships, populateFriendships};
 // module.exports = {cards, populateCards, users, populateUsers, records, populateRecords, messages, populateMessages};
-
-
-

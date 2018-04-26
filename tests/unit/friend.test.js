@@ -10,9 +10,9 @@ const {users, populateUsers, friendships, populateFriendships} = require('./../s
 beforeEach(populateUsers);
 beforeEach(populateFriendships);
 
-after(()=>{
-  return require('../../models').sequelize.connectionManager.close().then(() => console.log('shut down gracefully'));
-});
+// after(()=>{
+//   return require('../../models').sequelize.connectionManager.close().then(() => console.log('shut down gracefully'));
+// });
 
 describe('Create', ()=>{
   it('should add a new friendships unit test', async ()=>{
