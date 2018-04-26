@@ -6,6 +6,7 @@ const moment = require('moment');
 const controller = require('./controller');
 const models = require('../../models');
 const messageController = require('./../messages/controller');
+const dateformat = require('dateformat');
 // Add foreign key to records.
 
 const config = require('../../config');
@@ -32,7 +33,7 @@ router.post('/record', async (req, res) => {
       const title = sender[0].username + ' send ' + req.body.receiverEmail + ' a ' + card[0].cardName + '.';
       console.log(`${title}`);
       const time = new Date();
-      const msgContent = sender[0].username + " send a card { " + card[0].cardName + " } to " + req.body.receiverEmail + " at " + time.toLocaleDateString() + ".";
+      const msgContent = sender[0].username + " send a card { " + card[0].cardName + " } to " + req.body.receiverEmail + " at " + dateFormat(time, "dddd, mmmm dS, yyyy, h:MM:ss TT") + ".";
       
       console.log(`${msgContent}`);
       const message = await messageController.dbCreateMessage(models.Message, req.body.senderid, receiverid, result.recordid, title, msgContent);
