@@ -48,10 +48,11 @@ exports.dbFacebookLogin = async (User, facebookid, username, email) => {
           if (email === null){
             throw new Error('Email cannot be null.');
           }else{
-            const checkemail = await User.findAll({ where: { email: email},raw: true });
-            if (checkemail.length !== 0){
-              throw new Error('Email exists.');
-            } else{
+            const checkemail = await User.findOne({ where: { email: email},raw: true });
+            if (checkemail){
+              const user = await checkemail.updateAttributes({ facebookid });
+              return user;
+            }else{
               let raw = await User.create({
                 username,
                 email,
