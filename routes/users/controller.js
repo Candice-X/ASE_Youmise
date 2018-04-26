@@ -52,7 +52,7 @@ exports.dbFacebookLogin = async (User, facebookid, username, email) => {
       if (!usernameRegex.test(username)){
         throw new Error('Username must be number and letters!');
       }
-      let user = await User.findOne({ where: { username }});
+      user = await User.findOne({ where: { username }});
       if(user){
         throw new Error('Username already exist. Please choose another username.');
       }
