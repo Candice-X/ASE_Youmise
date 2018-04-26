@@ -9,7 +9,7 @@
       <!--- This is the sign up div -->
       <!-- This is the validation code div   -->
   
-      <div id="validate_div" v-if="!submittedValue">
+      <div id="validate_div" v-if="!submittedValue1">
         <label class="message"> Please input your email address  </label>
         <div class="form-label-group">
   
@@ -25,7 +25,7 @@
   
   
       <transition name="fade">
-        <div id="signup_div" v-if='submittedValue'>
+        <div id="signup_div" v-if='submittedValue1'>
   
           <div class="form-label-group" :class="{ invalid: $v.user.confirmationCode.$error }">
             <input id="validateCode" class="form-control" placeholder="Verification Code" autofocus="" 
@@ -83,7 +83,7 @@
           confirmationCode: '',
           repeatPassword: '',
         },
-        submittedValue: false,
+        submittedValue1: false,
         errorMsg: '',
         validateMsg: '',
       };
@@ -114,22 +114,23 @@
     methods: {
       submitSignup() {
         //if the input is validated
+        var a = this;
         if (this.user.password.length < 8) {
           this.errorMsg = "password has to be more than 8 characters";
           return;
         }
         if (this.user.username.length != 0 && this.user.password.length >= 8) {
           // request server for sign up
-          this.errorMsg = "";
-  
+          a.errorMsg = "";
+         
           axios.post("/user/confirmforgetPassword", this.user)
             .then(res => {
               console.log("response !!!!!", res);
               // const data = res.data;
               console.log(res.data);
               // console.log(user);   
-              this.submittedValue = true;
-              this.$router.push('/login');
+              // a.submittedValue1 = true;
+              a.$router.push('/login');
             })
             .catch(error => {
               if (typeof error.response === 'undefined') {
@@ -138,7 +139,7 @@
                 if (error.response) {
                   //请求已发出，但服务器使用状态代码进行响应
                   //落在2xx的范围之外
-                  this.errorMsg = error.response.data;
+                  a.errorMsg = error.response.data;
                 } else {
                   //在设置触发错误的请求时发生了错误
                   console.log('Error', error.message);
@@ -146,41 +147,27 @@
               }
             });
         } else {
-          this.errorMsg = " Fileds should not be empty";
+          a.errorMsg = " Fileds should not be empty";
         }
       },
   
-      resendValidationCode() {
+     async resendValidationCode() {
         this.validateMsg = '';
-        axios.post("/user/forgetPassword", {
-            email: this.user.email
-          })
-          .then(res => {
-            console.log("response verification!", res);
-            // const data = res.data;
-            console.log(res.data);
-            this.user.username = res.data.user.username;
-            console.log(res.data.user);
-            console.log("resend verification code");
-            this.submittedValue = true;
-            this.validateMsg = 'Resend the verification code successfully';
-          })
-          .catch(error => {
-            if (typeof error.response === 'undefined') {
-              return;
-            } else {
-              if (error.response) {
-                //请求已发出，但服务器使用状态代码进行响应
-                //落在2xx的范围之外
-                this.validateMsg = error.response.data;
-              } else {
-                //在设置触发错误的请求时发生了错误
-                console.log('Error', error.message);
-              }
-            }
-          });
-      }
-  
+        try{
+          const response = await axios.post("/user/forgetPassword", {
+              email: this.user.email
+            });
+            console.log(response);
+            this.user.username = response.data.username;
+            
+          
+            this.submittedValue1 = true;     
+        }catch (e){
+            this.validateMsg = e.response.data;        
+        };
+          
+      },
+ 
     },
   };
 </script>
