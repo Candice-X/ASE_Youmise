@@ -460,24 +460,49 @@ exports.dbUpdateById = async (Record, recordid, receiverid, status) => {
     }
 };
 // card receiver use card
-exports.dbUseCard = async (Message, Record, recordid, title, msgContent) => {
+exports.dbUseCard = async (Card, User, Message, Record, recordid, title, msgContent) => {
   try {
-    let record = await Record.findOne({ where : { recordid } });
+      console.log("zheli neng jinlai...");
+    let record = await Record.findOne({ where : { recordid: recordid } });
     if(!record){
-      throw new Error('Record not found!');
+        console.log("zhaobudao record.");
+        console.log(`you recordid ${recordid}`);
+      throw new Error(400, 'Record not found!');
     }
     if(record.get('status') === 6){
-      throw new Error('Your card is already in use');
+      throw new Error(400,'Your card is already in use');
     }
     if(record.get('status') === 5){
-      throw new Error('You have already used this card!');
+      throw new Error(400,'You have already used this card!');
     }
     if(record.get('status') === 4){
-      throw new Error('Card expired.');
+      throw new Error(400,'Card expired.');
     }
     const senderid = record.get('receiverid');
     const receiverid = record.get('senderid');
-    const message = await MessageController.dbCreateMessage(Message, senderid, receiverid, recordid, title, msgContent);
+    const cardid = record.get('cardid');
+    const sender = await User.findAll({where: {uid: senderid}, raw: true});
+    if (!sender){
+        console.log('sender not exist.');
+        throw new Error(400,'sender not exist.');
+    }
+    const receiver = await User.findAll({where: {uid: receiverid}, raw: true});
+    if (!receiver){
+        console.log('receiver not exist.');
+        throw new Error(400,'receiver not exist.');
+    }
+    const card = await Card.findAll({where: {cardid: cardid}, raw: true});
+    if (!card){
+        console.log('card not exist.');
+        throw new Error(400,'card not exist.');
+    }
+
+    const titleAuto = sender[0].username + ' send ' + receiver[0].email + ' a using request { ' + card[0].cardName + ' }.';
+      console.log(`${title}`);
+
+    const msgContentAuto = sender[0].username + " send a card { " + card[0].cardName + " } to " + receiver[0].email + ".";
+      
+    const message = await MessageController.dbCreateMessage(Message, senderid, receiverid, recordid, titleAuto, msgContentAuto);
     const status = 6;
     const updateRecord = await exports.dbUpdateById(Record, recordid, senderid, status);
     return message;
