@@ -134,7 +134,7 @@ describe('GET /record/record/sender/senderid/status', ()=>{
 
 describe('POST /record/usecard', ()=>{
     it('should update record status and send a new message', (done)=>{
-        const title = users[1].username + ' send ' + users[0].email + ' a using request { ' + cards[0].cardName + ' }.';
+        const titleAuto = users[1].username + ' send ' + users[0].email + ' a using request { ' + cards[0].cardName + ' }.';
         request(app)
             .post('/record/usecard')
             .send({
@@ -145,7 +145,7 @@ describe('POST /record/usecard', ()=>{
             .expect(200)
             .expect((res)=>{
                 expect(res.body.senderid).toBe(records[0].receiverid);
-                expect(res.body.title).toBe(title);
+                expect(res.body.title).toBe(titleAuto);
             })
             .end((err,res)=>{
                 if(err){

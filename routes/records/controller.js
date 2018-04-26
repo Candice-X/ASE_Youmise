@@ -498,11 +498,12 @@ exports.dbUseCard = async (Card, User, Message, Record, recordid, title, msgCont
     }
 
     const titleAuto = sender[0].username + ' send ' + receiver[0].email + ' a using request { ' + card[0].cardName + ' }.';
-      console.log(`${title}`);
+    console.log(`${titleAuto}`);
 
-    const msgContentAuto = sender[0].username + " send a card { " + card[0].cardName + " } to " + receiver[0].email + ".";
-      
+    const msgContentAuto = sender[0].username + " send a card { " + card[0].cardName + " } using request to " + receiver[0].email + ".";
+    console.log(`${msgContentAuto}`); 
     const message = await MessageController.dbCreateMessage(Message, senderid, receiverid, recordid, titleAuto, msgContentAuto);
+    console.log(`${JSON.stringify(message)}`);
     const status = 6;
     const updateRecord = await exports.dbUpdateById(Record, recordid, senderid, status);
     return message;
