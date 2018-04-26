@@ -32,8 +32,8 @@ router.post('/record', async (req, res) => {
       const title = sender[0].username + ' send ' + req.body.receiverEmail + ' a ' + card[0].cardName + '.';
       console.log(`${title}`);
       const d = new Date();
-      var time = d.getDate()  + "-" + (d.getMonth()+1) + "-" + d.getFullYear() + " " +
-d.getHours() + ":" + d.getMinutes();
+      var time = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + " " +
+d.getUTCHours() + ":" + d.getUTCMinutes() + ":" + d.getUTCSeconds();
       const msgContent = sender[0].username + " send a card { " + card[0].cardName + " } to " + req.body.receiverEmail + " at " + time + ".";
       
       console.log(`${msgContent}`);
