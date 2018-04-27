@@ -47,20 +47,20 @@
       return {
         cards: [{
             cardName: "Fujunku Chen",
-            cardImg: img13,
+            cardImg: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/fujunku.jpg",
             sender: "Enjoy the show",
             senderImg: boy
           },
           {
             cardName: "Yinghai Xu",
-            cardImg: img1,
+            cardImg: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/yinghai.jpeg",
             sender: "Just like it",
             senderImg: girl
           },
           {
             cardName: "Yingying Huang",
-            cardImg: img7,
-            sender: "hhhhh",
+            cardImg: "https://s3.us-east-2.amazonaws.com/umisefrontendimages/yingying.jpg",
+            sender: "Milk tea is my life",
             senderImg: girl
           },
           {
