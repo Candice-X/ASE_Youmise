@@ -24,8 +24,8 @@
                 <div class="content" style="width:190px;">
                   <h4 class="message_title">{{ message.title }} </h4>
                   <!-- <p class="sub_title" >{{message.cardTitle}}</p> -->
-                  <p class="sub_title">Message: <br/>{{ message.cardContent }} </p>
-                  <p class="">{{message.msgContent}}</p>
+                  <p class="sub_title">Message: <br />{{ message.cardContent }} </p>
+                  <!-- <p class="">{{message.msgContent}}</p> -->
                 </div>
               </div>
               <div v-if="message.status==='SENT'">
@@ -48,8 +48,8 @@
             You don't have any Friend Request right now
             <!-- <button class="btn btn-secondary btn-primary"> Add Friends </button> -->
           </div>
-          <div v-for="(request, index) in friendRequests" :key="index" class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-xs-12 card_cont">
-            <div class="card_img " style="height:230px;">
+          <div v-for="(request, index) in friendRequests" :key="index" class="col-xl-3 col-lg-4 col-md-4 col-sm-6 card_cont">
+            <div class="card_img">
               <div class="sender_cont">
                 <div class='avatar'>
                   <img src="../assets/img/girl.png" />
@@ -269,7 +269,7 @@
     width: 280px;
     margin: 0px 25px;
     background: #dcdcdc;
-    height: 180px;
+    height: 220px;
     border-radius: 5px;
   }
   

@@ -1,13 +1,16 @@
 <template>
   <div>  
     <div class="friend_btn">
-      <button class="btn btn-primary btn-sm btn-outline-success show_friendlist" @click="friend_list=true"><span class="nav-link js-scroll-trigger" ><i class="icon-people"></i>Friends</span></button>
+      <button class="btn btn-primary btn-sm btn-outline-success show_friendlist" @click="friend_list=true">
+        <span class="nav-link js-scroll-trigger" ><i class="icon-people"></i>Friends</span>
+      </button>
     </div>
   
     <div class="friends friends_mobi" v-if="friend_list">
       <button class="btn btn-primary btn-outline-success btn-sm addFriendsBtn" style="width:85%;margin:15px;" data-toggle="modal" data-target="#add_friends">Add Friend</button>
       <hr />
-      <div v-for="(friend, index) in friendsList" :key="index" class="friend" :class="{friend_active:friend.uid === currentFriendId}" @click="setCurrentFriend(friend.uid)">
+      <div v-for="(friend, index) in friendsList" :key="index" class="friend" :class="{friend_active:friend.uid === currentFriendId}" 
+      @click="setCurrentFriend(friend.uid)">
         <div class="friends_img">
           <img src="../assets/img/girl.png" />
         </div>
@@ -57,7 +60,7 @@
   
       setCurrentFriend(friendId) {
         this.currentFriendId = friendId;
-        if (jQuery(window).width() < 992) {
+        if (jQuery(window).width() < 768) {
           this.friend_list = false;
         }; 
         this.$store.state.user.currentFriendId = friendId;
@@ -83,6 +86,7 @@
     .friends {
       background: rgba(0, 0, 0, 0.9)!important;
     }
+
     .friend_btn {
       position: fixed !important;
       bottom: 20px;
@@ -221,9 +225,11 @@
     .addFriendsBtn {
       margin-top: 55px !important;
     }
+
     .friend {
       padding: 10px 0 10px 0;
       height: 70px;
     }
+  
   }
 </style>

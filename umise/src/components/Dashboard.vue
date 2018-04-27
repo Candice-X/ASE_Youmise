@@ -594,6 +594,11 @@
       margin-left: 0rem;
       /* min-height: 775px; */
     }
+    .friend_float_div{
+      margin:0;
+      padding:0;
+
+    }
   }
   
   @media (min-width: 768px) and (max-width: 992px) {

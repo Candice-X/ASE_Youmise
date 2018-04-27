@@ -12,14 +12,14 @@
           <button class="btn btn-primary btn-outline-success" :class="{ active: isReceiveModel ==='sent' }" 
           @click="showSendCard">Sent</button>
         </center>
-        <div class="row">
+        <div class="row friend_card_cont">
           <div class="empty_msg" style="" v-if="cards.length===0">
             You don't have any Card right now <br/>
             <router-link class="btn btn-secondary btn-primary" to="/dashboard">
               Send Card to Friends </router-link>
           </div>
   
-          <div v-for="(card, index) in cards" :key="index" class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12 card_cont card_cont_mobile">
+          <div v-for="(card, index) in cards" :key="index" class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-xs-12 card_cont card_cont_mobile">
             <div class="card_img" data-toggle="modal" data-target="#friend_cards_specific" @click="showCard(index)">
               <img v-bind:src="card.cardImgURL" />
   
@@ -523,6 +523,7 @@
       margin-top: 0px;
       margin-left: 0rem;
     }
+   
   }
   
   h1 {
@@ -612,8 +613,15 @@
       margin-left: 0rem;
       /* min-height: 775px; */
     }
+
+   
   }
-  
+  @media (min-width:700px) and (max-width:992px){
+      .friend_card_cont{
+      margin-right:200px !important;
+    }
+  }
+
   @media (min-width: 992px) {
     section.resume-section {
       padding-top: 3rem !important;
@@ -628,8 +636,10 @@
       padding-right: 15rem !important;
       /* min-height: 775px; */
     }
-  }
+
   
+  }
+ 
   .bg-primary {
     background-color: rgba(0, 0, 0, 0.7) !important;
   }
