@@ -10,7 +10,7 @@
       <!-- This is the validation code div   -->
   
       <div id="validate_div" v-if="!submittedValue1">
-        <label class="message"> Please input your email address  </label>
+        <label class="message"> Please input your email address!  </label>
         <div class="form-label-group">
   
           <input id="email_address" class="form-control" placeholder="UserName" autofocus="" type="" @blur="$v.user.email" v-model="user.email">
